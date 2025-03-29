@@ -1,0 +1,1 @@
+NET_Wrapper.on_async_http(async_load);

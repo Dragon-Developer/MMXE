@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"CollageRestoreGPUState",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CollageRestoreGPUState",
+  "parent":{
+    "name":"General",
+    "path":"folders/Collage/General.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"CollageIsPowerTwo",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CollageIsPowerTwo",
+  "parent":{
+    "name":"General",
+    "path":"folders/Collage/General.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

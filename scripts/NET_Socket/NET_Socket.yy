@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_Socket",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_Socket",
+  "parent":{
+    "name":"Classes",
+    "path":"folders/Netcode/Classes.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

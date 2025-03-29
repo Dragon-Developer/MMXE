@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_InputManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_InputManager",
+  "parent":{
+    "name":"Managers",
+    "path":"folders/Netcode/Game/Managers.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

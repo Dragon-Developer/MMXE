@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_BaseGameOld",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_BaseGameOld",
+  "parent":{
+    "name":"Protocol",
+    "path":"folders/Netcode/Game/Protocol.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

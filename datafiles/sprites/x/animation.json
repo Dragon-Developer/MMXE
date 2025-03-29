@@ -1,0 +1,148 @@
+{
+  "sprites": {
+      "default": {
+          "origin": {
+              "x": 35,
+              "y": 40
+          }
+      }
+  },
+    "data": {
+      "layers": [
+        "normal",
+        "x1_legs",
+        "x3_arms",
+        "falcon_helm",
+        "x2_body"
+      ],
+      "animations": {
+        "speed": 1,
+        "type_combinations": [
+          ["", "shoot"],
+          ["", "x1", "x2", "x3", "falcon", "ult"],
+          ["", "legs", "body", "arms", "helm"]
+        ],
+        "list": [
+          {
+            "name": "idle",
+            "properties": {
+              "keyframes": [
+                { "key": 0,   "frame": 0 },
+                { "key": 80,  "frame": 1 },
+                { "key": 84,  "frame": 2 },
+                { "key": 92,  "frame": 1 },
+                { "key": 96,  "frame": 0 },
+                { "key": 144, "frame": 1 },
+                { "key": 148, "frame": 2 },
+                { "key": 152, "frame": 1 },
+                { "key": 156, "frame": 0 },
+                { "key": 160, "frame": 1 },
+                { "key": 164, "frame": 2 },
+                { "key": 168, "frame": 1 }
+              ]
+            }
+          },
+          {
+            "name": "critical",
+            "properties": {
+              "action": "idle",
+              "keyframes": [
+                { "key": 0,   "frame": 5 },
+                { "key": 10,  "frame": 0 },
+                { "key": 20,  "frame": 4 },
+                { "key": 30,  "frame": 0 },
+                { "key": 40,  "frame": 5 },
+                { "key": 50,  "frame": 0 },
+                { "key": 60,  "frame": 4 },
+                { "key": 70,  "frame": 0 },
+                { "key": 80,  "frame": 5 },
+                { "key": 90,  "frame": 0 },
+                { "key": 100, "frame": 4 },
+                { "key": 110, "frame": 1 },
+                { "key": 112, "frame": 2 },
+                { "key": 118, "frame": 1 },
+                { "key": 119, "frame": 1 }
+              ]
+            }
+          },
+          {
+            "name": "walk",
+            "properties": {
+              "keyframes": [
+                { "key": 0,  "frame": 0 },
+                { "key": 5,  "frame": 1 },
+                { "key": 6,  "frame": 2 },
+                { "key": 8,  "frame": 3 },
+                { "key": 11, "frame": 4 },
+                { "key": 14, "frame": 5 },
+                { "key": 17, "frame": 6 },
+                { "key": 19, "frame": 7 },
+                { "key": 21, "frame": 8 },
+                { "key": 24, "frame": 9 },
+                { "key": 27, "frame": 10 },
+                { "key": 30, "frame": 1 }
+              ],
+              "loop_begin": 5
+            }
+          },
+          {
+            "name": "jump",
+            "properties": {
+              "keyframes": [
+                { "key": 0, "frame": 0 },
+                { "key": 3, "frame": 1 },
+                { "key": 7, "frame": 2 }
+              ],
+              "loop_begin": 7
+            }
+          },
+          {
+            "name": "fall",
+            "properties": {
+              "action": "jump",
+              "keyframes": [
+                { "key": 0, "frame": 2 },
+                { "key": 3, "frame": 3 },
+                { "key": 7, "frame": 4 }
+              ],
+              "loop_begin": 7
+            }
+          },
+          {
+            "name": "land",
+            "properties": {
+              "action": "jump",
+              "keyframes": [
+                { "key": 0, "frame": 5 },
+                { "key": 2, "frame": 6 },
+                { "key": 3, "frame": 6 }
+              ]
+            }
+          },
+          {
+            "name": "saber",
+            "properties": {
+              "keyframes": [
+                { "key": 0, "frame": 0 },
+                { "key": 2, "frame": 1 },
+                { "key": 5, "frame": 2 },
+                { "key": 6, "frame": 3 },
+                { "key": 7, "frame": 4 },
+                { "key": 9, "frame": 5 },
+                { "key": 11, "frame": 6 },
+                { "key": 13, "frame": 7 },
+                { "key": 15, "frame": 8 },
+                { "key": 17, "frame": 9 },
+                { "key": 21, "frame": 10 },
+                { "key": 37, "frame": 9 },
+                { "key": 40, "frame": 2 },
+                { "key": 43, "frame": 1 },
+                { "key": 51, "frame": 0 }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+  

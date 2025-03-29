@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"__CollageFileFromWeb",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CollageFileFromWeb",
+  "parent":{
+    "name":"System",
+    "path":"folders/Collage/System.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"CollageImageGetTexturePage",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CollageImageGetTexturePage",
+  "parent":{
+    "name":"Image",
+    "path":"folders/Collage/Image.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

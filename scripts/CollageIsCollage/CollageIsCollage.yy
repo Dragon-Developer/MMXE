@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"CollageIsCollage",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CollageIsCollage",
+  "parent":{
+    "name":"General",
+    "path":"folders/Collage/General.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

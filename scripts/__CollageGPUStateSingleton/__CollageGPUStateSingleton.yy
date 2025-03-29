@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"__CollageGPUStateSingleton",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CollageGPUStateSingleton",
+  "parent":{
+    "name":"System",
+    "path":"folders/Collage/System.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

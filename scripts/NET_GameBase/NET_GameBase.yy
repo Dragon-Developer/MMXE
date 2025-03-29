@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_GameBase",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_GameBase",
+  "parent":{
+    "name":"Types",
+    "path":"folders/Netcode/Game/Types.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

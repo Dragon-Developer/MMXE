@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_Serializer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_Serializer",
+  "parent":{
+    "name":"Serialization",
+    "path":"folders/Netcode/Classes/Serialization.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

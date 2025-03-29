@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_HttpRequest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_HttpRequest",
+  "parent":{
+    "name":"RPC",
+    "path":"folders/Netcode/RPC.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

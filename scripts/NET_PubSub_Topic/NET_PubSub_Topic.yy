@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_PubSub_Topic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_PubSub_Topic",
+  "parent":{
+    "name":"PubSub",
+    "path":"folders/Netcode/Util/PubSub.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

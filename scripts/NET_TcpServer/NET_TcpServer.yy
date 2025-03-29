@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_TcpServer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_TcpServer",
+  "parent":{
+    "name":"TCP",
+    "path":"folders/Netcode/Protocol/TCP.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

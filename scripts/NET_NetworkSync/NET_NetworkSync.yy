@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_NetworkSync",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_NetworkSync",
+  "parent":{
+    "name":"Network",
+    "path":"folders/Netcode/Classes/Network.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

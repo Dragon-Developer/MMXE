@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"__CollageVertexAdd",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CollageVertexAdd",
+  "parent":{
+    "name":"Vertex Buffer",
+    "path":"folders/Collage/System/Vertex Buffer.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"NET_PingManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"NET_PingManager",
+  "parent":{
+    "name":"Types",
+    "path":"folders/Netcode/Game/Types.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
