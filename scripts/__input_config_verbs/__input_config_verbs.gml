@@ -20,10 +20,10 @@ function __input_config_verbs()
             left:  [input_binding_key(vk_left),  input_binding_key("A")],
             right: [input_binding_key(vk_right), input_binding_key("D")],
             
-            accept:  input_binding_key(vk_space),
-            cancel:  input_binding_key(vk_backspace),
-            action:  input_binding_key(vk_enter),
-            special: input_binding_key(vk_shift),
+            accept:  input_binding_key("V"),//gonna be jump
+            cancel:  input_binding_key("D"),// gonna be dash
+            action:  input_binding_key("X"),// shoot
+            special: input_binding_key("C"),// alt shoot
             
             //No aiming verbs since we use the mouse for that (see below for aiming verb examples)
             shoot: input_binding_mouse_button(mb_left),

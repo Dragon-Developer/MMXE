@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shader_palette_light",
+  "name":"shader_palette_light",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

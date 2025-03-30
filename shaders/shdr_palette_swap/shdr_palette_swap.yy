@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shdr_palette_swap",
+  "name":"shdr_palette_swap",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}
