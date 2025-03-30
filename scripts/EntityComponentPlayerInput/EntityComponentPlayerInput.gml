@@ -18,7 +18,7 @@ function EntityComponentPlayerInput() : EntityComponentInputBase() constructor {
 				_verb = "right";	
 			}
 		}
-		var _input = global.game.get_input(self.__player_index);
+		var _input = GAME.get_input(self.__player_index);
 		if (struct_exists(_input, _verb))
 			return _input[$ _verb];
 		return false;

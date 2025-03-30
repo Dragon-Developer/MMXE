@@ -8,7 +8,6 @@ function GameLoop() : NET_GameLoopBase() constructor {
 			if (!_component.step_enabled) return; 
 			_component.step_end(); 
 		};
-
 		ENTITIES.for_each_component(EntityComponentPlayerInput, _step);
 		ENTITIES.for_each_component(EntityComponentPlayerMove, _step);
 		ENTITIES.for_each_component(EntityComponentAnimation, _step);
