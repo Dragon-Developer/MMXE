@@ -1,8 +1,11 @@
 function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	// Variables
 	self.dir = 1;
+	self.dash_dir = 1;
 	self.current_hspd = 1.5;
 	self.dash_jump = false;
+	self.dash_tapped = false;
+	self.debug = false;
 	self.states = {
 		walk: {
 			speed: 1.5,	
@@ -13,6 +16,9 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		},
 		jump: {
 			strength: 1363/256
+		},
+		wall_jump: {
+			strength: 5
 		}
 	}
 	self.timer = 0;
@@ -52,7 +58,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 			enter: function() {
 				self.fsm.inherit();
 				self.publish("animation_play", { name: "jump" });
-				self.physics.set_vspd(-self.states.jump.strength);	
+				self.physics.set_vspd(-self.states.jump.strength);
 			},
 		})
 		.add_child("air", "fall", {
@@ -61,6 +67,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.publish("animation_play", { name: "fall" });
 				if (self.fsm.get_previous_state() == "jump")
 					self.physics.set_vspd(0);
+				if(self.physics.get_vspd() < 0)
+					self.physics.set_vspd(0);
 			}
 		})
 		.add("dash", {
@@ -68,6 +76,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.timer = 0;
 				self.current_hspd = self.states.dash.speed;	
 				self.dash_dir = self.dir;
+				if(self.dash_dir == 0)
+					self.dash_dir = self.hdir;
 				self.publish("animation_play", { name: "dash" });
 			},
 			step: function() {
@@ -76,7 +86,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 			},
 			leave: function() {
 				self.dash_jump = self.input.get_input_pressed("jump");
-				if (!self.dash_jump)
+				if (!self.dash_jump && self.physics.is_on_floor())
 					self.current_hspd = self.states.walk.speed;	
 			}
 		})
@@ -87,6 +97,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 					self.current_hspd = self.states.walk.speed;	
 				self.dash_dir = self.dir;
 				self.publish("animation_play", { name: "dash_end" });
+				self.dash_tapped = false;
 			},
 			step: function() {
 				self.set_hor_movement();
@@ -111,6 +122,56 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.publish("on_crouch", false);		
 			}
 		})
+		.add("wall_slide", {// this is forte. the strategy is currently 'random bullshit go'
+			enter: function() {
+				self.timer = 0;
+				self.publish("animation_play", { name: "wall_slide" });
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(0);
+				self.dash_jump = false;
+				self.current_hspd = self.states.walk.speed;	
+			},
+			leave: function() {	
+				self.physics.update_gravity();
+				self.physics.set_vspd(0);
+			},
+			step: function() {
+				self.timer++;
+				if(self.timer == 6){
+					self.physics.set_vspd(2);
+				}
+				self.set_hor_movement();	
+			}
+		})
+		.add_child("air","wall_jump", {// this is forte. the strategy is currently 'random bullshit go'
+			enter: function() {
+				self.timer = 0;
+				self.change_animation("wall_jump");
+				if (self.dir != 0) self.publish("animation_xscale", self.dir)
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(0);
+			},
+			leave: function() {	
+			},
+			step: function() {
+				self.timer++;
+				if(self.timer > 11){
+					self.publish("animation_play_at_loop", { name: "jump"});
+					self.set_hor_movement();
+				} else if(self.timer > 5) {
+				}
+				if(self.timer == 5){
+					self.physics.update_gravity();
+					if(self.input.get_input("dash")){
+						self.current_hspd = self.states.dash.speed;	
+						self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
+						self.dash_jump = true;
+					} else
+						self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
+					self.physics.set_vspd(-self.states.wall_jump.strength);	
+				}
+			}
+		})
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", ["idle", "land"], "walk")
 		.add_transition("t_dash", ["idle", "walk"], "dash")
@@ -119,14 +180,26 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
 		.add_transition("t_custom_end", "custom", "idle")
 		.add_transition("t_animation_end", ["start", "land", "dash_end"], "idle")
+		.add_transition("t_dash_end", ["dash"], "fall", function() { return !self.physics.is_on_floor(); })
+		/*automatic transitions between states*/
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0; })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
-		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump"); })
-		.add_transition("t_transition", "dash", "dash_end", function() { return self.hdir != self.dash_dir || self.timer >= self.states.dash.interval; })
+		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
+		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10; })
+		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
+		.add_transition("t_transition", "wall_slide", "wall_jump", function() { return self.input.get_input_pressed("jump"); })
+		.add_transition("t_transition", "dash", "dash_end", function() 
+		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer >= self.states.dash.interval || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
-		.add_transition("t_transition", "fall", "land", function() { return self.physics.is_on_floor(); })
+		.add_transition("t_transition", ["fall", "wall_slide"], "land", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
-		.add_transition("t_dash_end", ["dash"], "dash_end", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_transition", "fall", "wall_slide", function()
+		{ return self.wall_slide_possible();})
+	self.wall_slide_possible = function(){
+		return self.physics.check_place_meeting(self.get_instance().x + self.hdir * 9 * self.physics.right.x,
+		self.get_instance().y + self.hdir * 9 * self.physics.right.y, obj_block_parent)
+	}
+		
 		
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -144,7 +217,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	
 	// Sets the player's horizontal movement based on direction
 	self.set_hor_movement = function(_dir = self.hdir) {
-		self.dir = _dir;
+		if (_dir != 0) self.dir = _dir;
 		self.physics.set_hspd(self.current_hspd * _dir);
 		if (_dir != 0) self.publish("animation_xscale", _dir)
 	}
@@ -155,7 +228,12 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		if (_times <= 1 || self.hdir != _key) return;
 		self.double_tap.reset();
 		self.dash_dir = _key;
+		self.dash_tapped = true;
 		self.fsm.trigger("t_dash");
+	}
+	
+	self.change_animation = function(_anim){
+		self.publish("animation_play", { name: _anim });
 	}
 	
 	// Handles input and triggers attack transitions	
@@ -173,6 +251,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		if (self.hdir != 0) self.fsm.trigger("t_move_h");
 		if (self.vdir != 0) self.fsm.trigger("t_move_v");
 		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
+		if (self.input.get_input_pressed("dash")) {self.fsm.trigger("t_dash");self.dash_tapped = false;}
 		if (self.input.get_input("down")) self.fsm.trigger("t_crouch");
 		
 		if (!self.physics.is_on_floor()) fsm.trigger("t_dash_end");
@@ -184,13 +263,14 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	}
 	
 	self.draw_gui = function() {
-		return;
+		if !self.debug return;
 		var _history = self.fsm.history_get();
 		
 		draw_set_valign(fa_top);
 		draw_set_halign(fa_left);
 		draw_set_color(c_white);
 		
+		draw_text(16, 0, string(self.dash_dir) + ", " + string(self.dir));	
 		draw_text(16, 16, "Move FSM History");	
 		for (var _i = 0, _len = array_length(_history); _i < _len; _i++) {
 			draw_text(16, 16 + 16*(1 +_i), _history[_len - _i - 1]);	

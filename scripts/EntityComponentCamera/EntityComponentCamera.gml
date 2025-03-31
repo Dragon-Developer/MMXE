@@ -7,6 +7,7 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 	self.rotation_controller = new RotationController(); 
 	self.camera = -1;
 	self.flipped_y = false;
+	self.target = noone;
 	
 	self.start_rotation = function(_angle) {
 		ENTITIES.pause(["actor"], true);

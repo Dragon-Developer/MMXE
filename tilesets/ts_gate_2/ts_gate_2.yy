@@ -1,19 +1,19 @@
 {
   "$GMTileSet":"",
-  "%Name":"TileSet23",
+  "%Name":"ts_gate_2",
   "autoTileSets":[],
   "macroPageTiles":{
     "SerialiseHeight":0,
     "SerialiseWidth":0,
     "TileSerialiseData":[],
   },
-  "name":"TileSet23",
+  "name":"ts_gate_2",
   "out_columns":16,
   "out_tilehborder":2,
   "out_tilevborder":2,
   "parent":{
-    "name":"Stages",
-    "path":"folders/Rooms/Stages.yy",
+    "name":"Misc",
+    "path":"folders/Tile Sets/Misc.yy",
   },
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",
