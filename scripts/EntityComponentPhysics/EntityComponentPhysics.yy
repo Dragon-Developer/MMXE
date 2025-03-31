@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"EntityComponentAnimation",
+  "%Name":"EntityComponentPhysics",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"EntityComponentAnimation",
+  "name":"EntityComponentPhysics",
   "parent":{
     "name":"General",
     "path":"folders/Scripts/Game/Entity Components/General.yy",

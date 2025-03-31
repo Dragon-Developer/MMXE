@@ -465,7 +465,8 @@ function AnimationController(_character = "") constructor {
         self.__animation = _animation;
         self.__sprite = self.get_sprite();
 		var _props = self.get_props(_animation);
-		var _keyframe_mode =  struct_exists(_props, "keyframes") && is_array(_props.keyframes) && array_length(_props.keyframes) > 0;
+		if (is_undefined(_props)) return;
+		var _keyframe_mode = struct_exists(_props, "keyframes") && is_array(_props.keyframes) && array_length(_props.keyframes) > 0;
 		self.__current_animation = {
 			mode: _keyframe_mode ? ANIMATION_MODE.KEYFRAMES : ANIMATION_MODE.SPEED,
 			speed: struct_exists(_props, "speed") ? _props.speed : 1,

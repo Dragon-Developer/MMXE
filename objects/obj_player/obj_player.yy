@@ -8,8 +8,8 @@
   "name":"obj_player",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"ECS",
+    "path":"folders/Objects/ECS.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",
@@ -33,6 +33,13 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":null,
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_player_mask",
+    "path":"sprites/spr_player_mask/spr_player_mask.yy",
+  },
+  "tags":[
+    "actor",
+    "player",
+  ],
   "visible":true,
 }

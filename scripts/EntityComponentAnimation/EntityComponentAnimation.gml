@@ -65,6 +65,15 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 		}
 	}
 	
+	self.flip_up = function() {
+		self.animation.set_yscale(-self.animation.get_yscale());	
+	}
+	
+	self.rotate_up = function(_angle) {
+		self.rotation_angle += _angle;
+//		self.animation.set_angle(self.animation.__angle + _angle);	
+	}
+	
 	self.draw = function() {
 	    var _instance_x = floor(parent.get_instance().x);
 	    var _instance_y = floor(parent.get_instance().y);

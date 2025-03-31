@@ -4,6 +4,8 @@ function GameInput() : NET_InputManager() constructor {
 		"right",
 		"up",
 		"down",
+		"jump",
+		"dash",
 	]);
     self.getLocal = function(_index = 0) {
         var _input = {};

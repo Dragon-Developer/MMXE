@@ -14,6 +14,10 @@ function EntityComponentBase() constructor {
 	self.on_register = function() {}
 	self.on_remove = function() {}
 	
+	self.get_instance = function() {
+		return self.parent.get_instance();	
+	}
+	
 	self.add_tags = function(_tags) {
 		if (!is_array(_tags)) _tags = [_tags];
 		array_foreach(_tags, function(_tag) {
