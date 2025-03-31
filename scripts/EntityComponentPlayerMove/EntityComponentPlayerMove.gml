@@ -6,6 +6,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	self.dash_jump = false;
 	self.dash_tapped = false;
 	self.debug = false;
+	self.camera = noone;
 	self.states = {
 		walk: {
 			speed: 1.5,	
@@ -188,6 +189,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10; })
 		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
 		.add_transition("t_transition", "wall_slide", "wall_jump", function() { return self.input.get_input_pressed("jump"); })
+		.add_transition("t_transition", ["air"], "wall_jump", function() { return self.input.get_input_pressed("jump") && self.wall_slide_possible(); })
 		.add_transition("t_transition", "dash", "dash_end", function() 
 		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer >= self.states.dash.interval || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
@@ -208,6 +210,10 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		});
 		self.subscribe("animation_end", function() {
 			self.fsm.trigger("t_animation_end");	
+		});
+		
+		self.subscribe("camera_set", function(_cam) {
+			self.camera = _cam;	
 		});
 	}
 	// Initialization
@@ -260,9 +266,12 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		// Updates the FSM
 		if (self.fsm.event_exists("step"))
 			self.fsm.step();
+			
+		
 	}
 	
 	self.draw_gui = function() {
+		
 		if !self.debug return;
 		var _history = self.fsm.history_get();
 		
