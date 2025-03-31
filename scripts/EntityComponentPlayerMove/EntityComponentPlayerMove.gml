@@ -44,14 +44,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 			}
 		})
 		.add("air", {
-			enter: function() {	
-				self.publish("on_jump", true);	
-			},
 			step: function() {
 				self.set_hor_movement();
-			},
-			leave: function() {
-				self.publish("on_jump", false);	
 			}
 		})
 		.add_child("air", "jump", {
@@ -131,7 +125,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_transition", "dash", "dash_end", function() { return self.hdir != self.dash_dir || self.timer >= self.states.dash.interval; })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
 		.add_transition("t_transition", "fall", "land", function() { return self.physics.is_on_floor(); })
-		.add_transition("t_transition", "idle", "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_dash_end", ["dash"], "dash_end", function() { return !self.physics.is_on_floor(); })
 		
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -179,6 +174,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		if (self.vdir != 0) self.fsm.trigger("t_move_v");
 		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
 		if (self.input.get_input("down")) self.fsm.trigger("t_crouch");
+		
+		if (!self.physics.is_on_floor()) fsm.trigger("t_dash_end");
 		self.fsm.trigger("t_transition");
 		
 		// Updates the FSM
@@ -187,6 +184,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	}
 	
 	self.draw_gui = function() {
+		return;
 		var _history = self.fsm.history_get();
 		
 		draw_set_valign(fa_top);

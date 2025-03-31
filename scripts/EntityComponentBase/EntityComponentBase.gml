@@ -5,6 +5,7 @@ function EntityComponentBase() constructor {
 	self.__id = -1;
 	
 	self.step_enabled = true;
+	self.draw_enabled = true;
 	
 	self.init = function() {}
 	self.step = function() {}

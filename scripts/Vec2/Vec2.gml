@@ -58,5 +58,8 @@ function Vec2(_x = 0, _y = 0) constructor {
 	    var _factor = _clockwise ? 1 : -1;
 	    return new Vec2(self.y * _factor, -self.x * _factor);
 	}
+	static round_vec = function() {
+		return new Vec2(round(self.x), round(self.y));	
+	}
 }
 Vec2();

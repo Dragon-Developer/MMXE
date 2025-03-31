@@ -1,5 +1,5 @@
 function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
-	self.velocity = new Vec2(0, 0);
+	self.velocity = new Vec2(0, 0); 
     self.grav = new Vec2(0, 0.25);
 	self.up = new Vec2(0, -1);
 	self.right = new Vec2(1, 0);
@@ -8,94 +8,249 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	self.objects = {
 		block: obj_square_16,
 	};
-	
-	self.set_speed = function(_x, _y) {
+	/**
+	 * Sets the velocity of the entity.
+	 * @param {real} x - X velocity.
+	 * @param {real} y - Y velocity.
+	 */
+	set_speed = function(_x, _y) {
 		self.velocity.set(_x, _y);
 	}
-	
-	self.set_hspd = function(_speed) {
+	/**
+	 * Sets horizontal speed while maintaining rotation.
+	 * @param {real} speed - Horizontal speed value.
+	 */
+	set_hspd = function(_speed) {
 	    var _rotated_velocity = self.velocity.rotate(self.right.angle()); 
 	    _rotated_velocity.x = _speed;
 	    self.velocity = _rotated_velocity.rotate(-self.right.angle());
 	}
-	
-	self.get_hspd = function() {
+	/**
+     * Gets the horizontal speed of the entity.
+     * @returns {real} The horizontal speed.
+     */
+	get_hspd = function() {
 		var _rotated_velocity = self.velocity.rotate(self.up.angle()); 
 		return _rotated_velocity.y;
 	}
-	
-	self.set_vspd = function(_speed) {
+	/**
+     * Sets vertical speed while maintaining rotation.
+     * @param {real} speed - Vertical speed value.
+     */
+	set_vspd = function(_speed) {
 	    var _rotated_velocity = self.velocity.rotate(self.up.angle()); 
 	    _rotated_velocity.x = -_speed;
 	    self.velocity = _rotated_velocity.rotate(-self.up.angle());
 	}
-	
-	self.get_vspd = function() {
+	/**
+	 * Gets the vertical speed of the entity.
+	 * @returns {real} The vertical speed.
+	 */
+	get_vspd = function() {
 		var _rotated_velocity = self.velocity.rotate(self.up.angle()); 
 		return -_rotated_velocity.x;
 	}
-	
-	self.get_grav = function() {
+	/**
+	 * Gets the current gravity vector.
+	 * @returns {struct.Vec2} Gravity vector.
+	 */
+	get_grav = function() {
 		return self.grav;
 	}
-	
-	self.set_grav = function(_grav) {
+	/**
+	 * Gets the current gravity vector.
+	 * @returns {Vec2} Gravity vector.
+	 */
+	set_grav = function(_grav) {
 		self.grav = _grav;	
 	}
-
-	self.step = function() {
-		self.velocity = self.velocity.add(self.grav);
+	/**
+	 * Updates entity physics, applies gravity, and handles movement.
+	 */
+	step = function() {
         self.move_step(self.velocity);
-		if (self.is_on_floor()) self.velocity.setY(0);
+		self.velocity = self.velocity.add(self.grav);
+		if (self.is_on_floor()) self.set_vspd(0);
     }
-	self.check_place_meeting = function(_x, _y, _obj) {
+	/**
+	 * Checks if the entity is colliding with an object at a given position.
+	 * @param {real} x - X position.
+	 * @param {real} y - Y position.
+	 * @param {Object} obj - Object to check collision against.
+	 * @returns {boolean} True if collision occurs.
+	 */
+	check_place_meeting = function(_x, _y, _obj) {
 		with (self.get_instance()) {
 			return place_meeting(_x, _y, _obj)	
 		}
 	}
-	self.is_on_floor = function() {
+	/**
+	 * Checks if the entity is on the floor.
+	 * @returns {bool} True if entity is on the floor.
+	 */
+	is_on_floor = function() {
 		var _inst = self.get_instance();
-		return self.check_place_meeting(_inst.x - self.up.x, _inst.y - self.up.y, self.objects.block);	
+		var _previous_x = _inst.x;
+		var _previous_y = _inst.y;
+		self.move_step(self.up.multiply(-1));
+		var _on_floor = (_previous_y == _inst.y && _previous_x == _inst.x);
+		_inst.x = _previous_x;
+		_inst.y = _previous_y;
+		return _on_floor;
 	}
-	self.move_step = function(_v) {
+	/**
+	 * Moves the entity step by step while handling collisions in 4 separate directions.
+	 * @param {Vec2} _v - Movement vector.
+	 */
+	move_step = function(_v) {
+	    if (_v.x >= 0) self.move_right(_v.x);
+	    if (_v.x < 0) self.move_left(_v.x);
+	    if (_v.y >= 0) self.move_down(_v.y);
+	    if (_v.y < 0) self.move_up(_v.y);
+	};
+	/**
+	 * Gets the horizontal origin offset based on the entity's up direction.
+	 * @returns {real} The x origin offset (16 if up is horizontal, else 8).
+	 */
+	get_x_origin = function() {
+		return (abs(self.up.x) == 1) ? 16 : 8;
+	};
+	/**
+	 * Gets the vertical origin offset based on the entity's up direction.
+	 * @returns {real} The y origin offset (16 if up is vertical, else 8).
+	 */
+	get_y_origin = function() {
+		return (abs(self.up.y) == 1) ? 16 : 8;
+	};
+	/**
+	 * Moves the entity to the right, stopping at the closest collision.
+	 */
+	move_right = function(_vx) {
 		var _inst = self.get_instance();
-	    var _remaining_x = _v.x;
-	    var _remaining_y = _v.y;
-	    if (_remaining_x != 0) {
-			var _step_size = 1;
-	        var _direction_x = _remaining_x > 0 ? 1 : -1;
-	        while (abs(_remaining_x) > _step_size) {
-	            if (self.check_place_meeting(_inst.x + _direction_x, _inst.y, self.objects.block)) {
-	                break;
-	            }
-				_step_size = abs(_remaining_x) > 1 ? _step_size : abs(_remaining_x);
-	            _inst.x += _direction_x * _step_size;
-	            _remaining_x -= _direction_x * _step_size;
-	        }
-	    }
+		var _target_x = _inst.x + _vx;
+		var _origin = self.get_x_origin();
+    
+		var _nearest_block = noone;
+		var _object = self.objects.block;
+		with (_inst) {
+			var _array = instance_place_array(_target_x, y, _object, false);
+			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
+				var _block = _array[_i];
+				if (_inst.bbox_right <= _block.bbox_left) {
+					if (_nearest_block == noone || _block.bbox_left < _nearest_block.bbox_left) {
+						_nearest_block = _block;
+					}
+				}
+			}
+		}
 
-	    if (_remaining_y != 0) {
-			var _step_size = 1;
-	        var _direction_y = _remaining_y > 0 ? 1 : -1;
-	        while (abs(_remaining_y) > _step_size) {
-	            if (self.check_place_meeting(_inst.x, _inst.y + _direction_y, self.objects.block)) {
-	                break;
-	            }
-				_step_size = abs(_remaining_y) > 1 ? _step_size : abs(_remaining_y);
-	            _inst.y += _direction_y * _step_size;
-	            _remaining_y -= _direction_y * _step_size;
-	        }
-	    }
-	}
-	self.update_gravity = function() {
-        self.grav = new Vec2(-self.up.x, -self.up.y).normalize().multiply(self.grav_magnitude);
+		_inst.x = (_nearest_block != noone) 
+			? _nearest_block.bbox_left - _origin
+			: _target_x;
+	};
+	/**
+	 * Moves the entity to the left, stopping at the closest collision.
+	 */
+	move_left = function(_vx) {
+		var _inst = self.get_instance();
+		var _target_x = _inst.x + _vx;
+		var _origin = self.get_x_origin();
+
+		var _nearest_block = noone;
+		var _object = self.objects.block;
+		with (_inst) {
+			var _array = instance_place_array(_target_x, y, _object, false);
+			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
+				var _block = _array[_i];
+				if (_inst.bbox_left >= _block.bbox_right + 1) {
+					if (_nearest_block == noone || _block.bbox_right > _nearest_block.bbox_right) {
+						_nearest_block = _block;
+					}
+				}
+			}
+		}
+
+		_inst.x = (_nearest_block != noone) 
+			? _nearest_block.bbox_right + _origin + 1
+			: _target_x;
+	};
+
+	/**
+	 * Moves the entity downward, stopping at the closest collision.
+	 */
+	move_down = function(_vy) {
+		var _inst = self.get_instance();
+		var _target_y = _inst.y + _vy;
+		var _origin = self.get_y_origin();
+
+		var _nearest_block = noone;
+		var _object = self.objects.block;
+		with (_inst) {
+			var _array = instance_place_array(x, _target_y, _object, false);
+			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
+				var _block = _array[_i];
+				if (_inst.bbox_bottom <= _block.bbox_top) {
+					if (_nearest_block == noone || _block.bbox_top < _nearest_block.bbox_top) {
+						_nearest_block = _block;
+					}
+				}
+			}
+		}
+
+		_inst.y = (_nearest_block != noone) 
+			? _nearest_block.bbox_top - _origin
+			: _target_y;
+	};
+
+	/**
+	 * Moves the entity upward, stopping at the closest collision.
+	 */
+	self.move_up = function(_vy) {
+		var _inst = self.get_instance();
+		var _target_y = _inst.y + _vy;
+		var _origin = self.get_y_origin();
+
+		var _nearest_block = noone;
+		var _object = self.objects.block;
+		with (_inst) {
+			var _array = instance_place_array(x, _target_y, _object, false);
+			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
+				var _block = _array[_i];
+				if (_inst.bbox_top >= _block.bbox_bottom + 1) {
+					if (_nearest_block == noone || _block.bbox_bottom < _nearest_block.bbox_bottom) {
+						_nearest_block = _block;
+					}
+				}
+			}
+		}
+
+		_inst.y = (_nearest_block != noone) 
+			? _nearest_block.bbox_bottom + _origin + 1
+			: _target_y;
+	};
+
+
+	/**
+     * Updates the gravity vector based on the current up vector.
+     */
+	update_gravity = function() {
+        self.grav = new Vec2(-self.up.x, -self.up.y)
+			.normalize()
+			.multiply(self.grav_magnitude);
     }
-	self.rotate_up = function(_angle) {
-		self.up = self.up.rotate(_angle);
-		self.right = self.up.rotate(-90*self.up_to_right_dir);
+	/**
+     * Rotates the up vector and updates gravity accordingly.
+     * @param {real} angle - Angle in degrees.
+     */
+	rotate_up = function(_angle) {
+		self.up = self.up.rotate(_angle).round_vec();
+		self.right = self.up.rotate(-90*self.up_to_right_dir).round_vec();;
 		self.update_gravity();
 	}
-	self.flip_up = function() {
+	/**
+     * Flips the up vector and updates gravity accordingly.
+     */
+	flip_up = function() {
 		self.up = self.up.multiply(-1);	
 		self.up_to_right_dir *= -1;
 		self.update_gravity();

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"run_cmd",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"run_cmd",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -4,6 +4,7 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	self.rotation_point = { x: 0, y: 0 };
 	self.rotation_angle = 0;
 	self.rotation_debug = false;
+	self.subdirectories = [""];
 	self.animation = new AnimationController();
 	
 	self.on_register = function() {
@@ -28,8 +29,16 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 		});
 	}
 	
+	self.set_subdirectories = function(_subdirs) {
+		self.subdirectories = _subdirs;	
+	}
+	
+	self.load_sprites = function() {
+		SpriteLoader.reload_collage(self.collage, "sprites/" + self.character, self.subdirectories);
+	}
+	
 	self.reload_animations = function() {
-		var _array = SpriteLoader.reload_collage(collage, "sprites/" + self.character);
+		self.load_sprites();
 		var _animation = JSON.load("sprites/" + self.character + "/animation.json");
 		var _current_animation = undefined;
 		if (!is_undefined(self.animation)) {
@@ -92,6 +101,8 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	    self.animation
 			.set_angle(-self.rotation_angle)
 			.draw(undefined, _x, _y)
+			.draw("x1_legs", _x, _y)
+			.draw("x1_arms", _x, _y)
 
 		if (self.rotation_debug) {
 		    draw_set_color(c_red);

@@ -34,8 +34,8 @@ function CombinationGenerator() constructor {
 		        _current_fallback = string_join_ext(separator, _new_array);
 		        array_push(_fallbacks, _current_fallback);
 			}
-			show_debug_message(_type);
-			show_debug_message(_fallbacks);
+			//show_debug_message(_type);
+			//show_debug_message(_fallbacks);
 			array_push(combinations, {
 				type: _type,
 				fallbacks: _fallbacks

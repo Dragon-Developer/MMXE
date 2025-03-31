@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"EntityComponentWorld",
   "parent":{
-    "name":"Entity Components",
-    "path":"folders/Scripts/Game/Entity Components.yy",
+    "name":"World",
+    "path":"folders/Scripts/Game/Entity Components/World.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

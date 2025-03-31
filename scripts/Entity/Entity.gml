@@ -83,7 +83,7 @@ function Entity() constructor {
 	}
 	static draw = function() {
 		array_foreach(self.__components, function(_component) {
-			_component.draw();
+			if (_component.draw_enabled) _component.draw();
 		});
 	}
 	static draw_end = function() {
