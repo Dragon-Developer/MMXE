@@ -2054,6 +2054,7 @@
     {"id":{"name":"run_cmd","path":"scripts/run_cmd/run_cmd.yy",},},
     {"id":{"name":"scr_physics_init","path":"scripts/scr_physics_init/scr_physics_init.yy",},},
     {"id":{"name":"scr_physics_update","path":"scripts/scr_physics_update/scr_physics_update.yy",},},
+    {"id":{"name":"scr_spawn_player","path":"scripts/scr_spawn_player/scr_spawn_player.yy",},},
     {"id":{"name":"SnowState","path":"scripts/SnowState/SnowState.yy",},},
     {"id":{"name":"SpriteLoader","path":"scripts/SpriteLoader/SpriteLoader.yy",},},
     {"id":{"name":"Vec2","path":"scripts/Vec2/Vec2.yy",},},
