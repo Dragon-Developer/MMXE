@@ -119,11 +119,23 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 		return _on_floor;
 	}
 	/**
-	 * Moves the entity step by step while handling collisions in 4 separate directions.
-	 * @param {Vec2} _v - Movement vector.
+	 * Checks if the entity is near a wall.
+	 * @returns {bool} True if the entity would collide with a wall at this distance.
 	 */
-	 //this should be called move_all or move_vector, move_step sounds like it's the function
-	 //called in the step function to do the moving
+	check_wall = function(_dist) {
+		var _inst = self.get_instance();
+		var _previous_x = _inst.x;
+		var _previous_y = _inst.y;
+		self.move_step(self.right.multiply(_dist));
+		var _on_wall = (_previous_y == _inst.y && _previous_x == _inst.x);
+		_inst.x = _previous_x;
+		_inst.y = _previous_y;
+		return _on_wall;
+	}
+	/**
+	 * Moves the entity step by step while handling collisions in 4 separate directions.
+	 * @param {Vec2} v - Movement vector.
+	 */
 	move_step = function(_v) {
 	    if (_v.x >= 0) self.move_right(_v.x);
 	    if (_v.x < 0) self.move_left(_v.x);
@@ -238,7 +250,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity upward, stopping at the closest collision.
 	 */
-	self.move_up = function(_vy) {
+	move_up = function(_vy) {
 		var _inst = self.get_instance();
 		var _target_y = _inst.y + _vy;
 		var _origin = self.get_y_origin();
