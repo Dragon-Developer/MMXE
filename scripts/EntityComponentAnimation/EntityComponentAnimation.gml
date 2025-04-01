@@ -5,12 +5,16 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	self.rotation_angle = 0;
 	self.rotation_debug = false;
 	self.subdirectories = [""];
+	self.armors = [""];
 	self.animation = new AnimationController();
 	
 	self.on_register = function() {
 		self.subscribe("character_set", function(_character) {
 			self.character = _character;
 			self.reload_animations();
+		});
+		self.subscribe("armor_set", function(_armors){
+			self.armors = _armors;
 		});
 		self.subscribe("animation_play", function(_animation) {
 			_animation[$ "reset"] ??= false;
@@ -75,7 +79,7 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 			self.publish("animation_end");	
 		}
 		var _mouse = mouse_wheel_down() - mouse_wheel_up();
-		if (_mouse != 0) self.rotation_angle += _mouse * 45;
+		if (_mouse != 0) self.rotation_angle += _mouse * 15;
 		
 		if (mouse_check_button_pressed(mb_right)) {
 		    var _instance_x = floor(parent.get_instance().x);
@@ -109,11 +113,14 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	    var _x = _instance_x + (_ox - _rotated_x);
 	    var _y = _instance_y + (_oy - _rotated_y);
 
+		
 	    self.animation
 			.set_angle(-self.rotation_angle)
 			.draw(undefined, floor(_x), floor(_y))
-			.draw("x2_legs", floor(_x), floor(_y))
-			.draw("x2_helm", floor(_x), floor(_y))
+			
+		for(var q = 0; q < array_length(self.armors); q++){
+			self.animation.draw(self.armors[q],floor(_x), floor(_y));
+		}
 
 		if (self.rotation_debug) {
 		    draw_set_color(c_red);
