@@ -19,6 +19,7 @@ function GuiServerMenu() : GuiContainer() constructor {
 	buttonCreate.addEventListener("click", function() { 
 		global.game = new GameOnline();
 		global.server = new GameServer(real(inputPort.getValue()));
+		global.socket = global.server;
 		self.setEnabled(false);
 		parent.lobbyMenuContainer.setEnabled(true);
 	});

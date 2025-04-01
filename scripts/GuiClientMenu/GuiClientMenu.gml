@@ -21,6 +21,7 @@ function GuiClientMenu() : GuiContainer() constructor {
 		var _split = string_split(_ip_port,":");
 		global.game = new GameOnline();
 		global.client = new GameClient(_split[0], real(_split[1]));
+		global.socket = global.client;
 		self.setEnabled(false);
 		parent.lobbyMenuContainer.setEnabled(false);
 	});

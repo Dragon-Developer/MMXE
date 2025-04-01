@@ -8,13 +8,16 @@ function PingManager() constructor {
     self.__min_input_delay = 1;
 
     // Maximum delay in frames for input actions
-    self.__max_input_delay = 15;
+    self.__max_input_delay = 10;
 
     // Threshold ping value after which maximum delay is applied
     self.__ping_threshold = 166;  
 
     // List to store received ping values
     self.__ping_history = [];     
+	
+	// Input delay Offset for calculation
+	self.__input_delay_offset = 1;
 
     // Maximum number of pings to store in the history for delay calculation
     self.__max_ping_history = 10; 
@@ -39,7 +42,7 @@ function PingManager() constructor {
 
 	    // Ensure the delay is within the acceptable range (min and max delay in frames)
 		var _result = clamp(_dynamic_delay_in_frames, self.__min_input_delay, self.__max_input_delay);
-	    return floor(_result);
+	    return self.__input_delay_offset + floor(_result);
 	};
 
 	/**
