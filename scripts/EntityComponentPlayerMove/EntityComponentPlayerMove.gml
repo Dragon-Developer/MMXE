@@ -219,6 +219,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new EntityComponentInputBase();
 			self.physics = self.parent.find("physics") ?? new EntityComponentPhysicsBase();
+			self.publish("set_slope_detection", true)
 		});
 		self.subscribe("animation_end", function() {
 			self.fsm.trigger("t_animation_end");	
