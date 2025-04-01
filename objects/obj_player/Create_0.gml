@@ -5,8 +5,7 @@ components.add([
 	EntityComponentPlayerMove,
 	EntityComponentPhysics,
 	EntityComponentAnimation,
-	EntityComponentMask,
-	EntityComponentCameraGuide
+	EntityComponentMask
 ]);
 
 components.init();
