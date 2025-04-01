@@ -46,8 +46,14 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 		
     }
 	
-	self.update_pos = function(_x,_y){
-		camera_set_view_pos(self.camera,floor(_x - self.width / 2),floor(_y - self.height / 2));
+	self.update_pos = function(_x, _y) {
+		var _cam_x = floor(_x - self.width / 2);
+		var _cam_y = floor(_y - self.height / 2);
+		if (self.flipped_y) {
+			camera_set_view_pos(self.camera, _cam_x, _cam_y + self.height);
+		} else {
+			camera_set_view_pos(self.camera, _cam_x, _cam_y);
+		}
 	}
 	
 	self.init = function() {

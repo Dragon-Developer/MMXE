@@ -144,10 +144,11 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.set_hor_movement();	
 			}
 		})
-		.add_child("air","wall_jump", {// this is forte. the strategy is currently 'random bullshit go'
+		.add("wall_jump", {// this is forte. the strategy is currently 'random bullshit go'
 			enter: function() {
 				self.timer = 0;
-				self.change_animation("wall_jump");
+				self.change_animation("wall_jump", true);
+				self.dir = self.get_wall_jump_dir();
 				if (self.dir != 0) self.publish("animation_xscale", self.dir)
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(0);
@@ -156,40 +157,44 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 			},
 			step: function() {
 				self.timer++;
-				if(self.timer > 11){
+				if (self.timer > 11){
 					self.publish("animation_play_at_loop", { name: "jump"});
 					self.set_hor_movement();
-				} else if(self.timer > 5) {
+				} else if (self.timer > 5) {
+					
 				}
-				if(self.timer == 5){
+				if (self.timer == 5){
 					self.physics.update_gravity();
-					if(self.input.get_input("dash")){
+					if (self.input.get_input("dash")) {
 						self.current_hspd = self.states.dash.speed;	
 						self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
 						self.dash_jump = true;
-					} else
+					} else {
 						self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
+					}
 					self.physics.set_vspd(-self.states.wall_jump.strength);	
 				}
 			}
 		})
 		.add_transition("t_init", "init", "idle")
-		.add_transition("t_move_h", ["idle", "land"], "walk")
-		.add_transition("t_dash", ["idle", "walk"], "dash")
+		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
+		.add_transition("t_dash", ["idle", "walk"], "dash", function() { return !self.physics.check_wall(self.dash_dir); })
 		.add_transition("t_jump", ["idle", "walk", "dash"], "jump", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
 		.add_transition("t_custom_end", "custom", "idle")
 		.add_transition("t_animation_end", ["start", "land", "dash_end"], "idle")
-		.add_transition("t_dash_end", ["dash"], "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
 		/*automatic transitions between states*/
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0; })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
-		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10; })
+		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10 || self.physics.get_vspd() > 0; })
 		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
-		.add_transition("t_transition", "wall_slide", "wall_jump", function() { return self.input.get_input_pressed("jump"); })
-		.add_transition("t_transition", ["air"], "wall_jump", function() { return self.input.get_input_pressed("jump") && self.wall_slide_possible(); })
+		.add_transition("t_jump", "wall_slide", "wall_jump")
+		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
+		.add_wildcard_transition("t_jump", "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
 		.add_transition("t_transition", "dash", "dash_end", function() 
 		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer >= self.states.dash.interval || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
@@ -197,9 +202,15 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_transition", "fall", "wall_slide", function()
 		{ return self.wall_slide_possible();})
+	
 	self.wall_slide_possible = function(){
-		return self.physics.check_place_meeting(self.get_instance().x + self.hdir * 9 * self.physics.right.x,
-		self.get_instance().y + self.hdir * 9 * self.physics.right.y, obj_block_parent)
+		return self.hdir != 0 && self.physics.check_wall(self.hdir);
+	}
+	
+	self.get_wall_jump_dir = function() {
+		if (self.physics.check_wall(9)) return 1;
+		if (self.physics.check_wall(-9)) return -1;
+		return 0;
 	}
 		
 		
@@ -238,8 +249,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		self.fsm.trigger("t_dash");
 	}
 	
-	self.change_animation = function(_anim){
-		self.publish("animation_play", { name: _anim });
+	self.change_animation = function(_anim, _reset = false){
+		self.publish("animation_play", { name: _anim, reset: _reset });
 	}
 	
 	// Handles input and triggers attack transitions	
@@ -257,10 +268,11 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		if (self.hdir != 0) self.fsm.trigger("t_move_h");
 		if (self.vdir != 0) self.fsm.trigger("t_move_v");
 		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
-		if (self.input.get_input_pressed("dash")) {self.fsm.trigger("t_dash");self.dash_tapped = false;}
+		if (self.input.get_input_pressed("dash")) { self.fsm.trigger("t_dash"); self.dash_tapped = false; }
 		if (self.input.get_input("down")) self.fsm.trigger("t_crouch");
 		
 		if (!self.physics.is_on_floor()) fsm.trigger("t_dash_end");
+		if (self.physics.check_wall(self.dash_dir)) fsm.trigger("t_dash_end");
 		self.fsm.trigger("t_transition");
 		
 		// Updates the FSM

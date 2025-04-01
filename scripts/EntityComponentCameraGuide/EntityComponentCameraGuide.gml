@@ -6,7 +6,7 @@ function EntityComponentCameraGuide() : EntityComponentBase() constructor {
 	self.step = function(){
 		if(self.target == noone || self.camera == noone) return;
 		
-		self.camera.update_pos(self.target.x,self.target.y);
+		self.camera.update_pos(self.target.x, self.target.y);
 	}
 	
 	self.on_register = function() {

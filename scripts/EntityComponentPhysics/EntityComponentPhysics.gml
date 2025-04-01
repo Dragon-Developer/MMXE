@@ -127,7 +127,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
 		self.move_step(self.right.multiply(_dist));
-		var _on_wall = (_previous_y == _inst.y && _previous_x == _inst.x);
+		var _on_wall = new Vec2(_inst.x, _inst.y).subtract(new Vec2(_previous_x, _previous_y)).length() < abs(_dist);
 		_inst.x = _previous_x;
 		_inst.y = _previous_y;
 		return _on_wall;
