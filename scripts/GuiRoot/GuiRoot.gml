@@ -9,7 +9,7 @@ function GuiRoot() : GuiContainer() constructor {
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		global.game.start();
-		if (struct_exists(global, "server")) 
+		if (!is_undefined(global.server)) 
 			global.server.rpc.sendNotification("game_start", {
 				players: [0, 1]
 			}, global.server.getAllSockets());

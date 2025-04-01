@@ -31,5 +31,8 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		
 		draw_text(_gui_width - 16, 16, $"frame: {parent.__current_frame}");
 		draw_text(_gui_width - 16, 32, $"delay: {parent.__input_delay}");
+		if (!is_undefined(global.socket)) {
+			draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
+		}
 	}
 }
