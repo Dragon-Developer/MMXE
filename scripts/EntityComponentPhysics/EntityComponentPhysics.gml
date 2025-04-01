@@ -6,9 +6,16 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	self.grav_magnitude = self.grav.length(); 
 	self.up_to_right_dir = -1;
 	self.terminal_velocity = 6.25;
+	self.check_slopes = false;
 	self.objects = {
 		block: obj_square_16,
 	};
+	
+	self.on_register = function() {
+		self.subscribe("set_slope_detection", function(_detect) {
+			self.check_slopes = _detect;
+		});
+	}
 	/**
 	 * Sets the velocity of the entity.
 	 * @param {real} x - X velocity.
@@ -59,17 +66,39 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 		return self.grav;
 	}
 	/**
-	 * Gets the current gravity vector.
-	 * @returns {Vec2} Gravity vector.
+	 * Sets the current gravity vector.
 	 */
 	set_grav = function(_grav) {
 		self.grav = _grav;	
+	}
+	/*
+	 * Sets the slope detection state.
+	*/
+	set_slope_detection = function(_grav) {
+		self.check_slopes = _grav;	
 	}
 	/**
 	 * Updates entity physics, applies gravity, and handles movement.
 	 */
 	step = function() {
-        self.move_step(self.velocity);
+		if(self.check_slopes){
+			var _inst = self.get_instance();
+			var _x = _inst.x;
+			var _y = _inst.y;
+			if(check_place_meeting(
+			_x,
+			_y,
+			obj_slope_zone)){
+				log(_inst);
+				if(instance_nearest(_x,_y,obj_slope_zone).image_xscale > 0)
+					_inst.mask_index = spr_player_mask_right_slope;
+				else
+					_inst.mask_index = spr_player_mask_left_slope;
+			}
+			else
+				_inst.mask_index = spr_player_mask;
+		}
+		self.move_step(self.velocity);
 		self.velocity = self.velocity.add(self.grav);
 		
 		if(self.get_vspd() > self.terminal_velocity){
@@ -122,11 +151,11 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	 * Checks if the entity is near a wall.
 	 * @returns {bool} True if the entity would collide with a wall at this distance.
 	 */
-	check_wall = function(_dist) {
+	check_wall = function(_dist, _coll) {
 		var _inst = self.get_instance();
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
-		self.move_step(self.right.multiply(_dist));
+		self.move_step(self.right.multiply(_dist), _coll);
 		var _on_wall = new Vec2(_inst.x, _inst.y).subtract(new Vec2(_previous_x, _previous_y)).length() < abs(_dist);
 		_inst.x = _previous_x;
 		_inst.y = _previous_y;
@@ -136,11 +165,11 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	 * Moves the entity step by step while handling collisions in 4 separate directions.
 	 * @param {Vec2} v - Movement vector.
 	 */
-	move_step = function(_v) {
-	    if (_v.x >= 0) self.move_right(_v.x);
-	    if (_v.x < 0) self.move_left(_v.x);
-	    if (_v.y >= 0) self.move_down(_v.y);
-	    if (_v.y < 0) self.move_up(_v.y);
+	move_step = function(_v,_block = self.objects.block) {
+	    if (_v.x >= 0) self.move_right(_v.x, _block);
+	    if (_v.x < 0) self.move_left(_v.x, _block);
+	    if (_v.y >= 0) self.move_down(_v.y, _block);
+	    if (_v.y < 0) self.move_up(_v.y, _block);
 	};
 	/**
 	 * Gets the horizontal origin offset based on the entity's up direction.
@@ -159,7 +188,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity to the right, stopping at the closest collision.
 	 */
-	move_right = function(_vx) {
+	move_right = function(_vx, _coll = self.objects.block) {
 		var _inst = self.get_instance();
 		var _target_x = _inst.x + _vx;
 		var _origin = self.get_x_origin();
@@ -185,13 +214,13 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity to the left, stopping at the closest collision.
 	 */
-	move_left = function(_vx) {
+	move_left = function(_vx, _coll = self.objects.block) {
 		var _inst = self.get_instance();
 		var _target_x = _inst.x + _vx;
 		var _origin = self.get_x_origin();
 
 		var _nearest_block = noone;
-		var _object = self.objects.block;
+		var _object = _coll;
 		with (_inst) {
 			var _array = instance_place_array(_target_x, y, _object, false);
 			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
@@ -223,13 +252,13 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity downward, stopping at the closest collision.
 	 */
-	move_down = function(_vy) {
+	move_down = function(_vy, _coll = self.objects.block) {
 		var _inst = self.get_instance();
 		var _target_y = _inst.y + _vy;
 		var _origin = self.get_y_origin();
 
 		var _nearest_block = noone;
-		var _object = self.objects.block;
+		var _object = _coll;
 		with (_inst) {
 			var _array = instance_place_array(x, _target_y, _object, false);
 			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
@@ -250,13 +279,13 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity upward, stopping at the closest collision.
 	 */
-	move_up = function(_vy) {
+	move_up = function(_vy, _coll = self.objects.block) {
 		var _inst = self.get_instance();
 		var _target_y = _inst.y + _vy;
 		var _origin = self.get_y_origin();
 
 		var _nearest_block = noone;
-		var _object = self.objects.block;
+		var _object = _coll
 		with (_inst) {
 			var _array = instance_place_array(x, _target_y, _object, false);
 			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {

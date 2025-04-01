@@ -23,6 +23,9 @@ function EntityComponentMask() : EntityComponentBase() constructor {
 		with (obj_block_parent) {
 			visible = other.draw_enabled;	
 		}
+		with (obj_slope_zone) {
+			visible = other.draw_enabled;	
+		}
 	}
 	self.draw = function() {
 		var _inst = parent.get_instance();
