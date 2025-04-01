@@ -1,1 +1,0 @@
-scr_spawn_player(160,1800);

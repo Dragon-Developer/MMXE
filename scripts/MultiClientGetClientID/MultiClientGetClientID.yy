@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"MultiClientGetClientID",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"MultiClientGetClientID",
+  "parent":{
+    "name":"MultiClient",
+    "path":"folders/MultiClient.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

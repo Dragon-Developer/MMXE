@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiSprite",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiSprite",
+  "parent":{
+    "name":"Components",
+    "path":"folders/HazyGUI/Components.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -38,13 +38,14 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
         self.rotation_controller.step();
 		self.angle = self.rotation_controller.current_angle;
 		camera_set_view_angle(self.camera, self.angle);
+		/* this keyboard check doesn't work well in multiplayer
 		if (keyboard_check_pressed(ord("1"))) {
 			self.flip_y();	
 		}
 		if (keyboard_check_pressed(ord("2"))) {
 			if (!self.rotation_controller.enabled)
 				self.start_rotation(self.rotation_controller.current_angle - 90);	
-		}
+		}*/
 		if(self.target == noone) return;
 		
 		self.update_pos(self.target.x,self.target.y);

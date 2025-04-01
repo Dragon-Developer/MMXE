@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiLayoutManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiLayoutManager",
+  "parent":{
+    "name":"Components",
+    "path":"folders/HazyGUI/Components.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
