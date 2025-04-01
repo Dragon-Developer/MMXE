@@ -1,0 +1,2 @@
+spawn();
+instance_destroy();
