@@ -1,5 +1,6 @@
 function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	// Variables
+	self.hp = 28;
 	self.dir = 1;
 	self.dash_dir = 1;
 	self.current_hspd = 1.5;
