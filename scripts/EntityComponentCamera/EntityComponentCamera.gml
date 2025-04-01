@@ -9,6 +9,10 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 	self.flipped_y = false;
 	self.target = noone;
 	
+	self.on_register = function() {
+		
+	}
+	
 	self.start_rotation = function(_angle) {
 		ENTITIES.pause(["actor"], true);
 		self.rotation_controller
@@ -39,7 +43,12 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 			if (!self.rotation_controller.enabled)
 				self.start_rotation(self.rotation_controller.current_angle - 90);	
 		}
+		
     }
+	
+	self.update_pos = function(_x,_y){
+		camera_set_view_pos(self.camera,floor(_x - self.width / 2),floor(_y - self.height / 2));
+	}
 	
 	self.init = function() {
 		self.camera = view_get_camera(0);	

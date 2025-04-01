@@ -111,9 +111,9 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 
 	    self.animation
 			.set_angle(-self.rotation_angle)
-			.draw(undefined, _x, _y)
-			.draw("x1_legs", _x, _y)
-			.draw("x1_arms", _x, _y)
+			.draw(undefined, floor(_x), floor(_y))
+			.draw("x2_legs", floor(_x), floor(_y))
+			.draw("x2_helm", floor(_x), floor(_y))
 
 		if (self.rotation_debug) {
 		    draw_set_color(c_red);

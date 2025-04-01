@@ -14,6 +14,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(EntityComponentMask, _step);
 		ENTITIES.for_each_component(EntityComponentPhysics, _step);
 		ENTITIES.for_each_component(EntityComponentAnimation, _step);
+		ENTITIES.for_each_component(EntityComponentCameraGuide, _step);
 		ENTITIES.for_each_component(EntityComponentCamera, _step);
 		
 	}

@@ -1748,6 +1748,7 @@
     {"id":{"name":"EntityComponentAnimation","path":"scripts/EntityComponentAnimation/EntityComponentAnimation.yy",},},
     {"id":{"name":"EntityComponentBase","path":"scripts/EntityComponentBase/EntityComponentBase.yy",},},
     {"id":{"name":"EntityComponentCamera","path":"scripts/EntityComponentCamera/EntityComponentCamera.yy",},},
+    {"id":{"name":"EntityComponentCameraGuide","path":"scripts/EntityComponentCameraGuide/EntityComponentCameraGuide.yy",},},
     {"id":{"name":"EntityComponentInputBase","path":"scripts/EntityComponentInputBase/EntityComponentInputBase.yy",},},
     {"id":{"name":"EntityComponentMask","path":"scripts/EntityComponentMask/EntityComponentMask.yy",},},
     {"id":{"name":"EntityComponentPhysics","path":"scripts/EntityComponentPhysics/EntityComponentPhysics.yy",},},
