@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiClientMenu",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiClientMenu",
+  "parent":{
+    "name":"Gui",
+    "path":"folders/Scripts/Gui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

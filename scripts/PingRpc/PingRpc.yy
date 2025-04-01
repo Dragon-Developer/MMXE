@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"PingRpc",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PingRpc",
+  "parent":{
+    "name":"RPC",
+    "path":"folders/Scripts/Netcode/RPC.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

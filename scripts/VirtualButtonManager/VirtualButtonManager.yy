@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"VirtualButtonManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"VirtualButtonManager",
+  "parent":{
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

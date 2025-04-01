@@ -15,7 +15,7 @@ function NET_RpcRequest(_id, _timeout, _parent) : NET_BaseRequest() constructor 
         try {
             return is_instanceof(_result, NET_RpcRequest);
         } catch (err) {
-            return instanceof(_result) == "NET_RPCRequest";
+            return instanceof(_result) == "NET_RpcRequest";
         }
     };
 }

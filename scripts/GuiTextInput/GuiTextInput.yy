@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiTextInput",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiTextInput",
+  "parent":{
+    "name":"Components",
+    "path":"folders/HazyGUI/Components.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

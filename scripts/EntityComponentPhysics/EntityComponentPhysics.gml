@@ -5,6 +5,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	self.right = new Vec2(1, 0);
 	self.grav_magnitude = self.grav.length(); 
 	self.up_to_right_dir = -1;
+	self.terminal_velocity = 6.25;
 	self.objects = {
 		block: obj_square_16,
 	};
@@ -70,6 +71,11 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	step = function() {
         self.move_step(self.velocity);
 		self.velocity = self.velocity.add(self.grav);
+		
+		if(self.get_vspd() > self.terminal_velocity){
+			self.set_vspd(self.terminal_velocity);
+		}
+		
 		if (self.is_on_floor()) self.set_vspd(0);
     }
 	/**
@@ -99,8 +105,36 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 		return _on_floor;
 	}
 	/**
+	 * Checks if the entity has hit the ceiling.
+	 * @returns {bool} True if entity is colliding with the ceiling.
+	 */
+	is_on_ceil = function() {
+		var _inst = self.get_instance();
+		var _previous_x = _inst.x;
+		var _previous_y = _inst.y;
+		self.move_step(self.up);
+		var _on_floor = (_previous_y == _inst.y && _previous_x == _inst.x);
+		_inst.x = _previous_x;
+		_inst.y = _previous_y;
+		return _on_floor;
+	}
+	/**
+	 * Checks if the entity is near a wall.
+	 * @returns {bool} True if the entity would collide with a wall at this distance.
+	 */
+	check_wall = function(_dist) {
+		var _inst = self.get_instance();
+		var _previous_x = _inst.x;
+		var _previous_y = _inst.y;
+		self.move_step(self.right.multiply(_dist));
+		var _on_wall = new Vec2(_inst.x, _inst.y).subtract(new Vec2(_previous_x, _previous_y)).length() < abs(_dist);
+		_inst.x = _previous_x;
+		_inst.y = _previous_y;
+		return _on_wall;
+	}
+	/**
 	 * Moves the entity step by step while handling collisions in 4 separate directions.
-	 * @param {Vec2} _v - Movement vector.
+	 * @param {Vec2} v - Movement vector.
 	 */
 	move_step = function(_v) {
 	    if (_v.x >= 0) self.move_right(_v.x);
@@ -174,6 +208,17 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 			? _nearest_block.bbox_right + _origin + 1
 			: _target_x;
 	};
+	
+	/*
+	 * Moves the entity in whatever direction is supplied, positive or negative
+	 * A simpler way to handle movement if needed
+	 */
+	move_horiz = function(_vspd){
+		if(_vspd > 0)
+			return move_right(_vspd);
+		else 
+			return move_left(_vspd * -1);
+	}
 
 	/**
 	 * Moves the entity downward, stopping at the closest collision.
@@ -205,7 +250,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity upward, stopping at the closest collision.
 	 */
-	self.move_up = function(_vy) {
+	move_up = function(_vy) {
 		var _inst = self.get_instance();
 		var _target_y = _inst.y + _vy;
 		var _origin = self.get_y_origin();

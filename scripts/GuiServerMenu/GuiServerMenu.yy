@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiServerMenu",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiServerMenu",
+  "parent":{
+    "name":"Gui",
+    "path":"folders/Scripts/Gui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

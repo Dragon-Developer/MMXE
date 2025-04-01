@@ -5,6 +5,7 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	self.rotation_angle = 0;
 	self.rotation_debug = false;
 	self.subdirectories = [""];
+	self.armors = [""];
 	self.animation = new AnimationController();
 	
 	self.on_register = function() {
@@ -12,11 +13,25 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 			self.character = _character;
 			self.reload_animations();
 		});
+		self.subscribe("armor_set", function(_armors){
+			self.armors = _armors;
+		});
 		self.subscribe("animation_play", function(_animation) {
 			_animation[$ "reset"] ??= false;
 			_animation[$ "keep_index"] ??= false;
 			var _index = self.animation.get_index();
 			self.animation.play(_animation.name, _animation.reset);
+			if (_animation.keep_index) {
+				self.animation.set_index(_index);	
+			}
+		});
+		
+		self.subscribe("animation_play_at_loop", function(_animation, _frame) {
+			_animation[$ "reset"] ??= false;
+			_animation[$ "keep_index"] ??= false;
+			var _index = self.animation.get_index();
+			self.animation.play_at_loop(_animation.name, _animation.reset);
+			self.animation.__frame = _frame;
 			if (_animation.keep_index) {
 				self.animation.set_index(_index);	
 			}
@@ -64,7 +79,7 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 			self.publish("animation_end");	
 		}
 		var _mouse = mouse_wheel_down() - mouse_wheel_up();
-		if (_mouse != 0) self.rotation_angle += _mouse * 45;
+		if (_mouse != 0) self.rotation_angle += _mouse * 15;
 		
 		if (mouse_check_button_pressed(mb_right)) {
 		    var _instance_x = floor(parent.get_instance().x);
@@ -98,11 +113,14 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	    var _x = _instance_x + (_ox - _rotated_x);
 	    var _y = _instance_y + (_oy - _rotated_y);
 
+		
 	    self.animation
 			.set_angle(-self.rotation_angle)
-			.draw(undefined, _x, _y)
-			.draw("x1_legs", _x, _y)
-			.draw("x1_arms", _x, _y)
+			.draw(undefined, floor(_x), floor(_y))
+			
+		for(var q = 0; q < array_length(self.armors); q++){
+			self.animation.draw(self.armors[q],floor(_x), floor(_y));
+		}
 
 		if (self.rotation_debug) {
 		    draw_set_color(c_red);

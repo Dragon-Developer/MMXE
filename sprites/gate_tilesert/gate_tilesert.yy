@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Stages",
-    "path":"folders/Rooms/Stages.yy",
+    "name":"Normal",
+    "path":"folders/Sprites/Tileset/Normal.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
