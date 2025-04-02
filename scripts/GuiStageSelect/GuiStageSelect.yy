@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiStageSelect",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiStageSelect",
+  "parent":{
+    "name":"Gui",
+    "path":"folders/Scripts/Gui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -9,6 +9,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	self.check_slopes = false;
 	self.objects = {
 		block: obj_square_16,
+		projectile : obj_square_16
 	};
 	
 	self.on_register = function() {
@@ -117,6 +118,18 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	check_place_meeting = function(_x, _y, _obj) {
 		with (self.get_instance()) {
 			return place_meeting(_x, _y, _obj)	
+		}
+	}
+	/**
+	 * If the entity collides with an entity at a given position, return said entity
+	 * @param {real} x - X position.
+	 * @param {real} y - Y position.
+	 * @param {Object} obj - Object to check collision against.
+	 * @returns {boolean} True if collision occurs.
+	 */
+	get_place_meeting = function(_x, _y, _obj) {
+		with (self.get_instance()) {
+			return instance_place(_x, _y, _obj)	
 		}
 	}
 	/**

@@ -5,7 +5,7 @@ function GuiRoot() : GuiContainer() constructor {
 	setUsingCache(true);
 	setBorderSprite(-1)
 	
-	startGame = function() {
+	startGame = function(_id = 1) {
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		global.game.start();
@@ -13,6 +13,7 @@ function GuiRoot() : GuiContainer() constructor {
 			global.server.rpc.sendNotification("game_start", {
 				players: [0, 1]
 			}, global.server.getAllSockets());
+			log(string(_id) + " is the requested room id")
 		room_goto_next();
 	}
 	
@@ -22,6 +23,7 @@ function GuiRoot() : GuiContainer() constructor {
 	serverMenuContainer = new GuiServerMenu();
 	lobbyMenuContainer = new GuiLobbyMenu();
 	clientMenuContainer = new GuiClientMenu();
+	StageSelectContainer = new GuiStageSelect();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
@@ -29,9 +31,10 @@ function GuiRoot() : GuiContainer() constructor {
 	serverMenuContainer.setEnabled(false);
 	lobbyMenuContainer.setEnabled(false);
 	clientMenuContainer.setEnabled(false);
+	StageSelectContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer]);
+	addChild([mainMenuContainer, StageSelectContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;

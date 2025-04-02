@@ -8,13 +8,16 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	self.dash_tapped = false;
 	self.debug = false;
 	self.camera = noone;
+	self.locked = false;
+	self.ride_armor = noone;
+	self.can_wall_jump = true;
 	self.states = {
 		walk: {
-			speed: 1.5,	
+			speed: 1.75,	
 		},
 		dash: {
-			speed: 3.5,	
-			interval: 32
+			speed: 4,	
+			interval: 40
 		},
 		jump: {
 			strength: 1363/256
@@ -27,6 +30,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	
 	// Finite State Machine initialization
 	self.fsm = new SnowState("init", false);
+	#region fsm
 	self.fsm
 		.history_enable()
 		.history_set_max_size(10)
@@ -177,6 +181,24 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				}
 			}
 		})
+		.add("ride", {
+			enter: function() {
+				self.publish("animation_play", { name: "crouch" });
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(0);
+			},
+			step: function(){
+				if(self.ride_armor != noone){
+					var _inst = self.get_instance();
+					_inst.x = self.ride_armor.x;
+					_inst.y = self.ride_armor.y - 12;
+				}
+			},
+			leave: function(){
+				self.physics.update_gravity();
+				self.physics.set_vspd(0);
+			}
+		})
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_dash", ["idle", "walk"], "dash", function() { return !self.physics.check_wall(self.dash_dir); })
@@ -184,6 +206,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
 		.add_transition("t_custom_end", "custom", "idle")
+		.add_transition("t_ride", ["air", "walk"], "ride")
+		.add_transition("t_ride_exit", "ride", "jump")
 		.add_transition("t_animation_end", ["start", "land", "dash_end"], "idle")
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
@@ -203,6 +227,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_transition", "fall", "wall_slide", function()
 		{ return self.wall_slide_possible();})
+	#endregion
 	
 	self.wall_slide_possible = function(){
 		return self.hdir != 0 && self.physics.check_wall(self.hdir);
@@ -228,10 +253,29 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		self.subscribe("camera_set", function(_cam) {
 			self.camera = _cam;	
 		});
+		
+		self.subscribe("lock_player", function(_cam) {
+			self.locked = _cam;	
+		});
+		
+		self.subscribe("enter_ride", function(_ride) {
+			self.fsm.trigger("t_ride");
+			self.ride_armor = _ride;
+		});
+		
+		self.subscribe("exit_ride", function(_cam) {
+			self.fsm.trigger("t_ride_exit");
+		});
+		
+		self.subscribe("request_move", function(_cam) {
+			_cam.publish("deliver_self", self);
+		});
 	}
 	// Initialization
 	self.init = function() {
 		self.fsm.trigger("t_init");
+		view_set_wport(0,32);
+		view_set_hport(0,32);
 	}
 	
 	// Sets the player's horizontal movement based on direction
@@ -257,7 +301,11 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	
 	// Handles input and triggers attack transitions	
 	self.step = function() {
-		// Gets horizontal and vertical directions from player input
+		self.default_step();
+	}
+	
+	self.default_step = function(){
+	// Gets horizontal and vertical directions from player input
 		self.hdir = self.input.get_input("right") - self.input.get_input("left");
 		self.vdir = self.input.get_input("down") - self.input.get_input("up");
 		
@@ -279,9 +327,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		
 		// Updates the FSM
 		if (self.fsm.event_exists("step"))
-			self.fsm.step();
-			
-		
+			self.fsm.step();	
 	}
 	
 	self.draw_gui = function() {
