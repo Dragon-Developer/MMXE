@@ -15,12 +15,14 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(EntityComponentPhysics, _step);
 		ENTITIES.for_each_component(EntityComponentAnimation, _step);
 		ENTITIES.for_each_component(EntityComponentCamera, _step);
+		ENTITIES.for_each_component(EntityComponentCameraRecorder, _step);
 		
 	}
 	self.draw_gui = function() {
 		var _draw_gui = function(_component) { _component.draw_gui(); };
 		
 		ENTITIES.for_each_component(EntityComponentPlayerMove, _draw_gui);
+		ENTITIES.for_each_component(EntityComponentCameraRecorder, _draw_gui);
 		
 		var _gui_width = display_get_gui_width();
 		var _gui_height = display_get_gui_height();

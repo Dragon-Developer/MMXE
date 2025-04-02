@@ -155,6 +155,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.physics.set_grav(0);
 			},
 			leave: function() {	
+				self.physics.update_gravity();
 			},
 			step: function() {
 				self.timer++;
@@ -164,14 +165,16 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				} else if (self.timer > 5) {
 					
 				}
-				if (self.timer == 5){
+				if (self.timer == 5) {
 					self.physics.update_gravity();
 					if (self.input.get_input("dash")) {
 						self.current_hspd = self.states.dash.speed;	
-						self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
+						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
+							self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
 						self.dash_jump = true;
 					} else {
-						self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
+						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
+							self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
 					}
 					self.physics.set_vspd(-self.states.wall_jump.strength);	
 				}
@@ -179,7 +182,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		})
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
-		.add_transition("t_dash", ["idle", "walk"], "dash", function() { return !self.physics.check_wall(self.dash_dir); })
+		//.add_transition("t_dash", ["idle", "walk", "dash_end"], "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
 		.add_transition("t_jump", ["idle", "walk", "dash"], "jump", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
@@ -191,7 +195,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0; })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
-		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10 || self.physics.get_vspd() > 0; })
+		.add_transition("t_transition", "wall_jump", "fall", function() { return self.check_wall_jump_end(); })
 		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
 		.add_transition("t_jump", "wall_slide", "wall_jump")
 		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
@@ -206,6 +210,14 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	
 	self.wall_slide_possible = function(){
 		return self.hdir != 0 && self.physics.check_wall(self.hdir);
+	}
+	
+	self.check_wall_jump_end = function() {
+		if (self.timer <= 10) return false;
+		if (self.timer > 10 && self.physics.get_vspd() > 0) return true; 
+		if (self.timer > 10 && !self.input.get_input("jump")) return true; 
+		if (!self.input.get_input("jump") && self.physics.is_on_ceil()) return true;
+		return false;
 	}
 	
 	self.get_wall_jump_dir = function() {
@@ -243,7 +255,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	// Double-tap detection system for activating dash
 	self.double_tap = new MultiTap();
 	self.double_tap.onPressed = function(_key, _times) {
-		if (_times <= 1 || self.hdir != _key) return;
+		if (_times <= 1 || self.dir != _key) return;
 		self.double_tap.reset();
 		self.dash_dir = _key;
 		self.dash_tapped = true;
@@ -269,7 +281,10 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		if (self.hdir != 0) self.fsm.trigger("t_move_h");
 		if (self.vdir != 0) self.fsm.trigger("t_move_v");
 		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
-		if (self.input.get_input_pressed("dash")) { self.fsm.trigger("t_dash"); self.dash_tapped = false; }
+		if (self.input.get_input_pressed("dash") && !self.input.get_input_pressed("jump")) { 
+			self.fsm.trigger("t_dash"); 
+			self.dash_tapped = false;
+		}
 		if (self.input.get_input("down")) self.fsm.trigger("t_crouch");
 		
 		if (!self.physics.is_on_floor()) fsm.trigger("t_dash_end");
