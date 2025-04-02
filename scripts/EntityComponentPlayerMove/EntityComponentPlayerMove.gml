@@ -182,7 +182,6 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		})
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
-		//.add_transition("t_dash", ["idle", "walk", "dash_end"], "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
 		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
 		.add_transition("t_jump", ["idle", "walk", "dash"], "jump", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_crouch", "idle", "crouch")
@@ -192,7 +191,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
 		/*automatic transitions between states*/
-		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0; })
+		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir);; })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
 		.add_transition("t_transition", "wall_jump", "fall", function() { return self.check_wall_jump_end(); })

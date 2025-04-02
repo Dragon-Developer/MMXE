@@ -1,5 +1,7 @@
 function GameLoop() : NET_GameLoopBase() constructor {
-	self.step = function() {
+	self.game_speed = 1;
+	self.game_timer = 0;
+	self.entities_step = function() {
 		var _step = function(_component) { 
 			if (!_component.step_enabled) return; 
 			_component.step(); 
@@ -16,6 +18,13 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(EntityComponentAnimation, _step);
 		ENTITIES.for_each_component(EntityComponentCamera, _step);
 		ENTITIES.for_each_component(EntityComponentCameraRecorder, _step);
+	}
+	self.step = function() {
+		self.game_timer += self.game_speed;
+		while (self.game_timer >= 1) {
+			self.game_timer -= 1;
+			self.entities_step();
+		}
 		
 	}
 	self.draw_gui = function() {

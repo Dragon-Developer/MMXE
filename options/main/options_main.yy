@@ -10,7 +10,7 @@
   "option_gameid":"0",
   "option_game_speed":60,
   "option_mips_for_3d_textures":false,
-  "option_remove_unused_assets":true,
+  "option_remove_unused_assets":false,
   "option_sci_usesci":false,
   "option_spine_licence":false,
   "option_steam_app_id":"0",
