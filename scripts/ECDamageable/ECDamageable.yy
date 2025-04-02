@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ECDamageable",
   "parent":{
-    "name":"General",
-    "path":"folders/Scripts/Game/Entity Components/General.yy",
+    "name":"Damageable",
+    "path":"folders/Scripts/Game/Entity Components/Damageable.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

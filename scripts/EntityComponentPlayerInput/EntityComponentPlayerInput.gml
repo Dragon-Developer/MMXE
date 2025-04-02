@@ -3,6 +3,7 @@ function EntityComponentPlayerInput() : EntityComponentInputBase() constructor {
     self.__inputPressed = {};
 	self.__swap_horizontal = false;
 	self.__player_index = 0;
+	self.__locked = false;
     self.verbs = GAME.inputs.getKeys();
 	self.set_swap_horizontal = function(_value) {
 		self.__swap_horizontal = _value;	
@@ -25,11 +26,17 @@ function EntityComponentPlayerInput() : EntityComponentInputBase() constructor {
 	}
 
     self.update_inputs = function() {
-        array_foreach(self.verbs, function(_verb) {
-            var _isPressed = self.__input_check(_verb);
-            self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
-            self.__input[$ _verb] = _isPressed;
-        });
+		if(self.__locked){
+			 array_foreach(self.verbs, function(_verb) {
+				self.__input[$ _verb] = false;
+			 });
+		} else {
+	        array_foreach(self.verbs, function(_verb) {
+	            var _isPressed = self.__input_check(_verb);
+	            self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
+	            self.__input[$ _verb] = _isPressed;
+	        });
+		}
     };
 	
 	self.step = function() {

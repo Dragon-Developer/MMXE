@@ -17,9 +17,8 @@ function GuiMainMenu() : GuiContainer() constructor {
     
     buttonStart = new GuiButton(160, 32, "Start Game");
 	buttonStart.addEventListener("click", function() { 
-		global.game = new GameOffline();
 		self.setEnabled(false);
-		parent.startGame();
+		parent.StageSelectContainer.setEnabled(true);
 	});
 	
 	buttonOnline = new GuiButton(160, 32, "Play Online");

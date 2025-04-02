@@ -1,8 +1,8 @@
 function EntityComponentCamera() : EntityComponentBase() constructor {
     self.x = 0;
     self.y = 0;
-    self.width = 320;
-    self.height = 240;
+    self.width = GAME_W;
+    self.height = GAME_H;
 	self.angle = 0;
 	self.rotation_controller = new RotationController(); 
 	self.camera = -1;
@@ -63,7 +63,8 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 	
 	self.init = function() {
 		self.camera = view_get_camera(0);	
-		surface_resize(application_surface, width, height);
+		surface_resize(application_surface, self.width, self.height);
+		room_set_viewport(room, 0, true, 0, 0, GAME_W, GAME_H);
 	}
 	
 	self.rotation_controller.on_end = function() {
