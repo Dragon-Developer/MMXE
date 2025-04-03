@@ -1,12 +1,8 @@
 function GameLoop() : NET_GameLoopBase() constructor {
-<<<<<<< HEAD
 	self.game_speed = 1;
 	self.game_timer = 0;
-	self.entities_step = function() {
-=======
 	self.debug = false;//should make this a global variable
-	self.step = function() {
->>>>>>> d51226f (finished basic rideable parent object and begun level editor)
+	self.entities_step = function() {
 		var _step = function(_component) { 
 			if (!_component.step_enabled) return; 
 			_component.step(); 
