@@ -21,6 +21,10 @@ function GuiText(_text) : GuiBase() constructor {
 		refresh();
 		return self;
 	}
+	
+	getText = function(){
+		return text;
+	}
 
     setFont = function(_font) {
         font = _font;

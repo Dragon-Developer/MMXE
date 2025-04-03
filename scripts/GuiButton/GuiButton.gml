@@ -13,5 +13,4 @@ function GuiButton(_width = 0, _height = 0, _child = []) : GuiContainer() constr
 	setBorderColor(borderColors.normal);
 	setBorderIndex(4);
     setText(_child);
-
 }

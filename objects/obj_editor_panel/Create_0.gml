@@ -1,7 +1,10 @@
 event_inherited();
 
-components.add([ComponentEditorBar,
+components.add([
 	EntityComponentAnimation,
-	EntityComponentMask]);
+	EntityComponentMask,
+	EntityComponentCamera,
+	ComponentEditorBar
+	]);
 
 components.init();

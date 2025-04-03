@@ -304,10 +304,18 @@ function GuiBase() constructor {
 	});
 	
 	printMe = function() {
-		return string({ name, width, height, x, y, type: string(instanceof(self))}) + "\n";
+		return string({ name, width, height, x, y, type: string(instanceof(self)), _id}) + "\n";
+	}
+	
+	returnSelf = function() {
+		return { name, width, height, x, y, type: string(instanceof(self))};
 	}
 	
 	print = function(_level = 0) {
 		return string_repeat("--", _level) + printMe();	
+	}
+	
+	setName = function(_name){
+		name = _name;
 	}
 }

@@ -13,8 +13,16 @@ function GuiRoot() : GuiContainer() constructor {
 			global.server.rpc.sendNotification("game_start", {
 				players: [0, 1]
 			}, global.server.getAllSockets());
-			log(string(_id) + " is the requested room id")
-		room_goto_next();
+		
+		
+		room_goto(1);//this is bad. while rooms are stored as integer pointers, this
+	}// goes to whatever level is loaded as #1
+	
+	startEditor = function(){
+		hudContainer.setEnabled(true);
+		refreshChildren();
+		global.game.start();
+		room_goto(rm_editor);
 	}
 	
 	mainMenuContainer = new GuiMainMenu();
