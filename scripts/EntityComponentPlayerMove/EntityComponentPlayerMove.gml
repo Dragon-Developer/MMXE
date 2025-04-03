@@ -321,11 +321,12 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		// Trigger FSM transitions
 		if (self.hdir != 0) self.fsm.trigger("t_move_h");
 		if (self.vdir != 0) self.fsm.trigger("t_move_v");
-		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
-		if (self.input.get_input_pressed("dash") && !self.input.get_input_pressed("jump")) { 
+		if (self.input.get_input_pressed("dash")) { 
+		//if (self.input.get_input_pressed("dash") && !self.input.get_input_pressed("jump")) { 
 			self.fsm.trigger("t_dash"); 
 			self.dash_tapped = false;
-		}
+		} 
+		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
 		if (self.input.get_input("down")) self.fsm.trigger("t_crouch");
 		
 		if (!self.physics.is_on_floor()) fsm.trigger("t_dash_end");
