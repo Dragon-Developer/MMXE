@@ -190,13 +190,6 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(0);
 			},
-			step: function(){
-				if(self.ride_armor != noone){
-					var _inst = self.get_instance();
-					_inst.x = self.ride_armor.x;
-					_inst.y = self.ride_armor.y - 12;
-				}
-			},
 			leave: function(){
 				self.physics.update_gravity();
 				self.physics.set_vspd(0);
@@ -272,10 +265,12 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		self.subscribe("enter_ride", function(_ride) {
 			self.fsm.trigger("t_ride");
 			self.ride_armor = _ride;
+			self.camera.set_target(_ride);
 		});
 		
 		self.subscribe("exit_ride", function(_cam) {
 			self.fsm.trigger("t_ride_exit");
+			self.camera.set_target(self.get_instance());
 		});
 		
 		self.subscribe("request_move", function(_cam) {
@@ -285,8 +280,6 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	// Initialization
 	self.init = function() {
 		self.fsm.trigger("t_init");
-		view_set_wport(0,32);
-		view_set_hport(0,32);
 	}
 	
 	// Sets the player's horizontal movement based on direction

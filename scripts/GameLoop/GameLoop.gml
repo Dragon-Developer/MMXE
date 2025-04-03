@@ -1,7 +1,12 @@
 function GameLoop() : NET_GameLoopBase() constructor {
+<<<<<<< HEAD
 	self.game_speed = 1;
 	self.game_timer = 0;
 	self.entities_step = function() {
+=======
+	self.debug = false;//should make this a global variable
+	self.step = function() {
+>>>>>>> d51226f (finished basic rideable parent object and begun level editor)
 		var _step = function(_component) { 
 			if (!_component.step_enabled) return; 
 			_component.step(); 
@@ -29,6 +34,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		
 	}
 	self.draw_gui = function() {
+		if(!self.debug) return;
 		var _draw_gui = function(_component) { _component.draw_gui(); };
 		
 		ENTITIES.for_each_component(EntityComponentPlayerMove, _draw_gui);
