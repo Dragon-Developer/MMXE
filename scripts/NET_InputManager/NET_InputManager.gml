@@ -65,7 +65,10 @@ function NET_InputManager() constructor {
 	}
 	static getInput = function(_frame, _player_index) {
 		if (!self.hasInput(_frame, _player_index)) {
-			return getEmptyInput();
+			if (struct_exists(self.lastInput, _player_index)) {
+				return self.getLastInput(_player_index);
+			}
+			return self.getEmptyInput();
 		}
 		return self.frameInput[$ _frame][$ _player_index];
 	}

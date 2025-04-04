@@ -6,6 +6,7 @@ function EntityComponentBase() constructor {
 	
 	self.step_enabled = true;
 	self.draw_enabled = true;
+	self.serializer = new NET_Serializer();
 	
 	self.init = function() {}
 	self.step = function() {}
@@ -55,5 +56,11 @@ function EntityComponentBase() constructor {
 	self.subscribe = function(_event, _callback) {
 		if (is_undefined(self.parent)) return;
 		self.parent.subscribe(_event, _callback);
+	}
+	self.save = function() {
+		self.serializer.serialize();
+	}
+	self.load = function() {
+		self.serializer.deserialize();
 	}
 }

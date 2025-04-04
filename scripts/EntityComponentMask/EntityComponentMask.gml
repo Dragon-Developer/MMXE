@@ -5,6 +5,13 @@ function EntityComponentMask() : EntityComponentBase() constructor {
 	self.alpha = 0.8;
 	self.color = c_white;
 	self.draw_enabled = false;
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addVariable("xscale")
+		.addVariable("yscale")
+		.addVariable("angle")
+		.addVariable("alpha")
+		.addVariable("color")
 	self.set_rotation = function(_rotation) {
 		var _inst = parent.get_instance();
 		_inst.image_angle = _rotation;

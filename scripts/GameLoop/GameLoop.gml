@@ -1,7 +1,13 @@
 function GameLoop() : NET_GameLoopBase() constructor {
 	self.game_speed = 1;
 	self.game_timer = 0;
-	self.debug = false;//should make this a global variable
+	self.debug = true;//should make this a global variable
+	self.save_state = function() {
+		ENTITIES.save();	
+	}
+	self.load_state = function() {
+		ENTITIES.load();	
+	}
 	self.entities_step = function() {
 		var _step = function(_component) { 
 			if (!_component.step_enabled) return; 
@@ -47,6 +53,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		
 		draw_text(_gui_width - 16, 16, $"frame: {parent.__current_frame}");
 		draw_text(_gui_width - 16, 32, $"delay: {parent.__input_delay}");
+		draw_text(_gui_width - 16, 48, $"mode: {parent.__mode}");
 		if (!is_undefined(global.socket)) {
 			draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
 		}

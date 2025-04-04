@@ -11,6 +11,15 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 		block: obj_square_16,
 		projectile : obj_square_16
 	};
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addClone("velocity")
+		.addClone("grav")
+		.addClone("up")
+		.addClone("right")
+		.addVariable("grav_magnitude")
+		.addVariable("up_to_right_dir")
+		.addVariable("terminal_velocity")
 	
 	self.on_register = function() {
 		self.subscribe("set_slope_detection", function(_detect) {
@@ -82,23 +91,6 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 	 * Updates entity physics, applies gravity, and handles movement.
 	 */
 	step = function() {
-		if(self.check_slopes){
-			var _inst = self.get_instance();
-			var _x = _inst.x;
-			var _y = _inst.y;
-			if(check_place_meeting(
-			_x,
-			_y,
-			obj_slope_zone)){
-				log(_inst);
-				if(instance_nearest(_x,_y,obj_slope_zone).image_xscale > 0)
-					_inst.mask_index = spr_player_mask_right_slope;
-				else
-					_inst.mask_index = spr_player_mask_left_slope;
-			}
-			else
-				_inst.mask_index = spr_player_mask;
-		}
 		self.move_step(self.velocity);
 		self.velocity = self.velocity.add(self.grav);
 		

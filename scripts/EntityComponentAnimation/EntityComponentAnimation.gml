@@ -8,6 +8,10 @@ function EntityComponentAnimation() : EntityComponentBase() constructor {
 	self.armors = [""];
 	self.animation = new AnimationController();
 	
+	self.serializer
+		.addVariable("armors")
+		.addCustom("animation");
+	
 	self.on_register = function() {
 		self.subscribe("character_set", function(_character) {
 			self.character = _character;

@@ -10,6 +10,7 @@ function NET_GameBase() constructor {
 	self.__events = {};
 	self.__event_listeners = {};
 	self.__input_delay = 0;
+	self.__mode = 0;
 	/**
      * Sets the game loop instance.
      * @param {Struct.NET_GameLoopBase} game - The game loop to assign.

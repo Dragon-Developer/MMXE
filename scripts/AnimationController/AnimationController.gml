@@ -41,6 +41,27 @@ function AnimationController(_character = "") constructor {
 	self.__last_keyframe = -1;
 	self.__last_index = -1;
 	self.__wait_frames = 0;
+	
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addVariable("__sprite")
+		.addVariable("__index")
+		.addVariable("__frame")
+		.addVariable("__xscale")
+		.addVariable("__yscale")
+		.addVariable("__angle")
+		.addVariable("__color")
+		.addVariable("__alpha")
+		.addVariable("__character")
+		.addVariable("__types")
+		.addVariable("__type")
+		.addVariable("__visible")
+		.addVariable("__speed")
+		.addClone("__current_animation")
+		.addVariable("__last_keyframe")
+		.addVariable("__last_index")
+		.addVariable("__wait_frames")
+	
 	static use_collage = function(_collage) {
 		self.__collage = _collage;
 		return self;

@@ -1,4 +1,4 @@
-#macro GM_NETCODE_SERIALIZER_HASH_ENABLED false
+#macro GM_NETCODE_SERIALIZER_HASH_ENABLED true
 
 function NET_SerializerVariable(_owner, _name) constructor {
 	self.owner = _owner;

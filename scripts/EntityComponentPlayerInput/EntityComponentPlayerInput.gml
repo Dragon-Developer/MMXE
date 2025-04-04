@@ -5,6 +5,13 @@ function EntityComponentPlayerInput() : EntityComponentInputBase() constructor {
 	self.__player_index = 0;
 	self.__locked = false;
     self.verbs = GAME.inputs.getKeys();
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addClone("__input")
+		.addClone("__inputPressed")
+		.addClone("__swap_horizontal")
+		.addClone("__player_index")
+		.addClone("verbs")
 	self.set_swap_horizontal = function(_value) {
 		self.__swap_horizontal = _value;	
 	}
@@ -12,6 +19,7 @@ function EntityComponentPlayerInput() : EntityComponentInputBase() constructor {
 		self.__player_index = _index;	
 	}
 	self.__input_check = function(_verb) {
+		if (self.__locked) return false;
 		if (self.__swap_horizontal) {
 			if (_verb == "right") {
 				_verb = "left";
@@ -26,17 +34,11 @@ function EntityComponentPlayerInput() : EntityComponentInputBase() constructor {
 	}
 
     self.update_inputs = function() {
-		if(self.__locked){
-			 array_foreach(self.verbs, function(_verb) {
-				self.__input[$ _verb] = false;
-			 });
-		} else {
-	        array_foreach(self.verbs, function(_verb) {
-	            var _isPressed = self.__input_check(_verb);
-	            self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
-	            self.__input[$ _verb] = _isPressed;
-	        });
-		}
+	    array_foreach(self.verbs, function(_verb) {
+	        var _isPressed = self.__input_check(_verb);
+	        self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
+	        self.__input[$ _verb] = _isPressed;
+	    });
     };
 	
 	self.step = function() {

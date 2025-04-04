@@ -56,6 +56,15 @@ function SnowState(_initState, _execEnter = true) constructor {
 		SNOWSTATE_REFLEXIVE_TRANSITION_NAME,
 	];
 	
+	serializer = new NET_Serializer();
+	serializer
+		.addVariable("__currEvent")
+		.addVariable("__tempEvent")
+		.addVariable("__parent")
+		.addClone("__childQueue")
+		.addVariable("__stateStartTime")
+		.addClone("__history")
+	
 	// Add .on() events
 	__on_events[$ "state changed"] = undefined;
 		

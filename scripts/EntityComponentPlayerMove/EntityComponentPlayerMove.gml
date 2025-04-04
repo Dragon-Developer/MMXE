@@ -27,6 +27,13 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		}
 	}
 	self.timer = 0;
+	self.serializer
+		.addVariable("dir")
+		.addVariable("current_hspd")
+		.addVariable("dash_dir")
+		.addVariable("dash_jump")
+		.addVariable("dash_tapped")
+		.addCustom("fsm");
 	
 	// Finite State Machine initialization
 	self.fsm = new SnowState("init", false);
@@ -65,6 +72,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.fsm.inherit();
 				self.publish("animation_play", { name: "jump" });
 				self.physics.set_vspd(-self.states.jump.strength);
+				if (self.fsm.get_previous_state() == "dash" || self.input.get_input("dash"))
+					self.current_hspd = self.states.dash.speed;
 			},
 		})
 		.add_child("air", "fall", {
@@ -128,7 +137,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.publish("on_crouch", false);		
 			}
 		})
-		.add("wall_slide", {// this is forte. the strategy is currently 'random bullshit go'
+		.add("wall_slide", {
 			enter: function() {
 				self.timer = 0;
 				self.publish("animation_play", { name: "wall_slide" });
@@ -149,7 +158,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.set_hor_movement();	
 			}
 		})
-		.add("wall_jump", {// this is forte. the strategy is currently 'random bullshit go'
+		.add("wall_jump", {
 			enter: function() {
 				self.timer = 0;
 				self.change_animation("wall_jump", true);
@@ -159,6 +168,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				self.physics.set_grav(0);
 			},
 			leave: function() {	
+				self.physics.update_gravity();
 			},
 			step: function() {
 				self.timer++;
@@ -168,14 +178,16 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 				} else if (self.timer > 5) {
 					
 				}
-				if (self.timer == 5){
+				if (self.timer == 5) {
 					self.physics.update_gravity();
 					if (self.input.get_input("dash")) {
 						self.current_hspd = self.states.dash.speed;	
-						self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
+						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
+							self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
 						self.dash_jump = true;
 					} else {
-						self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
+						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
+							self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
 					}
 					self.physics.set_vspd(-self.states.wall_jump.strength);	
 				}
@@ -201,8 +213,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		})
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
-		.add_transition("t_dash", ["idle", "walk"], "dash", function() { return !self.physics.check_wall(self.dash_dir); })
-		.add_transition("t_jump", ["idle", "walk", "dash"], "jump", function() { return self.physics.is_on_floor(); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
+		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
 		.add_transition("t_custom_end", "custom", "idle")
@@ -212,7 +224,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
 		/*automatic transitions between states*/
-		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0; })
+		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
 		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10 || self.physics.get_vspd() > 0; })
@@ -234,6 +246,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	}
 	
 	self.get_wall_jump_dir = function() {
+		if (self.physics.is_on_floor()) return 0;
 		if (self.physics.check_wall(9)) return 1;
 		if (self.physics.check_wall(-9)) return -1;
 		return 0;
@@ -288,7 +301,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	// Double-tap detection system for activating dash
 	self.double_tap = new MultiTap();
 	self.double_tap.onPressed = function(_key, _times) {
-		if (_times <= 1 || self.hdir != _key) return;
+		if (_times <= 1 || self.dir != _key) return;
 		self.double_tap.reset();
 		self.dash_dir = _key;
 		self.dash_tapped = true;
@@ -318,7 +331,10 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		if (self.hdir != 0) self.fsm.trigger("t_move_h");
 		if (self.vdir != 0) self.fsm.trigger("t_move_v");
 		if (self.input.get_input_pressed("jump")) self.fsm.trigger("t_jump");
-		if (self.input.get_input_pressed("dash")) { self.fsm.trigger("t_dash"); self.dash_tapped = false; }
+		if (self.input.get_input_pressed("dash") && !self.input.get_input_pressed("jump")) { 
+			self.fsm.trigger("t_dash"); 
+			self.dash_tapped = false;
+		}
 		if (self.input.get_input("down")) self.fsm.trigger("t_crouch");
 		
 		if (!self.physics.is_on_floor()) fsm.trigger("t_dash_end");

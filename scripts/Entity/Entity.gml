@@ -4,7 +4,16 @@ function Entity() constructor {
 	self.__components = [];
 	self.__instance = other.id;
 	self.__event_bus = new EventBus();
-
+	static save = function() {
+		array_foreach(self.__components, function(_component) {
+			_component.save();
+		});
+	}
+	static load = function() {
+		array_foreach(self.__components, function(_component) {
+			_component.load();
+		});
+	}
 	static get_instance = function() {
 		return self.__instance;	
 	}

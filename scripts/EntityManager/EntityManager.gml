@@ -174,4 +174,14 @@ function EntityManager() constructor {
 			_inst.components.pause(value);
 		}));
 	}
+	static save = function() {
+		array_foreach(self.__instances, function(_inst) {
+			_inst.components.save();
+		});
+	}
+	static load = function() {
+		array_foreach(self.__instances, function(_inst) {
+			_inst.components.load();
+		});
+	}
 }
