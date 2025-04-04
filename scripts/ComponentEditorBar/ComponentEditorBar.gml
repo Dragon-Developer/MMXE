@@ -1,4 +1,5 @@
 function ComponentEditorBar() : EntityComponentBase() constructor{
+	#region checklist
 	/*
 		all todo's
 		
@@ -23,7 +24,6 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		Saving and loading
 			-save file to json
 			-load from json
-				-tile data
 				-object data
 					-object specific information
 						-x/y pos
@@ -32,6 +32,7 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 						-rotation
 						-what object it is
 	*/
+	#endregion
 	
 	#region generic information
 		self.width = 96;
@@ -51,6 +52,9 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		self.tile_placing = 0;
 		self.tilemap_scroll_x = 0;
 		self.tilemap_scroll_y = 0;
+		self.tile_flipped = false;
+		self.tile_mirrored = false;
+		self.tile_rotated = false;
 	#endregion
 	#region Object Specific Information
 	#endregion
@@ -97,7 +101,7 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 	self.tool_use = function(){
 		switch(self.tool){
 			case(0):
-					self.edit_tool();
+					self.tile_tool();
 			break;
 			case(1):
 			break;
@@ -110,12 +114,12 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 			self.load();
 	}
 	
-	self.edit_tool = function(){
+	self.tile_tool = function(){
 		var _id = layer_tilemap_get_id(self.tile_layers[tileset]);
-		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width){
+		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width - 16){
 			var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
 			var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
-			if(_gui_mouse_y< 65){
+			if(_gui_mouse_y< 65 && _gui_mouse_x > GAME_W - self.width){
 				if(mouse_check_button_pressed(mb_left))
 					tile_placing = 
 					floor((_gui_mouse_x - (GAME_W - self.width) + self.tilemap_scroll_x) / 16) + 
@@ -136,6 +140,35 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 				self.tilemap_scroll_y = clamp(self.tilemap_scroll_y, 0, sprite_get_height(self.tile_sprites[tileset]) - 64);
 				
 			}
+			else
+			{
+				if(get_mouse_click(GAME_W - self.width - 16, 0, GAME_W - self.width, 16)){
+					log("mouse clicked on the save button")
+					var _lvlname = get_string("Save Level As?", self.map_name);
+					self.map_name = _lvlname;
+					self.save();
+				} else if(get_mouse_click(GAME_W - self.width - 16, 16, GAME_W - self.width, 32)){
+					log("mouse clicked on the load button")
+					var _lvlname = get_string("Save Level As?", self.map_name);
+					self.map_name = _lvlname;
+					self.load();
+				} else if(get_mouse_click(GAME_W - self.width - 16, 32, GAME_W - self.width, 48)){
+					log("mouse clicked on the Select Tool button")
+				} else if(get_mouse_click(GAME_W - self.width - 16, 48, GAME_W - self.width, 64)){
+					log("mouse clicked on the Tile Tool button")
+				} else if(get_mouse_click(GAME_W - self.width - 16, 64, GAME_W - self.width, 80)){
+					log("mouse clicked on the Object Tool button")
+				} else if(get_mouse_click(GAME_W - self.width - 16, 80, GAME_W - self.width, 96)){//these next 3 only exist in the tile tool{
+					log("mouse clicked on the mirror button")
+					self.tile_mirrored = !self.tile_mirrored
+				} else if(get_mouse_click(GAME_W - self.width - 16, 96, GAME_W - self.width, 112)){
+					log("mouse clicked on the flip button")
+					self.tile_flipped = !self.tile_flipped;
+				} else if(get_mouse_click(GAME_W - self.width - 16, 112, GAME_W - self.width, 128)){
+					log("mouse clicked on the rotate button")
+					self.tile_rotated = !self.tile_rotated;
+				}
+			}
 			//else
 				//change tileset. I need to make a new layer if this tileset doesnt exist, so changing tilesets should be a new method. 
 				/*
@@ -146,13 +179,36 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 					 - change the tileset variable to the correct number
 				*/
 		} else {
+			if(mouse_check_button_pressed(mb_right)){
+				tilemap_set(_id, 
+				0, 
+				floor(mouse_x / 16), floor(mouse_y / 16));
+			}
 			if(mouse_check_button_pressed(mb_left)){
 				tilemap_set(_id, 
 				tile_placing, 
 				floor(mouse_x / 16), floor(mouse_y / 16));
-				tilemap_set_mask(_id, tile_index_mask);  // optional for flipping & turning tiles in the tilemap
+				tilemap_set(_id, 
+				tile_set_rotate(tilemap_get(_id,floor(mouse_x / 16), floor(mouse_y / 16)), self.tile_rotated),
+				floor(mouse_x / 16), floor(mouse_y / 16));
+				tilemap_set(_id, 
+				tile_set_flip(tilemap_get(_id,floor(mouse_x / 16), floor(mouse_y / 16)), self.tile_flipped),
+				floor(mouse_x / 16), floor(mouse_y / 16));
+				tilemap_set(_id, 
+				tile_set_mirror(tilemap_get(_id,floor(mouse_x / 16), floor(mouse_y / 16)), self.tile_mirrored),
+				floor(mouse_x / 16), floor(mouse_y / 16));
 			}
 		}
+	}
+	
+	self.get_mouse_click = function(_x1, _y1, _x2, _y2){
+		var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
+		var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
+		
+		if(_gui_mouse_x < _x2 && _gui_mouse_x > _x1 && _gui_mouse_y < _y2 && _gui_mouse_y > _y1 && mouse_check_button_pressed(mb_left)){
+			return true;
+		}
+		return false;
 	}
 
 	self.draw = function(){
@@ -164,25 +220,52 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 
 	self.draw_gui = function(){
 		if(self.save_notification_timer > 0){
-			draw_string("SAVED TO " + working_directory,0,0);
-			log("SAVED TO " + working_directory);
+			draw_string("SAVED TO " + working_directory,0,20);
 			self.save_notification_timer--;
 		}
-		
-		//reticle
-		var _max_width = floor( self.width / 18)
-		var _inst = self.get_instance();
 		//tool window
 		draw_rectangle(GAME_W - self.width,0,GAME_W, GAME_H, false);
 		draw_rectangle(GAME_W - self.width - 16,96,GAME_W, GAME_H, false);
 		//tileset specific
+		self.draw_tilemap_selection();
+	}
+	
+	self.draw_tilemap_selection = function(){
+		var _inst = self.get_instance();
+		
 		draw_string(self.current_tileset_name, (GAME_W - self.width), 70);
 		draw_string(self.tile_placing, (GAME_W - self.width), 60);
 		draw_string((mouse_x - _inst.x + GAME_W / 2), 0,0);
 		draw_string((mouse_y - _inst.y + GAME_H / 2), 0,10);
 		draw_string(asset_get_name(self.tile_options[self.tileset]), (GAME_W - self.width), 80);
 		
+		#region tilemap selection
+		// draw the tileset itself
+		draw_sprite_part(self.tile_sprites[self.tileset], 0,
+		self.tilemap_scroll_x,self.tilemap_scroll_y,
+		self.width - 2,62, GAME_W - self.width + 1, 1);
+		
+		if(self.tilemap_scroll_x < 16)
+			draw_sprite(spr_editor_icons,0, GAME_W - self.width - self.tilemap_scroll_x,-self.tilemap_scroll_y);
+		
+		//draw the reticle
+		if((self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 - self.tilemap_scroll_x > GAME_W - self.width - 15)
+		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
+		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 - self.tilemap_scroll_x, 
+		0  + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 0, c_white, 0.9);
+		if((self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 + 17 - self.tilemap_scroll_x > GAME_W - self.width - 15)
+		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
+		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 + 17 - self.tilemap_scroll_x, 
+		17 + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 180, c_white, 0.9);
+		draw_rectangle_color(GAME_W - self.width, 0, GAME_W, mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
+		draw_rectangle_color(GAME_W - self.width, 65, GAME_W, 64 - mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
+		
+		draw_rectangle_color(GAME_W - self.width,0 , GAME_W - self.width + mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
+		draw_rectangle_color(GAME_W,0 , GAME_W - mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
+		#endregion
+		
 		#region possible object selection
+		var _max_width = floor( self.width / 18)
 		for(var p = 0; p < array_length(self.tile_sprites); p++){
 			draw_sprite(spr_selection,0,(GAME_W - self.width) + 18 * (p mod _max_width), 
 			96 + 18 * floor(p / _max_width))
@@ -194,36 +277,32 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 			97 + 18 * floor(p / _max_width));
 		}
 		#endregion
-		self.draw_tilemap_selection();
-	}
-	
-	self.draw_save_button = function(){
-		if(1 == 0)
-			draw_sprite(spr_player_mask,0,0,0)
-	}
-	
-	self.draw_tilemap_selection = function(){
-		// draw the tileset itself
-		draw_sprite_part(self.tile_sprites[self.tileset], 0,
-		self.tilemap_scroll_x,self.tilemap_scroll_y,
-		self.width - 2,62, GAME_W - self.width + 1, 1);
-		//draw the reticle
-		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
-		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 - self.tilemap_scroll_x, 
-		0  + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 0, c_white, 0.9);
-		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
-		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 + 17 - self.tilemap_scroll_x, 
-		17 + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 180, c_white, 0.9);
 		
-		draw_rectangle_color(GAME_W - self.width, 0, GAME_W, mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
-		draw_rectangle_color(GAME_W - self.width, 65, GAME_W, 64 - mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
-		
-		draw_rectangle_color(GAME_W - self.width,0 , GAME_W - self.width + mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
-		draw_rectangle_color(GAME_W,0 , GAME_W - mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
+		#region buttons
+			draw_sprite(spr_editor_icons,0, GAME_W - self.width - 16,0);
+			draw_sprite(spr_editor_icons,7, GAME_W - self.width - 16,16);
+			draw_sprite(spr_editor_icons,1, GAME_W - self.width - 16,32);
+			draw_sprite(spr_editor_icons,2, GAME_W - self.width - 16,48);
+			draw_sprite(spr_editor_icons,3, GAME_W - self.width - 16,64);
+			if(self.tile_mirrored)
+				draw_sprite(spr_editor_icons,9, GAME_W - self.width - 16,80);//rotate
+			else
+				draw_sprite(spr_editor_icons,4, GAME_W - self.width - 16,80);//mirror
+			if(self.tile_flipped)
+				draw_sprite(spr_editor_icons,10, GAME_W - self.width - 16,96);//rotate
+			else
+				draw_sprite(spr_editor_icons,5, GAME_W - self.width - 16,96);//flip
+			if(self.tile_rotated)
+				draw_sprite(spr_editor_icons,11, GAME_W - self.width - 16,112);//rotate
+			else
+				draw_sprite(spr_editor_icons,6, GAME_W - self.width - 16,112);//rotate
+		#endregion
 	}
 	
 	self.save = function(){
-		var _sav = file_text_open_write(working_directory + self.map_name + ".mmxlv");// if the megaman maker crew complains about this i will shove my foot up their ass about it
+		var _sav = file_text_open_write(self.map_name + ".mmxlv");// if the megaman maker crew complains about this i will shove my foot up their ass about it
+		
+		
 		for(var h = 0; h < room_height / 16; h++){
 			for(var w = 0; w < room_width / 16; w++){
 				file_text_write_string(_sav, 
@@ -234,11 +313,15 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 			file_text_writeln(_sav);
 		}
 		file_text_close(_sav);
-		self.save_notification_timer = 60;
+		self.save_notification_timer = 180;
 	}
 	
 	self.load = function(){
-		var _sav = file_text_open_read(working_directory + self.map_name + ".mmxlv");// if the megaman maker crew complains about this i will shove my foot up their ass about it
+		var _sav = file_text_open_read(self.map_name + ".mmxlv");// if the megaman maker crew complains about this i will shove my foot up their ass about it
+		if(!file_exists(self.map_name + ".mmxlv")){
+			log("this file does not exist so i will now shit thyself")
+			return;
+		}
 		var _lvl = file_text_read_string(_sav);
 		_lvl = string_split(_lvl, "$%^&");// "$%^&" is the 'delimiter', which seperates the different parts of the level
 		// it would be better for me to have a smaller delimiter, because each character effectively multiplies file size
@@ -258,6 +341,5 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 			_lvl = string_split(_lvl, "$%^&");
 		}
 		file_text_close(_sav);
-		self.save_notification_timer = 60;
 	}
 }
