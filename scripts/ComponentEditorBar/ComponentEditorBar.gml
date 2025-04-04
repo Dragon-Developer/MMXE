@@ -1,5 +1,4 @@
 function ComponentEditorBar() : EntityComponentBase() constructor{
-	
 	/*
 		all todo's
 		
@@ -39,6 +38,9 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		self.physics = noone;
 		self.scrollbar_pos = 0;
 		self.tool = 0;// 0 = select, 1 = tile, 2 = object
+		self.mouse_select_padding = 2;
+		self.map_name = "undefined oof"
+		self.save_notification_timer = 0;
 	#endregion
 	#region Tileset Specific Information
 		self.current_tileset_name = "TILESET:";
@@ -47,6 +49,8 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		self.tile_sprites = [spr_tiles_engine_1, gate_tilesert];
 		self.tile_layers = [];
 		self.tile_placing = 0;
+		self.tilemap_scroll_x = 0;
+		self.tilemap_scroll_y = 0;
 	#endregion
 	#region Object Specific Information
 	#endregion
@@ -54,12 +58,14 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 	#endregion
 	
 	self.init = function(){
-		self.add_layer();
+		self.add_layer(0);
+		ini_open("temp_ini.ini");
+		ini_close();
 	}
-	self.add_layer = function(){
+	self.add_layer = function(_ts){
 		var _layer = layer_create(0, "layer " + string(array_length(self.tile_layers)))
 		array_push(tile_layers, _layer);
-		layer_tilemap_create(_layer,0,0,self.tile_options[tileset],room_width, room_height);
+		layer_tilemap_create(_layer,0,0,self.tile_options[_ts],room_width, room_height);
 	}
 	
 	self.step = function(){
@@ -91,7 +97,6 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 	self.tool_use = function(){
 		switch(self.tool){
 			case(0):
-				if(mouse_check_button_pressed(mb_left))
 					self.edit_tool();
 			break;
 			case(1):
@@ -99,14 +104,38 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 			case(2):
 			break;
 		}
+		if(keyboard_check(vk_control) && keyboard_check_pressed(ord("S")))
+			self.save();
+		if(keyboard_check_pressed(ord("L")))
+			self.load();
 	}
 	
 	self.edit_tool = function(){
 		var _id = layer_tilemap_get_id(self.tile_layers[tileset]);
 		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width){
 			var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
-			if(mouse_y < 65)
-				tile_placing = floor((_gui_mouse_x - (GAME_W - self.width)) / 16) + floor((mouse_y) / 16) * (sprite_get_width(self.tile_sprites[tileset]) / 16) 
+			var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
+			if(_gui_mouse_y< 65){
+				if(mouse_check_button_pressed(mb_left))
+					tile_placing = 
+					floor((_gui_mouse_x - (GAME_W - self.width) + self.tilemap_scroll_x) / 16) + 
+					floor((_gui_mouse_y + self.tilemap_scroll_y) / 16) * (sprite_get_width(self.tile_sprites[tileset]) / 16) 
+				
+				if(_gui_mouse_y > 63 - mouse_select_padding){
+					self.tilemap_scroll_y++;
+				} else if(_gui_mouse_y < mouse_select_padding){
+					self.tilemap_scroll_y--;
+				}
+				
+				if(_gui_mouse_x < GAME_W - self.width + mouse_select_padding + 1){
+					self.tilemap_scroll_x--;
+				} else if(_gui_mouse_x > GAME_W - mouse_select_padding - 1){
+					self.tilemap_scroll_x++;
+				}
+				self.tilemap_scroll_x = clamp(self.tilemap_scroll_x, 0, sprite_get_width(self.tile_sprites[tileset]) - self.width);
+				self.tilemap_scroll_y = clamp(self.tilemap_scroll_y, 0, sprite_get_height(self.tile_sprites[tileset]) - 64);
+				
+			}
 			//else
 				//change tileset. I need to make a new layer if this tileset doesnt exist, so changing tilesets should be a new method. 
 				/*
@@ -116,11 +145,14 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 					 - if the new tileset layer already exists, go to that one. 
 					 - change the tileset variable to the correct number
 				*/
+		} else {
+			if(mouse_check_button_pressed(mb_left)){
+				tilemap_set(_id, 
+				tile_placing, 
+				floor(mouse_x / 16), floor(mouse_y / 16));
+				tilemap_set_mask(_id, tile_index_mask);  // optional for flipping & turning tiles in the tilemap
+			}
 		}
-		tilemap_set(_id, 
-		tile_placing, 
-		floor(mouse_x / 16), floor(mouse_y / 16));
-		tilemap_set_mask(_id, tile_index_mask);  // optional for flipping & turning tiles in the tilemap
 	}
 
 	self.draw = function(){
@@ -131,8 +163,14 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 	}
 
 	self.draw_gui = function(){
+		if(self.save_notification_timer > 0){
+			draw_string("SAVED TO " + working_directory,0,0);
+			log("SAVED TO " + working_directory);
+			self.save_notification_timer--;
+		}
+		
 		//reticle
-		var _max_width =floor( self.width / 18)
+		var _max_width = floor( self.width / 18)
 		var _inst = self.get_instance();
 		//tool window
 		draw_rectangle(GAME_W - self.width,0,GAME_W, GAME_H, false);
@@ -140,6 +178,8 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		//tileset specific
 		draw_string(self.current_tileset_name, (GAME_W - self.width), 70);
 		draw_string(self.tile_placing, (GAME_W - self.width), 60);
+		draw_string((mouse_x - _inst.x + GAME_W / 2), 0,0);
+		draw_string((mouse_y - _inst.y + GAME_H / 2), 0,10);
 		draw_string(asset_get_name(self.tile_options[self.tileset]), (GAME_W - self.width), 80);
 		
 		#region possible object selection
@@ -157,17 +197,67 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		self.draw_tilemap_selection();
 	}
 	
+	self.draw_save_button = function(){
+		if(1 == 0)
+			draw_sprite(spr_player_mask,0,0,0)
+	}
+	
 	self.draw_tilemap_selection = function(){
-		// my original idea was to have a second viewport to draw, which would show the tileset
-		// but thinking about the way the mouse coords is gonna get fuckered up,
-		// i think i will stick to the main viewport
+		// draw the tileset itself
 		draw_sprite_part(self.tile_sprites[self.tileset], 0,
-		0,1,self.width - 2,62, GAME_W - self.width + 1, 1);
+		self.tilemap_scroll_x,self.tilemap_scroll_y,
+		self.width - 2,62, GAME_W - self.width + 1, 1);
+		//draw the reticle
 		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
-		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16, 
-		0  + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16, 1, 1, 0, c_white, 0.9);
+		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 - self.tilemap_scroll_x, 
+		0  + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 0, c_white, 0.9);
 		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
-		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 + 17, 
-		17 + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16, 1, 1, 180, c_white, 0.9);
+		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 + 17 - self.tilemap_scroll_x, 
+		17 + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 180, c_white, 0.9);
+		
+		draw_rectangle_color(GAME_W - self.width, 0, GAME_W, mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
+		draw_rectangle_color(GAME_W - self.width, 65, GAME_W, 64 - mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
+		
+		draw_rectangle_color(GAME_W - self.width,0 , GAME_W - self.width + mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
+		draw_rectangle_color(GAME_W,0 , GAME_W - mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
+	}
+	
+	self.save = function(){
+		var _sav = file_text_open_write(working_directory + self.map_name + ".mmxlv");// if the megaman maker crew complains about this i will shove my foot up their ass about it
+		for(var h = 0; h < room_height / 16; h++){
+			for(var w = 0; w < room_width / 16; w++){
+				file_text_write_string(_sav, 
+					tilemap_get(layer_tilemap_get_id(self.tile_layers[tileset]), w, h)
+				);
+				file_text_write_string(_sav, "$%^&");
+			}
+			file_text_writeln(_sav);
+		}
+		file_text_close(_sav);
+		self.save_notification_timer = 60;
+	}
+	
+	self.load = function(){
+		var _sav = file_text_open_read(working_directory + self.map_name + ".mmxlv");// if the megaman maker crew complains about this i will shove my foot up their ass about it
+		var _lvl = file_text_read_string(_sav);
+		_lvl = string_split(_lvl, "$%^&");// "$%^&" is the 'delimiter', which seperates the different parts of the level
+		// it would be better for me to have a smaller delimiter, because each character effectively multiplies file size
+		var _id = layer_tilemap_get_id(self.tile_layers[tileset]);
+		for(var h = 0; h < room_height / 16; h++){
+			for(var w = 0; w < room_width / 16; w++){
+				if(w < array_length(_lvl))
+					if(_lvl[w] != ""){
+						tilemap_set(_id, 
+						real(_lvl[w]), 
+						w,h);
+						tilemap_set_mask(_id, tile_index_mask);
+					}
+			}
+			file_text_readln(_sav);
+			var _lvl = file_text_read_string(_sav);
+			_lvl = string_split(_lvl, "$%^&");
+		}
+		file_text_close(_sav);
+		self.save_notification_timer = 60;
 	}
 }
