@@ -8,10 +8,10 @@ function PingManager() constructor {
     self.__min_input_delay = 1;
 
     // Maximum delay in frames for input actions
-    self.__max_input_delay = 10;
+    self.__max_input_delay = 100;
 
     // Threshold ping value after which maximum delay is applied
-    self.__ping_threshold = 166;  
+    self.__ping_threshold = 1660;  
 
     // List to store received ping values
     self.__ping_history = [];     

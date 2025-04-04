@@ -21,6 +21,13 @@ function GuiMainMenu() : GuiContainer() constructor {
 		parent.StageSelectContainer.setEnabled(true);
 	});
 	
+	buttonEdit = new GuiButton(160, 32, "Edit Level");
+	buttonEdit.addEventListener("click", function() { 
+		self.setEnabled(false);
+		global.game = new GameOffline();
+		parent.startEditor();
+	});
+	
 	buttonOnline = new GuiButton(160, 32, "Play Online");
 	buttonOnline.addEventListener("click", function() { 
 		self.setEnabled(false);
@@ -30,6 +37,6 @@ function GuiMainMenu() : GuiContainer() constructor {
     buttonOptions = new GuiButton(160, 32,"Options");
     buttonExit = new GuiButton(160, 32, "Exit"); 
     
-    mainContainer.addChild([buttonStart, buttonOnline, buttonOptions, buttonExit]);
+    mainContainer.addChild([buttonStart, buttonEdit, buttonOnline, buttonOptions, buttonExit]);
     addChild(mainContainer);
 }

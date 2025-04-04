@@ -40,6 +40,7 @@ function AnimationController(_character = "") constructor {
 	self.__collage = undefined;
 	self.__last_keyframe = -1;
 	self.__last_index = -1;
+	self.__wait_frames = 0;
 	static use_collage = function(_collage) {
 		self.__collage = _collage;
 		return self;
@@ -253,6 +254,10 @@ function AnimationController(_character = "") constructor {
 	/// @param {real} max_key
 	function __process_keyframes(_current_index, _speed, _loop_begin, _keyframes, _max_key) {
 	    var _key_progress = _current_index + _speed;
+		if (self.__wait_frames > 0) {
+			self.__wait_frames--;
+			_key_progress = _current_index;
+		}
 	    var _chosen_frame = 0;
 		var _len = array_length(_keyframes);
 	    if (_key_progress > _max_key) {
@@ -299,6 +304,10 @@ function AnimationController(_character = "") constructor {
 				_number = sprite_get_number(self.__sprite);
 			}
 			var _next = self.get_next_frame();
+			if (self.__wait_frames > 0) {
+				self.__wait_frames--;
+				_next = self.__index;
+			}
 	        self.__index = _next;
 	        if (self.__index >= _number) {
 	            self.__index = clamp(self.__index - _number + _loop_begin, _loop_begin, _number - 1);
@@ -461,6 +470,7 @@ function AnimationController(_character = "") constructor {
             self.__index = 0;
 			self.__last_keyframe = -1;
 			self.__last_index = -1;
+			self.__wait_frames = 1;
         }
         self.__animation = _animation;
         self.__sprite = self.get_sprite();
@@ -478,13 +488,7 @@ function AnimationController(_character = "") constructor {
 	
 	static play_at_loop = function(_animation, _reset = true) {
 		if (_animation == "") return;
-        if (self.__animation != _animation || _reset) {
-            self.__index = 0;
-			self.__last_keyframe = -1;
-			self.__last_index = -1;
-        }
-        self.__animation = _animation;
-        self.__sprite = self.get_sprite();
+        self.__sprite = self.get_sprite(_animation);
 		var _props = self.get_props(_animation);
 		if (is_undefined(_props)) return;
 		var _keyframe_mode = struct_exists(_props, "keyframes") && is_array(_props.keyframes) && array_length(_props.keyframes) > 0;
@@ -494,6 +498,13 @@ function AnimationController(_character = "") constructor {
 			max_key: struct_exists(_props, "max_key") ? _props.max_key : undefined,
 			loop_begin: struct_exists(_props, "loop_begin") ? _props.loop_begin : 0
 		}
+		if (self.__animation != _animation || _reset) {
+            self.__index = 0;
+			self.__last_keyframe = -1;
+			self.__last_index = -1;
+			self.__wait_frames = 1;
+        }
+        self.__animation = _animation;
 		self.__index = self.__current_animation.loop_begin;
 		return self;
     }

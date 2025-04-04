@@ -12,6 +12,7 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 	self.on_register = function() {
 		self.subscribe("target_set", function(_target) {
 			self.target = _target;
+			_target.components.publish("camera_set", self);
 		});
 	}
 	
@@ -59,6 +60,10 @@ function EntityComponentCamera() : EntityComponentBase() constructor {
 		} else {
 			camera_set_view_pos(self.camera, _cam_x, _cam_y);
 		}
+	}
+	
+	self.set_target = function(_target){
+		self.target = _target;
 	}
 	
 	self.init = function() {

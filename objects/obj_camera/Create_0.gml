@@ -1,5 +1,8 @@
 event_inherited();
 
-components.add(EntityComponentCamera);
+components.add([
+	EntityComponentCamera,
+	EntityComponentCameraRecorder
+]);
 
 components.init();

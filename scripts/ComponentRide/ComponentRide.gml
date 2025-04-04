@@ -28,6 +28,8 @@ function ComponentRide() : EntityComponentPlayerMove() constructor{
 		}
 		
 		if(self.pilot != noone){
+			self.pilot.x = self.get_instance().x;
+			self.pilot.y = self.get_instance().y - 21;
 			if(self.input.get_input_pressed("jump") && self.input.get_input("up")){
 				self.pilot.components.publish("exit_ride", true);
 				self.input = new EntityComponentPlayerInput();
