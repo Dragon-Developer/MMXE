@@ -47,10 +47,11 @@ function GuiText(_text) : GuiBase() constructor {
 		if (!enabled) return;
 		if (!visible) return;
 		var _pos = getDrawPosition();
-        draw_set_font(font);
-		draw_set_halign(fa_left);
-		draw_set_valign(fa_top);
-        draw_text_color(floor(_pos.x), floor(_pos.y), text, color, color, color, color, alpha);
+        //draw_set_font(font);
+		//draw_set_halign(fa_left);
+		//draw_set_valign(fa_top);
+        //draw_text_color(floor(_pos.x), floor(_pos.y), text, color, color, color, color, alpha);
+		draw_string_condensed(text, floor(_pos.x), floor(_pos.y) + 4)
 		var _copy = string_copy(text, 1, __cursorPosition);
 		var _pos_offset = string_width(_copy);
 		if (__cursorVisible) {

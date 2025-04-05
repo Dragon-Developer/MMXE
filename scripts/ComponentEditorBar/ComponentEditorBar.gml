@@ -31,6 +31,13 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 						-scale
 						-rotation
 						-what object it is
+			-.mmxlv
+				-we dont need 2 seperate files. i already fixed that issue
+				-level data, then object data
+					-need to select a delimiter. keep in mind the file size is multiplied by each 
+						character in the delimiter because the delimiters are used to seperate
+						everything in the level data
+							-could be #x#. this looks too much like uwu. i heavily dislike uwu.
 	*/
 	#endregion
 	
@@ -38,7 +45,7 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		self.width = 96;
 		self.physics = noone;
 		self.scrollbar_pos = 0;
-		self.tool = 0;// 0 = select, 1 = tile, 2 = object
+		self.tool = false; //false = tile, true = object. no selecting needed, i can do that via object
 		self.mouse_select_padding = 2;
 		self.map_name = "undefined oof"
 		self.save_notification_timer = 0;
@@ -57,8 +64,11 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		self.tile_rotated = false;
 	#endregion
 	#region Object Specific Information
-	#endregion
-	#region Selection Specific Information
+		self.objects = [];// every single object. will probably place an object limit. 
+		self.current_object = 0;
+		self.object_options = [obj_player_spawner, obj_square_16];// the objects the player can select
+		// i shouldnt need a fuckton of variables for objects. you select the object, it holds
+		// all of it's data that it needs, and this script doesnt hold it outside of local vars
 	#endregion
 	
 	self.init = function(){
@@ -104,8 +114,6 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 					self.tile_tool();
 			break;
 			case(1):
-			break;
-			case(2):
 			break;
 		}
 		if(keyboard_check(vk_control) && keyboard_check_pressed(ord("S")))
@@ -169,15 +177,6 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 					self.tile_rotated = !self.tile_rotated;
 				}
 			}
-			//else
-				//change tileset. I need to make a new layer if this tileset doesnt exist, so changing tilesets should be a new method. 
-				/*
-					things change_tileset needs to do:
-					 - change the active tileset layer
-					 - if the new tileset layer does not exist or the array for tileset layers is too chunky, get a new layer
-					 - if the new tileset layer already exists, go to that one. 
-					 - change the tileset variable to the correct number
-				*/
 		} else {
 			if(mouse_check_button_pressed(mb_right)){
 				tilemap_set(_id, 
@@ -219,8 +218,11 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 	}
 
 	self.draw_gui = function(){
+		var _inst = self.get_instance();
+		draw_string((mouse_x - _inst.x + GAME_W / 2), 0,0);
+		draw_string((mouse_y - _inst.y + GAME_H / 2), 0,10);
 		if(self.save_notification_timer > 0){
-			draw_string("SAVED TO " + working_directory,0,20);
+			draw_string_condensed("SAVED TO " + working_directory,0,20);
 			self.save_notification_timer--;
 		}
 		//tool window
@@ -233,11 +235,11 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 	self.draw_tilemap_selection = function(){
 		var _inst = self.get_instance();
 		
-		draw_string(self.current_tileset_name, (GAME_W - self.width), 70);
-		draw_string(self.tile_placing, (GAME_W - self.width), 60);
-		draw_string((mouse_x - _inst.x + GAME_W / 2), 0,0);
-		draw_string((mouse_y - _inst.y + GAME_H / 2), 0,10);
-		draw_string(asset_get_name(self.tile_options[self.tileset]), (GAME_W - self.width), 80);
+		draw_sprite(spr_selection,0,GAME_W - (self.width / 2) - 9, 69);// no this is not a funny number
+		draw_sprite_part(self.tile_sprites[self.tileset],0,
+		self.tile_placing mod floor(sprite_get_width(self.tile_sprites[self.tileset]) / 16),
+		floor(self.tile_placing / sprite_get_width(self.tile_sprites[self.tileset]) / 16),
+		16,16,GAME_W - (self.width / 2) - 8,70)
 		
 		#region tilemap selection
 		// draw the tileset itself
@@ -257,16 +259,18 @@ function ComponentEditorBar() : EntityComponentBase() constructor{
 		draw_sprite_ext(spr_grid,0, GAME_W - self.width + 
 		(self.tile_placing mod (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16 + 17 - self.tilemap_scroll_x, 
 		17 + floor((self.tile_placing / sprite_get_width(self.tile_sprites[tileset])) * 16)*16 - self.tilemap_scroll_y, 1, 1, 180, c_white, 0.9);
-		draw_rectangle_color(GAME_W - self.width, 0, GAME_W, mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
+		
+		draw_rectangle_color(GAME_W - self.width, 0, GAME_W, mouse_select_padding - 1, c_orange, c_orange, c_orange, c_orange,false);
 		draw_rectangle_color(GAME_W - self.width, 65, GAME_W, 64 - mouse_select_padding, c_orange, c_orange, c_orange, c_orange,false);
 		
-		draw_rectangle_color(GAME_W - self.width,0 , GAME_W - self.width + mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
-		draw_rectangle_color(GAME_W,0 , GAME_W - mouse_select_padding, 64, c_orange, c_orange, c_orange, c_orange,false);
+		draw_rectangle_color(GAME_W - self.width,0 , GAME_W - self.width + mouse_select_padding - 1, 64, c_orange, c_orange, c_orange, c_orange,false);
+		draw_rectangle_color(GAME_W,0 , GAME_W - mouse_select_padding - 1, 64, c_orange, c_orange, c_orange, c_orange,false);
 		#endregion
 		
 		#region possible object selection
 		var _max_width = floor( self.width / 18)
 		for(var p = 0; p < array_length(self.tile_sprites); p++){
+			if(p == self.tileset)
 			draw_sprite(spr_selection,0,(GAME_W - self.width) + 18 * (p mod _max_width), 
 			96 + 18 * floor(p / _max_width))
 			draw_sprite_part(self.tile_sprites[p], 0,
