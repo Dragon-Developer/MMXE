@@ -24,18 +24,18 @@ function NET_GameRollback() : NET_GameBase() constructor {
 			frame: _frame
 		});
 	}
-	static save_state = function() {
+	self.save_state = function() {
 		self.__last_confirmed_frame = self.__current_frame;
 		self.game_loop.save_state();
 	}
-	static load_state = function() {
+	self.load_state = function() {
 		self.game_loop.load_state();
 	}
-	static roll_forward = function() {
+	self.roll_forward = function() {
 		var _desired_frame = self.__current_frame;	
 		self.__current_frame = self.__last_confirmed_frame;
 		self.__mode = NET_ROLLBACK_MODE.NORMAL;	
-		while (self.__current_frame < _desired_frame) {
+		while (self.__current_frame < _desired_frame - 1) {
 			if (self.__mode == NET_ROLLBACK_MODE.NORMAL && !self.inputs.canContinue(self.__current_frame)) {
 				self.save_state();
 				self.__mode = NET_ROLLBACK_MODE.PREDICTING;	
@@ -44,31 +44,22 @@ function NET_GameRollback() : NET_GameBase() constructor {
 		}
 	}
 	self.add_input = function(_frame, _player_index, _input) {
+		//if (_frame < self.__current_frame) return;
 		var _last_input = self.inputs.getLastInput(_player_index);
 		if (!is_undefined(_last_input) && self.__current_frame > _frame && !self.inputs.isInputEqual(_last_input, _input)) {
 			self.__mode = NET_ROLLBACK_MODE.ROLLBACK;
 		}
 		return self.inputs.addInput(_frame, _player_index, _input);
 	}
-	/*
-	static addLocalInput = function() {
-		self.currentInput = self.inputs.inputJoin(self.currentInput, self.getLocalInput());
-		if (self.lastInputFrame - self.currentFrame >= self.inputDelay) return;
-		var _input = self.currentInput;
-		self.lastInputFrame++;
-		self.inputs.addInput(self.lastInputFrame, self.playerIndex, _input);
-		self.sendInput(self.lastInputFrame, _input);
-		self.currentInput = self.inputs.getEmptyInput();
-	}*/
 	self.start = function() {
 		NET_GameWrapper.add(self);
 		self.__started = true;
 		self.save_state();
 		self.add_local_input();
 	}
-	static advance_frame = function() {
+	self.advance_frame = function() {
 		if (self.__mode == NET_ROLLBACK_MODE.NORMAL) {
-			self.inputs.deleteFramesUntil(self.__current_frame - 2);
+			self.inputs.deleteFramesUntil(self.__current_frame - 10);
 		}
 		self.run_current_frame();
 		self.__current_frame++;
@@ -89,12 +80,13 @@ function NET_GameRollback() : NET_GameBase() constructor {
 		}
 		if (self.__mode == NET_ROLLBACK_MODE.NORMAL && !self.inputs.canContinue(self.__current_frame)) {
 			self.save_state();
-			self.__mode = NET_ROLLBACK_MODE.PREDICTING;	
+			self.__mode = NET_ROLLBACK_MODE.PREDICTING;
 		}
 		if (self.__mode == NET_ROLLBACK_MODE.PREDICTING && (self.__current_frame - self.__last_confirmed_frame) > self.__max_predicted_frames) {
-			self.__waiting_frames++;
+			//self.__waiting_frames++;
+			self.__mode = NET_ROLLBACK_MODE.LOCKED;
 		}
-		if (self.__mode != NET_ROLLBACK_MODE.LOCKED) {
+		else if (self.__mode != NET_ROLLBACK_MODE.LOCKED) {
 			self.advance_frame();
 		}
 		self.add_local_input();

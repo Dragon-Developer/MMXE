@@ -58,11 +58,16 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	serializer = new NET_Serializer();
 	serializer
+		.addVariable("__initState")
 		.addVariable("__currEvent")
 		.addVariable("__tempEvent")
 		.addVariable("__parent")
+		.addVariable("__parent")
 		.addClone("__childQueue")
 		.addVariable("__stateStartTime")
+		.addVariable("__history")
+		.addVariable("__historyMaxSize")
+		.addVariable("__historyEnabled")
 		.addClone("__history")
 	
 	// Add .on() events

@@ -16,8 +16,8 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 			speed: 1.75,	
 		},
 		dash: {
-			speed: 4,	
-			interval: 40
+			speed: 3.5,	
+			interval: 32
 		},
 		jump: {
 			strength: 1363/256
@@ -33,6 +33,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.addVariable("dash_dir")
 		.addVariable("dash_jump")
 		.addVariable("dash_tapped")
+		.addCustom("double_tap")
 		.addCustom("fsm");
 	
 	// Finite State Machine initialization
@@ -287,8 +288,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 	// Initialization
 	self.init = function() {
 		self.fsm.trigger("t_init");
-		view_set_wport(0,32);
-		view_set_hport(0,32);
+
 	}
 	
 	// Sets the player's horizontal movement based on direction

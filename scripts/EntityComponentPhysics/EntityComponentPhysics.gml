@@ -94,7 +94,7 @@ function EntityComponentPhysics() : EntityComponentPhysicsBase() constructor {
 		self.move_step(self.velocity);
 		self.velocity = self.velocity.add(self.grav);
 		
-		if(self.get_vspd() > self.terminal_velocity){
+		if (self.get_vspd() > self.terminal_velocity){
 			self.set_vspd(self.terminal_velocity);
 		}
 		
