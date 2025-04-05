@@ -4,7 +4,7 @@ function GuiButton(_width = 0, _height = 0, _child = []) : GuiContainer() constr
 	setText = function(_child) {
 		addChild(_child);
 	}
-	setBorderSprite(spr_gui_panel_border);
+	setBorderSprite(spr_button_bounding);
 	setSize(_width, _height);
 	setFlexDirection("row");
 	setJustifyContent("space-evenly");
