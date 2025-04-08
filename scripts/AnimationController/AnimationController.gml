@@ -44,6 +44,7 @@ function AnimationController(_character = "") constructor {
 	
 	self.serializer = new NET_Serializer();
 	self.serializer
+		.addVariable("__animation")
 		.addVariable("__sprite")
 		.addVariable("__index")
 		.addVariable("__frame")

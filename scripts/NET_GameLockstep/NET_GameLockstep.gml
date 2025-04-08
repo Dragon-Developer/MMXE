@@ -1,5 +1,5 @@
 function NET_GameLockstep() : NET_GameBase() constructor {
-	self.__ping_manager = new PingManager();
+	self.__ping_manager = new NET_PingManager();
 	self.__last_input_frame = -1;
 	self.__input_delay = 10;
 	self.__running = false;

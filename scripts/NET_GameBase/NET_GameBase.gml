@@ -137,4 +137,10 @@ function NET_GameBase() constructor {
 		self.__started = true;	
 		NET_GameWrapper.add(self);
 	}
+	/**
+     * Check if game is running normally (not predicting).
+     */
+	static on_normal = function() {
+		return true;	
+	}
 }

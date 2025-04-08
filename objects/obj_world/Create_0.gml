@@ -1,5 +1,5 @@
 event_inherited();
 
-components.add(EntityComponentWorld);
+components.add(ComponentWorld);
 
 components.init();

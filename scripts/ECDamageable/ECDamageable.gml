@@ -1,4 +1,4 @@
-function ECDamageable() : EntityComponentBase() constructor{
+function ECDamageable() : ComponentBase() constructor{
 	self.hp = 1;
 	self.damage_rate = 1;
 	self.combo_counter = 0;// for zero series comboing.
@@ -14,7 +14,7 @@ function ECDamageable() : EntityComponentBase() constructor{
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			// this class doesnt need input because you cant move while damaged
-			self.physics = self.parent.find("physics") ?? new EntityComponentPhysicsBase();
+			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 		});
 	}
 }

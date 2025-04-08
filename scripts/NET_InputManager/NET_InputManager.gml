@@ -3,13 +3,40 @@ function NET_InputManager() constructor {
 	self.totalPlayers = 2;
 	self.lastInput = {};
 	self.keys = [];
+	static getFormattedInputs = function(_frame) {
+		var _raw_inputs = self.getAll(_frame);
+		var _formatted_inputs = array_create(self.totalPlayers);
+
+		for (var _i = 0; _i < self.totalPlayers; _i++) {
+			var _keys_true = [];
+			var _input_struct = _raw_inputs[_i];
+			var _keys = variable_struct_get_names(_input_struct);
+			var _count = array_length(_keys);
+			for (var _j = 0; _j < _count; _j++) {
+				var _key = _keys[_j];
+				if (_input_struct[$ _key]) {
+					array_push(_keys_true, _key);
+				}
+			}
+			_formatted_inputs[_i] = _keys_true;
+		}
+		return _formatted_inputs;
+	}
+
+	static getAll = function(_frame) {
+		var _inputs = [];
+		for (var _i = 0; _i < self.totalPlayers; _i++) {
+			array_push(_inputs, variable_clone(self.getInput(_frame, _i)));
+		}
+		return _inputs;
+	}
 	static setKeys = function(_keys) {
 		self.keys = _keys;	
 	}
 	static getKeys = function() {
 		return self.keys;	
 	}
-	self.getLocal = function(_index) {
+	static getLocal = function(_index) {
 		return {};	
 	};
 	static fromBinary = function(_binary) {
@@ -70,7 +97,7 @@ function NET_InputManager() constructor {
 			}
 			return self.getEmptyInput();
 		}
-		return self.frameInput[$ _frame][$ _player_index];
+		return variable_clone(self.frameInput[$ _frame][$ _player_index]);
 	}
 	static hasInput = function(_frame, _player_index) {
 		return 
@@ -78,7 +105,7 @@ function NET_InputManager() constructor {
 			struct_exists(self.frameInput[$ _frame], _player_index);
 	}
 	static getLastInput = function(_player_index) {
-		return self.lastInput[$ _player_index];
+		return variable_clone(self.lastInput[$ _player_index]);
 	}
 	static addInput = function(_frame, _player_index, _input) {
 		if (!struct_exists(self.frameInput, _frame)) {

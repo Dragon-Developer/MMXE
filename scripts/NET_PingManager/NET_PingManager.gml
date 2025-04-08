@@ -3,7 +3,7 @@
  * dynamic input delay based on the average ping.
  * It stores ping history and uses it to determine an appropriate delay for input actions.
  */
-function PingManager() constructor {
+function NET_PingManager() constructor {
     // Minimum delay in frames for input actions
     self.__min_input_delay = 1;
 
@@ -17,10 +17,14 @@ function PingManager() constructor {
     self.__ping_history = [];     
 	
 	// Input delay Offset for calculation
-	self.__input_delay_offset = 1;
+	self.__offset = 1;
 
     // Maximum number of pings to store in the history for delay calculation
     self.__max_ping_history = 10; 
+
+	static set_offset = function(_offset) {
+		self.__offset = _offset;
+	}
 
 	/**
 	 * Calculates the dynamic input delay based on the average ping in the history.
@@ -33,7 +37,7 @@ function PingManager() constructor {
 	    if (array_length(self.__ping_history) == 0) {
 	        return self.__min_input_delay;
 	    }
-
+		
 	    // Calculate the median ping (in milliseconds)
 		var _base_ping = array_median(self.__ping_history);
 		
@@ -42,7 +46,7 @@ function PingManager() constructor {
 
 	    // Ensure the delay is within the acceptable range (min and max delay in frames)
 		var _result = clamp(_dynamic_delay_in_frames, self.__min_input_delay, self.__max_input_delay);
-	    return self.__input_delay_offset + floor(_result);
+	    return self.__offset + floor(_result);
 	};
 
 	/**

@@ -9,7 +9,7 @@
 event_inherited();
 
 components.add([
-	EntityComponentAnimation
+	ComponentAnimation
 	]);
 
 components.init();

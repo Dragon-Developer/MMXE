@@ -2,9 +2,9 @@ event_inherited();
 
 components.add([
 	ComponentRide,
-	EntityComponentPhysics,
-	EntityComponentAnimation,
-	EntityComponentMask
+	ComponentPhysics,
+	ComponentAnimation,
+	ComponentMask
 ]);
 
 components.init();
