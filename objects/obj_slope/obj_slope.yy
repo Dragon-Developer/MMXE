@@ -1,7 +1,9 @@
 {
   "$GMObject":"",
   "%Name":"obj_slope",
-  "eventList":[],
+  "eventList":[
+    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
   "name":"obj_slope",
   "overriddenProperties":[],
@@ -9,7 +11,10 @@
     "name":"Blocks",
     "path":"folders/Objects/Blocks.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_square_16",
+    "path":"objects/obj_square_16/obj_square_16.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -27,7 +32,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"Sprite20",
+    "path":"sprites/Sprite20/Sprite20.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

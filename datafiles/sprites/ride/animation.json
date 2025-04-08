@@ -1,0 +1,652 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 64,
+        "y": 85
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          "",
+          "shoot"
+        ],
+        [
+          "",
+          "x1",
+          "x2",
+          "x3",
+          "falcon",
+          "ult"
+        ],
+        [
+          "",
+          "legs",
+          "body",
+          "arms",
+          "helm"
+        ]
+      ],
+      "list": [
+        {
+          "name": "armor_x1_activated_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "armor_x1_walk_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "armor_x1_dash_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "armor_x1_jump_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "idle",
+          "properties": {
+            "action": "armor_x1_activated_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "critical",
+          "properties": {
+            "action": "idle",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "walk",
+          "properties": {
+            "action": "armor_x1_walk_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 8,
+                "frame": 3
+              },
+              {
+                "key": 11,
+                "frame": 4
+              },
+              {
+                "key": 14,
+                "frame": 5
+              },
+              {
+                "key": 17,
+                "frame": 6
+              },
+              {
+                "key": 19,
+                "frame": 7
+              },
+              {
+                "key": 21,
+                "frame": 8
+              },
+              {
+                "key": 24,
+                "frame": 9
+              },
+              {
+                "key": 27,
+                "frame": 10
+              },
+              {
+                "key": 30,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "jump",
+          "properties": {
+            "action": "armor_x1_jump_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 7,
+                "frame": 2
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "fall",
+          "properties": {
+            "action": "armor_x1_jump_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 7,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "land",
+          "properties": {
+            "action": "armor_x1_jump_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              },
+              {
+                "key": 2,
+                "frame": 6
+              },
+              {
+                "key": 3,
+                "frame": 6
+              }
+            ]
+          }
+        },
+        {
+          "name": "select",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "saber",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 7,
+                "frame": 4
+              },
+              {
+                "key": 9,
+                "frame": 5
+              },
+              {
+                "key": 11,
+                "frame": 6
+              },
+              {
+                "key": 13,
+                "frame": 7
+              },
+              {
+                "key": 15,
+                "frame": 8
+              },
+              {
+                "key": 17,
+                "frame": 9
+              },
+              {
+                "key": 21,
+                "frame": 10
+              },
+              {
+                "key": 37,
+                "frame": 9
+              },
+              {
+                "key": 40,
+                "frame": 2
+              },
+              {
+                "key": 43,
+                "frame": 1
+              },
+              {
+                "key": 51,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 7,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 11,
+                "frame": 4
+              },
+              {
+                "key": 13,
+                "frame": 5
+              },
+              {
+                "key": 15,
+                "frame": 6
+              },
+              {
+                "key": 18,
+                "frame": 7
+              },
+              {
+                "key": 21,
+                "frame": 8
+              },
+              {
+                "key": 60,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 7,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 11,
+                "frame": 4
+              },
+              {
+                "key": 13,
+                "frame": 5
+              },
+              {
+                "key": 15,
+                "frame": 6
+              },
+              {
+                "key": 18,
+                "frame": 7
+              },
+              {
+                "key": 21,
+                "frame": 8
+              },
+              {
+                "key": 60,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "complete",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 57,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "outro",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 8,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro2_end",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              },
+              {
+                "key": 29,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash",
+          "properties": {
+            "action": "armor_x1_dash_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "dash_end",
+          "properties": {
+            "action": "armor_x1_dash_1",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "wall_slide",
+          "properties": {
+            "action": "wall",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              }
+            ],
+            "loop_begin": 6
+          }
+        },
+        {
+          "name": "wall_jump",
+          "properties": {
+            "action": "wall",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 3,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "shoot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 4
+          }
+        },
+        {
+          "name": "hurt",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 13,
+                "frame": 6
+              },
+              {
+                "key": 15,
+                "frame": 7
+              },
+              {
+                "key": 17,
+                "frame": 8
+              },
+              {
+                "key": 21,
+                "frame": 9
+              },
+              {
+                "key": 22,
+                "frame": 1
+              },
+              {
+                "key": 30,
+                "frame": 0
+              },
+              {
+                "key": 32,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "death",
+          "properties": {
+            "action": "dolor",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "crouch",
+          "properties": {
+            "action": "idle",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 2
+          }
+        },
+        {
+          "name": "crouch_end",
+          "properties": {
+            "action": "crouch",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

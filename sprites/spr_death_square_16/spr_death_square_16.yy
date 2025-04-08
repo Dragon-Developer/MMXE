@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Square",
-    "path":"folders/Sprites/Blocks/Square.yy",
+    "name":"Editor",
+    "path":"folders/Sprites/Editor.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

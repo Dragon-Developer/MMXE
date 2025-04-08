@@ -1,22 +1,20 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function ECDamageable() : EntityComponentBase() constructor{
+function ECDamageable() : ComponentBase() constructor{
 	self.hp = 1;
-	self.damage_rate = 1;// any damage is multiplied by this. armors would set this to 0.5, for example
+	self.damage_rate = 1;
+	self.combo_counter = 0;// for zero series comboing.
+	self.invuln_timer = 0;// im sure dark is going to replace this with something like v1's system
+	/*
+	basically, projectiles have a combo number. if this combo number is below the combo counter,
+	then the projectile can deal damage without giving a shit about invulnerability frames. 
+	regular lemons would only have a combo counter of 0, so you can't deal extra damage. 
 	
-	self.take_damage = function(_source, _damage){//could probably make this into a single local variable
-		self.hp -= _damage * self.damage_rate;
-		self.hp = max(self.hp, 0);
-		self.publish("damaged");
-	}
+	combo counter is reset when invulnerability wears off
+	*/
+	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
-			self.physics = self.parent.find("physics") ?? new EntityComponentPhysicsBase();
+			// this class doesnt need input because you cant move while damaged
+			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 		});
-	}
-	
-	self.step = function(){
-		//detect if there is a collision with another entity. 
-		//should get physics to use it's collision detection
 	}
 }

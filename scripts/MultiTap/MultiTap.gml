@@ -4,6 +4,14 @@ function MultiTap() constructor {
 	self.timer = 0;
 	self.enabled = false;
 	self.tapCount = 0;
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addVariable("currentKey")
+		.addVariable("minInterval")
+		.addVariable("timer")
+		.addVariable("enabled")
+		.addVariable("tapCount")
+	
 	self.onPressed = function(_key, _count) {}
 	static pressed = function(_key) {
 		if (!is_undefined(self.currentKey) && self.currentKey != _key) {

@@ -18,8 +18,8 @@
   "resourceType":"GMTileSet",
   "resourceVersion":"2.0",
   "spriteId":{
-    "name":"spr_tileset_2",
-    "path":"sprites/spr_tileset_2/spr_tileset_2.yy",
+    "name":"spr_tiles_generic",
+    "path":"sprites/spr_tiles_generic/spr_tiles_generic.yy",
   },
   "spriteNoExport":false,
   "textureGroupId":{

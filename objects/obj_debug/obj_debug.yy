@@ -9,8 +9,8 @@
   "name":"obj_debug",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"ECS",
+    "path":"folders/Objects/ECS.yy",
   },
   "parentObjectId":null,
   "persistent":true,

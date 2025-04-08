@@ -1,11 +1,12 @@
 event_inherited();
 
 components.add([
-	EntityComponentPlayerInput,
-	EntityComponentPlayerMove,
-	EntityComponentPhysics,
-	EntityComponentAnimation,
-	EntityComponentMask
+	ComponentInstance,
+	ComponentPlayerInput,
+	ComponentPlayerMove,
+	ComponentPhysics,
+	ComponentAnimation,
+	ComponentMask
 ]);
 
 components.init();
