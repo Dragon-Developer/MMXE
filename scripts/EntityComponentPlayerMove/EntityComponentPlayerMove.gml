@@ -211,7 +211,7 @@ function EntityComponentPlayerMove() : EntityComponentBase() constructor {
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir);; })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
-		.add_transition("t_transition", "wall_jump", "fall", function() { return self.check_wall_jump_end(); })
+		.add_transition("t_transition", "wall_jump", "fall", function() { return self.check_wall_jump_end() || self.physics.is_on_ceil() })
 		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
 		.add_transition("t_jump", "wall_slide", "wall_jump")
 		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })

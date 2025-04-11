@@ -20,6 +20,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(EntityComponentCamera, _step);
 		ENTITIES.for_each_component(ComponentRide, _step);
 		ENTITIES.for_each_component(ComponentEditorBar, _step);
+		ENTITIES.for_each_component(ComponentDialouge, _step);
 		ENTITIES.for_each_component(EntityComponentCameraRecorder, _step);
 	}
 	self.step = function() {
@@ -32,7 +33,11 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	}
 	self.draw_gui = function() {
 		var _draw_gui = function(_component) { _component.draw_gui(); };
+		
+		// some things use the draw_gui function regardless of debug
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
+		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
+		
 		if(!self.debug) return;
 		
 		ENTITIES.for_each_component(EntityComponentPlayerMove, _draw_gui);

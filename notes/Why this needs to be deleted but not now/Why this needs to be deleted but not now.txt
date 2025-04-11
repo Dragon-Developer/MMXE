@@ -1,0 +1,3 @@
+This folder holds graphics that forte, or any other development team member, did not want to use the
+collage system to add in. this folder needs cleaning because the end goal is to use collage as much as
+possible because its way more usable than the ingame sprites (external editors can actually edit graphics!)

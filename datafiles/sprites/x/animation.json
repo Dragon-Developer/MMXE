@@ -696,6 +696,20 @@
               }
             ]
           }
+        },{
+          "name": "mugshot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 0
+              }
+            ]
+          }
         }
       ]
     }

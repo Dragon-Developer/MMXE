@@ -58,5 +58,6 @@ function string_get_text_length(_string){
 		else
 			_xx += 8;
 	}
+	//log("The string is " + string(_xx) + " pixels wide")
 	return _xx;
 }
