@@ -1,10 +1,10 @@
-function GameClient(_ip, _port) : NET_UdpSocketRAW(_ip, _port) constructor {
+function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
+	//self.enableConnectionMode();
 	input_source_set(INPUT_KEYBOARD, 1);
 	global.local_player_index = 1;
 	global.game.add_event_listener("input_local", function(_data) {
 		self.inputRpc.sendInput(0, _data.frame, _data.inputs[0]);
 	});
-	self.enableConnectionMode();
 	self.started = false;
 	self.inputRpc = new InputRpc(false);
 	self.pingRpc = new PingRpc();

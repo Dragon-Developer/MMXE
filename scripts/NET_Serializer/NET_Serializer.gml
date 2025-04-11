@@ -1,6 +1,9 @@
-function NET_Serializer() constructor {
-	self.owner = other;
+function NET_Serializer(_owner = other) constructor {
+	self.owner = _owner;
 	self.variables = [];
+	static setOwner = function(_owner) {
+		self.owner = _owner;	
+	}
 	static addVariable = function(_variable) {
 		array_push(self.variables, new NET_SerializerVariable(self.owner, _variable));
 		return self;

@@ -116,10 +116,14 @@ function EntityManager() constructor {
      */
 	static find = function(_tags) {
 		for (var i = 0; i < array_length(self.__instances); i++) {
-			if (self.__instances[i].components.find(_tags)) return self.__instances[i];
+			var _inst = self.__instances[i];
+			if (asset_has_tags(_inst.object_index, _tags, asset_object)) {
+				return _inst;
+			}
 		}
 		return undefined;
 	};
+
 
     /**
      * Returns all instances that have the specified tags.
@@ -129,10 +133,14 @@ function EntityManager() constructor {
 	static find_all = function(_tags) {
 		var _results = [];
 		for (var i = 0; i < array_length(self.__instances); i++) {
-			if (self.__instances[i].components.find(_tags)) array_push(_results, self.__instances[i]);
+			var _inst = self.__instances[i];
+			if (asset_has_tags(_inst.object_index, _tags, asset_object)) {
+				array_push(_results, _inst);
+			}
 		}
 		return _results;
 	};
+
 
     /**
      * Publishes an event to all instances.
@@ -173,5 +181,15 @@ function EntityManager() constructor {
 		array_foreach(_instances, method({ value: _value }, function(_inst) {
 			_inst.components.pause(value);
 		}));
+	}
+	static save = function() {
+		array_foreach(self.__instances, function(_inst) {
+			_inst.components.save();
+		});
+	}
+	static load = function() {
+		array_foreach(self.__instances, function(_inst) {
+			_inst.components.load();
+		});
 	}
 }

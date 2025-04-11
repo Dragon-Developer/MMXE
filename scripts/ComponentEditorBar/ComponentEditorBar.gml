@@ -1,4 +1,4 @@
-function ComponentEditorBar() : EntityComponentBase() constructor{
+function ComponentEditorBar() : ComponentBase() constructor{
 	#region checklist
 	/*
 		all todo's

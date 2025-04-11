@@ -1,4 +1,4 @@
-function ComponentRide() : EntityComponentPlayerMove() constructor{
+function ComponentRide() : ComponentPlayerMove() constructor{
 	self.pilot = noone;
 	self.ride_cooldown = 0;
 	self.states = {
@@ -32,7 +32,7 @@ function ComponentRide() : EntityComponentPlayerMove() constructor{
 			self.pilot.y = self.get_instance().y - 21;
 			if(self.input.get_input_pressed("jump") && self.input.get_input("up")){
 				self.pilot.components.publish("exit_ride", true);
-				self.input = new EntityComponentPlayerInput();
+				self.input = new ComponentPlayerInput();
 				self.pilot = noone;
 				self.ride_cooldown = 15;
 			}

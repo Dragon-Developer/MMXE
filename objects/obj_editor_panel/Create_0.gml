@@ -1,9 +1,9 @@
 event_inherited();
 
 components.add([
-	EntityComponentAnimation,
-	EntityComponentMask,
-	EntityComponentCamera,
+	ComponentAnimation,
+	ComponentMask,
+	ComponentCamera,
 	ComponentEditorBar
 	]);
 

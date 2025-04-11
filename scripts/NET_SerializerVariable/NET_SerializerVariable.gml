@@ -1,4 +1,4 @@
-#macro GM_NETCODE_SERIALIZER_HASH_ENABLED false
+#macro GM_NETCODE_SERIALIZER_HASH_ENABLED true
 
 function NET_SerializerVariable(_owner, _name) constructor {
 	self.owner = _owner;
@@ -47,7 +47,12 @@ function NET_SerializerCustom(_owner, _name) : NET_SerializerVariable(_owner, _n
 
 function NET_SerializerClone(_owner, _name) : NET_SerializerVariable(_owner, _name) constructor {
 	static serialize = function() {
-		var _value = struct_get_from_hash(self.owner, self.hash);
+		var _value;
+		if (GM_NETCODE_SERIALIZER_HASH_ENABLED) {
+			_value = struct_get_from_hash(self.owner, self.hash);
+		} else {
+			_value = variable_struct_get(self.owner, self.hash);
+		}
 		return variable_clone(_value);
 	}
 }

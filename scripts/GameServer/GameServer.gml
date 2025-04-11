@@ -1,5 +1,5 @@
-function GameServer(_port) : NET_UdpServerRAW(_port) constructor {
-	self.enableConnectionMode();
+function GameServer(_port) : NET_TcpServer(_port) constructor {
+//	self.enableConnectionMode();
 	global.local_player_index = 0;
 	global.game.add_local_players([0]);
 	global.game.inputs.setTotalPlayers(2);

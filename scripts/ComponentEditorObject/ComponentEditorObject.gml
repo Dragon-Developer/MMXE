@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function ComponentEditorObject() : EntityComponentBase() constructor{
+function ComponentEditorObject() : ComponentBase() constructor{
 	self.xscale = 1;
 	self.yscale = 1;
 	self.rotation = 0;
