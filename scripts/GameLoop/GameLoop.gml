@@ -1,7 +1,7 @@
 function GameLoop() : NET_GameLoopBase() constructor {
 	self.game_speed = 1;
 	self.game_timer = 0;
-	self.debug = true;//should make this a global variable
+	self.debug = global.debug;// i aint gonna replace every instance when i can just do this
 	self.save_state = function() {
 		ENTITIES.save();	
 	}

@@ -11,6 +11,8 @@ function global_init() {
 	global.client = undefined;
 	global.socket = undefined;
 	
+	global.debug = false;
+	
 	input_source_set(INPUT_KEYBOARD, 0);
 	window_set_size(3*GAME_W, 3*GAME_H);
 	window_center();

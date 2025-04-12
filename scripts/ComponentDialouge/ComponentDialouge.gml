@@ -1,4 +1,4 @@
-function ComponentDialouge() : EntityComponentBase() constructor{
+function ComponentDialouge() : ComponentBase() constructor{
 	var _dia = new Dialouge();
 	self.chat = [_dia];
 	self.point_in_chat = 0;
@@ -10,6 +10,8 @@ function ComponentDialouge() : EntityComponentBase() constructor{
 	self.text_chunks = ["Component Error!"];//i need to split text up so the words dont trail off
 	self.tc_length = [32];//cache these values instead of regenerating them every frame. the text doesnt change mid sentence.
 	self.text_length = [32];
+	
+	self.animation_index = 0;//a timer for a thing. 
 	
 	self.dialouge_box_width = 192;//not including mugshots. those are tacked onto the side.
 	self.dialouge_margin = 2;//the distance between the edge of the textbox and the text
@@ -70,7 +72,7 @@ function ComponentDialouge() : EntityComponentBase() constructor{
 					break;
 				}
 			}
-			self.text_length[q] = clamp(self.text_length[q]++,0, self.tc_length[q]);
+			self.text_length[q] = clamp(self.text_length[q] + 1,0, self.tc_length[q]);
 			draw_string_condensed(string_copy(self.text_chunks[q],0,self.text_length[q]),
 			self.dialouge_margin + _text_left_edge, q * (8 + dialouge_margin) + dialouge_margin + dialouge_y_top);
 		}
@@ -79,8 +81,39 @@ function ComponentDialouge() : EntityComponentBase() constructor{
 		var _right_col = (string_lower(self.focus) == "left" ? c_white : c_grey);// its going to happen, someone is going to say they put in right when
 		//they put in Right or RIght. heck, they could do RIGHT.
 		
-		draw_sprite_ext(right_mugshot, 0, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
-		draw_sprite_ext(left_mugshot, 0, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+		if(string_lower(self.focus) == "right" && array_last(self.text_length) != array_last(self.tc_length)){
+			if(self.animation_index % 20 > 10)
+				draw_sprite_ext(right_mugshot, 3, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+			else 
+				draw_sprite_ext(right_mugshot, 0, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+		} else if(self.animation_index % 120 > 105){
+			if(self.animation_index % 120 > 115)
+				draw_sprite_ext(right_mugshot, 1, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+			else if(self.animation_index % 120 > 110)
+				draw_sprite_ext(right_mugshot, 2, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+			else
+				draw_sprite_ext(right_mugshot, 1, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+			
+		} else {
+			draw_sprite_ext(right_mugshot, 0, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+		}
+		if(string_lower(self.focus) == "left" && array_last(self.text_length) != array_last(self.tc_length)){
+			if(self.animation_index % 20 > 10)
+				draw_sprite_ext(left_mugshot, 3, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+			else 
+				draw_sprite_ext(left_mugshot, 0, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+		} else if(self.animation_index % 120 > 105){
+			if(self.animation_index % 120 > 115)
+				draw_sprite_ext(left_mugshot, 1, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+			else if(self.animation_index % 120 > 110)
+				draw_sprite_ext(left_mugshot, 2, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+			else
+				draw_sprite_ext(left_mugshot, 1, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+			
+		} else {
+			draw_sprite_ext(left_mugshot, 0, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
+		}
+		self.animation_index = (self.animation_index + 1) % 120;
 	}
 	
 	self.generate_mugshots = function(){
