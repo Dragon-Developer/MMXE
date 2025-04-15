@@ -3,14 +3,6 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	/*
 		all todo's
 		
-		Tilemap drawing
-			-scrolling through selected tilemap to select proper tile
-			-hiding the tile in the top left corner with an erase option
-			-switching tilemaps
-				-making a new layer if this tilemap does not already have a layer
-				-changing the variable and making sure it doesnt make the game shit itself
-			-rotating currently selected piece
-			flipping currently selected piece
 		Object placement
 			-place objects
 			-edit object data
@@ -49,6 +41,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 		self.mouse_select_padding = 2;
 		self.map_name = "undefined oof"
 		self.save_notification_timer = 0;
+		self.delimiter = "%&"
 	#endregion
 	#region Tileset Specific Information
 		self.current_tileset_name = "TILESET:";
@@ -72,14 +65,15 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	#endregion
 	
 	self.init = function(){
-		self.add_layer(0);
+		self.add_layer(self.tile_options[0]);
 		ini_open("temp_ini.ini");
 		ini_close();
 	}
 	self.add_layer = function(_ts){
 		var _layer = layer_create(0, "layer " + string(array_length(self.tile_layers)))
-		array_push(tile_layers, _layer);
-		layer_tilemap_create(_layer,0,0,self.tile_options[_ts],room_width, room_height);
+		array_push(self.tile_layers, _layer);
+		log(_ts)
+		layer_tilemap_create(_layer,0,0,_ts,room_width, room_height);
 	}
 	
 	self.step = function(){
@@ -116,15 +110,53 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			case(1):
 			break;
 		}
+		
 		if(keyboard_check(vk_control) && keyboard_check_pressed(ord("S")))
 			self.save();
 		if(keyboard_check_pressed(ord("L")))
 			self.load();
+			
+		if(get_mouse_click(GAME_W - self.width - 16, 0, GAME_W - self.width, 16)){
+				log("mouse clicked on the save button")
+				var _lvlname = get_string("Save Level As?", self.map_name);
+				self.map_name = _lvlname;
+				self.save();
+			} else if(get_mouse_click(GAME_W - self.width - 16, 16, GAME_W - self.width, 32)){
+				log("mouse clicked on the load button")
+				//this should bring up a GUI that lets you select the level from there. 
+				//selecting levels via this get_string method is really janky
+				var _lvlname = get_string("Load Which Level?", self.map_name);
+				self.map_name = _lvlname;
+				self.load();
+			} else if(get_mouse_click(GAME_W - self.width - 16, 32, GAME_W - self.width, 48)){
+				log("mouse clicked on the Select Tool button")
+			} else if(get_mouse_click(GAME_W - self.width - 16, 48, GAME_W - self.width, 64)){
+				log("mouse clicked on the Tile Tool button")
+			} else if(get_mouse_click(GAME_W - self.width - 16, 64, GAME_W - self.width, 80)){
+				log("mouse clicked on the Object Tool button")
+			} else if(get_mouse_click(GAME_W - self.width - 16, 80, GAME_W - self.width, 96)){//these next 3 only exist in the tile tool{
+				log("mouse clicked on the mirror button")
+				self.tile_mirrored = !self.tile_mirrored
+			} else if(get_mouse_click(GAME_W - self.width - 16, 96, GAME_W - self.width, 112)){
+				log("mouse clicked on the flip button")
+				self.tile_flipped = !self.tile_flipped;
+			} else if(get_mouse_click(GAME_W - self.width - 16, 112, GAME_W - self.width, 128)){
+				log("mouse clicked on the rotate button")
+				self.tile_rotated = !self.tile_rotated;
+			}
 	}
 	
 	self.tile_tool = function(){
 		var _id = layer_tilemap_get_id(self.tile_layers[tileset]);
-		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width - 16){
+		
+		//this implementation is ass. needs to be redone to have a dragging_ui bool that is on when you click the edge and off when you release the mouse. 
+		if(get_mouse_down(GAME_W - self.width - 18, 0, GAME_W - self.width - 14, GAME_H)){
+			log(GAME_W - (mouse_x - self.get_instance().x + GAME_W / 2))
+			log(self.width);
+			self.width = GAME_W - (mouse_x - self.get_instance().x + GAME_W / 2) - 16;
+			self.width = clamp(self.width, 18, 240);// there doesnt NEED to be an upper limit but it would be preferable to not have the ability to block your vision out
+		}
+		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width - 18){
 			var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
 			var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
 			if(_gui_mouse_y< 65 && _gui_mouse_x > GAME_W - self.width){
@@ -150,31 +182,28 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			}
 			else
 			{
-				if(get_mouse_click(GAME_W - self.width - 16, 0, GAME_W - self.width, 16)){
-					log("mouse clicked on the save button")
-					var _lvlname = get_string("Save Level As?", self.map_name);
-					self.map_name = _lvlname;
-					self.save();
-				} else if(get_mouse_click(GAME_W - self.width - 16, 16, GAME_W - self.width, 32)){
-					log("mouse clicked on the load button")
-					var _lvlname = get_string("Save Level As?", self.map_name);
-					self.map_name = _lvlname;
-					self.load();
-				} else if(get_mouse_click(GAME_W - self.width - 16, 32, GAME_W - self.width, 48)){
-					log("mouse clicked on the Select Tool button")
-				} else if(get_mouse_click(GAME_W - self.width - 16, 48, GAME_W - self.width, 64)){
-					log("mouse clicked on the Tile Tool button")
-				} else if(get_mouse_click(GAME_W - self.width - 16, 64, GAME_W - self.width, 80)){
-					log("mouse clicked on the Object Tool button")
-				} else if(get_mouse_click(GAME_W - self.width - 16, 80, GAME_W - self.width, 96)){//these next 3 only exist in the tile tool{
-					log("mouse clicked on the mirror button")
-					self.tile_mirrored = !self.tile_mirrored
-				} else if(get_mouse_click(GAME_W - self.width - 16, 96, GAME_W - self.width, 112)){
-					log("mouse clicked on the flip button")
-					self.tile_flipped = !self.tile_flipped;
-				} else if(get_mouse_click(GAME_W - self.width - 16, 112, GAME_W - self.width, 128)){
-					log("mouse clicked on the rotate button")
-					self.tile_rotated = !self.tile_rotated;
+				//check if the next tileset is selectable. get the grid width and if the selected object is outside of the
+				//bounds of the tileset array just cancel the operation.
+				if(get_mouse_click(GAME_W - self.width, 65, GAME_W, GAME_H)){
+					var _max_width = floor( self.width / 18)
+					var _mouse_segment_x = floor((_gui_mouse_x - GAME_W + self.width) / 18);
+					var _mouse_segment_y = floor((_gui_mouse_y - 49) / 18);//need to verify if 65 is the right call
+					var _res = _mouse_segment_x * _mouse_segment_y;
+					if(_mouse_segment_x > _max_width || _res > array_length(self.tile_options) || _res < 0) return;
+					
+					self.tileset = _res;
+					
+					for(var e = 0; e < array_length(layer_get_all()); e++){
+						var _layer = layer_tilemap_get_id(layer_get_all()[e]);
+						var _tmap = tilemap_get_tileset(_layer);
+						if(_tmap = self.tile_options[self.tileset]){
+							return;// if we already have a tilemap for this tileset, dont do anything because we dont need to set shit up
+						}
+					}
+					// you can only get here if the tileset does in fact not have a layer assigned to it yet.
+					// this means there's only one layer per tileset but it still works out pretty well if
+					// you know what youre doing with tilesets.
+					add_layer(self.tile_options[self.tileset]);
 				}
 			}
 		} else {
@@ -199,12 +228,26 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			}
 		}
 	}
+		
+	self.object_tool = function(){
+			
+	}
 	
 	self.get_mouse_click = function(_x1, _y1, _x2, _y2){
 		var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
 		var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
 		
 		if(_gui_mouse_x < _x2 && _gui_mouse_x > _x1 && _gui_mouse_y < _y2 && _gui_mouse_y > _y1 && mouse_check_button_pressed(mb_left)){
+			return true;
+		}
+		return false;
+	}
+	
+	self.get_mouse_down = function(_x1, _y1, _x2, _y2){
+		var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
+		var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
+		
+		if(_gui_mouse_x < _x2 && _gui_mouse_x > _x1 && _gui_mouse_y < _y2 && _gui_mouse_y > _y1 && mouse_check_button(mb_left)){
 			return true;
 		}
 		return false;
@@ -219,8 +262,8 @@ function ComponentEditorBar() : ComponentBase() constructor{
 
 	self.draw_gui = function(){
 		var _inst = self.get_instance();
-		draw_string((mouse_x - _inst.x + GAME_W / 2), 0,0);
-		draw_string((mouse_y - _inst.y + GAME_H / 2), 0,10);
+		draw_string((mouse_x - _inst.x + GAME_W / 2), 4,0);
+		draw_string((mouse_y - _inst.y + GAME_H / 2), 4,10);
 		if(self.save_notification_timer > 0){
 			draw_string_condensed("SAVED TO " + working_directory,0,20);
 			self.save_notification_timer--;
@@ -273,6 +316,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			if(p == self.tileset)
 			draw_sprite(spr_selection,0,(GAME_W - self.width) + 18 * (p mod _max_width), 
 			96 + 18 * floor(p / _max_width))
+			
 			draw_sprite_part(self.tile_sprites[p], 0,
 			//draw_sprite_part(_element, 0, 
 			0, 16, 
@@ -312,7 +356,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 				file_text_write_string(_sav, 
 					tilemap_get(layer_tilemap_get_id(self.tile_layers[tileset]), w, h)
 				);
-				file_text_write_string(_sav, "$%^&");
+				file_text_write_string(_sav, self.delimiter);
 			}
 			file_text_writeln(_sav);
 		}
@@ -327,7 +371,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			return;
 		}
 		var _lvl = file_text_read_string(_sav);
-		_lvl = string_split(_lvl, "$%^&");// "$%^&" is the 'delimiter', which seperates the different parts of the level
+		_lvl = string_split(_lvl, self.delimiter);// "$%^&" is the 'delimiter', which seperates the different parts of the level
 		// it would be better for me to have a smaller delimiter, because each character effectively multiplies file size
 		var _id = layer_tilemap_get_id(self.tile_layers[tileset]);
 		for(var h = 0; h < room_height / 16; h++){
@@ -342,7 +386,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			}
 			file_text_readln(_sav);
 			var _lvl = file_text_read_string(_sav);
-			_lvl = string_split(_lvl, "$%^&");
+			_lvl = string_split(_lvl, self.delimiter);
 		}
 		file_text_close(_sav);
 	}
