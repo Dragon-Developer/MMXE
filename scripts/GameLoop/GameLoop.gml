@@ -2,6 +2,13 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	self.game_speed = 1;
 	self.game_timer = 0;
 	self.debug = global.debug;// i aint gonna replace every instance when i can just do this
+	
+	//thanks gacel ur the best
+	// Always 255 on modern PCs;
+	self.fullSpace = 255;
+	// Here we use 31 as it's 15-bit max value.
+	self.colorSpace = 31;
+	
 	self.save_state = function() {
 		ENTITIES.save();	
 	}
@@ -47,12 +54,18 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		}
 		
 	}
+	
+	self.draw_gui_begin = function(){
+		//var _draw_gui = function(_component) { _component.draw_gui(); };
+		//ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
+	}
+	
 	self.draw_gui = function() {
 		var _draw_gui = function(_component) { _component.draw_gui(); };
 		
 		// some things use the draw_gui function regardless of debug
-		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
+		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		
 		if(!self.debug) return;
 		
@@ -71,6 +84,19 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		draw_text(_gui_width - 16, 64, $"mode: {parent.__mode}");
 		if (!is_undefined(global.socket)) {
 			draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
+		}
+		
+		//put the final render step here?
+		//no, it doesnt render
+		with(obj_gui){
+			shader_set(shdr_snes_palette);
+			var scale = floor(fullSpace / colorSpace);
+			log(scale)
+			var deviation = floor(colorSpace / (fullSpace mod colorSpace));
+			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "scale"), scale);
+			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "deviation"), deviation);
+			draw_surface_stretched(application_surface, 0,0, GAME_W, GAME_H);
+			shader_reset();
 		}
 	}
 }

@@ -10,6 +10,7 @@ function ComponentDialouge() : ComponentBase() constructor{
 	self.text_chunks = ["Component Error!"];//i need to split text up so the words dont trail off
 	self.tc_length = [32];//cache these values instead of regenerating them every frame. the text doesnt change mid sentence.
 	self.text_length = [32];
+	self.input = noone;
 	
 	self.animation_index = 0;//a timer for a thing. 
 	
@@ -19,10 +20,23 @@ function ComponentDialouge() : ComponentBase() constructor{
 	self.dialouge_y_height = 44;
 	
 	self.init = function(){
-		self.set_dialouge("No Dialouge Set!")
+		self.set_dialouge(self.chat[0]);
+	}
+	self.on_register = function() {
+		self.subscribe("components_update", function() {
+			self.input = self.parent.find("input") ?? new ComponentInputBase();
+		});
 	}
 	
-	self.set_dialouge = function(_text, _mugshot_left = X_Mugshot1, _mugshot_right = X_Mugshot1){
+	self.set_dialouge_with_enum = function(_dialouge){
+		//var _sentence = _dialouge.sentence;
+		//var _mug_1 = _dialouge.mugshots[0];
+		//var _mug_2 =  _dialouge.mugshots[1];
+		//var _focus = _dialouge.focus;
+		self.set_dialouge("s");
+	}
+	
+	self.set_dialouge = function(_text, _mugshot_left = X_Mugshot1, _mugshot_right = X_Mugshot1, _focus = "right"){
 		
 		self.text_chunks = [];
 		self.tc_length = [];
@@ -56,9 +70,31 @@ function ComponentDialouge() : ComponentBase() constructor{
 		self.text_max_length = string_get_text_length(_text);
 		self.left_mugshot = _mugshot_left;
 		self.right_mugshot = _mugshot_right;
+		self.focus = _focus;
+		return _text;
 	};
 	
-	self.draw_gui = function(){//draw gui so i can draw in screenspace instead of roomspace
+	self.step = function(){
+		if(self.input.get_input_pressed("jump")){
+			if(self.text_length != self.tc_length)
+				self.text_length = self.tc_length;
+			else{
+				self.point_in_chat++;
+				if(self.point_in_chat >= array_length(self.chat)){
+					instance_destroy(self.get_instance());
+					with(self.get_instance()){
+						instance_destroy();
+					}
+				} else	{
+					self.set_dialouge_with_enum(self.chat[self.point_in_chat]);
+					log("stepp")
+				}
+			}
+		}
+	}
+	
+	#region gui
+	self.draw_gui = function(){
 		//gonna math for the middle of the screen and the edges of the textbox
 		var _text_right_edge = GAME_W / 2 + self.dialouge_box_width / 2 + self.dialouge_margin;
 		var _text_left_edge = GAME_W / 2 - self.dialouge_box_width / 2 - self.dialouge_margin;
@@ -115,6 +151,7 @@ function ComponentDialouge() : ComponentBase() constructor{
 		}
 		self.animation_index = (self.animation_index + 1) % 120;
 	}
+	#endregion
 	
 	self.generate_mugshots = function(){
 		//collage shit. animation uses it so go reference that for generating the sprite. 

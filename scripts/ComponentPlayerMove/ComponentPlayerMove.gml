@@ -5,7 +5,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.current_hspd = 1.5;
 	self.dash_jump = false;
 	self.dash_tapped = false;
-	self.debug = false;
+	self.debug = global.debug;
 	self.camera = noone;
 	self.locked = false;
 	self.ride_armor = noone;
@@ -162,7 +162,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("wall_jump", {
 			enter: function() {
 				self.timer = 0;
-				self.change_animation("wall_jump", true);
+				self.publish("animation_play", { name: "wall_jump" });
 				self.dir = self.get_wall_jump_dir();
 				if (self.dir != 0) self.publish("animation_xscale", self.dir)
 				self.physics.set_speed(0, 0);
@@ -256,7 +256,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
-			self.input = self.parent.find("input") ?? new EntityComponentInputBase();
+			self.input = self.parent.find("input") ?? new ComponentInputBase();
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 			self.publish("set_slope_detection", true)
 		});
@@ -306,10 +306,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.dash_dir = _key;
 		self.dash_tapped = true;
 		self.fsm.trigger("t_dash");
-	}
-	
-	self.change_animation = function(_anim, _reset = false){
-		self.publish("animation_play", { name: _anim, reset: _reset });
 	}
 	
 	// Handles input and triggers attack transitions	

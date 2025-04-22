@@ -14,6 +14,6 @@ function global_init() {
 	global.debug = false;
 	
 	input_source_set(INPUT_KEYBOARD, 0);
-	window_set_size(3*GAME_W, 3*GAME_H);
+	window_set_size(2*GAME_W, 2*GAME_H);
 	window_center();
 }

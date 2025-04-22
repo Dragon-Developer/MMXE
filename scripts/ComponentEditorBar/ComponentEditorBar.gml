@@ -187,11 +187,11 @@ function ComponentEditorBar() : ComponentBase() constructor{
 				if(get_mouse_click(GAME_W - self.width, 65, GAME_W, GAME_H)){
 					var _max_width = floor( self.width / 18)
 					var _mouse_segment_x = floor((_gui_mouse_x - GAME_W + self.width) / 18);
-					var _mouse_segment_y = floor((_gui_mouse_y - 49) / 18);//need to verify if 65 is the right call
+					var _mouse_segment_y = floor((_gui_mouse_y - 60) / 18);//need to verify if 65 is the right call
 					var _res = _mouse_segment_x * _mouse_segment_y;
 					if(_mouse_segment_x > _max_width || _res > array_length(self.tile_options) || _res < 0) return;
 					
-					self.tileset = _res;
+					self.tileset = clamp(_res,0,array_length(self.tile_options) - 1);
 					
 					for(var e = 0; e < array_length(layer_get_all()); e++){
 						var _layer = layer_tilemap_get_id(layer_get_all()[e]);
@@ -278,11 +278,14 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	self.draw_tilemap_selection = function(){
 		var _inst = self.get_instance();
 		
+		//the little example tile
 		draw_sprite(spr_selection,0,GAME_W - (self.width / 2) - 9, 69);// no this is not a funny number
 		draw_sprite_part(self.tile_sprites[self.tileset],0,
-		self.tile_placing mod floor(sprite_get_width(self.tile_sprites[self.tileset]) / 16),
-		floor(self.tile_placing / sprite_get_width(self.tile_sprites[self.tileset]) / 16),
+		(self.tile_placing mod floor(sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16,
+		floor(self.tile_placing / (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16,
 		16,16,GAME_W - (self.width / 2) - 8,70)
+		
+		log(floor(self.tile_placing / (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16)
 		
 		#region tilemap selection
 		// draw the tileset itself

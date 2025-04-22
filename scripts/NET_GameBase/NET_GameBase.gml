@@ -130,6 +130,10 @@ function NET_GameBase() constructor {
 		if (!self.__started) return;
 		self.game_loop.draw_gui();
 	}
+	static draw_gui_start = function() {
+		if (!self.__started) return;
+		self.game_loop.draw_gui_start();
+	}
 	/**
      * Starts the game, registering it with the wrapper.
      */

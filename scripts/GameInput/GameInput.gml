@@ -6,6 +6,7 @@ function GameInput() : NET_InputManager() constructor {
 		"down",
 		"jump",
 		"dash",
+		"shoot",
 	]);
     self.getLocal = function(_index = 0) {
         var _input = {};
