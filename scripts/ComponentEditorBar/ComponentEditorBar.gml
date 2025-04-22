@@ -72,7 +72,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	self.add_layer = function(_ts){
 		var _layer = layer_create(0, "layer " + string(array_length(self.tile_layers)))
 		array_push(self.tile_layers, _layer);
-		log(_ts)
+		//log(_ts)
 		layer_tilemap_create(_layer,0,0,_ts,room_width, room_height);
 	}
 	
@@ -105,9 +105,12 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	self.tool_use = function(){
 		switch(self.tool){
 			case(0):
-					self.tile_tool();
+				self.tile_tool();
 			break;
 			case(1):
+				self.object_tool();
+			break;
+			case(2):
 			break;
 		}
 		
@@ -115,6 +118,14 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			self.save();
 		if(keyboard_check_pressed(ord("L")))
 			self.load();
+		
+		//this is shit. should be on click and on release, instead of always checking if the mouse is down here
+		if(get_mouse_down(GAME_W - self.width - 18, 0, GAME_W - self.width - 14, GAME_H)){
+			log(GAME_W - (mouse_x - self.get_instance().x + GAME_W / 2))
+			log(self.width);
+			self.width = GAME_W - (mouse_x - self.get_instance().x + GAME_W / 2) - 16;
+			self.width = clamp(self.width, 18, 240);// there doesnt NEED to be an upper limit but it would be preferable to not have the ability to block your vision out
+		}
 			
 		if(get_mouse_click(GAME_W - self.width - 16, 0, GAME_W - self.width, 16)){
 				log("mouse clicked on the save button")
@@ -130,10 +141,13 @@ function ComponentEditorBar() : ComponentBase() constructor{
 				self.load();
 			} else if(get_mouse_click(GAME_W - self.width - 16, 32, GAME_W - self.width, 48)){
 				log("mouse clicked on the Select Tool button")
+				self.tool = self.tool;
 			} else if(get_mouse_click(GAME_W - self.width - 16, 48, GAME_W - self.width, 64)){
 				log("mouse clicked on the Tile Tool button")
+				self.tool = 0;
 			} else if(get_mouse_click(GAME_W - self.width - 16, 64, GAME_W - self.width, 80)){
 				log("mouse clicked on the Object Tool button")
+				self.tool = 1;
 			} else if(get_mouse_click(GAME_W - self.width - 16, 80, GAME_W - self.width, 96)){//these next 3 only exist in the tile tool{
 				log("mouse clicked on the mirror button")
 				self.tile_mirrored = !self.tile_mirrored
@@ -148,14 +162,6 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	
 	self.tile_tool = function(){
 		var _id = layer_tilemap_get_id(self.tile_layers[tileset]);
-		
-		//this implementation is ass. needs to be redone to have a dragging_ui bool that is on when you click the edge and off when you release the mouse. 
-		if(get_mouse_down(GAME_W - self.width - 18, 0, GAME_W - self.width - 14, GAME_H)){
-			log(GAME_W - (mouse_x - self.get_instance().x + GAME_W / 2))
-			log(self.width);
-			self.width = GAME_W - (mouse_x - self.get_instance().x + GAME_W / 2) - 16;
-			self.width = clamp(self.width, 18, 240);// there doesnt NEED to be an upper limit but it would be preferable to not have the ability to block your vision out
-		}
 		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width - 18){
 			var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
 			var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
@@ -230,7 +236,18 @@ function ComponentEditorBar() : ComponentBase() constructor{
 	}
 		
 	self.object_tool = function(){
+		//if the mouse is within the sidebar
+		if((mouse_x-self.get_instance().x + GAME_W / 2)> GAME_W - self.width - 18){
+			var _gui_mouse_x = (mouse_x-self.get_instance().x + GAME_W / 2);
+			var _gui_mouse_y = (mouse_y-self.get_instance().y + GAME_H / 2);
+			// get the object you click on and set it to your mouse. 
 			
+			//if there is an object selected, the gui changes to an infobar. clicking anywhere but here will clear the selection.
+			//if there is no object selected, the gui shows all possible objects. 
+		} else {
+			//place the object idk
+			//im not sure how to go about this but copy pasting is in my future
+		}
 	}
 	
 	self.get_mouse_click = function(_x1, _y1, _x2, _y2){
@@ -272,7 +289,17 @@ function ComponentEditorBar() : ComponentBase() constructor{
 		draw_rectangle(GAME_W - self.width,0,GAME_W, GAME_H, false);
 		draw_rectangle(GAME_W - self.width - 16,96,GAME_W, GAME_H, false);
 		//tileset specific
-		self.draw_tilemap_selection();
+		
+		switch(self.tool){
+			case(0):
+				self.draw_tilemap_selection();
+			break;
+			case(1):
+				self.draw_object_selection();
+			break;
+			case(2):
+			break;
+		}
 	}
 	
 	self.draw_tilemap_selection = function(){
@@ -285,7 +312,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 		floor(self.tile_placing / (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16,
 		16,16,GAME_W - (self.width / 2) - 8,70)
 		
-		log(floor(self.tile_placing / (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16)
+		//;log(floor(self.tile_placing / (sprite_get_width(self.tile_sprites[self.tileset]) / 16)) * 16)
 		
 		#region tilemap selection
 		// draw the tileset itself
@@ -348,6 +375,10 @@ function ComponentEditorBar() : ComponentBase() constructor{
 			else
 				draw_sprite(spr_editor_icons,6, GAME_W - self.width - 16,112);//rotate
 		#endregion
+	}
+		
+	self.draw_object_selection = function(){
+		
 	}
 	
 	self.save = function(){
