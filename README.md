@@ -63,6 +63,7 @@ Feel free to suggest features in the discord.
 - Victor from Maverick Wars: General spriting.
 - Fen: Glide armor
 - Fncilipeeps: Secret Content
+- AxlForte: General spriting
 - Mikael(?)
 
 ### Helpers:
