@@ -1,5 +1,9 @@
 function ComponentDialouge() : ComponentBase() constructor{
-	var _dia = new Dialouge();
+	var _dia = {   sentence : "NOP this no work",
+		mugshot_left : X_Mugshot_Angy1,
+		mugshot_right : X_Mugshot1,
+		focus : "right"
+	}
 	self.chat = [_dia];
 	self.point_in_chat = 0;
 	self.current_text = "dummy";
@@ -20,20 +24,21 @@ function ComponentDialouge() : ComponentBase() constructor{
 	self.dialouge_y_height = 44;
 	
 	self.init = function(){
-		self.set_dialouge(self.chat[0]);
+		self.set_dialouge_with_enum(self.chat[0]);
 	}
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
 		});
+		self.subscribe("change_dialouge", function(_chat) {
+			self.chat = _chat;
+			self.set_dialouge_with_enum(self.chat[0]);
+		});
 	}
 	
 	self.set_dialouge_with_enum = function(_dialouge){
-		//var _sentence = _dialouge.sentence;
-		//var _mug_1 = _dialouge.mugshots[0];
-		//var _mug_2 =  _dialouge.mugshots[1];
-		//var _focus = _dialouge.focus;
-		self.set_dialouge("s");
+		log(_dialouge)
+		self.set_dialouge(_dialouge.sentence, _dialouge.mugshot_left, _dialouge.mugshot_right, _dialouge.focus);
 	}
 	
 	self.set_dialouge = function(_text, _mugshot_left = X_Mugshot1, _mugshot_right = X_Mugshot1, _focus = "right"){
@@ -42,8 +47,12 @@ function ComponentDialouge() : ComponentBase() constructor{
 		self.tc_length = [];
 		self.text_length = [];
 		
+		log(_text);
+		if(_text == -4){
+			log("something done fucked up")
+		}
+		
 		var _convo_array = string_split(_text," ");
-		log(_convo_array)
 		var _cv_length = 0;
 		var _cv_offset = 0;
 		var _tmp_wrd = "";
@@ -71,23 +80,19 @@ function ComponentDialouge() : ComponentBase() constructor{
 		self.left_mugshot = _mugshot_left;
 		self.right_mugshot = _mugshot_right;
 		self.focus = _focus;
-		return _text;
+		//return _text;
 	};
 	
 	self.step = function(){
 		if(self.input.get_input_pressed("jump")){
-			if(self.text_length != self.tc_length)
+			if(self.text_length[array_length(self.text_length) - 1] != self.tc_length[array_length(self.text_length) - 1]){
 				self.text_length = self.tc_length;
-			else{
+			}else{
 				self.point_in_chat++;
 				if(self.point_in_chat >= array_length(self.chat)){
-					instance_destroy(self.get_instance());
-					with(self.get_instance()){
-						instance_destroy();
-					}
+					ENTITIES.destroy_instance(self.get_instance());
 				} else	{
 					self.set_dialouge_with_enum(self.chat[self.point_in_chat]);
-					log("stepp")
 				}
 			}
 		}
