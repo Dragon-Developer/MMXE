@@ -1,4 +1,5 @@
 function ComponentPlayerMove() : ComponentBase() constructor {
+	self.add_tags("player");
 	// Variables
 	self.dir = 1;
 	self.dash_dir = 1;
@@ -219,8 +220,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
 		.add_transition("t_custom_end", "custom", "idle")
-		.add_transition("t_ride", ["air", "walk"], "ride")
-		.add_transition("t_ride_exit", "ride", "jump")
+		.add_transition("t_custom", ["air", "walk"], "custom")
+		.add_transition("t_custom_exit", "custom", "jump")
 		.add_transition("t_animation_end", ["start", "land", "dash_end"], "idle")
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
@@ -262,27 +263,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		});
 		self.subscribe("animation_end", function() {
 			self.fsm.trigger("t_animation_end");	
-		});
-		
-		self.subscribe("camera_set", function(_cam) {
-			self.camera = _cam;	
-		});
-		
-		self.subscribe("lock_player", function(_cam) {
-			self.locked = _cam;	
-		});
-		
-		self.subscribe("enter_ride", function(_ride) {
-			self.fsm.trigger("t_ride");
-			self.ride_armor = _ride;
-		});
-		
-		self.subscribe("exit_ride", function(_cam) {
-			self.fsm.trigger("t_ride_exit");
-		});
-		
-		self.subscribe("request_move", function(_cam) {
-			_cam.publish("deliver_self", self);
 		});
 	}
 	// Initialization
