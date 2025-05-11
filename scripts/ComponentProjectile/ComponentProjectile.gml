@@ -1,0 +1,32 @@
+function ComponentProjectile() : ComponentBase() constructor{
+	//have a reference to a projectileWeaponData
+	//if it doesnt exist, then end the step function early
+	//otherwise, go ahead and run the step function of the ProjectileWeaponData
+	//same with step, draw, etc
+	//run the create step when the ProjectileWeaponData is recieved
+
+	weaponData = noone;
+
+	//you need this because specific stuff needs to happen. if you
+	//REALLY want to move this to somewhere else, make sure to call
+	//weaponData.create(); right after the data gets passed over
+	self.on_register = function() {
+		self.subscribe("set_weapon_data", function(_weapon_data) {
+			weaponData = _weapon_data;
+			//some projectiles dont need physics and such, so they arent here. 
+			//i doubt all projectiles need the animation component too, but I
+			//can see the need to have a default animation controller.
+			weaponData.create();
+		});
+	}
+	
+	self.step = function() {
+		if weaponData == noone return;
+		weaponData.step();
+	}
+	
+	self.draw = function() {
+		if weaponData == noone return;
+		weaponData.draw();
+	}
+}

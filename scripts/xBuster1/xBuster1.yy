@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"xBuster1",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"xBuster1",
+  "parent":{
+    "name":"Base",
+    "path":"folders/Scripts/Weapons/Projectile/MMX/Base.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
