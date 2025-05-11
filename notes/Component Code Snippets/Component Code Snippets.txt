@@ -1,0 +1,11 @@
+self.on_register = function() {
+}
+
+self.step = function(){
+}
+
+   - for creating a new component -
+ : ComponentBase() constructor
+ 
+ - for getting another component -
+self.get_instance().components.get()

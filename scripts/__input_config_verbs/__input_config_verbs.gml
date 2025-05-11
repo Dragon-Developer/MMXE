@@ -59,10 +59,10 @@ function __input_config_verbs()
             left:  input_binding_virtual_button(),
             right: input_binding_virtual_button(),
             
-            accept:  input_binding_virtual_button(),
-            cancel:  input_binding_virtual_button(),
-            action:  input_binding_virtual_button(),
-            special: input_binding_virtual_button(),
+            jump:  input_binding_virtual_button(),
+            dash:  input_binding_virtual_button(),
+            shoot:  input_binding_virtual_button(),
+            shoot2: input_binding_virtual_button(),
             
             pause: input_binding_virtual_button(),
         }

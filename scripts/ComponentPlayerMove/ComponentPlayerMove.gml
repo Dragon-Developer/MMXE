@@ -175,10 +175,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			step: function() {
 				self.timer++;
 				if (self.timer > 11){
-					self.publish("animation_play_at_loop", { name: "jump"});
+					self.publish("animation_play_at_loop", { name: "jump", frame: 10});
 					self.set_hor_movement();
-				} else if (self.timer > 5) {
-					
+				} else if (self.timer > 7) {
+					//please this looks so much better
+					//self.publish("animation_play_at_loop", { name: "jump", frame: 10});
 				}
 				if (self.timer == 5) {
 					self.physics.update_gravity();
@@ -259,7 +260,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
-			self.publish("set_slope_detection", true)
+			//What the heck is the parent of this? is it the player object?
+			self.weaponHandler = self.parent.find("weaponHandler") ?? new ComponentWeaponUse();
 		});
 		self.subscribe("animation_end", function() {
 			self.fsm.trigger("t_animation_end");	

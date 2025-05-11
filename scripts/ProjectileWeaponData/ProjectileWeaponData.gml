@@ -1,5 +1,5 @@
 function ProjectileWeapon() : WeaponData() constructor{
-	self.projectiles = noone;//projetile data doesnt exist yet.
+	self.projectiles = noone;//hmmm
 	self.charge_time = 60;//i dont think mmxe uses this, but battle network has some busters charge faster than others
 	self.animation_name = noone;//if its noone, then assume its _shoot. 
 }

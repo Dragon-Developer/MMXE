@@ -37,6 +37,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		
 		ENTITIES.for_each_component(ComponentPlayerInput, _step);
 		ENTITIES.for_each_component(ComponentPlayerMove, _step);
+		ENTITIES.for_each_component(ComponentWeaponUse, _step);
 		ENTITIES.for_each_component(ComponentMask, _step);
 		ENTITIES.for_each_component(ComponentPhysics, _step);
 		ENTITIES.for_each_component(ComponentAnimation, _step);
@@ -45,6 +46,12 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentEditorBar, _step);
 		ENTITIES.for_each_component(ComponentDialouge, _step);
 		ENTITIES.for_each_component(ComponentCameraRecorder, _step);
+		//Forte:
+		//some way to have all components not defined here still run their step method
+		//would make it easier to test
+		
+		//keeping the fixed step of operations would be a good idea. i would like player
+		//step and enemy step to happen before shooting, for example
 	}
 	self.step = function() {
 		self.game_timer += self.game_speed;

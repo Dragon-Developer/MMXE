@@ -1,4 +1,5 @@
 #macro ANIMATION_SPRITE_PREFIX "spr"
+//why do we need to have a macro for the animation sprite seperator? it just adds characters
 #macro ANIMATION_SPRITE_SEPARATOR "_"
 
 /// @param {string} character	Character name used in animation
@@ -21,12 +22,13 @@ function AnimationController(_character = "") constructor {
     self.__alpha = 1;
     self.__character = _character;
     self.__types = {
-        "normal": [""]
+        "normal": [""],
+		"shoot": ["_shoot"]
     };
     self.__actions = [];
 	self.__animations = [];
     self.__animation = "";
-    self.__type = "normal";
+    self.__type = "shoot";//SET THIS TO NORMAL WHEN YOURE DONE WITH SHOOTING
     self.__props = {};
 	self.__events = {};
 	self.__event_listeners = {};
@@ -671,12 +673,13 @@ function AnimationController(_character = "") constructor {
 	    self.__index = 0; 
 		self.__frame = 0;
 	    self.__types = {
-	        "normal": [""]
+	        "normal": [""],
+			"shoot": ["_shoot"]
 	    };
 	    self.__actions = [];
 		self.__animations = [];
 	    self.__animation = "";
-	    self.__type = "normal";
+	    self.__type = "shoot";//CHANGE THIS BACK TOO
 	    self.__props = {};
 		self.__events = {};
 		self.__current_animation = {
