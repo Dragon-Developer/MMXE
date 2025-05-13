@@ -68,6 +68,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			//shot offsets need to be applied. dark has something he was cookin on so i will leave it be
 			_inst.x = self.get_instance().x;
 			_inst.y = self.get_instance().y;
+			_inst.components.init();
 			//every projectile is the same object. melee attacks would be a seperate object
 			//so you can do seperate things depending on what hits what
 			

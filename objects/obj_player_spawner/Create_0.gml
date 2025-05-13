@@ -7,8 +7,8 @@ on_spawn = function(_player) {
 	["/normal", "/armor/x2/legs", "/armor/x1/helm"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", "x");
-	_player.components.publish("armor_set",
-	["x2_legs", "x1_helm"]);
+	//_player.components.publish("armor_set",
+	//["x2_legs", "x1_helm"]);
 	
 	if (current_spawn == global.local_player_index) {
 		var _camera = ENTITIES.create_instance(obj_camera);

@@ -8,9 +8,9 @@ function ComponentProjectile() : ComponentBase() constructor{
 	//self.weaponData = xBuster1Data;
 	self.weaponData = global.weapon_data;
 	
+	
 	self.init = function(){
-		log("work dammit")
-		self.weaponData.init();
+		self.weaponData().create();
 	}
 
 	//you need this because specific stuff needs to happen. if you
@@ -27,12 +27,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 	}
 	
 	self.step = function() {
-		if weaponData == noone return;
-		weaponData.step();
-	}
-	
-	self.draw = function() {
-		if weaponData == noone return;
-		weaponData.draw();
+		//if weaponData == noone return;
+		self.weaponData().step();
 	}
 }

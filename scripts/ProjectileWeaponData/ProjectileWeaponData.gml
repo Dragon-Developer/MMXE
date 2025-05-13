@@ -15,5 +15,5 @@ function ProjectileData() constructor{
 	
 	self.create = function(){/*do startup things here*/}
 	self.step = function(){/*do movement things here*/}
-	self.draw = function(){/*do animator things here*/}
+	return self;
 }

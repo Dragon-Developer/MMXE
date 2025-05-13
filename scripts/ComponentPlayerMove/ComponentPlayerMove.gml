@@ -9,7 +9,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.debug = global.debug;
 	self.camera = noone;
 	self.locked = false;
-	self.ride_armor = noone;
+	self.ride_armor = noone;//need to double check if this is good to be deleted
 	self.can_wall_jump = true;
 	self.states = {
 		walk: {
@@ -255,7 +255,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		return 0;
 	}
 		
-		
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
@@ -267,10 +266,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			self.fsm.trigger("t_animation_end");	
 		});
 	}
+	
 	// Initialization
 	self.init = function() {
 		self.fsm.trigger("t_init");
-
 	}
 	
 	// Sets the player's horizontal movement based on direction
