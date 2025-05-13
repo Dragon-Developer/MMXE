@@ -10,6 +10,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	//dark said no int based timers because we plastered them everywhere.
 	//current_time is in milliseconds!
 	self.shot_end_time = 0;
+	current_weapon = 0;//the weapon data, not the projectile or melee data.
+	self.weapon_list = [xBuster1Data];
+	
+	self.init = function(){
+		current_weapon = 0;//DONT ADD THE () IT WILL CAUSE ISSUES
+	}
 	
 	self.on_register = function(){
 		self.subscribe("components_update", function() {
@@ -41,17 +47,35 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		}
 		
 		if(self.input.get_input_pressed("shoot")){
+			//set the time for shooting to end. it's an offset so idk
 			self.shot_end_time = CURRENT_FRAME + 24;
 			self.get_instance().components.get(ComponentAnimation).animation.__type = "shoot";
 			
+			//if youre idle, do the shooting animation. 
 			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
-		
 			if(_anim_name == "idle"){
 				self.publish("animation_play_at_loop", { 
 					name: "shoot",
 					frame: 0
 				});
 			}
+			
+			//TEMP - REMOVE WHEN BETTER METHOD IS FOUND
+			global.weapon_data = self.weapon_list[self.current_weapon];
+			
+			//make the projectile lol
+			var _inst = ENTITIES.create_instance(par_projectile);
+			//shot offsets need to be applied. dark has something he was cookin on so i will leave it be
+			_inst.x = self.get_instance().x;
+			_inst.y = self.get_instance().y;
+			//every projectile is the same object. melee attacks would be a seperate object
+			//so you can do seperate things depending on what hits what
+			
+			//_inst.components.get(ComponentProjectile).weaponData = self.current_weapon.data;
+			
+			// the above code does not work. ill just make the projectile data a global
+			// variable until i can fix it later or dark/gacel (the guys with expereince)
+			// come up with a better fix
 		}
 	}
 }

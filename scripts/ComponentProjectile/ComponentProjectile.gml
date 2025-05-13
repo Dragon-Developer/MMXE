@@ -5,7 +5,13 @@ function ComponentProjectile() : ComponentBase() constructor{
 	//same with step, draw, etc
 	//run the create step when the ProjectileWeaponData is recieved
 
-	weaponData = noone;
+	//self.weaponData = xBuster1Data;
+	self.weaponData = global.weapon_data;
+	
+	self.init = function(){
+		log("work dammit")
+		self.weaponData.init();
+	}
 
 	//you need this because specific stuff needs to happen. if you
 	//REALLY want to move this to somewhere else, make sure to call
@@ -16,7 +22,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 			//some projectiles dont need physics and such, so they arent here. 
 			//i doubt all projectiles need the animation component too, but I
 			//can see the need to have a default animation controller.
-			weaponData.create();
+			weaponData.init();//init, not create
 		});
 	}
 	

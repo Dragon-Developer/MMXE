@@ -13,6 +13,9 @@ function global_init() {
 	
 	global.debug = false;
 	
+	//make it work, make it good, make it fast
+	global.weapon_data = noone;
+	
 	input_source_set(INPUT_KEYBOARD, 0);
 	window_set_size(2*GAME_W, 2*GAME_H);
 	window_center();

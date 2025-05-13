@@ -710,6 +710,16 @@
               }
             ]
           }
+        },{
+          "name": "shot_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
         }
       ]
     }
