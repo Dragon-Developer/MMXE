@@ -7,11 +7,16 @@ function ComponentProjectile() : ComponentBase() constructor{
 
 	//self.weaponData = xBuster1Data;
 	self.weaponData = global.weapon_data;
+	self.weap = noone;
 	
 	
 	self.init = function(){
 		self.publish("animation_play", { name: "jump" });
-		self.weaponData().create();
+		
+		self.weap = self.weaponData();
+		log(self.weap);
+		self.weap.create();
+		log(self.weap.create);
 	}
 
 	//you need this because specific stuff needs to happen. if you
