@@ -24,6 +24,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 			self.armors = _armors;
 		});
 		self.subscribe("animation_play", function(_animation) {
+			log(_animation.name);
 			_animation[$ "reset"] ??= false;
 			_animation[$ "keep_index"] ??= false;
 			var _index = self.animation.get_index();
@@ -128,13 +129,19 @@ function ComponentAnimation() : ComponentBase() constructor {
 
 		if (array_length(self.position_queue) == 0) {
 			var _inst = parent.get_instance();
-			return [
-				_inst.x, _inst.y,
-				self.animation.__animation, 
-				self.animation.__frame,
-				self.animation.get_props().action,
-				self.animation.__xscale,
-			];
+			//if(self.animation != noone)
+				//if(self.animation.__animation != noone){
+					var ret = [
+						_inst.x, _inst.y,
+						self.animation.__animation, 
+						self.animation.__frame,
+						self.animation.get_props().action,
+						self.animation.__xscale,
+					];
+					//log(self.animation.get_props().action);
+					return ret;
+				//}
+			return [_inst.x, _inst.y, "idle", 0, "idle", 1];
 		}
 
 		var _first = self.position_queue[0];

@@ -10,6 +10,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 	
 	
 	self.init = function(){
+		self.publish("animation_play", { name: "jump" });
 		self.weaponData().create();
 	}
 
@@ -24,10 +25,14 @@ function ComponentProjectile() : ComponentBase() constructor{
 			//can see the need to have a default animation controller.
 			weaponData.init();//init, not create
 		});
+		
+		self.subscribe("animation_end", function() {
+			//do something. will probably add functionality later.	
+		});
 	}
 	
 	self.step = function() {
 		//if weaponData == noone return;
-		self.weaponData().step();
+		self.weaponData.step();
 	}
 }

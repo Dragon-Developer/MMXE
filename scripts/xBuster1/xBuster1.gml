@@ -9,13 +9,12 @@ function xBuster1Data() : ProjectileData() constructor{
 	self.comboiness = 3;//one full volley of lemons
 	
 	self.create = function(){
-		self.get_instance().components.get(ComponentAnimation).max_queue_size = 0;
-		self.get_instance().components.get(ComponentAnimation).set_subdirectories(["/normal","/weapons"]);
-		self.get_instance().components.publish("character_set", "x");
 	}
 	self.step = function(){
-		self.get_instance().x++;
-		self.publish("animation_play", { name: "idle" });
+		//self.get_instance().x++;
+		draw_sprite(spr_block1,0,self.get_instance().x,self.get_instance().y)
+		log("starfish")
+		self.publish("animation_play", { name: "walk" });
 	}
 	return self;//so this might be important
 }

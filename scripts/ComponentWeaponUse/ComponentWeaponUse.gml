@@ -64,11 +64,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			global.weapon_data = self.weapon_list[self.current_weapon];
 			
 			//make the projectile lol
-			var _inst = ENTITIES.create_instance(par_projectile);
-			//shot offsets need to be applied. dark has something he was cookin on so i will leave it be
-			_inst.x = self.get_instance().x;
-			_inst.y = self.get_instance().y;
-			_inst.components.init();
+			instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
 			//every projectile is the same object. melee attacks would be a seperate object
 			//so you can do seperate things depending on what hits what
 			
