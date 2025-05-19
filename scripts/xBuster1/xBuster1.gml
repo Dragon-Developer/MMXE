@@ -7,14 +7,10 @@ function xBuster1() : ProjectileWeapon() constructor{
 function xBuster1Data() : ProjectileData() constructor{
 	//the lemon
 	self.comboiness = 3;//one full volley of lemons
-	
-	self.create = function(){
+	self.create = function(_inst){
+		_inst.components.publish("animation_play", { name: "walk" });
 	}
-	self.step = function(){
-		//self.get_instance().x++;
-		draw_sprite(spr_block1,0,self.get_instance().x,self.get_instance().y)
-		log("starfish")
-		self.publish("animation_play", { name: "walk" });
+	self.step = function(_inst){
+		_inst.x += self.dir;
 	}
-	return self;//so this might be important
 }

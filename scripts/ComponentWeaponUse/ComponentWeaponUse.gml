@@ -64,15 +64,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			global.weapon_data = self.weapon_list[self.current_weapon];
 			
 			//make the projectile lol
-			instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
-			//every projectile is the same object. melee attacks would be a seperate object
-			//so you can do seperate things depending on what hits what
-			
-			//_inst.components.get(ComponentProjectile).weaponData = self.current_weapon.data;
-			
-			// the above code does not work. ill just make the projectile data a global
-			// variable until i can fix it later or dark/gacel (the guys with expereince)
-			// come up with a better fix
+			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
+			//we need to pass the direction over. i dont know how as of this moment
 		}
 	}
 }

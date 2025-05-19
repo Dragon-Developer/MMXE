@@ -28,7 +28,7 @@ it is easy to overwrite weapon values, because of a specific armor or combinatio
 		something else that im not catching.
 */
 
-function WeaponData() constructor{
+function Weapon() constructor{
 	/*  
 		weaponData is for immutable stuff, like maximum ammo capacity and the such
 		this will be a parent class for projectileWeapon and MeleeWeapon, so this might not hold much\
@@ -65,5 +65,5 @@ function WeaponSlot() constructor{
 	*/
 	
 	self.ammo = 28;
-	self.weaponData = new WeaponData();//prematurely fill it with a dummy weapon data so it wont shit itself
+	self.weaponData = new Weapon();//prematurely fill it with a dummy weapon data so it wont shit itself
 }
