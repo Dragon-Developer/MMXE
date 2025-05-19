@@ -8,9 +8,11 @@ function xBuster1Data() : ProjectileData() constructor{
 	//the lemon
 	self.comboiness = 3;//one full volley of lemons
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "walk" });
+		//may make this default
+		_inst.components.publish("animation_play", { name: "shot" });
 	}
 	self.step = function(_inst){
 		_inst.x += self.dir;
+		draw_sprite(spr_editor_icons,0,_inst.x, _inst.y);
 	}
 }

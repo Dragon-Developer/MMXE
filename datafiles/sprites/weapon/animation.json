@@ -1,0 +1,61 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 8,
+        "y": 8
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "shot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "xShot1_die",
+          "properties": {
+            "action": "shot",
+            "keyframes": [
+              {
+                "key": 1,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 3,
+                "frame": 2
+              },
+              {
+                "key": 4,
+                "frame": 3
+              }
+            ]
+          }
+        }
+
+      ]
+    }
+  }
+}

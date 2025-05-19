@@ -50,9 +50,6 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		//Forte:
 		//some way to have all components not defined here still run their step method
 		//would make it easier to test
-		
-		//keeping the fixed step of operations would be a good idea. i would like player
-		//step and enemy step to happen before shooting, for example
 	}
 	self.step = function() {
 		self.game_timer += self.game_speed;
@@ -94,12 +91,9 @@ function GameLoop() : NET_GameLoopBase() constructor {
 			draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
 		}
 		
-		//put the final render step here?
-		//no, it doesnt render
 		with(obj_gui){
 			shader_set(shdr_snes_palette);
 			var scale = floor(fullSpace / colorSpace);
-			log(scale)
 			var deviation = floor(colorSpace / (fullSpace mod colorSpace));
 			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "scale"), scale);
 			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "deviation"), deviation);

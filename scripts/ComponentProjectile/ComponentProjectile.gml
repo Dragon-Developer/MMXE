@@ -12,7 +12,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 	//refreshed myself on structs. gonna see about making it work now.
 	
 	self.init = function(){
-		self.publish("animation_play", { name: "jump" });
+		self.publish("animation_play", { name: "shot" });
 		weaponCreate = new weaponData();
 		weaponCreate.create(self.get_instance());
 	}
