@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"AssetGetName",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"AssetGetName",
+  "parent":{
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

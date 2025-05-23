@@ -1,6 +1,7 @@
 function ProjectileWeapon() : Weapon() constructor{
-	self.data = noone;//hmmm
-	self.charge_time = 60;//i dont think mmxe uses this, but battle network has some busters charge faster than others
+	self.data = [noone,noone,noone,noone, noone];//hmmm
+	self.charge_time = [4, 63, 123, 183];//i dont think mmxe uses this, but battle network has some busters charge faster than others
+	self.charge_limit = 2;
 	self.animation_name = noone;//if its noone, then assume its _shoot. 
 }
 
@@ -12,4 +13,20 @@ function ProjectileData() constructor{
 	self.dir = 1;
 	self.damage = 1;
 	self.comboiness = 1;
+	self.init_time = CURRENT_FRAME;
+	self.general_init = function(_comp){
+		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
+	}
 }
+
+/*
+
+The basic idea with the weapon/data split is as follows
+	- the data holds things that can/will change as the projectile moves. this includes
+		things like instance variables, direction, damage, etc
+	- the weapon holds things that are immutable. this includes base charge time, animation,
+		the associated data, weaponbar cosmetics, and max energy. 
+	- if it's something that the projectile needs, put it in the data. if its something
+		the player needs to make the projectile work, put it in the weapon.
+
+*/

@@ -21,14 +21,14 @@ function AnimationController(_character = "") constructor {
     self.__color = c_white;
     self.__alpha = 1;
     self.__character = _character;
-    self.__types = {
+    self.__types = {//probably didnt need to hardcode this, but we need better doccumentation anyways. 
         "normal": [""],
 		"shoot": ["_shoot"]
     };
     self.__actions = [];
 	self.__animations = [];
     self.__animation = "";
-    self.__type = "shoot";//SET THIS TO NORMAL WHEN YOURE DONE WITH SHOOTING
+    self.__type = "normal";
     self.__props = {};
 	self.__events = {};
 	self.__event_listeners = {};
@@ -576,7 +576,8 @@ function AnimationController(_character = "") constructor {
 		var _alpha = self.__alpha;
 		if (is_undefined(_sprite)) return self;
 		if (!CollageIsImage(_sprite) && !sprite_exists(_sprite)) return self;
-        draw_image_ext(_sprite, _index, _x, _y, _xscale, _yscale, _angle, _color, _alpha);    
+        draw_image_ext(_sprite, _index, _x, _y, _xscale, _yscale, _angle, _color, _alpha); 
+		//log(string(_sprite))
 		return self;
 	}
 	/// @returns {bool}
@@ -679,7 +680,7 @@ function AnimationController(_character = "") constructor {
 	    self.__actions = [];
 		self.__animations = [];
 	    self.__animation = "";
-	    self.__type = "shoot";//CHANGE THIS BACK TOO
+	    self.__type = "normal";
 	    self.__props = {};
 		self.__events = {};
 		self.__current_animation = {

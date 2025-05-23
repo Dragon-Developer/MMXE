@@ -16,6 +16,12 @@
       "type_combinations": [
         [
           ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
         ]
       ],
       "list": [
@@ -31,9 +37,20 @@
           }
         },
         {
+          "name": "xShot1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "xShot1_die",
           "properties": {
-            "action": "shot",
+            "action": "xShot1",
             "keyframes": [
               {
                 "key": 1,

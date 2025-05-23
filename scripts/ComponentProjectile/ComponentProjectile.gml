@@ -13,8 +13,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 	
 	self.init = function(){
 		self.publish("animation_play", { name: "shot" });
-		weaponCreate = new weaponData();
-		weaponCreate.create(self.get_instance());
+		
 	}
 
 	//you need this because specific stuff needs to happen. if you
@@ -24,9 +23,16 @@ function ComponentProjectile() : ComponentBase() constructor{
 		self.subscribe("animation_end", function() {
 			//do something. will probably add functionality later.	
 		});
+		self.subscribe("weapon_data_set", function(_dir) {
+			weaponCreate = new weaponData();
+			weaponCreate.general_init(self);
+			weaponCreate.create(self.get_instance());	
+			weaponCreate.dir = _dir;
+		});
 	}
 	
 	self.step = function() {
+		if weaponCreate = noone return;
 		weaponCreate.step(self.get_instance());
 	}
 }

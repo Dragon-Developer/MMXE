@@ -8,13 +8,14 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	*/
 	
 	//dark said no int based timers because we plastered them everywhere.
-	//current_time is in milliseconds!
+	//current_time is in milliseconds! use CURRENT_FRAME!
 	self.shot_end_time = 0;
-	current_weapon = 0;//the weapon data, not the projectile or melee data.
-	self.weapon_list = [xBuster1Data];
+	self.current_weapon = 0;//the weapon data, not the projectile or melee data.
+	self.weapon_list = [new xBuster()];
+	self.charge_start_time = -1;
 	
 	self.init = function(){
-		current_weapon = 0;//DONT ADD THE () IT WILL CAUSE ISSUES
+		current_weapon = 0;
 	}
 	
 	self.on_register = function(){
@@ -46,26 +47,71 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			}
 		}
 		
-		if(self.input.get_input_pressed("shoot")){
-			//set the time for shooting to end. it's an offset so idk
+		if(self.input.get_input_pressed("shoot") || self.input.get_input_released("shoot")){
+			
+			var _shot_code = noone;
+			
+			if(self.input.get_input_released("shoot")){
+				if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[3] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 4){
+						_shot_code = self.weapon_list[self.current_weapon].data[4];
+				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[2] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 3){
+						_shot_code = self.weapon_list[self.current_weapon].data[3];
+				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[1] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 2){
+						_shot_code = self.weapon_list[self.current_weapon].data[2];
+				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[0] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
+						_shot_code = self.weapon_list[self.current_weapon].data[1];
+				}
+			} else {
+				_shot_code = self.weapon_list[self.current_weapon].data[0];
+			}
+			
+			//set the time for shooting to end
 			self.shot_end_time = CURRENT_FRAME + 24;
 			self.get_instance().components.get(ComponentAnimation).animation.__type = "shoot";
 			
-			//if youre idle, do the shooting animation. 
+			//if youre idle, do the shooting animation
 			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
-			if(_anim_name == "idle"){
-				self.publish("animation_play_at_loop", { 
-					name: "shoot",
-					frame: 0
-				});
+			if(_anim_name == "idle" || _anim_name == "shoot"){
+				self.publish("animation_play", { name: "shoot" });
+				self.get_instance().components.get(ComponentAnimation).animation.__type = "normal";
 			}
 			
-			//TEMP - REMOVE WHEN BETTER METHOD IS FOUND
-			global.weapon_data = self.weapon_list[self.current_weapon];
-			
-			//make the projectile lol
+			//make the projectile
 			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
-			//we need to pass the direction over. i dont know how as of this moment
+			_shot.dir = self.get_instance().components.get(ComponentAnimation).animation.__xscale;
+			_shot.weaponData = _shot_code;
+		
+			//Charge reset/start
+			if(self.input.get_input_released("shoot")){
+				self.charge_start_time = -1;//if it's -1, then we arent charging. 
+			} else {
+				self.charge_start_time = CURRENT_FRAME;
+			}
+		}
+	}
+	
+	self.draw = function(){
+		log(self.input.get_input_released("shoot"));
+		if(self.charge_start_time == -1) return;
+		
+		if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[3] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 4){
+			//this is too far! i didnt get graphics yet!
+		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[2] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 3){
+			//this is too far! i didnt get graphics yet!
+		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[1] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 2){
+				draw_sprite(Player_Charge_2,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
+		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[0] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
+				draw_sprite(Player_Charge_1,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
+		} else {
+			log("no charge!")
 		}
 	}
 }

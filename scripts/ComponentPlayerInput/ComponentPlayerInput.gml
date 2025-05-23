@@ -1,6 +1,7 @@
 function ComponentPlayerInput() : ComponentInputBase() constructor {
     self.__input = GAME.inputs.getEmptyInput();
     self.__inputPressed = GAME.inputs.getEmptyInput();
+    self.__inputReleased = GAME.inputs.getEmptyInput();
 	self.__swap_horizontal = false;
 	self.__player_index = 0;
 	self.__locked = false;
@@ -9,6 +10,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	self.serializer
 		.addClone("__input")
 		.addClone("__inputPressed")
+		.addClone("__inputReleased")
 		.addClone("__swap_horizontal")
 		.addClone("__player_index")
 	self.set_swap_horizontal = function(_value) {
@@ -36,7 +38,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	    array_foreach(self.verbs, function(_verb) {
 	        var _isPressed = self.__input_check(_verb);
 	        self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
-	        self.__input[$ _verb] = _isPressed;
+	        self.__inputReleased[$ _verb] = struct_exists(self.__input, _verb) && self.__input[$ _verb] && !_isPressed;
+			self.__input[$ _verb] = _isPressed;
 	    });
     };
 	
@@ -51,6 +54,11 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 
     self.get_input_pressed = function(_verb) {
         if (struct_exists(self.__inputPressed, _verb)) return self.__inputPressed[$ _verb];
+		return false;
+    };
+	
+	self.get_input_released = function(_verb) {
+        if (struct_exists(self.__inputReleased, _verb)) return self.__inputReleased[$ _verb];
 		return false;
     };
 	

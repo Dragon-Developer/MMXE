@@ -24,7 +24,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 			self.armors = _armors;
 		});
 		self.subscribe("animation_play", function(_animation) {
-			log(_animation.name);
+			//log(_animation.name);
 			_animation[$ "reset"] ??= false;
 			_animation[$ "keep_index"] ??= false;
 			var _index = self.animation.get_index();
@@ -177,6 +177,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 			.set_xscale(_xscale)
 			.set_angle(-self.rotation_angle)
 			.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+			//log(_action)
 			
 		for (var _q = 0; _q < array_length(self.armors); _q++){
 			self.animation.draw_action(_action, self.armors[_q], _frame, floor(_x), floor(_y));
