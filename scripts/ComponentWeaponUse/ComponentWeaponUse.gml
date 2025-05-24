@@ -64,6 +64,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[0] < CURRENT_FRAME
 					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
 						_shot_code = self.weapon_list[self.current_weapon].data[1];
+				} else {
+					self.charge_start_time = -1;
+					return;//end code prematurely
 				}
 			} else {
 				_shot_code = self.weapon_list[self.current_weapon].data[0];
@@ -95,7 +98,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 	
 	self.draw = function(){
-		log(self.input.get_input_released("shoot"));
+		//log(self.input.get_input_released("shoot"));
 		if(self.charge_start_time == -1) return;
 		
 		if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[3] < CURRENT_FRAME
@@ -111,7 +114,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
 				draw_sprite(Player_Charge_1,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
 		} else {
-			log("no charge!")
+			//log("no charge!")
 		}
 	}
 }

@@ -5,8 +5,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 	//same with step, draw, etc
 	//run the create step when the ProjectileWeaponData is recieved
 
-	//self.weaponData = xBuster1Data;
-	self.weaponData = xBuster1Data;
+	self.weaponData = xBuster11Data;
 	self.weaponCreate = noone;
 	
 	//refreshed myself on structs. gonna see about making it work now.
@@ -24,6 +23,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 			//do something. will probably add functionality later.	
 		});
 		self.subscribe("weapon_data_set", function(_dir) {
+			//log(weaponData);
 			weaponCreate = new weaponData();
 			weaponCreate.general_init(self);
 			weaponCreate.create(self.get_instance());	

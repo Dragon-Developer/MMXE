@@ -1,7 +1,7 @@
 event_inherited();
 entity_object = par_projectile;
 dir = 1;
-weaponData = xBuster1Data;
+weaponData = xBuster11Data;
 on_spawn = function(_shot) {
 	_shot.components.publish("character_set", "weapon");
 	_shot.components.get(ComponentAnimation).set_subdirectories(["/normal"]);

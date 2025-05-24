@@ -5,6 +5,12 @@
         "x": 8,
         "y": 8
       }
+    },
+    "xShot1": {
+      "origin": {
+        "x": 132,
+        "y": 132
+      }
     }
   },
   "data": {
@@ -38,6 +44,28 @@
         },
         {
           "name": "xShot1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "xShot2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "xShot3X1",
           "properties": {
             "keyframes": [
               {

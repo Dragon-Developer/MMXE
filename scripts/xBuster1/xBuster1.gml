@@ -25,7 +25,7 @@ function xBuster11Data() : ProjectileData() constructor{
 function xBuster12Data() : ProjectileData() constructor{
 	self.comboiness = 2;//same combo damage as lemons, so it could be a good combo ender?
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "xShot1" });
+		_inst.components.publish("animation_play", { name: "xShot2" });
 	}
 	self.step = function(_inst){
 		
@@ -42,7 +42,7 @@ function xBuster12Data() : ProjectileData() constructor{
 function xBuster13Data() : ProjectileData() constructor{
 	self.comboiness = 1;
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "xShot1" });
+		_inst.components.publish("animation_play", { name: "xShot3X1" });
 	}
 	self.step = function(_inst){
 		var _hspd = 0;
