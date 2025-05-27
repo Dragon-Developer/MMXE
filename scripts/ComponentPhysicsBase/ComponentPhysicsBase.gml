@@ -1,4 +1,4 @@
-function ComponentPhysicsBase() : ComponentBase() constructor {
+1function ComponentPhysicsBase() : ComponentBase() constructor {
 	self.add_tags("physics");
 	self.set_speed = function(_x, _y) {}
 	self.get_hspd = function() { return 0; }

@@ -14,6 +14,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.weapon_list = [new xBuster()];
 	self.charge_start_time = -1;
 	
+	self.serializer
+		.addVariable("shot_end_time")
+		.addVariable("current_weapon")
+		.addVariable("weapon_list")
+		.addVariable("charge_start_time");
+	
 	self.init = function(){
 		current_weapon = 0;
 	}

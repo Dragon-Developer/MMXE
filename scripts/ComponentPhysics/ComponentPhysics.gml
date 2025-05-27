@@ -9,7 +9,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.check_slopes = false;
 	self.objects = {
 		block: obj_square_16,
-		projectile : obj_square_16
+		projectile : par_projectile
 	};
 	self.serializer = new NET_Serializer(self);
 	self.serializer

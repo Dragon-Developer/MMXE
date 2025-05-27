@@ -60,8 +60,41 @@
               {
                 "key": 0,
                 "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 7,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 9,
+                "frame": 6
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 4
               }
-            ]
+            ],
+            "loop_begin": 7
           }
         },
         {
@@ -71,8 +104,29 @@
               {
                 "key": 0,
                 "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 4
               }
-            ]
+            ],
+            "loop_begin": 5
           }
         },
         {

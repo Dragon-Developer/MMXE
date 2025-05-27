@@ -8,6 +8,12 @@ function ComponentProjectile() : ComponentBase() constructor{
 	self.weaponData = xBuster11Data;
 	self.weaponCreate = noone;
 	
+	
+	self.serializer = new NET_Serializer(self);
+	self.serializer
+		.addVariable("weaponData")
+		.addVariable("weaponCreate");
+	
 	//refreshed myself on structs. gonna see about making it work now.
 	
 	self.init = function(){
@@ -32,7 +38,12 @@ function ComponentProjectile() : ComponentBase() constructor{
 	}
 	
 	self.step = function() {
-		if weaponCreate = noone return;
+		//log(self.)
+		if weaponCreate == noone || weaponCreate == undefined return;//
+		if (!variable_struct_exists(
+		weaponCreate, 
+		"step")) 
+			return;
 		weaponCreate.step(self.get_instance());
 	}
 }

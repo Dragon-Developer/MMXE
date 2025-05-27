@@ -302,6 +302,7 @@ function AnimationController(_character = "") constructor {
 	/// @returns {AnimationController} self
     static advance_frame = function() {
 		if (self.__animation == "") return;
+		if (self.__current_animation == "" || self.__current_animation == undefined) return;
 	    var _loop_begin = 0;
 	    if (struct_exists(self.__props, self.__animation)) {
 	        var _props = self.__props[$ self.__animation];
@@ -311,6 +312,11 @@ function AnimationController(_character = "") constructor {
 	    }
     
 	    var _props = self.__props[$ self.__animation];
+		
+		if(!variable_struct_exists(__current_animation,"mode")){
+			variable_struct_set(__current_animation,"mode", ANIMATION_MODE.KEYFRAMES)
+		}
+		
 		// Key-frames mode
 	    if (self.__current_animation.mode == ANIMATION_MODE.KEYFRAMES) {
 			var _max_key = _props[$ "max_key"];
@@ -582,6 +588,7 @@ function AnimationController(_character = "") constructor {
 	}
 	/// @returns {bool}
     static on_end = function() {
+		if(self.__current_animation == undefined) return false;
 		var _next_index = self.__index + self.__current_animation.speed * self.__speed;
 		var _length = self.get_length();
         return (_next_index >= _length);

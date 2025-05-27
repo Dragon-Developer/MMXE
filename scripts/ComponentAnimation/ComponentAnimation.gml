@@ -129,19 +129,26 @@ function ComponentAnimation() : ComponentBase() constructor {
 
 		if (array_length(self.position_queue) == 0) {
 			var _inst = parent.get_instance();
-			//if(self.animation != noone)
-				//if(self.animation.__animation != noone){
+			if(self.animation != noone)
+				if(self.animation.__animation != noone){
+					var _action = "missing";
+					var _props = self.animation.get_props()
+					//log(_props)
+					if(_props != undefined){
+						if(variable_struct_exists(_props,"action")){
+							_action = _props.action;
+						}
+					}
+					
 					var ret = [
 						_inst.x, _inst.y,
 						self.animation.__animation, 
 						self.animation.__frame,
-						self.animation.get_props().action,
+						_action,
 						self.animation.__xscale,
 					];
-					//log(self.animation.get_props().action);
 					return ret;
-				//}
-			return [_inst.x, _inst.y, "idle", 0, "idle", 1];
+				}
 		}
 
 		var _first = self.position_queue[0];
