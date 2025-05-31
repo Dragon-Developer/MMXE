@@ -6,8 +6,8 @@
   "name":"obj_square_16",
   "overriddenProperties":[],
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Blocks/Collision.yy",
   },
   "parentObjectId":{
     "name":"obj_square_parent",

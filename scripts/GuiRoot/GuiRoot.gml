@@ -15,8 +15,8 @@ function GuiRoot() : GuiContainer() constructor {
 			}, global.server.getAllSockets());
 		
 		
-		room_goto(1);//this is bad. while rooms are stored as integer pointers, this
-	}// goes to whatever level is loaded as #1
+		room_goto(_id);
+	}
 	
 	startEditor = function(){
 		hudContainer.setEnabled(true);

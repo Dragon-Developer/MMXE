@@ -8,8 +8,8 @@
   "name":"par_enemy",
   "overriddenProperties":[],
   "parent":{
-    "name":"ECS",
-    "path":"folders/Objects/ECS.yy",
+    "name":"Parent",
+    "path":"folders/Objects/Enemies/Parent.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",

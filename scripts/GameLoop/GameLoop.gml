@@ -72,26 +72,27 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		
-		if(!self.debug) return;
+		if(self.debug){
 		
-		ENTITIES.for_each_component(ComponentPlayerMove, _draw_gui);
-		ENTITIES.for_each_component(ComponentCameraRecorder, _draw_gui);
+			ENTITIES.for_each_component(ComponentPlayerMove, _draw_gui);
+			ENTITIES.for_each_component(ComponentCameraRecorder, _draw_gui);
 		
-		var _gui_width = display_get_gui_width();
-		var _gui_height = display_get_gui_height();
+			var _gui_width = display_get_gui_width();
+			var _gui_height = display_get_gui_height();
 		
-		draw_set_valign(fa_top);
-		draw_set_halign(fa_right);
-		draw_set_color(c_white);
+			draw_set_valign(fa_top);
+			draw_set_halign(fa_right);
+			draw_set_color(c_white);
 		
-		draw_text(_gui_width - 16, 16, $"frame: {parent.__current_frame}");
-		draw_text(_gui_width - 16, 32, $"delay: {parent.__input_delay}");
-		draw_text(_gui_width - 16, 64, $"mode: {parent.__mode}");
-		if (!is_undefined(global.socket)) {
-			draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
+			draw_text(_gui_width - 16, 16, $"frame: {parent.__current_frame}");
+			draw_text(_gui_width - 16, 32, $"delay: {parent.__input_delay}");
+			draw_text(_gui_width - 16, 64, $"mode: {parent.__mode}");
+			if (!is_undefined(global.socket)) {
+				draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
+			}
 		}
 		
-		with(obj_gui){
+		/*with(obj_gui){
 			shader_set(shdr_snes_palette);
 			var scale = floor(fullSpace / colorSpace);
 			var deviation = floor(colorSpace / (fullSpace mod colorSpace));
@@ -99,6 +100,6 @@ function GameLoop() : NET_GameLoopBase() constructor {
 			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "deviation"), deviation);
 			draw_surface_stretched(application_surface, 0,0, GAME_W, GAME_H);
 			shader_reset();
-		}
+		}*/
 	}
 }

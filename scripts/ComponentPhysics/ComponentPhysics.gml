@@ -100,6 +100,11 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		
 		if (self.is_on_floor()) self.set_vspd(0);
     }
+	
+	draw_gui = function(){
+		var _inst = self.get_instance();
+		draw_point_color(_inst.x,_inst.y,#ffffff);
+	}
 	/**
 	 * Checks if the entity is colliding with an object at a given position.
 	 * @param {real} x - X position.

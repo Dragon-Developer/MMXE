@@ -8,11 +8,25 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.camera = -1;
 	self.flipped_y = false;
 	self.target = noone;
+	self.bounds = noone;//if bounds are noone, just lock onto player pos. otherwise, abide by bounds
+	self.physics = noone;
+	
+	self.movement_limit_x = 4;//the camera cant move faster than this
+	self.movement_limit_y = 7;
+	
+	self.bounds_top_left_x = 4;
+	self.bounds_top_left_y = 0;
+	self.bounds_bottom_right_x = 356;
+	self.bounds_bottom_right_y = 0;
 	
 	self.on_register = function() {
 		self.subscribe("target_set", function(_target) {
 			self.target = _target;
 			_target.components.publish("camera_set", self);
+		});
+		self.subscribe("components_update", function() {
+			//so I can get if the player collides with a camera trigger
+			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 		});
 	}
 	
@@ -40,6 +54,9 @@ function ComponentCamera() : ComponentBase() constructor {
 		self.angle = self.rotation_controller.current_angle;
 		camera_set_view_angle(self.camera, self.angle);
 		/* this keyboard check doesn't work well in multiplayer
+		
+		forte: this would be great if it was based on collisions
+		
 		if (keyboard_check_pressed(ord("1"))) {
 			self.flip_y();	
 		}
@@ -48,18 +65,64 @@ function ComponentCamera() : ComponentBase() constructor {
 				self.start_rotation(self.rotation_controller.current_angle - 90);	
 		}*/
 		if(self.target == noone) return;
+		//ill keep the bounds limited to if you have a target
+		//this way, cutscenes can manually move the camera without 
+		//worry about bounds messing something up
+		with(self.get_instance()){
+			if(place_meeting(other.target.x,other.target.y,obj_camera_changer)){
+				log("chamera chamger")
+				other.bounds = instance_place(other.target.x,other.target.y,obj_camera_changer);
+			}
+		}
+		
+		if(self.bounds != noone){
+			with(obj_camera_zone){
+				if(camera_id = other.bounds.camera_id){
+					var _width  = image_xscale * 16;
+					var _height = image_yscale * 16;
+					other.bounds_bottom_right_x = x + _width - GAME_W;
+					other.bounds_bottom_right_y = y + _height - GAME_H;
+					other.bounds_top_left_x = x;
+					other.bounds_top_left_y = y;
+				}
+			}
+		}
 		
 		self.update_pos(self.target.x,self.target.y);
     }
 	
 	self.update_pos = function(_x, _y) {
+		
 		var _cam_x = floor(_x - self.width / 2);
 		var _cam_y = floor(_y - self.height / 2);
+		
+		_cam_x = clamp(_cam_x, self.bounds_top_left_x, self.bounds_bottom_right_x);
+		_cam_y = clamp(_cam_y, self.bounds_top_left_y, self.bounds_bottom_right_y);
+		
+		if(abs(x - _cam_x) > self.movement_limit_x){
+			if(x > _cam_x){
+				_cam_x = x - self.movement_limit_x;
+			} else {
+				_cam_x = x + self.movement_limit_x;
+			}
+		}
+		
+		if(abs(y - _cam_y) > self.movement_limit_y){
+			if(y > _cam_y){
+				_cam_y = y - self.movement_limit_y;
+			} else {
+				_cam_y = y + self.movement_limit_y;
+			}
+		}
+		
+		
 		if (self.flipped_y) {
 			camera_set_view_pos(self.camera, _cam_x, _cam_y + self.height);
 		} else {
 			camera_set_view_pos(self.camera, _cam_x, _cam_y);
 		}
+		self.x = _cam_x;
+		self.y = _cam_y;
 	}
 	
 	self.set_target = function(_target){

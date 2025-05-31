@@ -20,9 +20,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
-		var _hit = self.check_for_collision();
 		
 		if(self.invuln_offset < CURRENT_FRAME) return;
+		
+		var _hit = self.check_for_collision();
 		
 		if(_hit){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
@@ -30,6 +31,11 @@ function ComponentDamageable() : ComponentBase() constructor{
 	}
 	
 	self.check_for_collision = function(){//seperated because this will definitely be expanded later
-		return self.physics.check_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
+		//place_meeting takes all masks into account, so I only need the one
+		var _proj = self.physics.check_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
+		if(_proj.components.get(ComponentProjectile).weaponCreate.damage > 0){
+			self.health -= _proj.components.get(ComponentProjectile).weaponCreate.damage;
+			self.publish("took damage", self.health);//so other components dont need to hook into this to get info
+		}
 	}
 }

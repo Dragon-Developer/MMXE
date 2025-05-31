@@ -6,8 +6,8 @@
   "name":"obj_slope_zone",
   "overriddenProperties":[],
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Blocks/Collision.yy",
   },
   "parentObjectId":null,
   "persistent":false,

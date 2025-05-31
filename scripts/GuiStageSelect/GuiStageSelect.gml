@@ -18,14 +18,49 @@ function GuiStageSelect() : GuiContainer() constructor {
 	StageButtons = [];
 	Stages = [rm_desert_bus, rm_test,rm_horizontal_test, rm_gate_2]
 	
-	for(var q = 1; q < array_length(Stages); q++){
-		StageButtons[q - 1] = new GuiButton(200, 32, room_get_name(Stages[q]));
-		StageButtons[q - 1].addEventListener("click", function() { 
-			global.game = new GameOffline();
-			self.setEnabled(false);
-			parent.startGame(self);
-		});
-	}
+	//TIME TO DO THIS SHIT MANUALLY!
+	
+	StageButtons[0] = new GuiButton(200, 32, "Test Room Desert Bus");
+	StageButtons[0].addEventListener("click", function() { 
+		global.game = new GameOffline();
+		self.setEnabled(false);
+		parent.startGame(1);
+	});
+	
+	StageButtons[1] = new GuiButton(200, 32, "Test Room Single");
+	StageButtons[1].addEventListener("click", function() { 
+		global.game = new GameOffline();
+		self.setEnabled(false);
+		parent.startGame(2);
+	});
+	
+	StageButtons[2] = new GuiButton(200, 32, "Test Room Horizontal");
+	StageButtons[2].addEventListener("click", function() { 
+		global.game = new GameOffline();
+		self.setEnabled(false);
+		parent.startGame(3);
+	});
+	
+	StageButtons[3] = new GuiButton(200, 32, "Gate 2");
+	StageButtons[3].addEventListener("click", function() { 
+		global.game = new GameOffline();
+		self.setEnabled(false);
+		parent.startGame(4);
+	});
+	
+	StageButtons[4] = new GuiButton(200, 32, "Explose Horneck");
+	StageButtons[4].addEventListener("click", function() { 
+		global.game = new GameOffline();
+		self.setEnabled(false);
+		parent.startGame(5);
+	});
+	
+	StageButtons[5] = new GuiButton(200, 32, "infinite test");
+	StageButtons[5].addEventListener("click", function() { 
+		global.game = new GameOffline();
+		self.setEnabled(false);
+		parent.startGame(6);
+	});
     
     mainContainer.addChild(StageButtons);
     addChild(mainContainer);

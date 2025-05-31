@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Blocks/Collision.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -79,13 +79,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			}
 			
 			//set the time for shooting to end
-			self.shot_end_time = CURRENT_FRAME + 24;
+			self.shot_end_time = CURRENT_FRAME + 15;
 			self.get_instance().components.get(ComponentAnimation).animation.__type = "shoot";
 			
 			//if youre idle, do the shooting animation
 			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
 			if(_anim_name == "idle" || _anim_name == "shoot"){
-				self.publish("animation_play", { name: "shoot" });
+				self.publish("animation_play_at_Loop", { name: "shoot" ,frame: 0});
 				self.get_instance().components.get(ComponentAnimation).animation.__type = "normal";
 			}
 			

@@ -39,10 +39,10 @@ function ComponentAnimation() : ComponentBase() constructor {
 			_animation[$ "keep_index"] ??= false;
 			var _index = self.animation.get_index();
 			self.animation.play_at_loop(_animation.name, _animation.reset);
-			self.animation.__frame = _animation.frame;
 			if (_animation.keep_index) {
 				self.animation.set_index(_index);	
 			}
+			self.animation.__frame = _animation.frame;
 		});
 		self.subscribe("animation_xscale", function(_xscale) {
 			self.animation.set_xscale(_xscale)

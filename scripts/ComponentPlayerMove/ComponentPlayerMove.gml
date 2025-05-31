@@ -13,10 +13,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.can_wall_jump = true;
 	self.states = {
 		walk: {
-			speed: 1.75,	
+			speed: 376/256,	
 		},
 		dash: {
-			speed: 3.5,	
+			speed: 885/256,	
 			interval: 32
 		},
 		jump: {
