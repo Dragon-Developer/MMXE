@@ -5,7 +5,7 @@ function xBuster() : ProjectileWeapon() constructor{
 
 function xBuster11Data() : ProjectileData() constructor{
 	//the lemon
-	self.comboiness = 3;//one full volley of lemons
+	self.comboiness = 0;//one full volley of lemons
 	self.create = function(_inst){
 		//log(init_time)
 		//may make this default
@@ -23,7 +23,7 @@ function xBuster11Data() : ProjectileData() constructor{
 }
 
 function xBuster12Data() : ProjectileData() constructor{
-	self.comboiness = 2;//same combo damage as lemons, so it could be a good combo ender?
+	self.comboiness = 1;//same combo damage as lemons, so it could be a good combo ender?
 	self.create = function(_inst){
 		_inst.components.publish("animation_play", { name: "xShot2" });
 	}
@@ -40,7 +40,7 @@ function xBuster12Data() : ProjectileData() constructor{
 }
 
 function xBuster13Data() : ProjectileData() constructor{
-	self.comboiness = 1;
+	self.comboiness = 2;
 	self.create = function(_inst){
 		_inst.components.publish("animation_play", { name: "xShot3X1" });
 	}

@@ -12,7 +12,7 @@ function ProjectileData() constructor{
 	*/
 	self.dir = 1;
 	self.damage = 1;
-	self.comboiness = 1;
+	self.comboiness = 1;//gonna follow z3's system
 	self.init_time = CURRENT_FRAME;
 	self.general_init = function(_comp){
 		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
