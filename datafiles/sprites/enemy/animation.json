@@ -163,8 +163,9 @@
           }
         },
         {
-          "name": "walk",
+          "name": "batAttacking",
           "properties": {
+            "action": "batIdle",
             "keyframes": [
               {
                 "key": 0,
@@ -219,7 +220,7 @@
           }
         },
         {
-          "name": "jump",
+          "name": "batIdle",
           "properties": {
             "keyframes": [
               {

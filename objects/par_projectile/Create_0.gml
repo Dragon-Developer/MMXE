@@ -2,7 +2,8 @@ event_inherited();
 
 components.add([
 	ComponentProjectile,
-	ComponentAnimation
+	ComponentAnimation,
+	ComponentMask
 ]);
 
 components.init();

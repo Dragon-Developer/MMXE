@@ -21,21 +21,49 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.step = function(){
 		
-		if(self.invuln_offset < CURRENT_FRAME) return;
+		//log(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_player))
+		if(instance_exists(obj_player)){
+			//log(self.get_instance().mask_index)
+			if(self.get_instance().mask_index == -1){
+				self.get_instance().mask_index = spr_player_mask;	
+			}
+		}
 		
-		var _hit = self.check_for_collision();
+		//log(self.invuln_offset < CURRENT_FRAME)
 		
-		if(_hit){
+		if(self.invuln_offset > CURRENT_FRAME) return;
+		
+		self.check_for_collision();
+		
+		//log("im here")
+		if(1 == 0){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 		}
 	}
 	
 	self.check_for_collision = function(){//seperated because this will definitely be expanded later
 		//place_meeting takes all masks into account, so I only need the one
-		var _proj = self.physics.check_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
+		var _proj = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
+		
+		//log(_proj)
+		
+		if(!variable_instance_exists(_proj, "components")) return;
+		//log("hit")
 		if(_proj.components.get(ComponentProjectile).weaponCreate.damage > 0){
 			self.health -= _proj.components.get(ComponentProjectile).weaponCreate.damage;
 			self.publish("took damage", self.health);//so other components dont need to hook into this to get info
+		}
+		if(self.health < 0)
+		{
+			ENTITIES.destroy_instance(self.get_instance());
+		}
+		if(_proj!=noone || _proj != undefined)
+		{
+			log("ded");
+		}
+		else
+		{
+			log("unded");
 		}
 	}
 }

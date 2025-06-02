@@ -18,7 +18,9 @@ function ComponentProjectile() : ComponentBase() constructor{
 	
 	self.init = function(){
 		self.publish("animation_play", { name: "shot" });
-		
+		if(self.get_instance().mask_index == -1){
+				self.get_instance().mask_index = spr_player_mask;	
+			}
 	}
 
 	//you need this because specific stuff needs to happen. if you

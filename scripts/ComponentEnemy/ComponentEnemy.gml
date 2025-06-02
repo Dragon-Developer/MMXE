@@ -5,7 +5,7 @@ function ComponentEnemy() : ComponentBase() constructor{
 		self.publish("animation_play", { name: "idle" });
 	}
 	
-	self.EnemyData = xBuster11Data;//enemy 
+	self.EnemyData = BaseEnemy;//enemy 
 	self.EnemyEnum = noone;
 	
 	
@@ -22,22 +22,24 @@ function ComponentEnemy() : ComponentBase() constructor{
 		self.subscribe("animation_end", function() {
 			//do something. will probably add functionality later.	
 		});
-		self.subscribe("enemy_data_set", function(_dir) {
-			//log(weaponData);
+		self.subscribe("enemy_data_set", function(_dir){
+			EnemyData = _dir;
 			EnemyEnum = new EnemyData();
-			EnemyEnum.general_init(self);
-			EnemyEnum.create(self.get_instance());	
-			EnemyEnum.dir = _dir;
+			EnemyEnum.setComponent(self);
+			EnemyEnum.init(self.get_instance());	
+			
 		});
 	}
 	
 	self.step = function() {
-		//log(self.)
+		log(EnemyData);
+		log(BaseEnemy);
 		if EnemyEnum == noone || EnemyEnum == undefined return;//
 		if (!variable_struct_exists(
 		EnemyEnum, 
 		"step")) 
 			return;
-		EnemyEnum.step(self.get_instance());
+		EnemyEnum.step(self);
+		self.get_constructor();
 	}
 }
