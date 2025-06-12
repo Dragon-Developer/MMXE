@@ -35,6 +35,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 			weaponCreate = new weaponData();
 			weaponCreate.general_init(self);
 			weaponCreate.create(self.get_instance());	
+			self.publish("animation_xscale", _dir)
 			weaponCreate.dir = _dir;
 		});
 	}

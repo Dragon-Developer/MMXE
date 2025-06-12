@@ -6,7 +6,7 @@
   "name":"ProjectileWeaponData",
   "parent":{
     "name":"Projectile",
-    "path":"folders/Scripts/Weapons/Projectile.yy",
+    "path":"folders/Scripts/Game/Weapons/Projectile.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

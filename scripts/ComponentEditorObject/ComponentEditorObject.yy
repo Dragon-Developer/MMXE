@@ -6,7 +6,7 @@
   "name":"ComponentEditorObject",
   "parent":{
     "name":"Components",
-    "path":"folders/Scripts/Level Editor/Components.yy",
+    "path":"folders/Scripts/Game/Level Editor/Components.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

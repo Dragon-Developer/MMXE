@@ -6,7 +6,7 @@
   "name":"GuiBase",
   "parent":{
     "name":"Base",
-    "path":"folders/HazyGUI/Components/Base.yy",
+    "path":"folders/Scripts/LIbraries/HazyGUI/Components/Base.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

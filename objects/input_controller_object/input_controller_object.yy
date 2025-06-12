@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"(System)",
-    "path":"folders/Input/(System).yy",
+    "path":"folders/Scripts/LIbraries/Input/(System).yy",
   },
   "parentObjectId":null,
   "persistent":true,

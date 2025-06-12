@@ -6,7 +6,7 @@
   "name":"CollageDrawImageTiled",
   "parent":{
     "name":"Rendering",
-    "path":"folders/Collage/Rendering.yy",
+    "path":"folders/Scripts/LIbraries/Collage/Rendering.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

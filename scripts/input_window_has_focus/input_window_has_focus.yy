@@ -6,7 +6,7 @@
   "name":"input_window_has_focus",
   "parent":{
     "name":"Deprecated",
-    "path":"folders/Input/(System)/Deprecated.yy",
+    "path":"folders/Scripts/LIbraries/Input/(System)/Deprecated.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

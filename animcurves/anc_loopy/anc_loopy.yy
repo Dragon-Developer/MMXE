@@ -15,7 +15,7 @@
   "name":"anc_loopy",
   "parent":{
     "name":"Animation Curves",
-    "path":"folders/Animation Curves.yy",
+    "path":"folders/Scripts/Animation Curves.yy",
   },
   "resourceType":"GMAnimCurve",
   "resourceVersion":"2.0",

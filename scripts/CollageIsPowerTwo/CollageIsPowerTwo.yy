@@ -6,7 +6,7 @@
   "name":"CollageIsPowerTwo",
   "parent":{
     "name":"General",
-    "path":"folders/Collage/General.yy",
+    "path":"folders/Scripts/LIbraries/Collage/General.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

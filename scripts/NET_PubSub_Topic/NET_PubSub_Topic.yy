@@ -6,7 +6,7 @@
   "name":"NET_PubSub_Topic",
   "parent":{
     "name":"PubSub",
-    "path":"folders/Netcode/Util/PubSub.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Util/PubSub.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

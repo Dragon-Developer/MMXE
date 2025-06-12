@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"BatEnemy",
   "parent":{
-    "name":"Enemy",
-    "path":"folders/Scripts/Enemy.yy",
+    "name":"Normal",
+    "path":"folders/Scripts/Enemy/Normal.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

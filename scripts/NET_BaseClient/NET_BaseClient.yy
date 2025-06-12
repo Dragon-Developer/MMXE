@@ -6,7 +6,7 @@
   "name":"NET_BaseClient",
   "parent":{
     "name":"Connected Sockets",
-    "path":"folders/Netcode/Protocol/Connected Sockets.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Protocol/Connected Sockets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

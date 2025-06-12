@@ -6,7 +6,7 @@
   "name":"Weapon",
   "parent":{
     "name":"Weapons",
-    "path":"folders/Scripts/Weapons.yy",
+    "path":"folders/Scripts/Game/Weapons.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

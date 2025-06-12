@@ -6,7 +6,7 @@
   "name":"__CollageBuilderClass",
   "parent":{
     "name":"Classes",
-    "path":"folders/Collage/System/Classes.yy",
+    "path":"folders/Scripts/LIbraries/Collage/System/Classes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

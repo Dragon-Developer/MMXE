@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"JSON",
   "parent":{
-    "name":"Generic",
-    "path":"folders/Scripts/Generic.yy",
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

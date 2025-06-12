@@ -6,7 +6,7 @@
   "name":"NET_Manager",
   "parent":{
     "name":"Manager",
-    "path":"folders/Netcode/Util/Manager.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Util/Manager.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

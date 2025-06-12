@@ -6,7 +6,7 @@
   "name":"GameServer",
   "parent":{
     "name":"Sockets",
-    "path":"folders/Scripts/Netcode/Sockets.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Sockets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

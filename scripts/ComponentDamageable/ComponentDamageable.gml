@@ -1,6 +1,8 @@
 function ComponentDamageable() : ComponentBase() constructor{
+	self.add_tags("damageable");
 	//get the physics 
 	self.health = 1;//the amount of health this entity has
+	self.health_max = 1;
 	self.combo_count = 0;//the amount of comboiness this entity has been hit with
 	self.combo_offset = 0;//some enemies take more or less comboiness from projectiles
 	
@@ -21,6 +23,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.step = function(){
 		
+		if(self.get_instance() == noone || self.get_instance() == undefined) return;
+		
 		//log(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_player))
 		if(instance_exists(obj_player)){
 			//log(self.get_instance().mask_index)
@@ -28,17 +32,17 @@ function ComponentDamageable() : ComponentBase() constructor{
 				self.get_instance().mask_index = spr_player_mask;	
 			}
 		}
+		self.get_instance().visible = true;
 		
 		//log(self.invuln_offset < CURRENT_FRAME)
 		
-		if(self.invuln_offset > CURRENT_FRAME) return;
+		if(self.invuln_offset > CURRENT_FRAME) {
+			if((self.invuln_offset - CURRENT_FRAME) % 2 == 0)
+				self.get_instance().visible = false;
+			return;
+		}
 		
 		self.check_for_collision();
-		
-		//log("im here")
-		if(1 == 0){
-			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
-		}
 	}
 	
 	self.check_for_collision = function(){//seperated because this will definitely be expanded later
@@ -52,18 +56,11 @@ function ComponentDamageable() : ComponentBase() constructor{
 		if(_proj.components.get(ComponentProjectile).weaponCreate.damage > 0){
 			self.health -= _proj.components.get(ComponentProjectile).weaponCreate.damage;
 			self.publish("took damage", self.health);//so other components dont need to hook into this to get info
+			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 		}
 		if(self.health < 0)
 		{
 			ENTITIES.destroy_instance(self.get_instance());
-		}
-		if(_proj!=noone || _proj != undefined)
-		{
-			log("ded");
-		}
-		else
-		{
-			log("unded");
 		}
 	}
 }

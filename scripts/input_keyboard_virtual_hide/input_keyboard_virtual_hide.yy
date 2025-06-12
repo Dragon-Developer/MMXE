@@ -6,7 +6,7 @@
   "name":"input_keyboard_virtual_hide",
   "parent":{
     "name":"23  Other",
-    "path":"folders/Input/23  Other.yy",
+    "path":"folders/Scripts/LIbraries/Input/23  Other.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -33,7 +33,7 @@
   "properties":[],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
-  "solid":false,
+  "solid":true,
   "spriteId":{
     "name":"spr_player_mask",
     "path":"sprites/spr_player_mask/spr_player_mask.yy",

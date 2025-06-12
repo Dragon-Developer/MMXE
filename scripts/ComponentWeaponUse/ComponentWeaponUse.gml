@@ -91,6 +91,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			
 			//make the projectile
 			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
+			apply_shot_offset(_shot);
 			_shot.dir = self.get_instance().components.get(ComponentAnimation).animation.__xscale;
 			_shot.weaponData = _shot_code;
 		
@@ -101,6 +102,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				self.charge_start_time = CURRENT_FRAME;
 			}
 		}
+	}
+	
+	self.apply_shot_offset = function(_shot){
+		//ugh
+		
 	}
 	
 	self.draw = function(){

@@ -32,8 +32,6 @@ function ComponentEnemy() : ComponentBase() constructor{
 	}
 	
 	self.step = function() {
-		log(EnemyData);
-		log(BaseEnemy);
 		if EnemyEnum == noone || EnemyEnum == undefined return;//
 		if (!variable_struct_exists(
 		EnemyEnum, 

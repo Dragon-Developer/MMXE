@@ -6,7 +6,7 @@
   "name":"NET_Server",
   "parent":{
     "name":"Classes",
-    "path":"folders/Netcode/Classes.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Classes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

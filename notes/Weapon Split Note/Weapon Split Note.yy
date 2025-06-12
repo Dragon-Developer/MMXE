@@ -4,7 +4,7 @@
   "name":"Weapon Split Note",
   "parent":{
     "name":"Weapons",
-    "path":"folders/Scripts/Weapons.yy",
+    "path":"folders/Scripts/Game/Weapons.yy",
   },
   "resourceType":"GMNotes",
   "resourceVersion":"2.0",

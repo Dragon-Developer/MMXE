@@ -6,7 +6,7 @@
   "name":"NET_PingManager",
   "parent":{
     "name":"Types",
-    "path":"folders/Netcode/Game/Types.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Game/Types.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

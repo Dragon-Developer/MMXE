@@ -12,7 +12,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Netcode/Objects.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":true,

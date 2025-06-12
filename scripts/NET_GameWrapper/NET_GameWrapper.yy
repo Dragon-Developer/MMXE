@@ -6,7 +6,7 @@
   "name":"NET_GameWrapper",
   "parent":{
     "name":"Wrappers",
-    "path":"folders/Netcode/Wrappers.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Wrappers.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -6,7 +6,7 @@
   "name":"NET_Serializer",
   "parent":{
     "name":"Serialization",
-    "path":"folders/Netcode/Classes/Serialization.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Classes/Serialization.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
