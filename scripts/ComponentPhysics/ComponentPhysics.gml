@@ -6,7 +6,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.grav_magnitude = self.grav.length(); 
 	self.up_to_right_dir = -1;
 	self.terminal_velocity = 6.25;
-	self.check_slopes = false;
+	self.check_slopes = false;//dont think this is needed anymore
 	self.objects = {
 		block: obj_square_16,
 		projectile : par_projectile

@@ -9,6 +9,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.debug = global.debug;
 	self.camera = noone;
 	self.locked = false;
+	self.paused = false;
 	self.ride_armor = noone;//need to double check if this is good to be deleted
 	self.can_wall_jump = true;
 	self.states = {
@@ -89,8 +90,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			}
 		})
 		.add("dash", {
-			enter: function() {
-				self.timer = 0;
+			enter: function() {//
+				self.timer = CURRENT_FRAME + self.states.dash.interval;
 				self.current_hspd = self.states.dash.speed;	
 				self.dash_dir = self.dir;
 				if(self.dash_dir == 0)
@@ -98,7 +99,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("animation_play", { name: "dash" });
 			},
 			step: function() {
-				self.timer++;
 				self.set_hor_movement(self.dash_dir);
 			},
 			leave: function() {
@@ -236,7 +236,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
 		.add_wildcard_transition("t_jump", "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
 		.add_transition("t_transition", "dash", "dash_end", function() 
-		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer >= self.states.dash.interval || (!self.dash_tapped && !self.input.get_input("dash")); })
+		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
 		.add_transition("t_transition", ["fall", "wall_slide"], "land", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
@@ -291,6 +291,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Handles input and triggers attack transitions	
 	self.step = function() {
+		if(!paused && !locked)
 		self.default_step();
 	}
 	

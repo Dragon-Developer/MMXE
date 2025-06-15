@@ -11,7 +11,6 @@ function batEnemy() : BaseEnemy() constructor{
 		if (self.fsm.event_exists("step"))
 		{
 			self.fsm.step();
-			log(self.fsm.history_get()[0]);
 		}
 		
 	}
@@ -39,8 +38,6 @@ function batEnemy() : BaseEnemy() constructor{
 				{
 					self.EnemyComponent.publish("animation_play", { name: "batIdle" });
 				}
-				
-				log(distance_to_object(obj_player));
 			}
 		})
 		.add("attack", {

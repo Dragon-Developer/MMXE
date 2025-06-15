@@ -64,13 +64,20 @@ function ComponentCamera() : ComponentBase() constructor {
 			if (!self.rotation_controller.enabled)
 				self.start_rotation(self.rotation_controller.current_angle - 90);	
 		}*/
-		if(self.target == noone) return;
+		if(self.target == noone) {
+			if (self.flipped_y) {
+				camera_set_view_pos(self.camera, x, y + self.height);
+			} else {
+				camera_set_view_pos(self.camera, x, y);
+			}
+			return;
+		}
 		//ill keep the bounds limited to if you have a target
 		//this way, cutscenes can manually move the camera without 
 		//worry about bounds messing something up
 		with(self.get_instance()){
 			if(place_meeting(other.target.x,other.target.y,obj_camera_changer)){
-				log("chamera chamger")
+				//log("chamera chamger")
 				other.bounds = instance_place(other.target.x,other.target.y,obj_camera_changer);
 			}
 		}

@@ -2143,6 +2143,7 @@
     {"id":{"name":"spr_tiles_engine","path":"sprites/spr_tiles_engine/spr_tiles_engine.yy",},},
     {"id":{"name":"spr_tiles_generic","path":"sprites/spr_tiles_generic/spr_tiles_generic.yy",},},
     {"id":{"name":"Sprite20","path":"sprites/Sprite20/Sprite20.yy",},},
+    {"id":{"name":"Sprite47","path":"sprites/Sprite47/Sprite47.yy",},},
     {"id":{"name":"test_strip","path":"sprites/test_strip/test_strip.yy",},},
     {"id":{"name":"X_Mugshot_Angy1","path":"sprites/X_Mugshot_Angy1/X_Mugshot_Angy1.yy",},},
     {"id":{"name":"X_Mugshot_Bored1","path":"sprites/X_Mugshot_Bored1/X_Mugshot_Bored1.yy",},},
