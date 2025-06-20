@@ -11,7 +11,7 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.bounds = noone;//if bounds are noone, just lock onto player pos. otherwise, abide by bounds
 	self.physics = noone;
 	
-	self.movement_limit_x = 4;//the camera cant move faster than this
+	self.movement_limit_x = 16;//the camera cant move faster than this
 	self.movement_limit_y = 7;
 	
 	self.bounds_top_left_x = 4;

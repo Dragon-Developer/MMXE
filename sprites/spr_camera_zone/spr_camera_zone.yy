@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"Camera",
-    "path":"folders/Objects/Blocks/Camera.yy",
+    "path":"folders/Objects/Level Assets/Generic/Blocks/Camera.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

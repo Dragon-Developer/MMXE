@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Camera",
-    "path":"folders/Objects/Blocks/Camera.yy",
+    "path":"folders/Objects/Level Assets/Generic/Blocks/Camera.yy",
   },
   "parentObjectId":null,
   "persistent":false,

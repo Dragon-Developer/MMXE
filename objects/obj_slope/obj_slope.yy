@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Collision",
-    "path":"folders/Objects/Blocks/Collision.yy",
+    "path":"folders/Objects/Level Assets/Generic/Blocks/Collision.yy",
   },
   "parentObjectId":{
     "name":"obj_square_16",

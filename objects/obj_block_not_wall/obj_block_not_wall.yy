@@ -7,7 +7,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Parents",
-    "path":"folders/Objects/Blocks/Parents.yy",
+    "path":"folders/Objects/Level Assets/Generic/Blocks/Parents.yy",
   },
   "parentObjectId":{
     "name":"obj_block_parent",

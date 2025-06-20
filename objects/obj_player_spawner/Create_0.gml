@@ -6,6 +6,7 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentAnimation).set_subdirectories(
 	["/normal", "/armor/x2/legs", "/armor/x1/helm"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
+	_player.components.publish("character_set", "weapon");
 	_player.components.publish("character_set", "x");
 	//_player.components.publish("armor_set",
 	//["x2_legs", "x1_helm"]);

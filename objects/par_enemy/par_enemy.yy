@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Parent",
-    "path":"folders/Objects/Enemies/Parent.yy",
+    "path":"folders/Objects/Level Assets/Enemies/Parent.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",

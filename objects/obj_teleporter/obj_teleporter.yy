@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Teleporter",
-    "path":"folders/Objects/Teleporter.yy",
+    "path":"folders/Objects/Level Assets/Generic/Teleporter.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -1,0 +1,241 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 16,
+        "y": 0
+      }
+    },
+    "xShot1": {
+      "origin": {
+        "x": 132,
+        "y": 132
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "h",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "stay_closed",
+          "properties": {
+            "action": "h",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "open",
+          "properties": {
+            "action": "h",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 1
+              },
+              {
+                "key": 12,
+                "frame": 2
+              },
+              {
+                "key": 16,
+                "frame": 1
+              },
+              {
+                "key": 20,
+                "frame": 3
+              },
+              {
+                "key": 30,
+                "frame": 4
+              },
+              {
+                "key": 34,
+                "frame": 5
+              },
+              {
+                "key": 38,
+                "frame": 6
+              },
+              {
+                "key": 42,
+                "frame": 3
+              },
+              {
+                "key": 46,
+                "frame": 4
+              },
+              {
+                "key": 50,
+                "frame": 5
+              },
+              {
+                "key": 54,
+                "frame": 6
+              },
+              {
+                "key": 58,
+                "frame": 3
+              },
+              {
+                "key": 70,
+                "frame": 7
+              },
+              {
+                "key": 75,
+                "frame": 8
+              },
+              {
+                "key": 80,
+                "frame": 9
+              },
+              {
+                "key": 85,
+                "frame": 10
+              },
+              {
+                "key": 90,
+                "frame": 11
+              }
+            ]
+          }
+        },
+        {
+          "name": "stay_open",
+          "properties": {
+            "action": "open",
+            "keyframes": [
+              {
+                "key": 1,
+                "frame": 10
+              }
+            ]
+          }
+        },
+        {
+          "name": "close",
+          "properties": {
+            "action": "h",
+            "keyframes": [
+              {
+                "key": 90,
+                "frame": 0
+              },
+              {
+                "key": 86,
+                "frame": 3
+              },
+              {
+                "key": 82,
+                "frame": 1
+              },
+              {
+                "key": 78,
+                "frame": 2
+              },
+              {
+                "key": 74,
+                "frame": 1
+              },
+              {
+                "key": 70,
+                "frame": 3
+              },
+              {
+                "key": 60,
+                "frame": 4
+              },
+              {
+                "key": 56,
+                "frame": 5
+              },
+              {
+                "key": 52,
+                "frame": 6
+              },
+              {
+                "key": 48,
+                "frame": 3
+              },
+              {
+                "key": 44,
+                "frame": 4
+              },
+              {
+                "key": 40,
+                "frame": 5
+              },
+              {
+                "key": 36,
+                "frame": 6
+              },
+              {
+                "key": 32,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 7
+              },
+              {
+                "key": 15,
+                "frame": 8
+              },
+              {
+                "key": 10,
+                "frame": 9
+              },
+              {
+                "key": 5,
+                "frame": 10
+              },
+              {
+                "key": 0,
+                "frame": 11
+              }
+            ]
+          }
+        }
+
+      ]
+    }
+  }
+}

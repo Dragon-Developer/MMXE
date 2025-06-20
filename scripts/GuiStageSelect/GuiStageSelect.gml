@@ -12,8 +12,8 @@ function GuiStageSelect() : GuiContainer() constructor {
 		.setFlexDirection("column")
         .setJustifyContent("center")
         .setAlignItems("center")
-        .setPaddingSize(16)
-		.setGap(8)
+        .setPaddingSize(4)
+		.setGap(4)
 		
 	StageButtons = [];
 	Stages = [rm_desert_bus, rm_test,rm_horizontal_test, rm_gate_2]

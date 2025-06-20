@@ -21,22 +21,20 @@ function GuiMainMenu() : GuiContainer() constructor {
 		parent.StageSelectContainer.setEnabled(true);
 	});
 	
-	buttonEdit = new GuiButton(160, 32, "Edit Level");
-	buttonEdit.addEventListener("click", function() { 
-		self.setEnabled(false);
-		global.game = new GameOffline();
-		parent.startEditor();
-	});
-	
 	buttonOnline = new GuiButton(160, 32, "Play Online");
 	buttonOnline.addEventListener("click", function() { 
 		self.setEnabled(false);
 		parent.playOnlineContainer.setEnabled(true);
 	});
 		
-    buttonOptions = new GuiButton(160, 32,"Options");
-    buttonExit = new GuiButton(160, 32, "Exit"); 
+    buttonOptions = new GuiButton(80, 32,"Options");
+	buttonOnline.addEventListener("click", function() { 
+		self.setEnabled(false);
+		//
+	});
+	
+    buttonExit = new GuiButton(60, 27, "Exit"); 
     
-    mainContainer.addChild([buttonStart, buttonEdit, buttonOnline, buttonOptions, buttonExit]);
+    mainContainer.addChild([buttonStart, buttonOnline, buttonOptions, buttonExit]);
     addChild(mainContainer);
 }

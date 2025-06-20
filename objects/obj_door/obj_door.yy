@@ -1,21 +1,19 @@
 {
   "$GMObject":"",
-  "%Name":"obj_collision_semisolid",
+  "%Name":"obj_door",
   "eventList":[
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_collision_semisolid",
+  "name":"obj_door",
   "overriddenProperties":[],
   "parent":{
-    "name":"Collision",
-    "path":"folders/Objects/Level Assets/Generic/Blocks/Collision.yy",
+    "name":"Door",
+    "path":"folders/Objects/Level Assets/Generic/Door.yy",
   },
   "parentObjectId":{
-    "name":"obj_square_16",
-    "path":"objects/obj_square_16/obj_square_16.yy",
+    "name":"obj_entity",
+    "path":"objects/obj_entity/obj_entity.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -35,9 +33,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_semisolid_square",
-    "path":"sprites/spr_semisolid_square/spr_semisolid_square.yy",
+    "name":"Sprite47",
+    "path":"sprites/Sprite47/Sprite47.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }
