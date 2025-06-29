@@ -57,6 +57,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	}
 	
 	self.load_sprites = function() {
+		//what does this do?
 		SpriteLoader.reload_collage(self.collage, "sprites/" + self.character, self.subdirectories);
 	}
 	
@@ -132,7 +133,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 			if(self.animation != noone)
 				if(self.animation.__animation != noone){
 					var _action = "missing";
-					var _props = self.animation.get_props()
+					var _props = self.animation.get_props();// THIS LINE IS IMPORTANT IT WILL GET SHOT OFFSETS
 					//log(_props)
 					if(_props != undefined){
 						if(variable_struct_exists(_props,"action")){
@@ -155,10 +156,12 @@ function ComponentAnimation() : ComponentBase() constructor {
 		return _first;
 	};
 
-
+	self.draw = function(){
+		self.draw_regular();
+	}
 
 	
-	self.draw = function() {
+	self.draw_regular = function() {
 		var _pos = self.get_interpolated_position();
 		var _instance_x = floor(_pos[0]);
 		var _instance_y = floor(_pos[1]);
@@ -199,4 +202,10 @@ function ComponentAnimation() : ComponentBase() constructor {
 		    draw_circle(_instance_x + _ox, _instance_y + _oy, 2, false);
 		}
 	};
+	
+	self.draw_apply_palette = function(){
+		self.palette_handler.apply();
+		self.draw_regular();
+		self.palette_handler.reset();
+	}
 }

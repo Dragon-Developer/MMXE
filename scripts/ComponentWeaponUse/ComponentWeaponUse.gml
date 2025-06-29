@@ -14,6 +14,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.weapon_list = [new xBuster()];
 	self.charge_start_time = -1;
 	
+	static collage = new Collage();
+	
 	self.serializer
 		.addVariable("shot_end_time")
 		.addVariable("current_weapon")
@@ -22,6 +24,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	
 	self.init = function(){
 		current_weapon = 0;
+		//this system for the moment wont work if the animator has multiple other things that use it
+		//but for the moment, the only other animator is the main player one. as long as we reset it
+		//at the end of the script, we should be good
 	}
 	
 	self.on_register = function(){
@@ -30,6 +35,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			//need input to see if youre shooting
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 			//idk physics would be good for speed burner/charge kick
+			self.animator = self.parent.find("AnimationMultiple") ?? new ComponentAnimationMultiple();
 		});
 	}
 	
@@ -110,23 +116,6 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 	
 	self.draw = function(){
-		//log(self.input.get_input_released("shoot"));
-		if(self.charge_start_time == -1) return;
-		
-		if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[3] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 4){
-			//this is too far! i didnt get graphics yet!
-		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[2] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 3){
-			//this is too far! i didnt get graphics yet!
-		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[1] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 2){
-				draw_sprite(Player_Charge_2,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
-		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[0] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
-				draw_sprite(Player_Charge_1,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
-		} else {
-			//log("no charge!")
-		}
+		//future issues
 	}
 }

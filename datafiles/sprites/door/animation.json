@@ -133,7 +133,7 @@
               },
               {
                 "key": 90,
-                "frame": 11
+                "frame": 10
               }
             ]
           }
@@ -156,15 +156,63 @@
             "action": "h",
             "keyframes": [
               {
-                "key": 90,
-                "frame": 0
+                "key": 0,
+                "frame": 10
               },
               {
-                "key": 86,
+                "key": 5,
+                "frame": 10
+              },
+              {
+                "key": 10,
+                "frame": 9
+              },
+              {
+                "key": 15,
+                "frame": 8
+              },
+              {
+                "key": 20,
+                "frame": 7
+              },
+              {
+                "key": 32,
                 "frame": 3
               },
               {
-                "key": 82,
+                "key": 36,
+                "frame": 6
+              },
+              {
+                "key": 40,
+                "frame": 5
+              },
+              {
+                "key": 44,
+                "frame": 4
+              },
+              {
+                "key": 48,
+                "frame": 3
+              },
+              {
+                "key": 52,
+                "frame": 6
+              },
+              {
+                "key": 56,
+                "frame": 5
+              },
+              {
+                "key": 60,
+                "frame": 4
+              },
+              {
+                "key": 70,
+                "frame": 3
+              },
+              {
+                "key": 74,
                 "frame": 1
               },
               {
@@ -172,66 +220,19 @@
                 "frame": 2
               },
               {
-                "key": 74,
+                "key": 82,
                 "frame": 1
               },
               {
-                "key": 70,
+                "key": 86,
                 "frame": 3
               },
               {
-                "key": 60,
-                "frame": 4
-              },
-              {
-                "key": 56,
-                "frame": 5
-              },
-              {
-                "key": 52,
-                "frame": 6
-              },
-              {
-                "key": 48,
-                "frame": 3
-              },
-              {
-                "key": 44,
-                "frame": 4
-              },
-              {
-                "key": 40,
-                "frame": 5
-              },
-              {
-                "key": 36,
-                "frame": 6
-              },
-              {
-                "key": 32,
-                "frame": 3
-              },
-              {
-                "key": 20,
-                "frame": 7
-              },
-              {
-                "key": 15,
-                "frame": 8
-              },
-              {
-                "key": 10,
-                "frame": 9
-              },
-              {
-                "key": 5,
-                "frame": 10
-              },
-              {
-                "key": 0,
-                "frame": 11
+                "key": 90,
+                "frame": 0
               }
-            ]
+            ],
+            "loop_begin": 90
           }
         }
 

@@ -254,15 +254,11 @@ function AnimationController(_character = "") constructor {
 					}
 					// [character, action, suffix]
 					var _sprite_name = string_join_ext(ANIMATION_SPRITE_SEPARATOR, _array);
-					var _sprite = undefined;
-					if (!is_undefined(this.__collage) && this.__collage.Exists(_sprite_name)) {
-			            _sprite = this.__collage.GetImageInfo(_sprite_name);
-					} else {
-						var _index = asset_get_index(_sprite_name);
-						if (_index != -1) {
-							_sprite = _index;	
-						}
-					}
+					// if dark asks, i made this function something generic so other systems could use it
+					// it does what it used to do, but i moved it to spriteloader so spriteloader 
+					// could also load sprite assets
+					var _sprite = SpriteLoader.load_sprite(this.__collage, _sprite_name);
+					
 					if (!is_undefined(_sprite)) {
 						currentAnimation[$ "sprites"][$ _action] = _sprite;
 					}
@@ -662,13 +658,20 @@ function AnimationController(_character = "") constructor {
                     _key_events = _anim_data.key_events;
                 }
 				
+				var _shot_offsets = [];
 				
+				if (struct_exists(_anim_data, "shot_offsets")) {
+                    _shot_offsets = _anim_data.shot_offsets;
+                }
+				
+				//shot offsets. i know i can get the active animation here. 
 				
                 self.add_animation(_name, {
                     action: _action,
                     keyframes: _keyframes,
                     loop_begin: _loop_begin,
 					index_events: _index_events,
+					shot_offsets: _shot_offsets,
                     speed: _speed
                 });
             }

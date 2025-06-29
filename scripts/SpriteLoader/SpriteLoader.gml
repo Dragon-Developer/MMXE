@@ -100,9 +100,11 @@ function SpriteLoader() constructor {
 			return !struct_exists(loaded_files, _file.path);
 		});
 		if (array_length(_files) == 0) return;
+		//log(_files)
 		_collage.StartBatch();
 		for (var _i = 0; _i < array_length(_files); _i++) {
 			var _sprite = _files[_i];
+			log(_sprite.path)
 		    _collage.AddFile(_sprite.path, _sprite.name, _sprite.frames, false, false, _sprite.origin.x, _sprite.origin.y);
 			loaded_files[$ _sprite.path] = true;
 		}
@@ -115,6 +117,47 @@ function SpriteLoader() constructor {
 		}
 		SpriteLoader.load_png_files(_collage, _files);
 		return _files;
+	}
+	
+	static load_sprite = function(_collage, _sprite_name){
+		//log(_sprite_name)
+		var _sprite = undefined;
+		if (!is_undefined(_collage) && _collage.Exists(_sprite_name)) {
+			_sprite = _collage.GetImageInfo(_sprite_name);//this is in fact not the magic line
+		} else {
+			var _index = asset_get_index(_sprite_name);
+			if (_index != -1) {
+				_sprite = _index;	
+			}
+		}
+		
+		return _sprite;
+	}
+	
+	static get_sprite_proper = function(_sprite, _frame){//takes a struct
+		var _image = _sprite.__subImagesArray[_frame];
+		var _surf = _image.texturePageStruct.__surface;
+			
+		var _x = _image.xPos;
+		var _y = _image.yPos;
+			
+		var _width = _image.originalWidth;
+		var _height = _image.originalHeight;
+			
+		_sprite = sprite_create_from_surface(_surf, _x, _y, _width, _height, false, false, 0, 0); 
+		return _sprite;//returns gm sprite asset
+	}
+	
+	//some collage fuckery
+	static load_sprite_manual = function(_collage, _sprite_name, _path, _frames,  _xorigin, _yorigin){
+		//log(_sprite_name)
+		
+		_collage.StartBatch();
+		_collage.AddFile(_path, _sprite_name, _frames, false, false, _xorigin, _yorigin);
+		loaded_files[$ _path] = true;
+		_collage.FinishBatch();
+		
+		self.load_sprite(_collage, _sprite_name);
 	}
 }
 SpriteLoader();

@@ -1,0 +1,60 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 35,
+        "y": 41
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "charge_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 0
+              }
+            ]
+          }
+        },{
+          "name": "shot_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

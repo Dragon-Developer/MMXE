@@ -1,5 +1,7 @@
 function global_init() {
 	ENTITIES = new EntityManager();
+	//soundmanager?
+	SOUND = new SoundManager();
 	VBUTTON = new VirtualButtonManager();
 	LOG = new LogConsole();
 	if (GM_build_type == "exe") {
@@ -18,6 +20,7 @@ function global_init() {
 	window_center();
 }
 
+//this is unused at the moment.
 function global_player_init(){
 	global.player_character = "x";
 	global.player_armor = ["none","none", "x2","x3","none"];//head, chest, arms, boots, full

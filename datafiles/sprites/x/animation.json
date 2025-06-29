@@ -696,8 +696,9 @@
               }
             ]
           }
-        },{
-          "name": "mugshot",
+        },
+        {
+          "name": "ladder",
           "properties": {
             "keyframes": [
               {
@@ -710,13 +711,51 @@
               }
             ]
           }
-        },{
-          "name": "shot_1",
+        },
+        {
+          "name": "ladder_enter",
           "properties": {
+            "action": "ladder",
             "keyframes": [
               {
                 "key": 0,
                 "frame": 0
+              },
+              {
+                "key": 30,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_move",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              },
+              {
+                "key": 10,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_exit",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              },
+              {
+                "key": 10,
+                "frame": 2
               }
             ]
           }

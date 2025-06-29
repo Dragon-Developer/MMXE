@@ -1,4 +1,5 @@
 #macro ENTITIES global.entities
+#macro SOUND global.soundManager
 #macro GAME global.game
 #macro WORLD global.world
 #macro VBUTTON global.vbutton

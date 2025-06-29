@@ -1,0 +1,3 @@
+function ComponentCharge() : ComponentBase() constructor{
+
+}

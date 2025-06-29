@@ -91,7 +91,8 @@ function ComponentDoor() : ComponentBase() constructor{
 				//open the door
 				if(animation_end){//this will trigger when animation end is called
 					state_segment++;  
-					curr_player.components.get(ComponentAnimation).animation.__speed = 1;
+					if(curr_player.components.get(ComponentPhysics).is_on_floor())
+						curr_player.components.get(ComponentAnimation).animation.__speed = 1;
 					coll.y -= 1025;
 					self.publish("animation_play", { name: "stay_open" });
 				}
@@ -112,7 +113,12 @@ function ComponentDoor() : ComponentBase() constructor{
 						}
 						prev_cam_x = curr_cam.x;
 						self.publish("animation_play", { name: "close" });
-						curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
+						if(curr_player.components.get(ComponentPhysics).is_on_floor()){
+							curr_player.components.get(ComponentPlayerMove).fsm.change("idle");
+						} else {
+							curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
+						}
+						curr_player.components.get(ComponentAnimation).animation.__speed = 1;
 						curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
 					}
 				//}
