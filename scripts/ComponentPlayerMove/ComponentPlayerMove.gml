@@ -27,10 +27,14 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			strength: 5
 		},
 		ladder: {
-			speed: 300/256//idk
+			speed: 376/256
+			//496/256 if its with arm parts
 		}
 	}
 	self.timer = 0;
+	
+	self.armor_parts = [noone, noone, noone, noone];// Head, Body, Arms, Boot
+	
 	self.serializer
 		.addVariable("dir")
 		.addVariable("timer")
@@ -314,11 +318,45 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.subscribe("animation_end", function() {
 			self.fsm.trigger("t_animation_end");	
 		});
+		self.subscribe("player_set_armor_full", function(_armors) {
+			self.apply_full_armor_set(_armors);
+		});
+		self.subscribe("player_set_armor_part", function(_armors) {
+			self.apply_full_armor_set(_armors);
+		});
 	}
 	
 	// Initialization
 	self.init = function() {
 		self.fsm.trigger("t_init");
+	}
+	
+	self.apply_full_armor_set = function(_armors){
+		self.armor_parts = [];
+		array_foreach(_armors, function(_arm){
+			array_push(self.armor_parts, _arm)
+			if(_arm != noone){
+				self.get_instance().components.get(ComponentAnimation).add_subdirectories(["/" + string(_arm.sprite_name)]);
+				_arm.apply_armor_effects(self);
+			}
+		});
+	}
+	self.apply_armor_part = function(_armor){
+		if(_armor == BootPartBase){
+			
+		} else if(_armor == ArmsPartBase){
+			
+		} else if(_armor == BodyPartBase){
+			
+		} else if(_armor == HeadPartBase){
+			
+		} else {
+			log("whatever you passed in here, it sure wasnt an armor struct!")
+		}
+	}
+	
+	self.remove_armor_part = function(){
+		
 	}
 	
 	// Sets the player's horizontal movement based on direction

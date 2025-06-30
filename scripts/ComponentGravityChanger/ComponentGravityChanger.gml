@@ -13,7 +13,7 @@ function ComponentGravityChanger() : ComponentBase() constructor{
 	}
 	
 	self.init = function(){
-		//self.publish("animation_play", "gravity_button_idle");
+		self.publish("animation_play", "idle");
 	}
 	
 	self.step = function(){

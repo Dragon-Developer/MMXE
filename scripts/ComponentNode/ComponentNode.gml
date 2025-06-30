@@ -3,12 +3,18 @@ function ComponentNode() : ComponentBase() constructor{
 	//a parent can have multiple children, but children do not require multiple parents. 
 	self.node_parent = undefined;
 	self.children_nodes = [];
-	self.previous_position = new Vec2(self.get_instance().x,self.get_instance().y);
+	//self.previous_position = new Vec2(self.get_instance().x,self.get_instance().y);
+	// dark wants me to use vector maths but i still dont understand what he means. 
+	// i assume he means using velocity to change it, but some situations the parent
+	// isnt moved by velocity
+	
+	//ill just make it a manual thing. its not that big of a deal.
 	
 	self.step = function(){
-		array_foreach(self.children_nodes, function(){
-			self.get_instance().x += other.get_instance().x - other.previous_position.x;
-			self.get_instance().y += other.get_instance().y - other.previous_position.y;
+		return;
+		array_foreach(self.children_nodes, function(_node){
+			_node.get_instance().x += self.get_instance().x - self.previous_position.x;
+			_node.get_instance().y += self.get_instance().y - self.previous_position.y;
 		});
 	}
 	
@@ -16,6 +22,10 @@ function ComponentNode() : ComponentBase() constructor{
 		//array push my beloved
 		//i wish this wasnt unique to gamemaker. this just makes sense. 
 		array_push(self.children_nodes, _child);
+		_child.node_parent = self;
+		with(_child){
+			self.publish("child_connected_to_parent");
+		}
 	}
 	
 	self.remove_child = function(_child){

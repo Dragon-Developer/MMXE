@@ -1,0 +1,77 @@
+LIGHT ARMOR
+Head - Headbutt, including headbutt attack from X DiVE
+Chest - Damage reduction
+Buster - Spiral Crush Buster
+Legs - Faster dash on ground and dash jump
+Full Set Bonus - Hadouken and Shakunetsu Hadoken
+
+GIGA ARMOR
+Head - Item Finder and slightly reduced weapon energy cost
+Chest - Damage reduction and Giga Crush
+Buster - Double Buster
+Legs - Faster air-dash
+Full Set Bonus - Shoryuken
+
+MAX ARMOR
+Head - Map and slightly reduced weapon energy cost
+Chest - Damage reduction and blue defensive shield
+Buster - Crossover Buster (similar to X3 Zero Project)
+Legs - Vertical air-dash
+Full Set Bonus - Tatsumaki Senpukyaku
+
+FORCE ARMOR
+Head - Infinite uncharged weapon usage
+Chest - Damage reduction and Nova Strike
+Buster - Stock Charge Shot
+Alt. Buster - Plasma Charge Shot
+Legs - Hover Dash
+Full Set Bonus - Undecided
+
+FALCON ARMOR
+Head - Increases ammo for special weapons by 50% and decreases ammo usage by 33%
+Chest - Damage reduction and Falcon Giga Crush
+Buster - Spear Charged Shot
+Legs - Free Move Flight and damaging air-dash from X6
+Full Set Bonus - Undecided
+
+GAEA ARMOR
+Head - Increase buster charge speed
+Chest - Damage reduction and Gaea Giga Crush
+Buster - Gaea Shot (can destroy Gaea Cubes)
+Legs - Immunity to spikes, can cling to walls, and Gaea Dash (can push Gaea Cubes)
+Full Set Bonus - Undecided
+
+BLADE ARMOR
+Head - Increases ammo for special weapons by 50% and decreases ammo usage by 33%
+Chest - Damage reduction and Blade Giga Crush
+Buster - Blade Buster
+Legs - Mach Dash
+Full Set Bonus - Undecided
+
+SHADOW ARMOR
+Head - Item attractor
+Chest - Damage reduction and Shadow Giga Crush
+Buster - Shadow Buster
+Legs - Immunity to spikes and can stick to ceilings and walls
+Full Set Bonus - Undecided
+
+GLIDE ARMOR
+Head - Item attractor
+Chest - Damage reduction and Giga Crash
+Buster - Homing Buster
+Legs - Glide Dash
+Full Set Bonus - Undecided
+
+ICARUS ARMOR
+Head - Damaging aura when jumping
+Chest - Damage reduction and all health X loses turns red, allowing him to slowly recover that red portion of health; if X is damaged before all his red health is restored, the remaining red will be lost permanently
+Buster - Normal shots become 1st charge, 1st charge becomes 2nd charge, and 2nd charge become a powerful laser
+Legs - Doubles jump height
+Full Set Bonus - Giga Crash; can be used when less that full energy for reduced damage and range
+
+HERMES ARMOR
+Head - Doubles charge speed; quadrupled with X-Dive
+Chest - Damage reduction and grants invincibility to enemy attacks that deal 2 damage or less; invincibility duration when hit double with X-Drive
+Buster - Triple-Spread Buster; Quintuple-Spread Buster with X-Drive
+Legs - Doubles run and dash speed; Blink Dash; quadruples run and dash speed with X-Drive
+Full Set Bonus - X-Drive

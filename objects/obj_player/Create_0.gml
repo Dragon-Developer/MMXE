@@ -7,7 +7,8 @@ components.add([
 	ComponentPhysics,
 	ComponentAnimation,
 	ComponentMask,
-	ComponentWeaponUse
+	ComponentWeaponUse,
+	ComponentNode
 ]);
 
 components.init();

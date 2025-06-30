@@ -56,6 +56,12 @@ function ComponentAnimation() : ComponentBase() constructor {
 		self.subdirectories = _subdirs;	
 	}
 	
+	self.add_subdirectories = function(_subdirs) {
+		array_foreach(_subdirs, function(_dir){
+			array_push(self.subdirectories, _dir);	
+		})
+	}
+	
 	self.load_sprites = function() {
 		//what does this do?
 		SpriteLoader.reload_collage(self.collage, "sprites/" + self.character, self.subdirectories);

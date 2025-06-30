@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"XFirstArmor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"XFirstArmor",
+  "parent":{
+    "name":"First",
+    "path":"folders/Scripts/Game/Armors/X/First.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

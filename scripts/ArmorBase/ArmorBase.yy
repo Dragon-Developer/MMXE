@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ArmorBase",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ArmorBase",
+  "parent":{
+    "name":"Parent",
+    "path":"folders/Scripts/Game/Armors/Parent.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -12,15 +12,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.shot_end_time = 0;
 	self.current_weapon = 0;//the weapon data, not the projectile or melee data.
 	self.weapon_list = [new xBuster()];
-	self.charge_start_time = -1;
-	
-	static collage = new Collage();
+	self.charge = noone;
 	
 	self.serializer
 		.addVariable("shot_end_time")
 		.addVariable("current_weapon")
 		.addVariable("weapon_list")
-		.addVariable("charge_start_time");
 	
 	self.init = function(){
 		current_weapon = 0;
@@ -35,11 +32,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			//need input to see if youre shooting
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 			//idk physics would be good for speed burner/charge kick
-			self.animator = self.parent.find("AnimationMultiple") ?? new ComponentAnimationMultiple();
 		});
 	}
 	
 	self.step = function(){
+		self.charge.current_weapon = self.weapon_list[self.current_weapon];
+		
 		if(self.shot_end_time < CURRENT_FRAME){
 			//probably shouldnt manually set this but meh
 			self.get_instance().components.get(ComponentAnimation).animation.__type = "normal";
@@ -64,21 +62,15 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			var _shot_code = noone;
 			
 			if(self.input.get_input_released("shoot")){
-				if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[3] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 4){
-						_shot_code = self.weapon_list[self.current_weapon].data[4];
-				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[2] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 3){
-						_shot_code = self.weapon_list[self.current_weapon].data[3];
-				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[1] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 2){
-						_shot_code = self.weapon_list[self.current_weapon].data[2];
-				} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[0] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
-						_shot_code = self.weapon_list[self.current_weapon].data[1];
-				} else {
-					self.charge_start_time = -1;
-					return;//end code prematurely
+				for(var p = 0; p < array_length(self.weapon_list[self.current_weapon].charge_time); p++){
+					if(self.charge.start_time + self.weapon_list[self.current_weapon].charge_time[p] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= p + 1){
+						_shot_code = self.weapon_list[self.current_weapon].data[p + 1];
+					}
+				}
+				
+				if(_shot_code == noone){
+					return;
 				}
 			} else {
 				_shot_code = self.weapon_list[self.current_weapon].data[0];
@@ -101,21 +93,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			_shot.dir = self.get_instance().components.get(ComponentAnimation).animation.__xscale;
 			_shot.weaponData = _shot_code;
 		
-			//Charge reset/start
-			if(self.input.get_input_released("shoot")){
-				self.charge_start_time = -1;//if it's -1, then we arent charging. 
-			} else {
-				self.charge_start_time = CURRENT_FRAME;
-			}
 		}
 	}
 	
 	self.apply_shot_offset = function(_shot){
 		//ugh
 		
-	}
-	
-	self.draw = function(){
-		//future issues
 	}
 }
