@@ -37,6 +37,7 @@ function ComponentCamera() : ComponentBase() constructor {
 			.activate();
     }
 
+
 	self.flip_y = function() {
 		if (!self.flipped_y) {
 			camera_set_view_size(self.camera, self.width, -self.height);
@@ -72,9 +73,9 @@ function ComponentCamera() : ComponentBase() constructor {
 			}
 			return;
 		}
-		//ill keep the bounds limited to if you have a target
-		//this way, cutscenes can manually move the camera without 
-		//worry about bounds messing something up
+		//ill only respect bounds if you have a target
+		//this way, cutscenes can manually move the camera 
+		//regardless of camera bounds
 		with(self.get_instance()){
 			if(place_meeting(other.target.x,other.target.y,obj_camera_changer)){
 				//log("chamera chamger")
@@ -139,13 +140,15 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.init = function() {
 		self.camera = view_get_camera(0);	
 		surface_resize(application_surface, self.width, self.height);
-		room_set_viewport(room, 0, true, 0, 0, GAME_W, GAME_H);
+		room_set_viewport(room, 0, true, 0, 0, GAME_W / 2, GAME_H);
 	}
 	
 	self.rotation_controller.on_end = function() {
 		ENTITIES.pause(["actor"], false);
+			log(WORLD)
 		var _instances = ENTITIES.find_all(["actor"]);
-		WORLD.components.get(ComponentWorld).rotate_up(-90);
+		if(WORLD != undefined)
+			WORLD.components.get(ComponentWorld).rotate_up(-90);
 	}
 }
 

@@ -6,7 +6,7 @@
   "name":"ComponemtBoss",
   "parent":{
     "name":"Enemy",
-    "path":"folders/Scripts/Game/Entity Components/Enemy.yy",
+    "path":"folders/Scripts/Game/Entity Components/Stage Gimmicks/Enemy.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

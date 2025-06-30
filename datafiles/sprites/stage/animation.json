@@ -1,0 +1,105 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 16,
+        "y": 8
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          "",
+          "shoot"
+        ],
+        [
+          "",
+          "x1",
+          "x2",
+          "x3",
+          "falcon",
+          "ult"
+        ],
+        [
+          "",
+          "legs",
+          "body",
+          "arms",
+          "helm"
+        ]
+      ],
+      "list": [
+        {
+          "name": "gravity_button",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "gravity_button_idle",
+          "properties": {
+            "action": "gravity_button",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "gravity_button_pressed",
+          "properties": {
+            "action": "gravity_button",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 3
+              }
+            ],
+            "loop_begin": 10
+          }
+        }
+      ]
+    }
+  }
+}

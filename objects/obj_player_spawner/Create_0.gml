@@ -9,10 +9,6 @@ on_spawn = function(_player) {
 	_player.components.publish("character_set", "weapon");
 	_player.components.publish("character_set", "x");
 	//_player.components.publish("armor_set",
-	//["x2_legs", "x1_helm"]);
-	
-	_player.components.publish("animation_set_palette_type", new AltPalette(xpal,firewave));
-	_player.components.publish("animation_apply_palette", true);
 	
 	if (current_spawn == global.local_player_index) {
 		var _camera = ENTITIES.create_instance(obj_camera);

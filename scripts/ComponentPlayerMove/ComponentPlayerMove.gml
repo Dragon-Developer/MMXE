@@ -221,7 +221,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function() {
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(0);
-				self.publish("animation_play", { name: "ladder" });
+				//self.publish("animation_play", { name: "ladder" });
 			},
 			leave: function(){
 				self.physics.update_gravity();
@@ -231,7 +231,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_child("ladder", "ladder_enter", {
 			enter: function(){
 				self.fsm.inherit();
+				with(self.get_instance()){
+					x = instance_nearest(x,y,obj_ladder).x + 16;
+				}
 				self.publish("animation_play", { name: "ladder_enter" });
+				self.fsm.change("ladder")
 			}
 		})
 		.add_child("ladder", "ladder_move", {
@@ -240,13 +244,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("animation_play", { name: "ladder_move" });
 			},
 			step: function(){
-				self.get_instance().y += self.vdir;
+				self.get_instance().y += self.vdir * self.states.ladder.speed;
 			}
 		})
-		.add_child("ladder", "ladder_exit", {
+		.add("ladder_exit", {
 			enter: function(){
-				self.fsm.inherit();
 				self.publish("animation_play", { name: "ladder_exit" });
+				self.fsm.change("fall")
+			},
+			leave: function(){
+				self.physics.update_gravity();
+				self.physics.set_vspd(0);
 			}
 		})
 		.add_transition("t_init", "init", "idle")
@@ -254,12 +262,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
 		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_crouch", "idle", "crouch")
-		.add_transition("t_custom", ["idle", "air", "walk", "dash", "crouch"], "custom")
+		.add_wildcard_transition("t_custom", "custom")
 		.add_transition("t_custom_end", "custom", "idle")
 		//.add_transition("t_custom", ["air", "walk"], "custom")  why does this line exist when the above line covers it
 		.add_transition("t_custom_exit", "custom", "jump")
 		.add_transition("t_animation_end", ["start", "land", "dash_end"], "idle")
-		.add_transition("t_animation_end", "ladder_enter", "ladder")
 		.add_transition("t_animation_end", "ladder_exit", "idle")
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
@@ -273,8 +280,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
 		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10 || self.physics.get_vspd() > 0; })
 		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
-		.add_transition("t_transition", ["air", "idle", "walk", "dash", "walljump"], "ladder_enter", function() { return self.vdir != 0 && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
+		.add_transition("t_transition", ["fall", "idle", "walk", "dash", "walljump"], "ladder_enter", function() { return self.vdir != 0 && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
 		.add_transition("t_transition", "ladder", "ladder_move", function() { return self.vdir != 0})
+		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
 		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
 		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
 		.add_transition("t_transition", "dash", "dash_end", function() 
