@@ -1,9 +1,9 @@
 # Mega Man X Engine Version 2
 We decided to restart after a few years of hiatus. This is to take advantage of changes made to gamemaker, the tool used to make MMXE run.
 
-Mega Man X Engine is a framework being developed using GameMaker that implements common Mega Man X games so you don't have to start from scratch, plus new assets showing what can be done with the engine.
+Mega Man X Engine is a framework being developed using GameMaker that implements common Mega Man X games so you don't have to start from scratch, plus a few assets showing what you can do with the engine.
 
-This isnt a game. We will not add things if you ask us.
+This is NOT a game. We will NOT add things if you ask us.
 
 ## Social Media
 - YouTube: https://www.youtube.com/@MMXEngine
@@ -16,26 +16,27 @@ Get Gamemaker, any variety should do.
 
 For best compatibility, use 2024.4.1.152 as this is the version used to develop MMXE.
 
-after that, go click on the code button in the github (here) and click on the download option in the dropdown. This will download a copy of the project files so you can edit them as you want.
+After that, go click on the code button in the github (here) and click on the download option in the dropdown. This will download a copy of the project files so you can edit them as you want.
 # Features
 Currently notable features include:
 - Basic Movement (walking, jumping, walljumping, etc)
+- Enemies (Though there isnt much to use yet)
+- Dialouge
 - Scene rotation/flipping
 
 In progress features:
-- Dialouge
-- Enemies
-- Multiple characters
-
-Features not added:
 - Ladders
 - Shooting
 - Special weapons
+
+Features not added:
 - Pause menu
+- Stage select
 - Bosses
 - Armor Capsules
+- Multiple characters
 
-Feel free to suggest features in the discord. 
+Feel free to suggest new features in the discord. 
 # Contributors
 ### Programming:
 - Dark Shadow (Dragon-Developer): main programmer.
@@ -54,8 +55,8 @@ Feel free to suggest features in the discord.
 - Vent: Secret Content
 - HombreRandom: Magma Dragoon sprites
 - Luminers: Stage tile designer, background artist
-- Burai (former): Axl sprites
-- Bwogglyswog: General spriting
+- Burai: Axl sprites
+- Bwogglyswog: General spriting, Menus
 - Fncilpeeps: General spriting
 - DocrobotZX: Rock, Protoman, sprites
 - Thomas Light (AKA: MaverickBlue on DeviantArt): Zero, Iris, Ultimate Armor X
