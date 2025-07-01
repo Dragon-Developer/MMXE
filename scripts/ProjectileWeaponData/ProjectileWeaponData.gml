@@ -1,6 +1,6 @@
 function ProjectileWeapon() : Weapon() constructor{
 	self.data = [noone,noone,noone,noone, noone];//hmmm
-	self.charge_time = [8, 63, 123, 183];//i dont think mmxe uses this, but battle network has some busters charge faster than others
+	self.charge_time = [30, 105, 180, 255];//i dont think mmxe uses this, but battle network has some busters charge faster than others
 	self.charge_limit = 2;
 	self.animation_name = noone;//if its noone, then assume its _shoot. 
 }

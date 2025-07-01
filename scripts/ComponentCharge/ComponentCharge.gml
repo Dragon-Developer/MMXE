@@ -27,25 +27,33 @@ function ComponentCharge() : ComponentBase() constructor{
 				self.publish("animation_visible", false);
 			} else if(self.input.get_input_pressed("shoot")){
 				self.start_time = CURRENT_FRAME;
-				self.publish("animation_visible", true);
 			}
 		}
 		
 		self.get_instance().x = self.get_instance().components.get(ComponentNode).node_parent.get_instance().x;
 		self.get_instance().y = self.get_instance().components.get(ComponentNode).node_parent.get_instance().y;
 
+		if(self.start_time == -1 || self.start_time + self.current_weapon.charge_time[0] > CURRENT_FRAME) return;
+		
+		if(floor(self.start_time + self.current_weapon.charge_time[0]) == floor(CURRENT_FRAME))
+			self.publish("animation_visible", true);
+		if(floor(self.start_time + self.current_weapon.charge_time[0] + 1) == floor(CURRENT_FRAME))
+			self.publish("animation_visible", true);
+		
 		var _shot_code = noone;
-		for(var p = 0; p < array_length(self.current_weapon.charge_time); p++){
-		//for(var p = array_length(self.current_weapon.charge_time) - 1; p > 0; p--){
-			if(self.start_time + self.current_weapon.charge_time[p] > CURRENT_FRAME && 
-			self.current_weapon.charge_limit >= p + 1){
-				_shot_code = self.current_weapon.data[p ];
+		
+		//for(var p = 0; p < array_length(self.current_weapon.charge_time); p++){
+		for(var p = array_length(self.current_weapon.charge_time) - 1; p > -1; p--){
+			if(self.start_time + self.current_weapon.charge_time[p] < CURRENT_FRAME && 
+			self.current_weapon.charge_limit >= p + 1 && _shot_code == noone){
+				_shot_code = self.current_weapon.data[p + 1];
 			}
 		}
 		
 		if(_shot_code != noone){
 			self.publish("animation_play", { 
-				name: "charge_" + string(array_get_index(self.current_weapon.data, _shot_code))
+				name: "charge_" + string(array_get_index(self.current_weapon.data, _shot_code)),
+				reset: false
 			});
 		}
 	}

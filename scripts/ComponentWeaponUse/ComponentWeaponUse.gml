@@ -82,9 +82,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			
 			//if youre idle, do the shooting animation
 			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
-			if(_anim_name == "idle" || _anim_name == "shoot"){
-				self.publish("animation_play_at_Loop", { name: "shoot" ,frame: 0});
-				self.get_instance().components.get(ComponentAnimation).animation.__type = "normal";
+			if(_anim_name == "idle"){
+				with(self.get_instance().components.get(ComponentAnimation).animation){
+					self.__index = 0;
+					self.__last_keyframe = -1;
+					self.__last_index = -1;
+					self.__wait_frames = 1;
+				}
 			}
 			
 			//make the projectile
@@ -100,4 +104,28 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//ugh
 		
 	}
+
+/*
+
+		//log(self.input.get_input_released("shoot"));Add commentMore actions
+		if(self.charge_start_time == -1) return;
+		
+		if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[3] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 4){
+			//this is too far! i didnt get graphics yet!
+		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[2] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 3){
+			//this is too far! i didnt get graphics yet!
+		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[1] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 2){
+				draw_sprite(Player_Charge_2,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
+		} else if(self.charge_start_time + self.weapon_list[self.current_weapon].charge_time[0] < CURRENT_FRAME
+					&& self.weapon_list[self.current_weapon].charge_limit >= 1){
+				draw_sprite(Player_Charge_1,CURRENT_FRAME, self.get_instance().x,self.get_instance().y)
+		} else {
+			//log("no charge!")
+		}
+
+*/
+
 }

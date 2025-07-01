@@ -182,7 +182,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			step: function() {
 				self.timer++;
 				if (self.timer > 11){
-					self.publish("animation_play_at_loop", { name: "jump", frame: 10});
+					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
 					self.set_hor_movement();
 				} else if (self.timer > 7) {
 					//please this looks so much better

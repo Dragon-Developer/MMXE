@@ -490,13 +490,13 @@ function AnimationController(_character = "") constructor {
 	}
 	/// @param {string} animation
 	/// @param {bool} reset_if_same
-    static play = function(_animation, _reset = true) {
+    static play = function(_animation, _reset = true, _frame = 0) {
 		if (_animation == "") return;
         if (self.__animation != _animation || _reset) {
-            self.__index = 0;
-			self.__last_keyframe = -1;
-			self.__last_index = -1;
-			self.__wait_frames = 1;
+            self.__index = _frame;
+			self.__last_keyframe = _frame - 1;
+			self.__last_index = _frame - 1;
+			self.__wait_frames = _frame + 1;
         }
         self.__animation = _animation;
         self.__sprite = self.get_sprite();
@@ -509,29 +509,6 @@ function AnimationController(_character = "") constructor {
 			max_key: struct_exists(_props, "max_key") ? _props.max_key : undefined,
 			loop_begin: struct_exists(_props, "loop_begin") ? _props.loop_begin : 0
 		}
-		return self;
-    }
-	
-	static play_at_loop = function(_animation, _reset = true) {
-		if (_animation == "") return;
-        self.__sprite = self.get_sprite(_animation);
-		var _props = self.get_props(_animation);
-		if (is_undefined(_props)) return;
-		var _keyframe_mode = struct_exists(_props, "keyframes") && is_array(_props.keyframes) && array_length(_props.keyframes) > 0;
-		self.__current_animation = {
-			mode: _keyframe_mode ? ANIMATION_MODE.KEYFRAMES : ANIMATION_MODE.SPEED,
-			speed: struct_exists(_props, "speed") ? _props.speed : 1,
-			max_key: struct_exists(_props, "max_key") ? _props.max_key : undefined,
-			loop_begin: struct_exists(_props, "loop_begin") ? _props.loop_begin : 0
-		}
-		if (self.__animation != _animation || _reset) {
-            self.__index = 0;
-			self.__last_keyframe = -1;
-			self.__last_index = -1;
-			self.__wait_frames = 1;
-        }
-        self.__animation = _animation;
-		self.__index = self.__current_animation.loop_begin;
 		return self;
     }
 	/// @param {string} type

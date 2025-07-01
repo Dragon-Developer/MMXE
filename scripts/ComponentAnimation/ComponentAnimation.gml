@@ -27,18 +27,9 @@ function ComponentAnimation() : ComponentBase() constructor {
 			//log(_animation.name);
 			_animation[$ "reset"] ??= false;
 			_animation[$ "keep_index"] ??= false;
+			_animation[$ "frame"] ??= 0;
 			var _index = self.animation.get_index();
-			self.animation.play(_animation.name, _animation.reset);
-			if (_animation.keep_index) {
-				self.animation.set_index(_index);	
-			}
-		});
-		
-		self.subscribe("animation_play_at_loop", function(_animation) {
-			_animation[$ "reset"] ??= false;
-			_animation[$ "keep_index"] ??= false;
-			var _index = self.animation.get_index();
-			self.animation.play_at_loop(_animation.name, _animation.reset);
+			self.animation.play(_animation.name, _animation.reset, _animation.frame);
 			if (_animation.keep_index) {
 				self.animation.set_index(_index);	
 			}

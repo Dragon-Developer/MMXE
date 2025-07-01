@@ -56,9 +56,21 @@ function SpriteLoader() constructor {
 
 	        var _base_name = _split[0];
 	        var _origin = _default_origin;
-	        if (struct_exists(_settings, _base_name) && struct_exists(_settings[$ _base_name], "origin")) {
-	            _origin = _settings[$ _baseName].origin;
-	        }
+			
+			var _sprite_name = "";
+			var _cut = string_split(_base_name, "_");
+			
+			for(var t = 0; t < array_length(_cut); t++){
+				if(t > 1){
+					_sprite_name += _cut[t];
+					if(t < array_length(_cut) - 1)
+						_sprite_name += "_"
+				}
+			}
+			
+	        if (struct_exists(_settings, _sprite_name) && struct_exists(_settings[$ _sprite_name], "origin")) {
+					_origin = _settings[$ _sprite_name].origin;
+			}
 
 	        array_push(_files, { path: _file_path, name: _base_name, origin: _origin, frames: _frames });
 	    }
@@ -104,7 +116,7 @@ function SpriteLoader() constructor {
 		_collage.StartBatch();
 		for (var _i = 0; _i < array_length(_files); _i++) {
 			var _sprite = _files[_i];
-			log(_sprite.path)
+			//log(_sprite.path)
 		    _collage.AddFile(_sprite.path, _sprite.name, _sprite.frames, false, false, _sprite.origin.x, _sprite.origin.y);
 			loaded_files[$ _sprite.path] = true;
 		}
