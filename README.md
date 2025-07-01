@@ -60,7 +60,7 @@ Feel free to suggest new features in the discord.
 - Fncilpeeps: General spriting
 - DocrobotZX: Rock, Protoman, sprites
 - Thomas Light (AKA: MaverickBlue on DeviantArt): Zero, Iris, Ultimate Armor X
-- yesilovenachos
+- yesilovenachos: Secret content, X sprites
 - Victor from Maverick Wars: General spriting.
 - Fen: Glide armor
 - Fncilipeeps: Secret Content
