@@ -1,6 +1,6 @@
 LIGHT ARMOR
 Head - Headbutt, including headbutt attack from X DiVE
-Chest - Damage reduction
+Chest - Damage reduction - 60%
 Buster - Spiral Crush Buster
 Legs - Faster dash on ground and dash jump
 Full Set Bonus - Hadouken and Shakunetsu Hadoken

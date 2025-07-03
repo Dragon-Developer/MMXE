@@ -76,25 +76,28 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				_shot_code = self.weapon_list[self.current_weapon].data[0];
 			}
 			
+			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
+			if(_anim_name == "idle"){
+				self.publish("animation_play", {name: "shoot"})
+			}
+			
+			if(_anim_name == "shoot"){
+				self.publish("animation_play", {name: "shoot", reset: true})
+			}
+			
 			//set the time for shooting to end
 			self.shot_end_time = CURRENT_FRAME + 15;
 			self.get_instance().components.get(ComponentAnimation).animation.__type = "shoot";
-			
-			//if youre idle, do the shooting animation
-			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
-			if(_anim_name == "idle"){
-				with(self.get_instance().components.get(ComponentAnimation).animation){
-					self.__index = 0;
-					self.__last_keyframe = -1;
-					self.__last_index = -1;
-					self.__wait_frames = 1;
-				}
-			}
 			
 			//make the projectile
 			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
 			apply_shot_offset(_shot);
 			_shot.dir = self.get_instance().components.get(ComponentAnimation).animation.__xscale;
+			
+			if(_anim_name == "wall_slide"){
+				_shot.dir*= -1
+			}
+			
 			_shot.weaponData = _shot_code;
 		
 		}

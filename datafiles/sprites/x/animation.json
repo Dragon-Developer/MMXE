@@ -92,61 +92,24 @@
                 "frame": 1
               }
             ]
-          }
-        },
-        {
-          "name": "idle_shoot",
-          "properties": {
-            "action": "idle",
-            "keyframes": [
+            "shot_offsets": [
               {
-                "key": 0,
-                "frame": 0
+                "x": 32,
+                "y": 32
               },
               {
-                "key": 80,
-                "frame": 1
+                "x": 32,
+                "y": 32
               },
               {
-                "key": 84,
-                "frame": 2
+                "x": 32,
+                "y": 32
               },
               {
-                "key": 92,
-                "frame": 1
-              },
-              {
-                "key": 96,
-                "frame": 0
-              },
-              {
-                "key": 144,
-                "frame": 1
-              },
-              {
-                "key": 148,
-                "frame": 2
-              },
-              {
-                "key": 152,
-                "frame": 1
-              },
-              {
-                "key": 156,
-                "frame": 0
-              },
-              {
-                "key": 160,
-                "frame": 1
-              },
-              {
-                "key": 164,
-                "frame": 2
-              },
-              {
-                "key": 168,
-                "frame": 1
+                "x": 32,
+                "y": 32
               }
+
             ]
           }
         },
@@ -637,6 +600,7 @@
         {
           "name": "shoot",
           "properties": {
+            "action":  "idle",
             "keyframes": [
               {
                 "key": 0,

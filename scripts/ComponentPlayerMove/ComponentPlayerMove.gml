@@ -333,6 +333,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	self.apply_full_armor_set = function(_armors){
 		self.armor_parts = [];
+		var _armors_to_load = [];
 		array_foreach(_armors, function(_arm){
 			array_push(self.armor_parts, _arm)
 			if(_arm != noone){
