@@ -10,18 +10,23 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.camera = noone;
 	self.locked = false;
 	self.paused = false;
-	self.ride_armor = noone;//need to double check if this is good to be deleted
 	self.can_wall_jump = true;
 	self.states = {
 		walk: {
 			speed: 376/256,	
+			animation: "walk"
 		},
 		dash: {
 			speed: 885/256,	
-			interval: 32
+			interval: 32,
+			animation: "dash"
 		},
 		jump: {
-			strength: 1363/256
+			strength: 1363/256,
+			animation: "jump"
+		},
+		fall:{
+			animation: "fall"
 		},
 		wall_jump: {
 			strength: 5
@@ -29,11 +34,14 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		ladder: {
 			speed: 376/256
 			//496/256 if its with arm parts
+		},
+		hurt: {
+			speed: -138 / 256
 		}
 	}
 	self.timer = 0;
 	
-	self.armor_parts = [noone, noone, noone, noone];// Head, Body, Arms, Boot
+	self.armor_parts = [new XFirstArmorHead(), new XFirstArmorBody(), new XFirstArmorArms(), new XFirstArmorBoot()];// Head, Body, Arms, Boot
 	
 	self.serializer
 		.addVariable("dir")
@@ -42,6 +50,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.addVariable("dash_dir")
 		.addVariable("dash_jump")
 		.addVariable("dash_tapped")
+		.addVariable("armor_parts")
 		.addCustom("double_tap")
 		.addCustom("fsm");
 	
@@ -65,7 +74,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("walk", {
 			enter: function() {
-				self.publish("animation_play", { name: "walk" });
+				//self.publish("animation_play", { name: "walk" });
+				self.publish("animation_play", { name: self.states.walk.animation });
 				self.current_hspd = self.states.walk.speed;
 			},
 			step: function() {
@@ -80,7 +90,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_child("air", "jump", {
 			enter: function() {
 				self.fsm.inherit();
-				self.publish("animation_play", { name: "jump" });
+				//self.publish("animation_play", { name: "jump" });
+				self.publish("animation_play", { name: self.states.jump.animation });
 				self.physics.set_vspd(-self.states.jump.strength);
 				if (self.fsm.get_previous_state() == "dash" || self.input.get_input("dash"))
 					self.current_hspd = self.states.dash.speed;
@@ -89,7 +100,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_child("air", "fall", {
 			enter: function() {
 				self.fsm.inherit();
-				self.publish("animation_play", { name: "fall" });
+				//self.publish("animation_play", { name: "fall" });
+				self.publish("animation_play", { name: self.states.fall.animation });
 				if (self.fsm.get_previous_state() == "jump")
 					self.physics.set_vspd(0);
 				if(self.physics.get_vspd() < 0)
@@ -103,7 +115,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.dash_dir = self.dir;
 				if(self.dash_dir == 0)
 					self.dash_dir = self.hdir;
-				self.publish("animation_play", { name: "dash" });
+				self.publish("animation_play", { name: self.states.dash.animation });
 			},
 			step: function() {
 				self.set_hor_movement(self.dash_dir);
@@ -225,11 +237,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function() {
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(0);
+				self.get_instance().components.get(ComponentAnimation).animation.__speed = 0;
 				//self.publish("animation_play", { name: "ladder" });
 			},
 			leave: function(){
 				self.physics.update_gravity();
 				self.physics.set_vspd(0);
+				self.get_instance().components.get(ComponentAnimation).animation.__speed = 1;
 			}
 		})
 		.add_child("ladder", "ladder_enter", {
@@ -246,6 +260,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function(){
 				self.fsm.inherit();
 				self.publish("animation_play", { name: "ladder_move" });
+				self.get_instance().components.get(ComponentAnimation).animation.__speed = 1;
 			},
 			step: function(){
 				self.get_instance().y += self.vdir * self.states.ladder.speed;
@@ -253,6 +268,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("ladder_exit", {
 			enter: function(){
+				self.get_instance().components.get(ComponentAnimation).animation.__speed = 1;
 				self.publish("animation_play", { name: "ladder_exit" });
 				self.fsm.change("fall")
 			},
@@ -261,9 +277,21 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_vspd(0);
 			}
 		})
+		.add("hurt", {
+			enter: function(){
+				self.physics.velocity = new Vec2(self.dir * self.states.hurt.speed,2);
+			},
+			step: function(){
+				
+			},
+			leave: function(){
+				
+			}
+		})
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
+		.add_wildcard_transition("t_hurt", "hurt", function() { return !self.fsm.get_current_state() == "wall_slide" })
 		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_wildcard_transition("t_custom", "custom")
@@ -288,7 +316,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "ladder", "ladder_move", function() { return self.vdir != 0})
 		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
 		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
-		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
+		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { 
+			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder) || self.physics.is_on_floor()
+		})
 		.add_transition("t_transition", "dash", "dash_end", function() 
 		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
@@ -324,21 +354,37 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.subscribe("player_set_armor_part", function(_armors) {
 			self.apply_full_armor_set(_armors);
 		});
+		self.subscribe("took_damage", function() {
+			self.fsm.trigger("t_hurt")
+		});
 	}
 	
 	// Initialization
 	self.init = function() {
 		self.fsm.trigger("t_init");
+		//self.apply_full_armor_set(self.armor_parts);
+		
+		/*
+		
+			loading armor data from json files? 
+			
+			maybe. it would make sense, but i think json has some extreme limitations
+		
+		*/
+		
 	}
 	
 	self.apply_full_armor_set = function(_armors){
 		self.armor_parts = [];
-		var _armors_to_load = [];
+		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm){
 			array_push(self.armor_parts, _arm)
 			if(_arm != noone){
 				self.get_instance().components.get(ComponentAnimation).add_subdirectories(["/" + string(_arm.sprite_name)]);
-				_arm.apply_armor_effects(self);
+				if(variable_struct_exists(_arm, "apply_armor_effects"))
+					_arm.apply_armor_effects(self);
+				else
+					log("this thing doesnt have an armor effect variable!")
 			}
 		});
 	}

@@ -30,7 +30,7 @@ function ComponentMask() : ComponentBase() constructor {
 		with (obj_block_parent) {
 			visible = other.draw_enabled;	
 		}
-		with (obj_slope_zone) {
+		with (obj_ladder) {
 			visible = other.draw_enabled;	
 		}
 	}

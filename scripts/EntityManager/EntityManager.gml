@@ -35,8 +35,8 @@ function EntityManager() constructor {
 	 * @param {Asset.GMObject} _object - The object containing components.
 	 * @returns {Instance} The created instance.
 	 */
-	static create_instance = function(_object) {
-		var _inst = instance_create_depth(0, 0, 0, _object);
+	static create_instance = function(_object, _x = 0, _y = 0) {
+		var _inst = instance_create_depth(_x, _y, 0, _object);
 		_inst.components.__id = self.__next_id++;
 
 		array_push(self.__instances, _inst);
@@ -53,16 +53,16 @@ function EntityManager() constructor {
 	 */
 	static destroy_instance = function(_inst) {
 		var _index = array_get_index(self.__instances, _inst);
-		if (_index == -1) return false;
-
+		if (_index <= -1) return false;
 		var _id = _inst.components.__id;
+		
 		
 		_inst.components.publish("entity_destroyed", _inst);
 		remove_all_components(_inst);
-		instance_destroy(_inst);
 		array_delete(self.__instances, _index, 1);
 		struct_remove(self.__instance_map, _id);
-
+		instance_destroy(_inst);
+		
 		return true;
 	};
 

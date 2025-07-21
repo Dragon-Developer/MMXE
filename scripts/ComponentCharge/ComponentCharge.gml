@@ -3,11 +3,14 @@ function ComponentCharge() : ComponentBase() constructor{
 	self.input = noone;
 	self.node_parent = noone;
 	self.current_weapon = noone;
+	self.shoot_input = "shoot";
+	self.shoot_inputs = ["shoot"]
+	self.charging = false;
 	
 	self.init = function(){
 		self.publish("animation_play", { 
 					name: "charge_1"
-				});
+				}); 
 				self.publish("animation_visible", false);
 	}
 	
@@ -20,14 +23,34 @@ function ComponentCharge() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
-		//Charge reset/start
+		self.charge();
+	}
+	
+	//I am gonna manually call this from componentWeaponUse
+	self.charge = function(){
+		var _pressed = false;
+		var _released = false;
 		if(self.input != noone) {
-			if(self.input.get_input_released("shoot")){
-				self.start_time = -1;//if it's -1, then we arent charging. 
-				self.publish("animation_visible", false);
-			} else if(self.input.get_input_pressed("shoot")){
-				self.start_time = CURRENT_FRAME;
+			//one may say that im compensating
+			//they would not be wrong
+			for(var p = 0; p < array_length(self.shoot_inputs); p++){
+				if(self.input.get_input_released(self.shoot_inputs[p])){
+					_released = true;
+				}
+				//should decouple these
+				if(self.input.get_input_pressed(self.shoot_inputs[p])){
+					_pressed = true;
+				}
 			}
+		}
+
+		if(_released && charging){//prevent 'stored charge shots'
+			self.start_time = -1;//if it's -1, then we arent charging. 
+			self.publish("animation_visible", false);
+			charging = false;
+		} else if(_pressed && !charging){//prevent charge shot delay rapidly increasing
+			self.start_time = CURRENT_FRAME;
+			charging = true;
 		}
 		
 		self.get_instance().x = self.get_instance().components.get(ComponentNode).node_parent.get_instance().x;

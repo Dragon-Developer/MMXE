@@ -354,6 +354,7 @@ function AnimationController(_character = "") constructor {
 	    if (_frame == self.__last_keyframe) return;
 
 	    var _props = self.get_props();
+		if(_props == undefined) return;
 	    if (struct_exists(_props, "key_events")) {
 	        var _key_events = _props.key_events;
 

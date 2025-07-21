@@ -9,6 +9,31 @@ function ComponentProjectile() : ComponentBase() constructor{
 	self.weaponCreate = noone;
 	
 	
+	self.init_time = -1;
+	self.ded = false;
+	self.death_requirements = [
+	function(){
+		var _inst = self.get_instance();
+		// i need to get the sprite width and height so i can account them when deleting projectiles.
+		// currently, i just give a quarter of the screen as leeway so sprites can leave the viewport
+		// before dying
+		if(!is_undefined(global.server))
+		return (
+			//this should be the camera because the player is never perfectly in the middle
+			abs(instance_nearest(_inst.x, _inst.y, obj_player).x - _inst.x + GAME_W / 2) > GAME_W ||
+			abs(instance_nearest(_inst.x, _inst.y, obj_player).y - _inst.y + GAME_H / 2) > GAME_H 
+		)
+		else
+		return (
+			//this should be the camera because the player is never perfectly in the middle
+			abs(instance_nearest(_inst.x, _inst.y, obj_camera).x - _inst.x + GAME_W / 2) > GAME_W / 1.5 ||
+			abs(instance_nearest(_inst.x, _inst.y, obj_camera).y - _inst.y + GAME_H / 2) > GAME_H / 1.5
+		)
+	}
+	];
+	
+	self.hurtable_tag = "enemy";// the generic projectile type. used for hurtables
+	
 	self.serializer = new NET_Serializer(self);
 	self.serializer
 		.addVariable("weaponData")
@@ -21,6 +46,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 		if(self.get_instance().mask_index == -1){
 				self.get_instance().mask_index = spr_player_mask;	
 			}
+		self.init_time = CURRENT_FRAME;
 	}
 
 	//you need this because specific stuff needs to happen. if you
@@ -41,12 +67,27 @@ function ComponentProjectile() : ComponentBase() constructor{
 	}
 	
 	self.step = function() {
-		//log(self.)
+		self.verify_can_die();
+		if(variable_instance_exists(self.get_instance(), "components")){
+			if(variable_instance_exists(self.get_instance().components, "_id"))
+				log(string(self.get_instance().components._id) + " is the id for a projectile")
+		}
 		if weaponCreate == noone || weaponCreate == undefined return;//
 		if (!variable_struct_exists(
 		weaponCreate, 
 		"step")) 
 			return;
-		weaponCreate.step(self.get_instance());
+		try{
+			weaponCreate.step(self.get_instance());
+		} catch(_exception){
+			
+		}
+	}
+	
+	self.verify_can_die = function(){
+		array_foreach(self.death_requirements, function(_req){
+			if(_req())
+				ENTITIES.destroy_instance(self.get_instance());
+		});
 	}
 }

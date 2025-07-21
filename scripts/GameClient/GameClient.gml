@@ -17,7 +17,7 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 		global.game.add_local_players([1]);
 		global.game.inputs.setTotalPlayers(totalPlayers);
 		global.gui.lobbyMenuContainer.setEnabled(false);	
-		global.gui.startGame();
+		global.gui.startMultiplayerLobby();
 		self.started = true;
 	});
 	self.setEvent("connected", function() {

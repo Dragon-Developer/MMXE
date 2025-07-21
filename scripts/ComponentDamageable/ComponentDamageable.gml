@@ -11,6 +11,9 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.physics = noone;//physics is used to detect collisions with projectiles.
 	
+	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
+	// if they actually hurt the hurtable
+	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
@@ -19,6 +22,16 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.init = function(){
 		
+	}
+	
+	self.add_max_health = function(_add){
+		self.health_max += _add;
+		self.health += _add;
+	}
+	
+	self.set_health = function(_health, _maxHealth = self.health_max){
+		self.health = _health;
+		self.health_max = _maxHealth;
 	}
 	
 	self.step = function(){
@@ -39,13 +52,22 @@ function ComponentDamageable() : ComponentBase() constructor{
 		if(self.invuln_offset > CURRENT_FRAME) {
 			if((self.invuln_offset - CURRENT_FRAME) % 2 == 0)
 				self.get_instance().visible = false;
-			return;
 		}
 		
 		self.check_for_collision();
 	}
 	
-	self.check_for_collision = function(){//seperated because this will definitely be expanded later
+	self.check_for_collision = function(){
+		self.check_for_projectiles();
+		self.check_for_enemies();
+		
+		if(self.health < 0)
+		{
+			ENTITIES.destroy_instance(self.get_instance());
+		}
+	}
+	
+	self.check_for_projectiles = function(){//seperated because this will definitely be expanded later
 		//place_meeting takes all masks into account, so I only need the one
 		var _proj = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
 		
@@ -53,14 +75,36 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(!variable_instance_exists(_proj, "components")) return;
 		//log("hit")
+		if(self.invuln_offset > CURRENT_FRAME && _proj.components.get(ComponentProjectile).weaponCreate.comboiness < self.comboiness){
+			//if the comboiness is too high and the projectile is not comboy enough
+			return;
+		}
+		
 		if(_proj.components.get(ComponentProjectile).weaponCreate.damage > 0){
 			self.health -= _proj.components.get(ComponentProjectile).weaponCreate.damage;
-			self.publish("took damage", self.health);//so other components dont need to hook into this to get info
+			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 		}
-		if(self.health < 0)
-		{
-			ENTITIES.destroy_instance(self.get_instance());
+		
+	}
+
+	self.check_for_enemies = function(){
+		if(self.get_instance() == par_enemy) return;
+		
+		var _enemy = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.enemy);
+		
+		if(!variable_instance_exists(_enemy, "components")){ 
+			return;
+		}
+		
+		if(self.invuln_offset > CURRENT_FRAME){
+			return;
+		}
+		
+		if(_enemy.components.get(ComponentEnemy).contact_damage > 0){
+			self.health -= _enemy.components.get(ComponentEnemy).contact_damage;
+			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 		}
 	}
 }

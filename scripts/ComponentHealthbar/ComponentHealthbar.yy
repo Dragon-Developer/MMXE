@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ComponentHealthbar",
   "parent":{
-    "name":"General",
-    "path":"folders/Scripts/Game/Entity Components/General.yy",
+    "name":"Camera",
+    "path":"folders/Scripts/Game/Entity Components/Camera.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

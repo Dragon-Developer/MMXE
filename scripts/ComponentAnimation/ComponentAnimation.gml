@@ -5,7 +5,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.rotation_angle = 0;
 	self.rotation_debug = false;
 	self.subdirectories = [""];
-	self.armors = [""];
+	self.armors = ["x1_helm","x1_helm","x1_helm","x1_helm"];//which format was this?
 	self.animation = new AnimationController();
 	self.position_queue = []; 
 	self.max_queue_size = 5;
@@ -55,12 +55,14 @@ function ComponentAnimation() : ComponentBase() constructor {
 	
 	self.load_sprites = function() {
 		//what does this do?
+		log("directory " + ("sprites/" + self.character) + " was loaded: " + (directory_exists("sprites/" + self.character) ? "true" : "false"));
 		SpriteLoader.reload_collage(self.collage, "sprites/" + self.character, self.subdirectories);
 	}
 	
 	self.reload_animations = function() {
 		self.load_sprites();
 		var _animation = JSON.load("sprites/" + self.character + "/animation.json");
+		if(_animation == -1) return;
 		var _current_animation = undefined;
 		if (!is_undefined(self.animation)) {
 			_current_animation = self.animation.__animation;

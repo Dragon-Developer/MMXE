@@ -34,6 +34,9 @@ function SpriteLoader() constructor {
 	    for (var _i = 0; _i < array_length(_sub_dirs); _i++) {
 	        array_push(result.subdirectories, self.__generate_directory_structure(_sub_dirs[_i]));
 	    }
+		
+		if(_png_files == [])
+			log("no png files were found in " + _current_dir)
 
 	    return result;
 	};

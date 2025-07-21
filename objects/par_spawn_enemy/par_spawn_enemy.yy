@@ -10,8 +10,8 @@
   "name":"par_spawn_enemy",
   "overriddenProperties":[],
   "parent":{
-    "name":"Parent",
-    "path":"folders/Objects/Level Assets/Enemies/Parent.yy",
+    "name":"Enemies",
+    "path":"folders/Objects/Level Assets/Enemies.yy",
   },
   "parentObjectId":{
     "name":"par_spawner",

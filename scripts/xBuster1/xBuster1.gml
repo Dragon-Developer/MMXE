@@ -1,6 +1,6 @@
 function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
-	self.charge_limit = 2;
+	self.charge_limit = 0;
 }
 
 function xBuster11Data() : ProjectileData() constructor{
@@ -18,7 +18,8 @@ function xBuster11Data() : ProjectileData() constructor{
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 2, self.init_time + 5)) _hspd = 5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6;
 		else _hspd = 6.25;
-		_inst.x += _hspd * self.dir;
+		if(!is_undefined(_inst))
+			_inst.x += _hspd * self.dir;
 	}
 }
 

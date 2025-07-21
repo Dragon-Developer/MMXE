@@ -1,5 +1,6 @@
 function ComponentEnemy() : ComponentBase() constructor{
 	self.health = -1;//because I dont want to manually get a reference to the damageable
+	self.contact_damage = 1;//the amount of contact damage enemies deal
 	
 	self.init = function(){
 		self.publish("animation_play", { name: "idle" });
@@ -7,7 +8,6 @@ function ComponentEnemy() : ComponentBase() constructor{
 	
 	self.EnemyData = BaseEnemy;//enemy 
 	self.EnemyEnum = noone;
-	
 	
 	self.serializer = new NET_Serializer(self);
 	self.serializer

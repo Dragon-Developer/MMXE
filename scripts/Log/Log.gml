@@ -1,5 +1,8 @@
 function log(_string){
 	show_debug_message(_string);
+	//if(variable_global_exists(global.logger)){
+		LOG.print(_string);
+	//}
 }
 function LogConsole() constructor {
 	static print = function(_text) {

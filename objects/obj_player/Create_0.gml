@@ -8,7 +8,9 @@ components.add([
 	ComponentAnimation,
 	ComponentMask,
 	ComponentWeaponUse,
-	ComponentNode
+	ComponentNode,
+	ComponentDamageable
+	//component input display should be on the camera. because its the camera, which only gets made once
 ]);
 
 components.init();

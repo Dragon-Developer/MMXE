@@ -3,10 +3,12 @@ function global_init() {
 	//soundmanager?
 	SOUND = new SoundManager();
 	VBUTTON = new VirtualButtonManager();
-	LOG = new LogConsole();
-	if (GM_build_type == "exe") {
+	//LOG = new LogConsole();
+	//if (GM_build_type == "exe") {
 		LOG = new LogFile();	
-	}
+	//}
+	
+	log(working_directory);
 	
 	global.local_player_index = 0;
 	global.server = undefined;

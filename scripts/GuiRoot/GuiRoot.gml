@@ -14,8 +14,19 @@ function GuiRoot() : GuiContainer() constructor {
 				players: [0, 1]
 			}, global.server.getAllSockets());
 		
-		
 		room_goto(_id);
+	}
+	
+	startMultiplayerLobby = function() {
+		hudContainer.setEnabled(true);
+		refreshChildren();
+		global.game.start();
+		if (!is_undefined(global.server)) 
+			global.server.rpc.sendNotification("game_start", {
+				players: [0, 1]
+			}, global.server.getAllSockets());
+		
+		room_goto(rm_headquarters);
 	}
 	
 	startEditor = function(){

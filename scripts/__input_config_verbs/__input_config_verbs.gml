@@ -20,10 +20,14 @@ function __input_config_verbs()
             left:  [input_binding_key(vk_left)],
             right: [input_binding_key(vk_right)],
             
-            jump:  input_binding_key("V"),//gonna be jump
-            dash:  input_binding_key("D"),// gonna be dash
-            shoot:  input_binding_key("X"),// shoot
-            shoot2: input_binding_key("C"),// alt shoot
+            jump:        input_binding_key("V"),//gonna be jump
+            dash:        input_binding_key("D"),// gonna be dash
+            shoot:       input_binding_key("X"),// shoot
+            shoot2:      input_binding_key("C"),// alt shoot
+            shoot3:      input_binding_key("Z"),// gigas
+            shoot4:      input_binding_key("f"),// power gear / alt gigas
+            switchLeft:  input_binding_key("A"),// switch weapon to the left
+            switchRight: input_binding_key("S"),// switch weapon to the right
             
             //No aiming verbs since we use the mouse for that (see below for aiming verb examples)
 			click: input_binding_mouse_button(mb_left),
@@ -38,16 +42,20 @@ function __input_config_verbs()
             left:  [input_binding_gamepad_axis(gp_axislh, true),  input_binding_gamepad_button(gp_padl)],
             right: [input_binding_gamepad_axis(gp_axislh, false), input_binding_gamepad_button(gp_padr)],
             
-            jump:  input_binding_gamepad_button(gp_face1),
-            dash:  input_binding_gamepad_button(gp_face2),
-            shoot:  input_binding_gamepad_button(gp_face3),
-            shoot2: input_binding_gamepad_button(gp_face4),
+            jump:        input_binding_gamepad_button(gp_face1),
+            dash:        input_binding_gamepad_button(gp_face2),
+            shoot:       input_binding_gamepad_button(gp_face3),
+            shoot2:      input_binding_gamepad_button(gp_face4),
+            shoot3:      input_binding_gamepad_button(gp_shoulderlb),
+            shoot4:      input_binding_gamepad_button(gp_shoulderrb),
+            switchLeft:  input_binding_gamepad_button(gp_shoulderl),
+            switchRight: input_binding_gamepad_button(gp_shoulderr),
             
             aim_up:    input_binding_gamepad_axis(gp_axisrv, true),
             aim_down:  input_binding_gamepad_axis(gp_axisrv, false),
             aim_left:  input_binding_gamepad_axis(gp_axisrh, true),
             aim_right: input_binding_gamepad_axis(gp_axisrh, false),
-            shoot:     [input_binding_gamepad_button(gp_shoulderlb), input_binding_gamepad_button(gp_shoulderrb)],
+            //shoot:     [input_binding_gamepad_button(gp_shoulderlb), input_binding_gamepad_button(gp_shoulderrb)],
             
             pause: input_binding_gamepad_button(gp_start),
         },
@@ -59,10 +67,14 @@ function __input_config_verbs()
             left:  input_binding_virtual_button(),
             right: input_binding_virtual_button(),
             
-            jump:  input_binding_virtual_button(),
-            dash:  input_binding_virtual_button(),
-            shoot:  input_binding_virtual_button(),
-            shoot2: input_binding_virtual_button(),
+            jump:        input_binding_virtual_button(),
+            dash:        input_binding_virtual_button(),
+            shoot:       input_binding_virtual_button(),
+            shoot2:      input_binding_virtual_button(),
+            shoot3:      input_binding_virtual_button(),
+            shoot4:      input_binding_virtual_button(),
+            switchLeft:  input_binding_virtual_button(),
+            switchRight: input_binding_virtual_button(),
             
             pause: input_binding_virtual_button(),
         }

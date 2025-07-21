@@ -27,14 +27,16 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	}
 	self.entities_step = function() {
 		var _step = function(_component) { 
-			if (!_component.step_enabled) return; 
-			_component.step(); 
+			try{
+				if (!_component.step_enabled) return; 
+				_component.step(); 
+			} catch(_exception) {
+				show_debug_message(_exception.message);
+			    show_debug_message(_exception.longMessage);
+			    show_debug_message(_exception.script);
+			    show_debug_message(_exception.stacktrace);
+			}
 		};
-		var _step_end = function(_component) { 
-			if (!_component.step_enabled) return; 
-			_component.step_end(); 
-		};
-		
 		
 		ENTITIES.for_each_component(ComponentNode, _step);
 		ENTITIES.for_each_component(ComponentPlayerInput, _step);
@@ -65,7 +67,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 			self.game_timer -= 1;
 			self.entities_step();
 		}
-		
+		//CURRENT_FRAME++;//this is here so rollback can function more effectively
 	}
 	
 	self.draw_gui_begin = function(){
@@ -80,6 +82,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
 		ENTITIES.for_each_component(ComponentHealthbar, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
+		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		
 		if(self.debug){
 		

@@ -6,10 +6,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.grav_magnitude = self.grav.length(); 
 	self.up_to_right_dir = -1;
 	self.terminal_velocity = 6.25;
-	self.check_slopes = false;//dont think this is needed anymore
 	self.objects = {
 		block: obj_square_16,
-		projectile : par_projectile
+		projectile : par_projectile,
+		enemy: par_enemy
 	};
 	self.serializer = new NET_Serializer(self);
 	self.serializer
@@ -20,12 +20,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		.addVariable("grav_magnitude")
 		.addVariable("up_to_right_dir")
 		.addVariable("terminal_velocity")
-	
-	self.on_register = function() {
-		self.subscribe("set_slope_detection", function(_detect) {
-			self.check_slopes = _detect;
-		});
-	}
 	/**
 	 * Sets the velocity of the entity.
 	 * @param {real} x - X velocity.
@@ -80,12 +74,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 */
 	set_grav = function(_grav) {
 		self.grav = _grav;	
-	}
-	/*
-	 * Sets the slope detection state.
-	*/
-	set_slope_detection = function(_grav) {
-		self.check_slopes = _grav;	
 	}
 	/**
 	 * Updates entity physics, applies gravity, and handles movement.

@@ -11,7 +11,7 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	
 	self.on_register = function(){
 		self.subscribe("components_update", function() {
-			self.compDamageable = self.parent.find("damageable") ?? new ComponentDamageable();
+			self.compDamageable = self.parent.find("damageable");
 		});
 	}
 	
@@ -32,6 +32,7 @@ function ComponentHealthbar() : ComponentBase() constructor{
 			}
 		}
 		draw_sprite(spr_bar1_limit, 0, screenOffsetX, screenOffsetY - 2 - i*2);
+		draw_string( compDamageable.invuln_time - CURRENT_FRAME, screenOffsetX, screenOffsetY + 16);
 	}
 	//need to learn collage! I need to load the UI texture folder!
 }

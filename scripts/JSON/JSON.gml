@@ -17,6 +17,10 @@ function JSON() constructor {
 	static load = function(_filename) {
 	  // We load in the file
 	  var _buff = buffer_load(_filename);
+	  //if the buffer does not exist, return -1 and bail
+	  if(_buff == -1){
+		return -1;
+	  }
 	  // We get the json from the buffer
 	  var _json = buffer_read(_buff, buffer_text);
 	  // We free the buffer, since we don't need it now. As we've extracted the whole string

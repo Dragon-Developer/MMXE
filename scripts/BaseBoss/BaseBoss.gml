@@ -6,4 +6,16 @@ function BaseBoss() : BaseEnemy() constructor{
 			focus : "left"
 		}
 	];
+	
+	self.enter_init = function(){
+		//do init related things here. this is varied enough to be placed here
+	}
+
+	self.enter_step = function(){
+		
+	}
+	
+	self.pose_animation_name = "idle";
+	
+	
 }

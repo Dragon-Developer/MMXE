@@ -10,9 +10,14 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	//dark said no int based timers because we plastered them everywhere.
 	//current_time is in milliseconds! use CURRENT_FRAME!
 	self.shot_end_time = 0;
-	self.current_weapon = 0;//the weapon data, not the projectile or melee data.
-	self.weapon_list = [new xBuster()];
+	self.current_weapon = [0,0,0];//i highly doubt these will change much at all during gameplay
+	self.weapon_list = [
+	[new xBuster()],
+	[new xBuster()],
+	[new xBuster()]
+	];
 	self.charge = noone;
+	self.shoot_inputs = [/*"shoot","shoot2","shoot3"*/]
 	
 	self.serializer
 		.addVariable("shot_end_time")
@@ -20,7 +25,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		.addVariable("weapon_list")
 	
 	self.init = function(){
-		current_weapon = 0;
+		//current_weapon = 0;
 		//this system for the moment wont work if the animator has multiple other things that use it
 		//but for the moment, the only other animator is the main player one. as long as we reset it
 		//at the end of the script, we should be good
@@ -36,7 +41,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
-		self.charge.current_weapon = self.weapon_list[self.current_weapon];
+		if(self.charge != noone){
+			//log(self.weapon_list)
+			//log(self.current_weapon)
+			self.charge.current_weapon = self.weapon_list[0,self.current_weapon[0]];//the first buster slot
+			self.charge.shoot_inputs = self.shoot_inputs;
+		}
 		
 		if(self.shot_end_time < CURRENT_FRAME){
 			//probably shouldnt manually set this but meh
@@ -56,24 +66,38 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				});
 			}
 		}
-		
-		if(self.input.get_input_pressed("shoot") || self.input.get_input_released("shoot")){
+		for(var g = 0; g < array_length(self.shoot_inputs);g++){
+			self.shoot(self.shoot_inputs[g], g);
+		}
+	}
+	
+	self.shoot = function(_input, _id){
+		if(self.input.get_input_pressed(_input) || self.input.get_input_released(_input)){
 			
 			var _shot_code = noone;
 			
-			if(self.input.get_input_released("shoot")){
-				for(var p = 0; p < array_length(self.weapon_list[self.current_weapon].charge_time); p++){
-					if(self.charge.start_time + self.weapon_list[self.current_weapon].charge_time[p] < CURRENT_FRAME
-					&& self.weapon_list[self.current_weapon].charge_limit >= p + 1){
-						_shot_code = self.weapon_list[self.current_weapon].data[p + 1];
+			if(self.input.get_input_released(_input) && self.charge != noone){
+				//nobody said i was a CLEAN coder
+				
+				if(self.charge.charging){
+					for(var p = 0; p < array_length(
+					
+					self.weapon_list[
+					_id][
+					self.current_weapon[
+					_id]].charge_time); p++){
+						
+						if(self.charge.start_time + self.weapon_list[_id][self.current_weapon[_id]].charge_time[p] < CURRENT_FRAME
+						&& self.weapon_list[_id][self.current_weapon[_id]].charge_limit >= p + 1){
+							_shot_code = self.weapon_list[_id][self.current_weapon[_id]].data[p + 1];
+						}
 					}
 				}
-				
 				if(_shot_code == noone){
 					return;
 				}
 			} else {
-				_shot_code = self.weapon_list[self.current_weapon].data[0];
+				_shot_code = self.weapon_list[_id][self.current_weapon[_id]].data[0];
 			}
 			
 			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;

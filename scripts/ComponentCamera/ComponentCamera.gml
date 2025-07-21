@@ -11,7 +11,7 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.bounds = noone;//if bounds are noone, just lock onto player pos. otherwise, abide by bounds
 	self.physics = noone;
 	
-	self.movement_limit_x = 16;//the camera cant move faster than this
+	self.movement_limit_x = 5;//the camera cant move faster than this
 	self.movement_limit_y = 7;
 	
 	self.bounds_top_left_x = 4;
@@ -97,6 +97,10 @@ function ComponentCamera() : ComponentBase() constructor {
 		}
 		
 		self.update_pos(self.target.x,self.target.y);
+		var _inst = self.get_instance();
+		
+		_inst.x = self.x;
+		_inst.y = self.y;
     }
 	
 	self.update_pos = function(_x, _y) {
@@ -141,11 +145,14 @@ function ComponentCamera() : ComponentBase() constructor {
 		self.camera = view_get_camera(0);	
 		surface_resize(application_surface, self.width, self.height);
 		room_set_viewport(room, 0, true, 0, 0, GAME_W / 2, GAME_H);
+		self.x = self.get_instance().x;
+		self.y = self.get_instance().y;
+		camera_set_view_pos(self.camera, self.get_instance().x, self.get_instance().y);
 	}
 	
 	self.rotation_controller.on_end = function() {
 		ENTITIES.pause(["actor"], false);
-			log(WORLD)
+			//log(WORLD)
 		var _instances = ENTITIES.find_all(["actor"]);
 		if(WORLD != undefined)
 			WORLD.components.get(ComponentWorld).rotate_up(-90);

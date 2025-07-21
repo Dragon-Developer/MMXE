@@ -92,25 +92,6 @@
                 "frame": 1
               }
             ]
-            "shot_offsets": [
-              {
-                "x": 32,
-                "y": 32
-              },
-              {
-                "x": 32,
-                "y": 32
-              },
-              {
-                "x": 32,
-                "y": 32
-              },
-              {
-                "x": 32,
-                "y": 32
-              }
-
-            ]
           }
         },
         {
@@ -238,6 +219,122 @@
           }
         },
         {
+          "name": "walk_smooth",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 9,
+                "frame": 5
+              },
+              {
+                "key": 10,
+                "frame": 6
+              },
+              {
+                "key": 11,
+                "frame": 7
+              },
+              {
+                "key": 12,
+                "frame": 8
+              },
+              {
+                "key": 13,
+                "frame": 9
+              },
+              {
+                "key": 14,
+                "frame": 10
+              },
+              {
+                "key": 15,
+                "frame": 11
+              },
+              {
+                "key": 16,
+                "frame": 12
+              },
+              {
+                "key": 17,
+                "frame": 13
+              },
+              {
+                "key": 18,
+                "frame": 14
+              },
+              {
+                "key": 19,
+                "frame": 15
+              },
+              {
+                "key": 20,
+                "frame": 16
+              },
+              {
+                "key": 21,
+                "frame": 17
+              },
+              {
+                "key": 22,
+                "frame": 18
+              },
+              {
+                "key": 23,
+                "frame": 19
+              },
+              {
+                "key": 24,
+                "frame": 20
+              },
+              {
+                "key": 25,
+                "frame": 21
+              },
+              {
+                "key": 26,
+                "frame": 22
+              },
+              {
+                "key": 27,
+                "frame": 23
+              },
+              {
+                "key": 28,
+                "frame": 24
+              },
+              {
+                "key": 29,
+                "frame": 25
+              },
+              {
+                "key": 30,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
           "name": "jump",
           "properties": {
             "keyframes": [
@@ -252,6 +349,46 @@
               {
                 "key": 7,
                 "frame": 2
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "jump_smooth",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 7,
+                "frame": 7
               }
             ],
             "loop_begin": 7
@@ -279,6 +416,47 @@
           }
         },
         {
+          "name": "fall_smooth",
+          "properties": {
+            "action": "jump_smooth",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 7
+              },
+              {
+                "key": 1,
+                "frame": 8
+              },
+              {
+                "key": 2,
+                "frame": 9
+              },
+              {
+                "key": 3,
+                "frame": 10
+              },
+              {
+                "key": 4,
+                "frame": 11
+              },
+              {
+                "key": 5,
+                "frame": 12
+              },
+              {
+                "key": 6,
+                "frame": 13
+              },
+              {
+                "key": 7,
+                "frame": 14
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
           "name": "land",
           "properties": {
             "action": "jump",
@@ -294,6 +472,30 @@
               {
                 "key": 3,
                 "frame": 6
+              }
+            ]
+          }
+        },
+        {
+          "name": "land_smooth",
+          "properties": {
+            "action": "jump_smooth",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 14
+              },
+              {
+                "key": 2,
+                "frame": 15
+              },
+              {
+                "key": 2,
+                "frame": 16
+              },
+              {
+                "key": 3,
+                "frame": 17
               }
             ]
           }
@@ -600,7 +802,7 @@
         {
           "name": "shoot",
           "properties": {
-            "action":  "idle",
+            "action": "idle",
             "keyframes": [
               {
                 "key": 0,
@@ -758,8 +960,28 @@
                 "frame": 1
               },
               {
-                "key": 10,
+                "key": 8,
                 "frame": 2
+              },
+              {
+                "key": 11,
+                "frame": 3
+              },
+              {
+                "key": 14,
+                "frame": 4
+              },
+              {
+                "key": 22,
+                "frame": 3
+              },
+              {
+                "key": 25,
+                "frame": 2
+              },
+              {
+                "key": 28,
+                "frame": 1
               }
             ]
           }

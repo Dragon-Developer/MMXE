@@ -44,6 +44,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     };
 	
 	self.step = function() {
+		//log(__player_index)
 		self.update_inputs();	
 	}
 

@@ -18,7 +18,7 @@ function GuiLobbyMenu() : GuiContainer() constructor {
     buttonStart = new GuiButton(200, 50, "Start");
 	buttonStart.addEventListener("click", function() { 
 		self.setEnabled(false);
-		parent.startGame(rm_explose_horneck);
+		parent.startMultiplayerLobby();
 	});
 	
 	buttonBack = new GuiButton(200, 50, "Back")
