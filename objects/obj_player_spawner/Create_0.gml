@@ -1,10 +1,9 @@
 event_inherited();
 entity_object = obj_player;
-spawn_times = GAME.inputs.getTotalPlayers();
 current_spawn = 0;
 on_spawn = function(_player) {
 	
-	_player.components.get(ComponentAnimation).set_subdirectories(
+	_player.components.get(ComponentAnimationPalette).set_subdirectories(
 	["/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", "weapon");
@@ -26,7 +25,8 @@ on_spawn = function(_player) {
 		var _camera = ENTITIES.create_instance(obj_camera, x - GAME_W / 3, y - GAME_H / 2);
 		_camera.components.publish("target_set", _player);	
 		_camera.components.get(ComponentHealthbar).compDamageable = _player.components.get(ComponentDamageable);
-		_player.components.get(ComponentAnimation).max_queue_size = 0;
+		_player.components.get(ComponentAnimationPalette).max_queue_size = 0;
 	}
 	current_spawn++;
 }
+spawn_times = GAME.inputs.getTotalPlayers();

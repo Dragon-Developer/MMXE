@@ -9,10 +9,8 @@ function GuiRoot() : GuiContainer() constructor {
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		global.game.start();
-		if (!is_undefined(global.server)) 
-			global.server.rpc.sendNotification("game_start", {
-				players: [0, 1]
-			}, global.server.getAllSockets());
+		//this is for the singleplayer experience. multiplayer isnt a factor here
+		
 		
 		room_goto(_id);
 	}
@@ -21,10 +19,25 @@ function GuiRoot() : GuiContainer() constructor {
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		global.game.start();
-		if (!is_undefined(global.server)) 
+		
+		if (!is_undefined(global.server)) {
+		//excuse my cancer, but i also dont give a fuck
+			log("this is the server!")
+			var _plrs = [0];
+			for(var t = 0; t < array_length(global.server.getAllSockets()); t++){
+				array_push(_plrs, t + 1)
+				global.server.rpc.sendNotification("set_player_id", {
+					_id: t + 1
+				}, global.server.getAllSockets()[t]);
+				log(global.server.getAllSockets()[t])
+			}
+			log(_plrs)
+			global.game.inputs.setTotalPlayers(array_length(_plrs));
 			global.server.rpc.sendNotification("game_start", {
-				players: [0, 1]
+				players: _plrs
 			}, global.server.getAllSockets());
+		}//if this fails, youre a client
+		
 		
 		room_goto(rm_headquarters);
 	}

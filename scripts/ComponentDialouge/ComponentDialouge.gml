@@ -118,8 +118,8 @@ function ComponentDialouge() : ComponentBase() constructor{
 			self.dialouge_margin + _text_left_edge, q * (8 + dialouge_margin) + dialouge_margin + dialouge_y_top);
 		}
 		
-		var _left_col = (string_lower(self.focus) == "right" ? c_white : c_grey);// i used string_lower to allow people to use right and Right.
-		var _right_col = (string_lower(self.focus) == "left" ? c_white : c_grey);// its going to happen, someone is going to say they put in right when
+		var _left_col = (string_lower(self.focus) == "right" ? c_grey : c_white);// i used string_lower to allow people to use right and Right.
+		var _right_col = (string_lower(self.focus) == "left" ? c_grey : c_white);// its going to happen, someone is going to say they put in right when
 		//they put in Right or RIght. heck, they could do RIGHT.
 		
 		if(string_lower(self.focus) == "right" && array_last(self.text_length) != array_last(self.tc_length)){

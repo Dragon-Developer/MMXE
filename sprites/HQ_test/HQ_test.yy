@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Delete Eventually",
-    "path":"folders/Sprites/Delete Eventually.yy",
+    "name":"Static Sprites",
+    "path":"folders/Sprites/Static Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -50,8 +50,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		if(self.shot_end_time < CURRENT_FRAME){
 			//probably shouldnt manually set this but meh
-			self.get_instance().components.get(ComponentAnimation).animation.__type = "normal";
-			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
+			self.get_instance().components.find("animation").animation.__type = "normal";
+			var _anim_name = self.get_instance().components.find("animation").animation.__animation;
 			if(_anim_name == "shoot"){
 				self.publish("animation_play", { 
 					name: "idle"

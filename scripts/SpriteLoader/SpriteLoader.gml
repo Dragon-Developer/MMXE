@@ -2,6 +2,8 @@ function SpriteLoader() constructor {
 	static loaded_files = {};
 	// Generates the nested directory structure first, then processes it
 	static __generate_directory_structure = function (_current_dir) {
+		_current_dir = working_directory + _current_dir;
+		////log("generating directory structure. directory is " + _current_dir)
 	    var result = {
 	        path: _current_dir,
 	        files: [],
@@ -10,8 +12,10 @@ function SpriteLoader() constructor {
 
 	    // Collect PNG files in the current directory
 	    var _png_files = [];
-	    var _png_file = file_find_first(_current_dir + "/*.png", fa_archive);
+	    var _png_file = file_find_first(_current_dir + "/*.png", fa_none);
+		////log("got the first png file")
 	    while (_png_file != "") {
+			////log(_png_file)
 	        array_push(_png_files, _current_dir + "/" + _png_file);
 	        _png_file = file_find_next();
 	    }
@@ -29,14 +33,23 @@ function SpriteLoader() constructor {
 	        _sub_dir = file_find_next();
 	    }
 	    file_find_close();
+		////log("file closed")
 
 	    // Now process subdirectories recursively
 	    for (var _i = 0; _i < array_length(_sub_dirs); _i++) {
 	        array_push(result.subdirectories, self.__generate_directory_structure(_sub_dirs[_i]));
 	    }
 		
+		////log("processed subdirectories")
+		
 		if(_png_files == [])
 			log("no png files were found in " + _current_dir)
+		else{
+			array_foreach(_png_files, function(_png){
+				//////log(_png + " was found")
+				////log(_png + " : " + (file_exists(_png) ? "exists" : "does not exist"))
+			})
+		}
 
 	    return result;
 	};
@@ -77,7 +90,7 @@ function SpriteLoader() constructor {
 
 	        array_push(_files, { path: _file_path, name: _base_name, origin: _origin, frames: _frames });
 	    }
-
+		//////log(_files)
 	    // Now process subdirectories recursively
 	    for (var _j = 0; _j < array_length(_directory_structure.subdirectories); _j++) {
 	        self.__scan_directory(_directory_structure.subdirectories[_j], _files, _settings, _default_origin);
@@ -86,6 +99,7 @@ function SpriteLoader() constructor {
 
 	// Public function to start the process
 	static get_all_png_files = function (_dir, _subdir) {
+		////log("getting all png files")
 	    var _directory_structure = self.__generate_directory_structure(_dir + _subdir);
 	    var _files = [];
 
@@ -114,28 +128,32 @@ function SpriteLoader() constructor {
 		_files = array_filter(_files, function(_file) {
 			return !struct_exists(loaded_files, _file.path);
 		});
-		if (array_length(_files) == 0) return;
-		//log(_files)
+		if (array_length(_files) == 0) {////log("the filepaths were empty! bailing") 
+			return;}
+		
+		//////log(_files)
 		_collage.StartBatch();
 		for (var _i = 0; _i < array_length(_files); _i++) {
 			var _sprite = _files[_i];
-			//log(_sprite.path)
+			//////log(_sprite.path)
 		    _collage.AddFile(_sprite.path, _sprite.name, _sprite.frames, false, false, _sprite.origin.x, _sprite.origin.y);
 			loaded_files[$ _sprite.path] = true;
 		}
 		_collage.FinishBatch();
 	}
 	static reload_collage = function(_collage, _dir, _subdirs) {
+		////log("reloading collage")
 		var _files = [];
 		for (var _i = 0, _len = array_length; _i < array_length(_subdirs); _i++) {
 			_files = array_concat(_files, SpriteLoader.get_all_png_files(_dir, _subdirs[_i]));
 		}
+		//////log(_files)
 		SpriteLoader.load_png_files(_collage, _files);
 		return _files;
 	}
 	
 	static load_sprite = function(_collage, _sprite_name){
-		//log(_sprite_name)
+		//////log(_sprite_name)
 		var _sprite = undefined;
 		if (!is_undefined(_collage) && _collage.Exists(_sprite_name)) {
 			_sprite = _collage.GetImageInfo(_sprite_name);//this is in fact not the magic line
@@ -165,7 +183,7 @@ function SpriteLoader() constructor {
 	
 	//some collage fuckery
 	static load_sprite_manual = function(_collage, _sprite_name, _path, _frames,  _xorigin, _yorigin){
-		//log(_sprite_name)
+		//////log(_sprite_name)
 		
 		_collage.StartBatch();
 		_collage.AddFile(_path, _sprite_name, _frames, false, false, _xorigin, _yorigin);

@@ -1,4 +1,4 @@
-function ComponemtBoss() : ComponentBase() constructor{
+function ComponentBoss() : ComponentBase() constructor{
 	
 	self.has_done_dialouge = false;
 	self.boss_data = new FlameStagBoss();//for example purposes

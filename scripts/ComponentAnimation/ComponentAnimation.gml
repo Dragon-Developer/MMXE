@@ -201,10 +201,4 @@ function ComponentAnimation() : ComponentBase() constructor {
 		    draw_circle(_instance_x + _ox, _instance_y + _oy, 2, false);
 		}
 	};
-	
-	self.draw_apply_palette = function(){
-		self.palette_handler.apply();
-		self.draw_regular();
-		self.palette_handler.reset();
-	}
 }

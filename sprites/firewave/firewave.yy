@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"firewave",
   "bboxMode":0,
-  "bbox_bottom":0,
+  "bbox_bottom":15,
   "bbox_left":0,
   "bbox_right":14,
   "bbox_top":0,
@@ -16,7 +16,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":1,
+  "height":16,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"b5b7a3f3-65af-44a5-82fc-fc7f161fc470","blendMode":0,"displayName":"default","isLocked":false,"name":"b5b7a3f3-65af-44a5-82fc-fc7f161fc470","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},

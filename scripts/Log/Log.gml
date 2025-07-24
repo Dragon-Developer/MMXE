@@ -1,8 +1,17 @@
-function log(_string){
+function log(_string, _stack = false, _stacklength = 5){
+	var _msg = "";
+	if(_stack){
+		var _a = debug_get_callstack(_stacklength);
+	    for (var i = 0; i < array_length(_a); i++)
+	    {
+	        //show_debug_message(_a[i]);
+			_msg += _a[i]
+	    }
+	}
+	_string = string(_string) + _msg;
+		
 	show_debug_message(_string);
-	//if(variable_global_exists(global.logger)){
-		LOG.print(_string);
-	//}
+	LOG.print(_string);
 }
 function LogConsole() constructor {
 	static print = function(_text) {

@@ -1,0 +1,46 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 35,
+        "y": 35
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "charge_1",
+          "properties": {
+            "speed":  1
+          }
+        },{
+          "name": "charge_2",
+          "properties": {
+            "speed": 1
+          }
+        }
+      ]
+    }
+  }
+}

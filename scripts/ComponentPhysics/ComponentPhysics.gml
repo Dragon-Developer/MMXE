@@ -135,12 +135,12 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * Checks if the entity has hit the ceiling.
 	 * @returns {bool} True if entity is colliding with the ceiling.
 	 */
-	is_on_ceil = function() {
+	is_on_ceil = function(_dist = 2) {
 		var _inst = self.get_instance();
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
-		self.move_step(self.up);
-		var _on_floor = (_previous_y == _inst.y && _previous_x == _inst.x);
+		self.move_step(self.up.multiply(_dist));
+		var _on_floor = (abs(_previous_x - _inst.x) < _dist && abs(_previous_y - _inst.y) < _dist);
 		_inst.x = _previous_x;
 		_inst.y = _previous_y;
 		return _on_floor;
@@ -285,10 +285,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _nearest_block = noone;
 		var _object = _coll
 		with (_inst) {
-			var _array = instance_place_array(x, _target_y, _object, false);
+			var _array = instance_place_array(x, floor(_target_y), _object, false);
 			for (var _i = 0, _len = array_length(_array); _i < _len; _i++) {
 				var _block = _array[_i];
-				if (_inst.bbox_top >= _block.bbox_bottom + 1) {
+				if (_inst.bbox_top > _block.bbox_bottom) {
 					if (_nearest_block == noone || _block.bbox_bottom < _nearest_block.bbox_bottom) {
 						_nearest_block = _block;
 					}

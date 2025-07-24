@@ -292,7 +292,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_move_h", ["idle", "land"], "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
 		.add_wildcard_transition("t_hurt", "hurt", function() { return !self.fsm.get_current_state() == "wall_slide" })
-		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor(); })
+		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_wildcard_transition("t_custom", "custom")
 		.add_transition("t_custom_end", "custom", "idle")
@@ -306,6 +306,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
 		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
 		.add_wildcard_transition("t_jump", "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
+		.add_wildcard_transition("t_dialouge", "idle")
 		/*automatic transitions between states*/
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })

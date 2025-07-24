@@ -32,7 +32,6 @@ function ComponentHealthbar() : ComponentBase() constructor{
 			}
 		}
 		draw_sprite(spr_bar1_limit, 0, screenOffsetX, screenOffsetY - 2 - i*2);
-		draw_string( compDamageable.invuln_time - CURRENT_FRAME, screenOffsetX, screenOffsetY + 16);
 	}
 	//need to learn collage! I need to load the UI texture folder!
 }

@@ -1,8 +1,9 @@
 function Palette(_plt_sprite) constructor {
 	static setSprite = function(_plt_sprite) {
-	    self.index = 0;
+	    self.index = 4;
 		self.sprite = _plt_sprite;
 	    self.indexUniform = shader_get_uniform(shdr_palette_swap, "u_paletteIndex");
+	    self.spriteHeight = shader_get_uniform(shdr_palette_swap, "u_HeightaletteIndex");
 	    self.textureSampler = shader_get_sampler_index(shdr_palette_swap, "u_paletteTexture");
 	    self.height = sprite_get_height(_plt_sprite);
 	    self.texture = sprite_get_texture(_plt_sprite, 0);
@@ -16,6 +17,7 @@ function Palette(_plt_sprite) constructor {
 	static apply = function() {
 		shader_set(shdr_palette_swap);
 		shader_set_uniform_f(self.indexUniform, self.index / self.height);
+		shader_set_uniform_f(self.spriteHeight, self.height);
 		texture_set_stage(self.textureSampler, self.texture);
 	}
 	static reset = function() {
@@ -33,6 +35,10 @@ function Palette(_plt_sprite) constructor {
 // see the benefit outside of keeping things as 1 job. 
 
 function AltPalette(_plt_sprite, _alt_sprite) constructor {
+	self.textureSampler = noone;
+	self.textureSamplerAlt = noone;
+	self.texture = noone;
+	self.alt_texture = noone;
 	static setSprites = function(_plt_sprite, _alt_sprite) {
 	    self.setMainSprite(_plt_sprite);
 		self.setAltSprite(_alt_sprite)
@@ -40,21 +46,25 @@ function AltPalette(_plt_sprite, _alt_sprite) constructor {
 	static setMainSprite = function(_plt_sprite) {
 		self.sprite = _plt_sprite;
 	    self.textureSampler = shader_get_sampler_index(shdr_palette_alternate, "PaletteBase");
+		self.textureWidth = shader_get_uniform(shdr_palette_swap, "width");
 		log(textureSampler)
 	    self.height = sprite_get_height(_plt_sprite);
 	    self.width = sprite_get_width(_plt_sprite);
 	    self.texture = sprite_get_texture(_plt_sprite, 0);
+		log(self.texture);
 	}
 	static setAltSprite = function(_alt_sprite) {
 		self.alt_sprite = _alt_sprite;
 	    self.textureSamplerAlt = shader_get_sampler_index(shdr_palette_alternate, "PaletteNew");
 		log(textureSamplerAlt)
 	    self.alt_texture = sprite_get_texture(_alt_sprite, 0);
+		log(self.alt_texture);
 	}
 	static apply = function() {
 		shader_set(shdr_palette_alternate);
 		texture_set_stage(self.textureSampler, self.texture);
 		texture_set_stage(self.textureSamplerAlt, self.alt_texture);
+		texture_set_stage(self.textureWidth, 16);
 	}
 	static reset = function() {
 		shader_reset();	
