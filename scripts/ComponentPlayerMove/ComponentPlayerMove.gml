@@ -14,7 +14,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.states = {
 		walk: {
 			speed: 376/256,	
-			animation: "walk"
+			animation: "walk_smooth"
 		},
 		dash: {
 			speed: 885/256,	
@@ -23,10 +23,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		},
 		jump: {
 			strength: 1363/256,
-			animation: "jump"
+			animation: "jump_smooth"
 		},
 		fall:{
-			animation: "fall"
+			animation: "fall_smooth"
 		},
 		wall_jump: {
 			strength: 5
@@ -41,7 +41,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	self.timer = 0;
 	
-	self.armor_parts = [new XFirstArmorHead(), new XFirstArmorBody(), new XFirstArmorArms(), new XFirstArmorBoot()];// Head, Body, Arms, Boot
+	self.armor_parts = [
+		new XFirstArmorHead(), 
+		new XFirstArmorBody(), 
+		new XFirstArmorArms(), 
+		new XFirstArmorBoot()];// Head, Body, Arms, Boot
 	
 	self.serializer
 		.addVariable("dir")
@@ -89,6 +93,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add_child("air", "jump", {
 			enter: function() {
+				self.input.__useBuffer = false;
 				self.fsm.inherit();
 				//self.publish("animation_play", { name: "jump" });
 				self.publish("animation_play", { name: self.states.jump.animation });
@@ -142,6 +147,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("land", {
 			enter: function() {
 				self.publish("animation_play", { name: "land" });
+				self.input.__useBuffer = true;
 			},
 			leave: function() {
 				self.dash_jump = false;	
@@ -160,6 +166,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("wall_slide", {
 			enter: function() {
+				self.input.__useBuffer = true;
 				self.timer = 0;
 				self.publish("animation_play", { name: "wall_slide" });
 				self.physics.set_speed(0, 0);
@@ -181,6 +188,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("wall_jump", {
 			enter: function() {
+				self.input.__useBuffer = false;
 				self.timer = 0;
 				self.publish("animation_play", { name: "wall_jump" });
 				self.dir = self.get_wall_jump_dir();
@@ -194,6 +202,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			step: function() {
 				self.timer++;
 				if (self.timer > 11){
+					self.input.__useBuffer = true;
 					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
 					self.set_hor_movement();
 				} else if (self.timer > 7) {

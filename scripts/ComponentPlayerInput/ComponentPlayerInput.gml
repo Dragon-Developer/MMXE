@@ -1,6 +1,9 @@
 function ComponentPlayerInput() : ComponentInputBase() constructor {
     self.__input = GAME.inputs.getEmptyInput();
     self.__inputPressed = GAME.inputs.getEmptyInput();
+    self.__inputPressedBuffer = [];
+	self.__BufferLength = 12;
+	self.__useBuffer = true;
     self.__inputReleased = GAME.inputs.getEmptyInput();
 	self.__swap_horizontal = false;
 	self.__player_index = 0;
@@ -13,6 +16,16 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		.addClone("__inputReleased")
 		.addClone("__swap_horizontal")
 		.addClone("__player_index")
+		
+	self.__inputBufferActive = {left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true};
+		
+	self.init = function(){
+		for(var p = 0; p < __BufferLength; p++){
+			array_push(self.__inputPressedBuffer, GAME.inputs.getEmptyInput());
+		}
+		log(self.__inputPressedBuffer)
+	}
+		
 	self.set_swap_horizontal = function(_value) {
 		self.__swap_horizontal = _value;	
 	}
@@ -40,12 +53,25 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	        self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
 	        self.__inputReleased[$ _verb] = struct_exists(self.__input, _verb) && self.__input[$ _verb] && !_isPressed;
 			self.__input[$ _verb] = _isPressed;
+			
+			if(self.__inputBufferActive[$ _verb]){
+				//forgive me father for i have sinned
+				for(var e = array_length(self.__inputPressedBuffer) - 1; e >= 0; e--){
+					if(e == 0){
+						self.__inputPressedBuffer[e][$ _verb] = self.__inputPressed[$ _verb];
+					} else {
+						self.__inputPressedBuffer[e][$ _verb] = self.__inputPressedBuffer[e - 1][$ _verb];
+					}
+				}
+			}
 	    });
     };
 	
 	self.step = function() {
-		//log(__player_index)
 		self.update_inputs();	
+		array_foreach(self.__inputPressedBuffer, function(_input){
+			log(string(_input.left) + ", " + string(_input.right));
+		})
 	}
 
     self.get_input = function(_verb) {
@@ -54,17 +80,17 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     };
 
     self.get_input_pressed = function(_verb) {
-        if (struct_exists(self.__inputPressed, _verb)) return self.__inputPressed[$ _verb];
-		return false;
+		//gonna make a system to 'extend' the press period. its effectively input buffering
+		var _result = false;
+        if (struct_exists(self.__inputPressed, _verb)) _result = self.__inputPressed[$ _verb];
+		for(var e = 0; e < array_length(self.__inputPressedBuffer); e++){
+			if(self.__inputPressedBuffer[e][$ _verb] && self.__useBuffer) _result = true;
+		}
+		return _result;
     };
 	
 	self.get_input_released = function(_verb) {
         if (struct_exists(self.__inputReleased, _verb)) return self.__inputReleased[$ _verb];
 		return false;
     };
-	
-	self.draw = function() {
-		//draw_text(parent.get_instance().x, parent.get_instance().y - 80, "player");
-	}
-	
 }

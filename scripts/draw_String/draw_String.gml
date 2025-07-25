@@ -37,10 +37,10 @@ function draw_string_condensed(_string, _x, _y){
 
 function string_get_text_length(_string){
 	var _char = "";
-	var _extreme_minors = ["."];// 5 px
-	var _ultra_minors = [":",";","i","l"];// 4 px
-	var _minors = ["1", "I","r"," "];// minor characters. get your head out of the gutter.
-	var _mediums = ["b","c","d","e","f","g","h","j","n","o","p","q","s","t","u","z"];// minors are 3px. mediums are 2. megas are 1.
+	var _extreme_minors = [];// 5 px
+	var _ultra_minors = [":",";","i","l","."];// 4 px
+	var _minors = ["1", "r"," "];// minor characters. get your head out of the gutter.
+	var _mediums = ["b","c","I","d","e","f","g","h","j","n","o","p","q","s","t","u","z"];// minors are 3px. mediums are 2. megas are 1.
 	var _megas = ["E", "F","N","a","k","m","w","x","y","L"];
 	var _xx = 0;
 	for(var q = 0; q < string_length(_string); q++){
