@@ -10,8 +10,8 @@ function GuiProgressBar(_width, _height) : GuiContainer() constructor {
     textChild = new GuiText(""); 
     addChild(textChild);
 
-    backgroundSprite = spr_gui_progress_back_9slice;
-	setSprite(spr_gui_progress_sprite_9slice);
+    backgroundSprite = spr_gui_panel;
+	setSprite(spr_gui_debug_9slice);
 
     setProgressValue = function(_value) {
         progressValue = clamp(_value, 0, maxProgressValue);

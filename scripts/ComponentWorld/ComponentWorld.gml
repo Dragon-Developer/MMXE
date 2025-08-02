@@ -1,4 +1,6 @@
 function ComponentWorld() : ComponentBase() constructor {
+	self.level_data = {music: "HQ"}
+	
 	self.flip_up = function() {
 		var _flip = function(_component) { _component.flip_up() };
 		ENTITIES.for_each_component(ComponentPhysics, _flip);

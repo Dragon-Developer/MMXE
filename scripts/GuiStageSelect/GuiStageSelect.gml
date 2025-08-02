@@ -27,11 +27,11 @@ function GuiStageSelect() : GuiContainer() constructor {
 		parent.startGame(1);
 	});
 	
-	StageButtons[1] = new GuiButton(200, 32, "Test Room Single");
+	StageButtons[1] = new GuiButton(200, 32, "Horiz test");
 	StageButtons[1].addEventListener("click", function() { 
 		global.game = new GameOffline();
 		self.setEnabled(false);
-		parent.startGame(2);
+		parent.startGame(rm_horizontal_test);
 	});
 	
 	StageButtons[2] = new GuiButton(200, 32, "headquarters");

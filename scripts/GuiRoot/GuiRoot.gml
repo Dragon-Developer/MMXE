@@ -56,6 +56,7 @@ function GuiRoot() : GuiContainer() constructor {
 	lobbyMenuContainer = new GuiLobbyMenu();
 	clientMenuContainer = new GuiClientMenu();
 	StageSelectContainer = new GuiStageSelect();
+	SettingsContainer = new GuiSettings();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
@@ -64,9 +65,10 @@ function GuiRoot() : GuiContainer() constructor {
 	lobbyMenuContainer.setEnabled(false);
 	clientMenuContainer.setEnabled(false);
 	StageSelectContainer.setEnabled(false);
+	SettingsContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, StageSelectContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer]);
+	addChild([mainMenuContainer, StageSelectContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer, SettingsContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;

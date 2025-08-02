@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ComponentNPC",
   "parent":{
-    "name":"NPC",
-    "path":"folders/Scripts/Game/Entity Components/Dialouge/NPC.yy",
+    "name":"Interactibles",
+    "path":"folders/Scripts/Game/Entity Components/Interactibles.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

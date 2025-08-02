@@ -382,6 +382,9 @@ function AnimationController(_character = "") constructor {
 	    if (_index == self.__last_index) return;
 
 	    var _props = self.get_props();
+		
+		if(_props == undefined) return;
+		
 	    if (struct_exists(_props, "index_events")) {
 	        var _index_events = _props.index_events;
 

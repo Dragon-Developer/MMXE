@@ -18,7 +18,8 @@ function GuiMainMenu() : GuiContainer() constructor {
     buttonStart = new GuiButton(160, 32, "Start Game");
 	buttonStart.addEventListener("click", function() { 
 		self.setEnabled(false);
-		parent.StageSelectContainer.setEnabled(true);
+		global.game = new GameOffline();
+		parent.startGame(rm_stage_select);
 	});
 	
 	buttonOnline = new GuiButton(160, 32, "Play Online");
@@ -28,9 +29,9 @@ function GuiMainMenu() : GuiContainer() constructor {
 	});
 		
     buttonOptions = new GuiButton(80, 32,"Options");
-	buttonOnline.addEventListener("click", function() { 
+	buttonOptions.addEventListener("click", function() { 
 		self.setEnabled(false);
-		//
+		parent.SettingsContainer.setEnabled(true);
 	});
 	
     buttonExit = new GuiButton(60, 27, "Exit"); 

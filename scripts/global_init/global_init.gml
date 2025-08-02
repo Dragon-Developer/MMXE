@@ -15,17 +15,22 @@ function global_init() {
 	global.client = undefined;
 	global.socket = undefined;
 	
+	global.stage_Data = {
+		room: rm_explose_horneck, 
+		x: 19, 
+		y: 18, 
+		beat: false, 
+		icon: X_Mugshot_Angy1, 
+		music: "HQ"
+	}
+	
 	global.debug = false;
 	
 	input_source_set(INPUT_KEYBOARD, 0);
-	window_set_size(3*GAME_W, 3*GAME_H);
-	window_center();
+	global_prepare_application();
 }
 
-//this is unused at the moment.
-function global_player_init(){
-	global.player_character = "x";
-	global.player_armor = ["none","none", "x2","x3","none"];//head, chest, arms, boots, full
-	global.player_weapon = [xBuster];//the player's availible weapon set. changes depending on character
-	global.lives = 2;//if you die with zero lives, you game over.
+function global_prepare_application(){	
+	window_set_size(global.settings.Game_Scale*GAME_W, global.settings.Game_Scale*GAME_H);
+	window_center();
 }

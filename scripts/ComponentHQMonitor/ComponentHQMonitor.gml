@@ -1,0 +1,3 @@
+function ComponentHQMonitor() : ComponentBase() constructor{
+
+}

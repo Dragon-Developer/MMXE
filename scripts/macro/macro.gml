@@ -2,6 +2,7 @@
 #macro SOUND global.soundManager
 #macro GAME global.game
 #macro WORLD global.world
+#macro PARTICLES global.particleSystem
 #macro VBUTTON global.vbutton
 #macro LOG global.logger
 #macro GAME_W 320

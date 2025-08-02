@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"PlayerParticles",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PlayerParticles",
+  "parent":{
+    "name":"Generic",
+    "path":"folders/Scripts/Game/Particles/Generic.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

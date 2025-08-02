@@ -11,7 +11,6 @@ function ComponentAnimationPalette() : ComponentAnimation() constructor {
 	self.draw_apply_palette = function(){
 		self.palette.apply();
 		self.draw_regular();
-		draw_sprite(X_Mugshot1, 0, self.get_instance().x, self.get_instance().y)
 		self.palette.reset();
 	}
 }

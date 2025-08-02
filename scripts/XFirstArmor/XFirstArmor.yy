@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"XFirstArmor",
   "parent":{
-    "name":"First",
-    "path":"folders/Scripts/Game/Armors/X/First.yy",
+    "name":"X",
+    "path":"folders/Scripts/Game/Armors/X.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

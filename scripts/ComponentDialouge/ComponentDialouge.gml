@@ -84,7 +84,7 @@ function ComponentDialouge() : ComponentBase() constructor{
 	};
 	
 	self.step = function(){
-		if(self.input.get_input_pressed("jump")){
+		if(self.input.get_input_pressed_raw("jump")){
 			if(self.text_length[array_length(self.text_length) - 1] != self.tc_length[array_length(self.text_length) - 1]){
 				self.text_length = self.tc_length;
 			}else{

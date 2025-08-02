@@ -5,6 +5,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.health_max = 1;
 	self.combo_count = 0;//the amount of comboiness this entity has been hit with
 	self.combo_offset = 0;//some enemies take more or less comboiness from projectiles
+	self.damage_rate = 1;//the amount that damage gets multiplied by
 	
 	self.invuln_offset = -1;//if its -1 the invuln timer is over
 	self.invuln_time = 60;//the time offset in frames that invulnerability lasts for
@@ -61,10 +62,14 @@ function ComponentDamageable() : ComponentBase() constructor{
 		self.check_for_projectiles();
 		self.check_for_enemies();
 		
-		if(self.health < 0)
+		if(self.health <= 0)
 		{
-			ENTITIES.destroy_instance(self.get_instance());
+			self.death_function();
 		}
+	}
+	
+	self.death_function = function(){
+		ENTITIES.destroy_instance(self.get_instance());
 	}
 	
 	self.check_for_projectiles = function(){//seperated because this will definitely be expanded later

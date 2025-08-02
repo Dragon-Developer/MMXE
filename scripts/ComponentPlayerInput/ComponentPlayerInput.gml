@@ -2,7 +2,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     self.__input = GAME.inputs.getEmptyInput();
     self.__inputPressed = GAME.inputs.getEmptyInput();
     self.__inputPressedBuffer = [];
-	self.__BufferLength = 12;
+	self.__BufferLength = 3;
 	self.__useBuffer = true;
     self.__inputReleased = GAME.inputs.getEmptyInput();
 	self.__swap_horizontal = false;
@@ -20,10 +20,13 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	self.__inputBufferActive = {left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true};
 		
 	self.init = function(){
+		self.buffer_reset();
+	}
+	self.buffer_reset = function(){
+		self.__inputPressedBuffer = [];
 		for(var p = 0; p < __BufferLength; p++){
 			array_push(self.__inputPressedBuffer, GAME.inputs.getEmptyInput());
 		}
-		log(self.__inputPressedBuffer)
 	}
 		
 	self.set_swap_horizontal = function(_value) {
@@ -68,10 +71,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     };
 	
 	self.step = function() {
-		self.update_inputs();	
-		array_foreach(self.__inputPressedBuffer, function(_input){
-			log(string(_input.left) + ", " + string(_input.right));
-		})
+		self.update_inputs();
 	}
 
     self.get_input = function(_verb) {
@@ -86,6 +86,13 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		for(var e = 0; e < array_length(self.__inputPressedBuffer); e++){
 			if(self.__inputPressedBuffer[e][$ _verb] && self.__useBuffer) _result = true;
 		}
+		return _result;
+    };
+	
+	self.get_input_pressed_raw = function(_verb) {
+		//gonna make a system to 'extend' the press period. its effectively input buffering
+		var _result = false;
+        if (struct_exists(self.__inputPressed, _verb)) _result = self.__inputPressed[$ _verb];
 		return _result;
     };
 	

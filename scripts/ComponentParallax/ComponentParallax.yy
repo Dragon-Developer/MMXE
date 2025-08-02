@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ComponentParallax",
   "parent":{
-    "name":"HQ",
-    "path":"folders/Scripts/Game/Entity Components/Stage Gimmicks/Specific/HQ.yy",
+    "name":"General",
+    "path":"folders/Scripts/Game/Entity Components/Stage Gimmicks/General.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

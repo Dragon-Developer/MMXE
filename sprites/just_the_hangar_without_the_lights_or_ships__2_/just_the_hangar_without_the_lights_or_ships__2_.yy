@@ -23,7 +23,7 @@
   ],
   "name":"just_the_hangar_without_the_lights_or_ships__2_",
   "nineSlice":null,
-  "origin":0,
+  "origin":9,
   "parent":{
     "name":"Static Sprites",
     "path":"folders/Sprites/Static Sprites.yy",
@@ -76,7 +76,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":0,
-    "yorigin":0,
+    "yorigin":256,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

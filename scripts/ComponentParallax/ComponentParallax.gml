@@ -8,6 +8,10 @@ function ComponentParallax() : ComponentBase() constructor{
 	self.cam = noone;
 	
 	self.init = function(){
+		self.reset_background();
+	}
+	
+	self.reset_background = function(){
 		var _length = array_length(self.sprites);
 		var _move_rate = self.camera_move_rate;
 		var _xy = self.xy_move_rate;
@@ -28,15 +32,14 @@ function ComponentParallax() : ComponentBase() constructor{
 		with(self.get_instance()){
 			other.cam = instance_nearest(x,y,obj_camera)
 		}
-		var _inst = self.get_instance();
 		var _offset = self.sprite_offsets;
 		
 		for(var q = 0; q < _length; q++){
-			
-			draw_sprite(self.sprites[q], 0, 
-			cam.x * _move_rate[q] * _xy[q].x - _offset[q].x
-			, cam.y * _move_rate[q] * _xy[q].y - _offset[q].y)
+			draw_sprite(self.sprites[q], 0, self.get_instance().x, self.get_instance().y)
+			//cam.x * _move_rate[q] * _xy[q].x + _offset[q].x
+			//, cam.y * _move_rate[q] * _xy[q].y + _offset[q].y)
 		}
+		draw_sprite(X_Mugshot_Angy1, 0, self.get_instance().x, self.get_instance().y)
 	}
 
 }

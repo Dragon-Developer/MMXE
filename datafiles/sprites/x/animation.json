@@ -28,6 +28,7 @@
           "x2",
           "x3",
           "falcon",
+          "blade",
           "ult"
         ],
         [
@@ -762,6 +763,38 @@
           }
         },
         {
+          "name": "dash_air",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "dash_end_air",
+          "properties": {
+            "action": "dash_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "wall_slide",
           "properties": {
             "action": "wall",
@@ -878,7 +911,7 @@
         {
           "name": "death",
           "properties": {
-            "action": "dolor",
+            "action": "hurt",
             "keyframes": [
               {
                 "key": 0,

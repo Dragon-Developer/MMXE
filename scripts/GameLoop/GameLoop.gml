@@ -45,6 +45,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentWeaponUse, _step);
 		ENTITIES.for_each_component(ComponentProjectile, _step);
 		ENTITIES.for_each_component(ComponentGravityChanger, _step);
+		ENTITIES.for_each_component(ComponentStageSelector, _step);
 		ENTITIES.for_each_component(ComponentMask, _step);
 		ENTITIES.for_each_component(ComponentPhysics, _step);
 		ENTITIES.for_each_component(ComponentCharge, _step);
@@ -59,6 +60,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentEditorBar, _step);
 		ENTITIES.for_each_component(ComponentDialouge, _step);
 		ENTITIES.for_each_component(ComponentHealthbar, _step);
+		ENTITIES.for_each_component(ComponentParticles, _step);
 		ENTITIES.for_each_component(ComponentCameraRecorder, _step);
 		//Forte:
 		//some way to have all components not defined here still run their step method
@@ -86,6 +88,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentHealthbar, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
+		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
 		
 		if(self.debug){
 		

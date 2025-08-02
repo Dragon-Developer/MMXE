@@ -17,7 +17,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	[new xBuster()]
 	];
 	self.charge = noone;
-	self.shoot_inputs = [/*"shoot","shoot2","shoot3"*/]
+	self.shoot_inputs = ["shoot","shoot2","shoot3"]
 	
 	self.serializer
 		.addVariable("shot_end_time")
@@ -58,7 +58,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				});
 			}
 		} else { //can use the time when you have the shoot animation up 
-			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
+			var _anim_name = self.get_instance().components.get(ComponentAnimationPalette).animation.__animation;
 		
 			if(_anim_name == "idle"){
 				self.publish("animation_play", { 
@@ -100,7 +100,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				_shot_code = self.weapon_list[_id][self.current_weapon[_id]].data[0];
 			}
 			
-			var _anim_name = self.get_instance().components.get(ComponentAnimation).animation.__animation;
+			var _anim_name = self.get_instance().components.get(ComponentAnimationPalette).animation.__animation;
 			if(_anim_name == "idle"){
 				self.publish("animation_play", {name: "shoot"})
 			}
@@ -111,12 +111,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			
 			//set the time for shooting to end
 			self.shot_end_time = CURRENT_FRAME + 15;
-			self.get_instance().components.get(ComponentAnimation).animation.__type = "shoot";
+			self.get_instance().components.get(ComponentAnimationPalette).animation.__type = "shoot";
 			
 			//make the projectile
 			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
 			apply_shot_offset(_shot);
-			_shot.dir = self.get_instance().components.get(ComponentAnimation).animation.__xscale;
+			_shot.dir = self.get_instance().components.get(ComponentAnimationPalette).animation.__xscale;
 			
 			if(_anim_name == "wall_slide"){
 				_shot.dir*= -1

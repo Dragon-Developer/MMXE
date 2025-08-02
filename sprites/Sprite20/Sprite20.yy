@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"Parents",
-    "path":"folders/Objects/Level Assets/Generic/Blocks/Parents.yy",
+    "path":"folders/Objects/Level Assets/Blocks/Parents.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

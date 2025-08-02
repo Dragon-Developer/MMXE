@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"Collision",
-    "path":"folders/Objects/Level Assets/Generic/Blocks/Collision.yy",
+    "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
