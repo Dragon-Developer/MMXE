@@ -17,6 +17,12 @@
         "x": 30,
         "y": 24
       }
+    },
+    "missile": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
     }
   },
   "data": {
@@ -133,6 +139,17 @@
               }
             ],
             "loop_begin": 5
+          }
+        },
+        {
+          "name": "missile",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
           }
         },
         {

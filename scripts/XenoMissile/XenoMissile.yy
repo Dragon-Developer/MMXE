@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"XenoMissile",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"XenoMissile",
+  "parent":{
+    "name":"MMX",
+    "path":"folders/Scripts/Game/Weapons/Projectile/MMX.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

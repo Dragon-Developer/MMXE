@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ComponentDoor",
   "parent":{
-    "name":"Door",
-    "path":"folders/Scripts/Game/Entity Components/Stage Gimmicks/General/Door.yy",
+    "name":"General",
+    "path":"folders/Scripts/Game/Entity Components/Stage Gimmicks/General.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -8,8 +8,8 @@
   "name":"par_boss",
   "overriddenProperties":[],
   "parent":{
-    "name":"Enemies",
-    "path":"folders/Objects/Level Assets/Enemies.yy",
+    "name":"Boss",
+    "path":"folders/Objects/Level Assets/Boss.yy",
   },
   "parentObjectId":{
     "name":"par_enemy",

@@ -1,0 +1,1041 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 35,
+        "y": 41
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          "",
+          "shoot"
+        ],
+        [
+          "",
+          "x1",
+          "x2",
+          "x3",
+          "falcon",
+          "blade",
+          "ult"
+        ],
+        [
+          "",
+          "legs",
+          "body",
+          "arms",
+          "helm"
+        ]
+      ],
+      "list": [
+        {
+          "name": "idle",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 80,
+                "frame": 1
+              },
+              {
+                "key": 84,
+                "frame": 2
+              },
+              {
+                "key": 92,
+                "frame": 1
+              },
+              {
+                "key": 96,
+                "frame": 0
+              },
+              {
+                "key": 144,
+                "frame": 1
+              },
+              {
+                "key": 148,
+                "frame": 2
+              },
+              {
+                "key": 152,
+                "frame": 1
+              },
+              {
+                "key": 156,
+                "frame": 0
+              },
+              {
+                "key": 160,
+                "frame": 1
+              },
+              {
+                "key": 164,
+                "frame": 2
+              },
+              {
+                "key": 168,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "critical",
+          "properties": {
+            "action": "idle",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              },
+              {
+                "key": 10,
+                "frame": 0
+              },
+              {
+                "key": 20,
+                "frame": 4
+              },
+              {
+                "key": 30,
+                "frame": 0
+              },
+              {
+                "key": 40,
+                "frame": 5
+              },
+              {
+                "key": 50,
+                "frame": 0
+              },
+              {
+                "key": 60,
+                "frame": 4
+              },
+              {
+                "key": 70,
+                "frame": 0
+              },
+              {
+                "key": 80,
+                "frame": 5
+              },
+              {
+                "key": 90,
+                "frame": 0
+              },
+              {
+                "key": 100,
+                "frame": 4
+              },
+              {
+                "key": 110,
+                "frame": 1
+              },
+              {
+                "key": 112,
+                "frame": 2
+              },
+              {
+                "key": 118,
+                "frame": 1
+              },
+              {
+                "key": 119,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "walk",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 8,
+                "frame": 3
+              },
+              {
+                "key": 11,
+                "frame": 4
+              },
+              {
+                "key": 14,
+                "frame": 5
+              },
+              {
+                "key": 17,
+                "frame": 6
+              },
+              {
+                "key": 19,
+                "frame": 7
+              },
+              {
+                "key": 21,
+                "frame": 8
+              },
+              {
+                "key": 24,
+                "frame": 9
+              },
+              {
+                "key": 27,
+                "frame": 10
+              },
+              {
+                "key": 30,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "walk_smooth",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 9,
+                "frame": 5
+              },
+              {
+                "key": 10,
+                "frame": 6
+              },
+              {
+                "key": 11,
+                "frame": 7
+              },
+              {
+                "key": 12,
+                "frame": 8
+              },
+              {
+                "key": 13,
+                "frame": 9
+              },
+              {
+                "key": 14,
+                "frame": 10
+              },
+              {
+                "key": 15,
+                "frame": 11
+              },
+              {
+                "key": 16,
+                "frame": 12
+              },
+              {
+                "key": 17,
+                "frame": 13
+              },
+              {
+                "key": 18,
+                "frame": 14
+              },
+              {
+                "key": 19,
+                "frame": 15
+              },
+              {
+                "key": 20,
+                "frame": 16
+              },
+              {
+                "key": 21,
+                "frame": 17
+              },
+              {
+                "key": 22,
+                "frame": 18
+              },
+              {
+                "key": 23,
+                "frame": 19
+              },
+              {
+                "key": 24,
+                "frame": 20
+              },
+              {
+                "key": 25,
+                "frame": 21
+              },
+              {
+                "key": 26,
+                "frame": 22
+              },
+              {
+                "key": 27,
+                "frame": 23
+              },
+              {
+                "key": 28,
+                "frame": 24
+              },
+              {
+                "key": 29,
+                "frame": 25
+              },
+              {
+                "key": 30,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "jump",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 7,
+                "frame": 2
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "jump_smooth",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 7,
+                "frame": 7
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "fall",
+          "properties": {
+            "action": "jump",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 7,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "fall_smooth",
+          "properties": {
+            "action": "jump_smooth",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 7
+              },
+              {
+                "key": 1,
+                "frame": 8
+              },
+              {
+                "key": 2,
+                "frame": 9
+              },
+              {
+                "key": 3,
+                "frame": 10
+              },
+              {
+                "key": 4,
+                "frame": 11
+              },
+              {
+                "key": 5,
+                "frame": 12
+              },
+              {
+                "key": 6,
+                "frame": 13
+              },
+              {
+                "key": 7,
+                "frame": 14
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "land",
+          "properties": {
+            "action": "jump",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              },
+              {
+                "key": 2,
+                "frame": 6
+              },
+              {
+                "key": 3,
+                "frame": 6
+              }
+            ]
+          }
+        },
+        {
+          "name": "land_smooth",
+          "properties": {
+            "action": "jump_smooth",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 14
+              },
+              {
+                "key": 2,
+                "frame": 15
+              },
+              {
+                "key": 2,
+                "frame": 16
+              },
+              {
+                "key": 3,
+                "frame": 17
+              }
+            ]
+          }
+        },
+        {
+          "name": "select",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "saber",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 7,
+                "frame": 4
+              },
+              {
+                "key": 9,
+                "frame": 5
+              },
+              {
+                "key": 11,
+                "frame": 6
+              },
+              {
+                "key": 13,
+                "frame": 7
+              },
+              {
+                "key": 15,
+                "frame": 8
+              },
+              {
+                "key": 17,
+                "frame": 9
+              },
+              {
+                "key": 21,
+                "frame": 10
+              },
+              {
+                "key": 37,
+                "frame": 9
+              },
+              {
+                "key": 40,
+                "frame": 2
+              },
+              {
+                "key": 43,
+                "frame": 1
+              },
+              {
+                "key": 51,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 7,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 11,
+                "frame": 4
+              },
+              {
+                "key": 13,
+                "frame": 5
+              },
+              {
+                "key": 15,
+                "frame": 6
+              },
+              {
+                "key": 18,
+                "frame": 7
+              },
+              {
+                "key": 21,
+                "frame": 8
+              },
+              {
+                "key": 60,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 7,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 11,
+                "frame": 4
+              },
+              {
+                "key": 13,
+                "frame": 5
+              },
+              {
+                "key": 15,
+                "frame": 6
+              },
+              {
+                "key": 18,
+                "frame": 7
+              },
+              {
+                "key": 21,
+                "frame": 8
+              },
+              {
+                "key": 60,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "complete",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 57,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "outro",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 8,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro2_end",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              },
+              {
+                "key": 29,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "dash_end",
+          "properties": {
+            "action": "dash",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_air",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "dash_end_air",
+          "properties": {
+            "action": "dash_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "wall_slide",
+          "properties": {
+            "action": "wall",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              }
+            ],
+            "loop_begin": 6
+          }
+        },
+        {
+          "name": "wall_jump",
+          "properties": {
+            "action": "wall",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 3,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "shoot",
+          "properties": {
+            "action": "idle",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 4
+          }
+        },
+        {
+          "name": "hurt",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 13,
+                "frame": 6
+              },
+              {
+                "key": 15,
+                "frame": 7
+              },
+              {
+                "key": 17,
+                "frame": 8
+              },
+              {
+                "key": 21,
+                "frame": 9
+              },
+              {
+                "key": 22,
+                "frame": 1
+              },
+              {
+                "key": 30,
+                "frame": 0
+              },
+              {
+                "key": 32,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "death",
+          "properties": {
+            "action": "hurt",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "crouch",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 2
+          }
+        },
+        {
+          "name": "crouch_end",
+          "properties": {
+            "action": "crouch",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_enter",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 30,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_move",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 11,
+                "frame": 3
+              },
+              {
+                "key": 14,
+                "frame": 4
+              },
+              {
+                "key": 22,
+                "frame": 3
+              },
+              {
+                "key": 25,
+                "frame": 2
+              },
+              {
+                "key": 28,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_exit",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              },
+              {
+                "key": 10,
+                "frame": 2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

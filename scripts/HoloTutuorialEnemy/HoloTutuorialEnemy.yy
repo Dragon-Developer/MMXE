@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"HoloTutuorialEnemy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"HoloTutuorialEnemy",
+  "parent":{
+    "name":"Normal",
+    "path":"folders/Scripts/Enemy/Normal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

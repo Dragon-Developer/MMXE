@@ -32,7 +32,7 @@ function __input_config_verbs()
             //No aiming verbs since we use the mouse for that (see below for aiming verb examples)
 			click: input_binding_mouse_button(mb_left),
             
-            pause: input_binding_key(vk_escape),
+            pause: input_binding_key(vk_enter),
         },
         
         gamepad:

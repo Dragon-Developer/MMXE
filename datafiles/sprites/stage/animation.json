@@ -5,37 +5,29 @@
         "x": 16,
         "y": 8
       }
+    },
+    "dr_cain_ghost": {
+      "origin": {
+        "x": 12,
+        "y": 23
+      }
     }
   },
   "data": {
     "layers": [
-      "normal",
-      "legs",
-      "helm",
-      "body",
-      "arms"
+      "normal"
     ],
     "animations": {
       "speed": 1,
       "type_combinations": [
         [
-          "",
-          "shoot"
+          ""
         ],
         [
-          "",
-          "x1",
-          "x2",
-          "x3",
-          "falcon",
-          "ult"
+          ""
         ],
         [
-          "",
-          "legs",
-          "body",
-          "arms",
-          "helm"
+          ""
         ]
       ],
       "list": [
@@ -66,6 +58,41 @@
               {
                 "key": 3,
                 "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dr_cain_ghost",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 5,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 4
               }
             ]
           }

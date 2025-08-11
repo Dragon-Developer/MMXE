@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"XCharacter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"XCharacter",
+  "parent":{
+    "name":"Characters",
+    "path":"folders/Scripts/Game/Characters.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

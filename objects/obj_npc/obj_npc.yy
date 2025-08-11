@@ -34,8 +34,8 @@
   "solid":false,
   "spriteId":null,
   "spriteMaskId":{
-    "name":"spr_player_mask",
-    "path":"sprites/spr_player_mask/spr_player_mask.yy",
+    "name":"spr_npc_mask",
+    "path":"sprites/spr_npc_mask/spr_npc_mask.yy",
   },
   "visible":true,
 }

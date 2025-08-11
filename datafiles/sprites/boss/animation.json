@@ -1,0 +1,86 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 35,
+        "y": 41
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "flame_stag_idle",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 80,
+                "frame": 1
+              },
+              {
+                "key": 84,
+                "frame": 2
+              },
+              {
+                "key": 92,
+                "frame": 1
+              },
+              {
+                "key": 96,
+                "frame": 0
+              },
+              {
+                "key": 144,
+                "frame": 1
+              },
+              {
+                "key": 148,
+                "frame": 2
+              },
+              {
+                "key": 152,
+                "frame": 1
+              },
+              {
+                "key": 156,
+                "frame": 0
+              },
+              {
+                "key": 160,
+                "frame": 1
+              },
+              {
+                "key": 164,
+                "frame": 2
+              },
+              {
+                "key": 168,
+                "frame": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

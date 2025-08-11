@@ -5,7 +5,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.rotation_angle = 0;
 	self.rotation_debug = false;
 	self.subdirectories = [""];
-	self.armors = [];//which format was this?
+	self.armors = [""];//which format was this?
 	self.animation = new AnimationController();
 	self.position_queue = []; 
 	self.max_queue_size = 5;
@@ -54,9 +54,8 @@ function ComponentAnimation() : ComponentBase() constructor {
 	}
 	
 	self.load_sprites = function() {
-		//what does this do?
-		//log("directory " + ("sprites/" + self.character) + " was loaded: " + (directory_exists("sprites/" + self.character) ? "true" : "false"));
-		SpriteLoader.reload_collage(self.collage, "sprites/" + self.character, self.subdirectories);
+		log(working_directory + "sprites/" + self.character)
+		SpriteLoader.reload_collage(self.collage,"sprites/" + self.character, self.subdirectories);
 	}
 	
 	self.reload_animations = function() {
@@ -75,7 +74,9 @@ function ComponentAnimation() : ComponentBase() constructor {
 			.add_type("hurtbox") 
 			.parse_data(_animation.data.animations)
 			.init();
-			
+		
+		//log(self.animation.parse_data(_animation.data.animations), false);
+		
 		if (!is_undefined(_current_animation)) {
 			self.animation.play(_current_animation);	
 		}
@@ -86,18 +87,15 @@ function ComponentAnimation() : ComponentBase() constructor {
 		if (self.animation.on_end()) {
 			self.publish("animation_end");	
 		}
-		var _mouse = mouse_wheel_down() - mouse_wheel_up();
-		if (_mouse != 0) self.rotation_angle += _mouse * 15;
-		
-		if (mouse_check_button_pressed(mb_right)) {
-		    var _instance_x = floor(parent.get_instance().x);
-		    var _instance_y = floor(parent.get_instance().y);
-			self.rotation_point.x = mouse_x - _instance_x;
-			self.rotation_point.y = mouse_y - _instance_y;
-		}
+		//rotates thing with scroll wheel
+		//var _mouse = mouse_wheel_down() - mouse_wheel_up();
+		//if (_mouse != 0) self.rotation_angle += _mouse * 15;
 		
 		if (GAME.on_normal()) {
 			if (GAME.__current_frame <= self.last_game_frame) return;
+			if (animation.get_props() == undefined) {
+				return;
+			}
 			if (self.max_queue_size == 0) return;
 			self.last_game_frame++;
 			var _inst = parent.get_instance();

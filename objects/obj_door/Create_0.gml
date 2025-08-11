@@ -4,7 +4,7 @@ components.add([
 	ComponentDoor,
 	ComponentPhysics,
 	ComponentMask,
-	ComponentAnimation
+	ComponentAnimationPalette
 ]);
 
 components.init();

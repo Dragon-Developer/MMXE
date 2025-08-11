@@ -6,7 +6,7 @@ function XSecondArmorHead() : HeadPartBase() constructor{
 
 function XSecondArmorBody() : BodyPartBase() constructor{
 	//i think this has 2/3 reduction?
-	self.damage_rate = 0.4;
+	self.damage_rate = 0.5;
 	self.armor_name = "First Armor Body"
 	self.sprite_name = "/x2/body"//this is more for filepath.
 }
@@ -21,5 +21,8 @@ function XSecondArmorBoot() : BootPartBase() constructor{
 	self.sprite_name = "/x2/legs"//this is more for filepath.
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		self.add_air_dash(_player);
+		with(_player){
+			struct_set(states.dash_air, "interval", states.dash.interval)
+		}
 	}
 }

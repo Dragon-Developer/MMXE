@@ -11,42 +11,18 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.locked = false;
 	self.paused = false;
 	self.can_wall_jump = true;
-	self.states = {
-		walk: {
-			speed: 376/256,	
-			animation: "walk"
-		},
-		dash: {
-			speed: 885/256,	
-			interval: 32,
-			animation: "dash"
-		},
-		jump: {
-			strength: 1363/256,
-			animation: "jump"
-		},
-		fall:{
-			animation: "fall"
-		},
-		wall_jump: {
-			strength: 5
-		},
-		ladder: {
-			speed: 376/256
-			//496/256 if its with arm parts
-		},
-		hurt: {
-			speed: -138 / 256
-		}
-	}
+	
 	self.timer = 0;
 	#endregion
 	
 	self.armor_parts = [
 		new XSecondArmorHead(), 
-		new XFirstArmorBody(), 
-		new XFirstArmorArms(), 
-		new XSecondArmorBoot()];// Head, Body, Arms, Boot
+		//new XFirstArmorBody(), 
+		//new XFirstArmorArms(), 
+		//new XSecondArmorBoot()
+		];// Head, Body, Arms, Boot
+		
+	self.character = global.player_character;
 	
 	#region serializer
 	self.serializer
@@ -61,9 +37,16 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.addCustom("fsm");
 		#endregion
 	
+	self.reset_state_variables = function(){
+		self.states = self.character.states;
+	}
+	
 	// Finite State Machine initialization
+	self.add_base_state_machine = function(){
+		
+	self.reset_state_variables();
+	
 	self.fsm = new SnowState("init", false);
-	#region fsm
 	self.fsm
 		.history_enable()
 		.history_set_max_size(10)
@@ -102,7 +85,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				//self.publish("animation_play", { name: "jump" });
 				self.publish("animation_play", { name: self.states.jump.animation });
 				self.physics.set_vspd(-self.states.jump.strength);
-				if (self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash"))
+				if (self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")
 					self.current_hspd = self.states.dash.speed;
 			},
 		})
@@ -116,45 +99,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if(self.physics.get_vspd() < 0)
 					self.physics.set_vspd(0);
 			}
-		})
-		.add("dash", {
-			enter: function() {//
-				WORLD.play_sound("dash");
-				var _inst = self.get_instance();
-					WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
-				self.timer = CURRENT_FRAME + self.states.dash.interval;
-				self.dash_dir = self.dir;
-				if(self.dash_dir == 0)
-					self.dash_dir = self.hdir;
-				self.publish("animation_play", { name: self.states.dash.animation });
-			},
-			step: function() {
-				self.set_hor_movement(self.dash_dir);
-				if(CURRENT_FRAME == self.timer - self.states.dash.interval + 2)
-					self.current_hspd = self.states.dash.speed;	
-				if(CURRENT_FRAME mod 8 == 0){
-					var _inst = self.get_instance();
-					WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
-				}
-			},
-			leave: function() {
-				self.dash_jump = self.input.get_input_pressed("jump");
-				if (!self.dash_jump && self.physics.is_on_floor())
-					self.current_hspd = self.states.walk.speed;	
-			}
-		})
-		.add("dash_end", {
-			enter: function() {
-				self.timer = 0;
-				if (!self.dash_jump)
-					self.current_hspd = self.states.walk.speed;	
-				self.dash_dir = self.dir;
-				self.publish("animation_play", { name: "dash_end" });
-				self.dash_tapped = false;
-			},
-			step: function() {
-				self.set_hor_movement();
-			},
 		})
 		.add("land", {
 			enter: function() {
@@ -177,67 +121,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("on_crouch", false);		
 			}
 		})
-		.add("wall_slide", {
-			enter: function() {
-				self.input.__useBuffer = true;
-				self.timer = 0;
-				self.publish("animation_play", { name: "wall_slide" });
-				self.physics.set_speed(0, 0);
-				self.physics.set_grav(0);
-				self.dash_jump = false;
-				self.current_hspd = self.states.walk.speed;	
-			},
-			leave: function() {	
-				self.physics.update_gravity();
-				self.physics.set_vspd(0);
-			},
-			step: function() {
-				self.timer++;
-				if(self.timer == 6){
-					self.physics.set_vspd(2);
-				}
-				self.set_hor_movement();	
-			}
-		})
-		.add("wall_jump", {
-			enter: function() {
-				WORLD.play_sound("jump");
-				self.input.__useBuffer = false;
-				self.timer = 0;
-				self.publish("animation_play", { name: "wall_jump" });
-				self.dir = self.get_wall_jump_dir();
-				if (self.dir != 0) self.publish("animation_xscale", self.dir)
-				self.physics.set_speed(0, 0);
-				self.physics.set_grav(0);
-			},
-			leave: function() {	
-				self.physics.update_gravity();
-			},
-			step: function() {
-				self.timer++;
-				if (self.timer > 11){
-					self.input.__useBuffer = true;
-					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
-					self.set_hor_movement();
-				} else if (self.timer > 7) {
-					//please this looks so much better
-					//self.publish("animation_play_at_loop", { name: "jump", frame: 10});
-				}
-				if (self.timer == 5) {
-					self.physics.update_gravity();
-					if (self.input.get_input("dash")) {
-						self.current_hspd = self.states.dash.speed;	
-						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
-							self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
-						self.dash_jump = true;
-					} else {
-						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
-							self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
-					}
-					self.physics.set_vspd(-self.states.wall_jump.strength);	
-				}
-			}
-		})
+		
 		.add("ride", {
 			enter: function() {
 				self.publish("animation_play", { name: "crouch" });
@@ -319,7 +203,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_init", "init", "idle")
 		.add_transition("t_move_h", "idle", "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_move_h", "land", "walk", function() { return !self.physics.check_wall(self.hdir) && !self.input.get_input("dash"); })
-		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
 		.add_wildcard_transition("t_hurt", "hurt", function() { return !(self.get_wall_jump_dir() != 0 && !self.physics.is_on_floor()); })
 		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
 		.add_transition("t_crouch", "idle", "crouch")
@@ -329,21 +212,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_custom_exit", "custom", "jump")
 		.add_wildcard_transition("t_death", "death")
 		.add_transition("t_animation_end", ["start", "land", "dash_end","ladder_exit", "hurt"], "idle")
-		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
-		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
-		.add_transition("t_jump", "wall_slide", "wall_jump")
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
-		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
-		.add_wildcard_transition("t_jump", "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
 		.add_wildcard_transition("t_dialouge", "idle")
 		//.add_wildcard_transition("t_hurt", "idle", function() { return !(self.get_wall_jump_dir() != 0 && !self.physics.is_on_floor()); })
 		/*automatic transitions between states*/
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
-		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") })
-		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10 || self.physics.get_vspd() > 0; })
-		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
 		.add_transition("t_transition", ["fall", "idle", "walk", "dash", "walljump"], "ladder_enter", function() { return self.vdir != 0 && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
 		.add_transition("t_transition", "ladder", "ladder_move", function() { return self.vdir != 0})
 		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
@@ -351,13 +226,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { 
 			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder) || self.physics.is_on_floor()
 		})
-		.add_transition("t_transition", "dash", "dash_end", function() 
-		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
 		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
-		.add_transition("t_transition", "fall", "wall_slide", function(){ return self.wall_slide_possible();})
-	#endregion
+	}
 	
 	self.wall_slide_possible = function(){
 		return self.hdir != 0 && self.physics.check_wall(self.hdir);
@@ -396,7 +268,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
+		self.add_base_state_machine();
+		self.character.init(self);
 		self.fsm.trigger("t_init");
+		log(self.states.walk.animation)
 	}
 	
 	self.apply_full_armor_set = function(_armors){
@@ -461,7 +336,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Handles input and triggers attack transitions	
 	self.step = function() {
-		if(!paused && !locked)
+		if(!(paused || locked))
 			self.default_step();
 	}
 	
@@ -513,5 +388,124 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		for (var _i = 0, _len = array_length(_history); _i < _len; _i++) {
 			draw_text(16, 16 + 16*(1 +_i), _history[_len - _i - 1]);	
 		}
+	}
+	
+	self.add_dash = function(){
+		self.fsm.add("dash", {
+			enter: function() {//
+				WORLD.play_sound("dash");
+				var _inst = self.get_instance();
+					WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+				self.timer = CURRENT_FRAME + self.states.dash.interval;
+				self.dash_dir = self.dir;
+				if(self.dash_dir == 0)
+					self.dash_dir = self.hdir;
+				self.publish("animation_play", { name: self.states.dash.animation });
+			},
+			step: function() {
+				self.set_hor_movement(self.dash_dir);
+				if(CURRENT_FRAME == self.timer - self.states.dash.interval + 2)
+					self.current_hspd = self.states.dash.speed;	
+				if(CURRENT_FRAME mod 8 == 0){
+					var _inst = self.get_instance();
+					WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
+				}
+			},
+			leave: function() {
+				self.dash_jump = self.input.get_input_pressed("jump");
+				if (!self.dash_jump && self.physics.is_on_floor())
+					self.current_hspd = self.states.walk.speed;	
+			}
+		})
+		.add("dash_end", {
+			enter: function() {
+				self.timer = 0;
+				if (!self.dash_jump)
+					self.current_hspd = self.states.walk.speed;	
+				self.dash_dir = self.dir;
+				self.publish("animation_play", { name: "dash_end" });
+				self.dash_tapped = false;
+			},
+			step: function() {
+				self.set_hor_movement();
+			},
+		})
+		.add_transition("t_transition", "dash", "dash_end", function() 
+		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
+		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
+		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
+	}
+	
+	self.add_wall_jump = function(){
+		self.fsm.add("wall_slide", {
+			enter: function() {
+				self.input.__useBuffer = true;
+				self.timer = 0;
+				self.publish("animation_play", { name: "wall_slide" });
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(0);
+				self.dash_jump = false;
+				self.current_hspd = self.states.walk.speed;	
+			},
+			leave: function() {	
+				self.physics.update_gravity();
+				self.physics.set_vspd(0);
+			},
+			step: function() {
+				self.timer++;
+				if(self.timer == 6){
+					self.physics.set_vspd(2);
+				}
+				self.set_hor_movement();	
+			}
+		})
+		.add("wall_jump", {
+			enter: function() {
+				WORLD.play_sound("jump");
+				self.input.__useBuffer = false;
+				self.timer = 0;
+				self.publish("animation_play", { name: "wall_jump" });
+				self.dir = self.get_wall_jump_dir();
+				if (self.dir != 0) self.publish("animation_xscale", self.dir)
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(0);
+			},
+			leave: function() {	
+				self.physics.update_gravity();
+			},
+			step: function() {
+				self.timer++;
+				if (self.timer > 11){
+					self.input.__useBuffer = true;
+					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
+					self.set_hor_movement();
+				} else if (self.timer > 7) {
+					//please this looks so much better
+					//self.publish("animation_play_at_loop", { name: "jump", frame: 10});
+				}
+				if (self.timer == 5) {
+					self.physics.update_gravity();
+					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
+						self.current_hspd = self.states.dash.speed;	
+						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
+							self.physics.set_hspd(self.states.dash.speed * self.dir * -1)
+						self.dash_jump = true;
+					} else {
+						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
+							self.physics.set_hspd(self.states.walk.speed * self.dir * -1)
+					}
+					self.physics.set_vspd(-self.states.wall_jump.strength);	
+				}
+			}
+		})
+		.add_transition("t_jump", ["air"], "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
+		.add_wildcard_transition("t_jump", "wall_jump", function() { return self.get_wall_jump_dir() != 0; })
+		.add_transition("t_transition", "fall", "wall_slide", function(){ return self.wall_slide_possible();})
+		.add_transition("t_transition", "wall_jump", "fall", function() { return (!self.input.get_input("jump") || self.physics.is_on_ceil()) && self.timer > 10 || self.physics.get_vspd() > 0; })
+		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
+		.add_transition("t_jump", "wall_slide", "wall_jump")
+		
 	}
 }

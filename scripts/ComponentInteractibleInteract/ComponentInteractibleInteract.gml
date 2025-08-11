@@ -21,7 +21,7 @@ function ComponentInteractibleInteract() : ComponentInteractibleContact() constr
 	self.draw = function(){
 			if self.can_interact && !self.interacted{
 				var _inst = self.get_instance();
-				draw_sprite(spr_text_font_normal, 61, _inst.x + interact_prompt_offset.x, _inst.y + interact_prompt_offset.y)
+				draw_sprite(spr_text_font_normal, 61, _inst.x + interact_prompt_offset.x, _inst.y + interact_prompt_offset.y + sin(CURRENT_FRAME / 10))
 			}
 	}
 }

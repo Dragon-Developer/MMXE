@@ -3,9 +3,11 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	healthBarCap = noone;
 	hp = 2;
 	maxhp = 20;  
-	screenOffsetX = 12;
-	screenOffsetY = 78;
+	barOffsets = [new Vec2(12,78)];
 	
+	barCount = 1;
+	barValues = [];
+	barValueMax = [];
 	
 	compDamageable = noone;
 	
@@ -16,22 +18,28 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	}
 	
 	self.draw_gui = function() {
-		
 		if(compDamageable != noone){
 			hp = compDamageable.health;
 			maxhp = compDamageable.health_max;
 		}
 		
-		draw_sprite(spr_bar1_icon, 0, screenOffsetX, screenOffsetY);
-		for(var i = 0; i <= maxhp; i++)
+		self.draw_bar(hp, maxhp, barOffsets[0]);
+		
+		for(var g = 1; g < barCount; g++){
+			self.draw_bar(barValues[g-1], barValueMax[g-1], barOffsets[g]);
+		}
+	}
+	
+	self.draw_bar = function(_val, _maxVal, _offset){
+		draw_sprite(spr_bar1_icon, 0, _offset.x, _offset.y);
+		for(var i = 0; i <= _maxVal; i++)
 		{			
-			draw_sprite(spr_bar1_area, 0, screenOffsetX, screenOffsetY - 2 - i*2);
-			if(hp > i)
+			draw_sprite(spr_bar1_area, 0, _offset.x, _offset.y - 2 - i*2);
+			if(_val > i)
 			{
-				draw_sprite(spr_bar1_hp_unit, 0, screenOffsetX + 4, screenOffsetY - 2 - i*2);
+				draw_sprite(spr_bar1_hp_unit, 0, _offset.x + 4, _offset.y - 2 - i*2);
 			}
 		}
-		draw_sprite(spr_bar1_limit, 0, screenOffsetX, screenOffsetY - 2 - i*2);
+		draw_sprite(spr_bar1_limit, 0, _offset.x, _offset.y - 2 - i*2);
 	}
-	//need to learn collage! I need to load the UI texture folder!
 }

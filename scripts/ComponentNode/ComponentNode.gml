@@ -24,7 +24,7 @@ function ComponentNode() : ComponentBase() constructor{
 		array_push(self.children_nodes, _child);
 		_child.node_parent = self;
 		with(_child){
-			self.publish("child_connected_to_parent");
+			self.publish("child_connected_to_parent", other);
 		}
 	}
 	

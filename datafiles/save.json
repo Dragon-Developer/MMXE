@@ -2,8 +2,8 @@
   "player_data": {
     "last_played_character": "x",
     "x_armors": [ "x1", "x2", "x3" ],
-    "health": 24,
-    "max_health": 120,
+    "health": 12,
+    "max_health": 12,
     "equipped_weapons": [ "ref", "script", 102855, "ref", "script", 102855, "ref", "script", 102855, "ref", "script", 102855 ],
     "weapons": [ "ref", "script", 102855 ]
   },
@@ -11,7 +11,9 @@
     "Music_Volume": 0.1,
     "Sound_Effect_Volume": 1,
     "Dash_On_Land": 0,
+    "PSX_Style_Dash_Jumping": 0,
     "Input_Buffer": 3,
-    "Game_Scale": 3
+    "Game_Scale": 3,
+    "Has_done_intro_stage":  true
   }
 }

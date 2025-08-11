@@ -1,25 +1,24 @@
-function ComponentBoss() : ComponentBase() constructor{
+function ComponentBoss() : ComponentEnemy() constructor{
 	
 	self.has_done_dialouge = false;
 	self.boss_data = new FlameStagBoss();//for example purposes
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
-		self.publish("animation_play", { name: "idle" });
-		
+		//self.publish("animation_play", { name: "idle" });
+		//self.publish("animation_play", { name: "idle" });
 	}
 	
 	self.step = function() {
-		//we do not need transitions because 
 		if (self.fsm.event_exists("step"))
 			self.fsm.step();
 	}
 	
-	self.fsm = new SnowState("enter", false);
+	self.fsm = new SnowState("enter", true);
 	self.fsm
 		.add("enter", {
 			enter: function() {
-				boss_data.enter_init();
+				boss_data.enter_init(self);
 			},
 			step: function() {
 				boss_data.enter_step();
@@ -45,7 +44,16 @@ function ComponentBoss() : ComponentBase() constructor{
 		})
 	
 	self.on_register = function() {
-		//animation_end is fairly important. 
+		self.subscribe("animation_end", function() {
+			//do something. will probably add functionality later.	
+		});
+		self.subscribe("enemy_data_set", function(_dir){
+			EnemyData = _dir;
+			EnemyEnum = new EnemyData();
+			boss_data.setComponent(self);
+			EnemyEnum.init(self.get_instance());	
+			
+		});
 	}
 	
 	/*

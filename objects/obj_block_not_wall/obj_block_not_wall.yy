@@ -6,8 +6,8 @@
   "name":"obj_block_not_wall",
   "overriddenProperties":[],
   "parent":{
-    "name":"Parents",
-    "path":"folders/Objects/Level Assets/Blocks/Parents.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
   },
   "parentObjectId":{
     "name":"obj_block_parent",

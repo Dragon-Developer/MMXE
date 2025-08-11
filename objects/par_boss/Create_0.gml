@@ -1,3 +1,4 @@
+event_inherited();
 
 components.add([
 	ComponentDamageable,

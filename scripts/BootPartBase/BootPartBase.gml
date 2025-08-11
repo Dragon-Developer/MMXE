@@ -5,7 +5,7 @@ function BootPartBase() : ArmorBase() constructor{
 	
 	self.add_air_dash = function(_player){
 		with(_player){
-			struct_set(states, "dash_air", {speed: self.states.dash.speed, interval: 15, max_dashes: 3, curr_dashes: 0, animation: "dash_air"})
+			struct_set(states, "dash_air", {speed: self.states.dash.speed, interval: 15, max_dashes: 1, curr_dashes: 0, animation: "dash_air"})
 			
 			self.fsm.add("dash_air", {
 				enter: function() {//

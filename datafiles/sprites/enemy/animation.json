@@ -5,119 +5,69 @@
         "x": 35,
         "y": 41
       }
+    },
+    "skull_bot": {
+      "origin": {
+        "x": 19,
+        "y": 28
+      }
     }
   },
   "data": {
     "layers": [
-      "normal",
-      "legs",
-      "helm",
-      "body",
-      "arms"
+      "normal"
     ],
     "animations": {
       "speed": 1,
       "type_combinations": [
         [
-          "",
-          "shoot"
+          ""
         ],
         [
-          "",
-          "x1",
-          "x2",
-          "x3",
-          "falcon",
-          "ult"
+          ""
         ],
         [
-          "",
-          "legs",
-          "body",
-          "arms",
-          "helm"
+          ""
         ]
       ],
       "list": [
         {
-          "name": "batAttacking",
+          "name": "holo_wait",
           "properties": {
-            "action": "batIdle",
             "keyframes": [
               {
                 "key": 0,
                 "frame": 0
               },
               {
-                "key": 5,
+                "key": 1,
                 "frame": 1
               },
               {
-                "key": 6,
+                "key": 2,
                 "frame": 2
-              },
-              {
-                "key": 8,
-                "frame": 3
-              },
-              {
-                "key": 11,
-                "frame": 4
-              },
-              {
-                "key": 14,
-                "frame": 5
-              },
-              {
-                "key": 17,
-                "frame": 6
-              },
-              {
-                "key": 19,
-                "frame": 7
-              },
-              {
-                "key": 21,
-                "frame": 8
-              },
-              {
-                "key": 24,
-                "frame": 9
-              },
-              {
-                "key": 27,
-                "frame": 10
-              },
-              {
-                "key": 30,
-                "frame": 1
-              }
-            ],
-            "loop_begin": 5
-          }
-        },
-        {
-          "name": "batIdle",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
               },
               {
                 "key": 3,
-                "frame": 1
+                "frame": 0
               },
               {
-                "key": 7,
-                "frame": 2
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 5,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 4
               }
-            ],
-            "loop_begin": 7
+            ]
           }
         },
         {
-          "name": "pissma",
+          "name": "skull_bot",
           "properties": {
             "keyframes": [
               {
@@ -126,13 +76,15 @@
               }
             ]
           }
-        },{
-          "name": "shot_1",
+        },
+        {
+          "name": "skull_bot_shield",
           "properties": {
+            "action": "skull_bot",
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
+                "frame": 1
               }
             ]
           }

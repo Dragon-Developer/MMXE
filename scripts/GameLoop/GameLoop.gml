@@ -3,6 +3,8 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	self.game_timer = 0;
 	self.debug = global.debug;// i aint gonna replace every instance when i can just do this
 	
+	self.blur = false;
+	
 	//thanks gacel ur the best
 	// Always 255 on modern PCs;
 	self.fullSpace = 255;
@@ -42,6 +44,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentPlayerInput, _step);
 		ENTITIES.for_each_component(ComponentPlayerMove, _step);
 		ENTITIES.for_each_component(ComponentEnemy, _step);
+		ENTITIES.for_each_component(ComponentBoss, _step);
 		ENTITIES.for_each_component(ComponentWeaponUse, _step);
 		ENTITIES.for_each_component(ComponentProjectile, _step);
 		ENTITIES.for_each_component(ComponentGravityChanger, _step);
@@ -52,6 +55,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentAnimation, _step);
 		ENTITIES.for_each_component(ComponentAnimationPalette, _step);
 		ENTITIES.for_each_component(ComponentNPC, _step);
+		ENTITIES.for_each_component(ComponentInteractibleContact, _step);
 		ENTITIES.for_each_component(ComponentParallax, _step);
 		ENTITIES.for_each_component(ComponentCamera, _step);
 		ENTITIES.for_each_component(ComponentRide, _step);
@@ -82,6 +86,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	
 	self.draw_gui = function() {
 		var _draw_gui = function(_component) { _component.draw_gui(); };
+		surface_set_target(application_surface)
 		
 		// some things use the draw_gui function regardless of debug
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
@@ -109,15 +114,26 @@ function GameLoop() : NET_GameLoopBase() constructor {
 				draw_text(_gui_width - 16, 48, $"ping: {global.socket.pingRpc.ping} ms");
 			}
 		}
+		surface_reset_target();
 		
-		/*with(obj_gui){
-			shader_set(shdr_snes_palette);
+		shader_set(shdr_snes_palette);
 			var scale = floor(fullSpace / colorSpace);
 			var deviation = floor(colorSpace / (fullSpace mod colorSpace));
 			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "scale"), scale);
 			shader_set_uniform_f(shader_get_uniform(shdr_snes_palette, "deviation"), deviation);
-			draw_surface_stretched(application_surface, 0,0, GAME_W, GAME_H);
+			draw_surface(application_surface, 0, 0)
+		shader_reset();
+		
+		if(keyboard_check_pressed(ord("5")))
+			self.blur = !self.blur;
+		
+		if(self.blur){
+			shader_set(shdr_forte_test);
+			shader_set_uniform_f(shader_get_uniform(shdr_forte_test, "width"), GAME_W);
+			shader_set_uniform_f(shader_get_uniform(shdr_forte_test, "height"), GAME_H);
+			shader_set_uniform_f(shader_get_uniform(shdr_forte_test, "ScreenScale"), global.settings.Game_Scale);
+			draw_surface(application_surface, 0, 0);
 			shader_reset();
-		}*/
+		}
 	}
 }

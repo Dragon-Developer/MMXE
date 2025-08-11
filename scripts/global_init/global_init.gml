@@ -8,7 +8,7 @@ function global_init() {
 		LOG = new LogFile();	
 	//}
 	
-	log(working_directory);
+	//log(working_directory);
 	
 	global.local_player_index = 0;
 	global.server = undefined;
@@ -23,6 +23,7 @@ function global_init() {
 		icon: X_Mugshot_Angy1, 
 		music: "HQ"
 	}
+	global.player_character = new ZeroCharacter();
 	
 	global.debug = false;
 	

@@ -29,6 +29,10 @@ function ComponentProjectile() : ComponentBase() constructor{
 			abs(instance_nearest(_inst.x, _inst.y, obj_camera).x - _inst.x + GAME_W / 2) > GAME_W / 1.5 ||
 			abs(instance_nearest(_inst.x, _inst.y, obj_camera).y - _inst.y + GAME_H / 2) > GAME_H / 1.5
 		)
+	},
+	function(){
+		var _inst = self.get_instance();
+		return _inst.components.get(ComponentPhysics).check_place_meeting(_inst.x,_inst.y, obj_reflect_block);
 	}
 	];
 	
@@ -47,6 +51,8 @@ function ComponentProjectile() : ComponentBase() constructor{
 				self.get_instance().mask_index = spr_player_mask;	
 			}
 		self.init_time = CURRENT_FRAME;
+		self.get_instance().components.get(ComponentPhysics).grav = new Vec2(0, 0);
+		self.get_instance().components.get(ComponentPhysics).velocity = new Vec2(0, 0);
 	}
 
 	//you need this because specific stuff needs to happen. if you

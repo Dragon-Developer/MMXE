@@ -2,12 +2,11 @@ event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
 on_spawn = function(_player) {
-	
 	_player.components.get(ComponentAnimationPalette).set_subdirectories(
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", "weapon");
-	_player.components.publish("character_set", "x");
+	_player.components.publish("character_set", global.player_character.image_folder);
 	_player.components.publish("armor_set",
 	[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
 	
@@ -17,7 +16,7 @@ on_spawn = function(_player) {
 	_charge.depth = _player.depth - 1;
 	_charge.components.publish("character_set", "player");
 	_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
-	
+	//
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);
 	_player.components.get(ComponentDamageable).invuln_time = 120;

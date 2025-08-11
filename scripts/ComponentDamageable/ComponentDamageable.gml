@@ -61,6 +61,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.check_for_collision = function(){
 		self.check_for_projectiles();
 		self.check_for_enemies();
+		self.check_for_damage_zones();
 		
 		if(self.health <= 0)
 		{
@@ -75,10 +76,19 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.check_for_projectiles = function(){//seperated because this will definitely be expanded later
 		//place_meeting takes all masks into account, so I only need the one
 		var _proj = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
-		
+		if(!variable_instance_exists(_proj, "components") || !instance_exists(_proj)) return;
+		if(_proj.components.get(ComponentProjectile) == undefined) return;
 		//log(_proj)
 		
-		if(!variable_instance_exists(_proj, "components")) return;
+		var _hits = false;
+		for(var g = 0; g < array_length(self.projectile_tags); g++){
+			if(_proj.components.get(ComponentProjectile).hurtable_tag == self.projectile_tags[g])
+				_hits = true;
+		}
+		
+		if !_hits return;
+		
+		
 		//log("hit")
 		if(self.invuln_offset > CURRENT_FRAME && _proj.components.get(ComponentProjectile).weaponCreate.comboiness < self.comboiness){
 			//if the comboiness is too high and the projectile is not comboy enough
@@ -108,6 +118,24 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(_enemy.components.get(ComponentEnemy).contact_damage > 0){
 			self.health -= _enemy.components.get(ComponentEnemy).contact_damage;
+			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+		}
+	}
+	
+	self.check_for_damage_zones = function(){
+		var _zone = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,obj_hurt_zone);
+		
+		if(!variable_instance_exists(_zone, "contact_damage")){ 
+			return;
+		}
+		
+		if(self.invuln_offset > CURRENT_FRAME){
+			return;
+		}
+		
+		if(_zone.contact_damage > 0){
+			self.health -= _zone.contact_damage;
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 		}

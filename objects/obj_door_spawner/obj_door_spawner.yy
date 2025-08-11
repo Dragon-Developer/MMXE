@@ -37,6 +37,9 @@
     "name":"Sprite47",
     "path":"sprites/Sprite47/Sprite47.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"Sprite47",
+    "path":"sprites/Sprite47/Sprite47.yy",
+  },
   "visible":true,
 }

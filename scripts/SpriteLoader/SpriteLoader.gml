@@ -147,7 +147,7 @@ function SpriteLoader() constructor {
 		for (var _i = 0, _len = array_length; _i < array_length(_subdirs); _i++) {
 			_files = array_concat(_files, SpriteLoader.get_all_png_files(_dir, _subdirs[_i]));
 		}
-		//////log(_files)
+		
 		SpriteLoader.load_png_files(_collage, _files);
 		return _files;
 	}
@@ -163,7 +163,6 @@ function SpriteLoader() constructor {
 				_sprite = _index;	
 			}
 		}
-		
 		return _sprite;
 	}
 	

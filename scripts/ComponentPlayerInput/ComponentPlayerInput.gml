@@ -17,7 +17,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		.addClone("__swap_horizontal")
 		.addClone("__player_index")
 		
-	self.__inputBufferActive = {left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true};
+	self.__inputBufferActive = {left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true, switchLeft: false, switchRight: false};
 		
 	self.init = function(){
 		self.buffer_reset();
@@ -100,4 +100,9 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
         if (struct_exists(self.__inputReleased, _verb)) return self.__inputReleased[$ _verb];
 		return false;
     };
+	
+	self.get_input_bind = function(_verb){
+		log(self.input[$ _verb])
+		return self.input[$ _verb];
+	}
 }

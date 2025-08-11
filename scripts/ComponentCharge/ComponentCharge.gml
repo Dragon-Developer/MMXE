@@ -6,6 +6,10 @@ function ComponentCharge() : ComponentBase() constructor{
 	self.shoot_input = "shoot";
 	self.shoot_inputs = ["shoot"]
 	self.charging = false;
+	self.charge_time = [30, 105, 180, 255]
+	self.charge_limit = 2;
+	
+	self.charge_sound = undefined;
 	
 	self.init = function(){
 		self.publish("animation_play", { 
@@ -46,36 +50,40 @@ function ComponentCharge() : ComponentBase() constructor{
 
 		if(_released && charging){//prevent 'stored charge shots'
 			self.start_time = -1;//if it's -1, then we arent charging. 
-			self.publish("animation_visible", false);
+			//self.publish("animation_visible", false);
+			WORLD.stop_sound(self.charge_sound);
 			charging = false;
 		} else if(_pressed && !charging){//prevent charge shot delay rapidly increasing
 			self.start_time = CURRENT_FRAME;
+			self.charge_sound = WORLD.play_sound("charge");
 			charging = true;
 		}
 		
 		self.get_instance().x = self.get_instance().components.get(ComponentNode).node_parent.get_instance().x;
 		self.get_instance().y = self.get_instance().components.get(ComponentNode).node_parent.get_instance().y;
 
-		if(self.start_time == -1 || self.start_time + self.current_weapon.charge_time[0] > CURRENT_FRAME) return;
+
+		//log(string(self.charge_time))
+		if(self.start_time == -1 || 
+		self.start_time + self.charge_time[0] > CURRENT_FRAME) return;
 		
-		if(floor(self.start_time + self.current_weapon.charge_time[0]) == floor(CURRENT_FRAME))
+		if(floor(self.start_time + self.charge_time[0]) == floor(CURRENT_FRAME) || floor(self.start_time + self.charge_time[0] + 1) == floor(CURRENT_FRAME)) { 
 			self.publish("animation_visible", true);
-		if(floor(self.start_time + self.current_weapon.charge_time[0] + 1) == floor(CURRENT_FRAME))
-			self.publish("animation_visible", true);
+		}
 		
 		var _shot_code = noone;
 		
 		//for(var p = 0; p < array_length(self.current_weapon.charge_time); p++){
-		for(var p = array_length(self.current_weapon.charge_time) - 1; p > -1; p--){
-			if(self.start_time + self.current_weapon.charge_time[p] < CURRENT_FRAME && 
-			self.current_weapon.charge_limit >= p + 1 && _shot_code == noone){
-				_shot_code = self.current_weapon.data[p + 1];
+		for(var p = array_length(self.charge_time) - 1; p > -1; p--){
+			if(self.start_time + self.charge_time[p] < CURRENT_FRAME && 
+			self.charge_limit >= p + 1 && _shot_code == noone){
+				_shot_code = p;
 			}
 		}
 		
 		if(_shot_code != noone){
 			self.publish("animation_play", { 
-				name: "charge_" + string(array_get_index(self.current_weapon.data, _shot_code)),
+				name: "charge_1",
 				reset: false
 			});
 		}

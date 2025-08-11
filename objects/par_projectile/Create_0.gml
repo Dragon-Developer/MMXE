@@ -4,7 +4,8 @@ components.add([
 	ComponentInstance,
 	ComponentProjectile,
 	ComponentAnimation,
-	ComponentMask
+	ComponentMask,
+	ComponentPhysics
 ]);
 
 components.init();

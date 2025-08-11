@@ -25,13 +25,17 @@ function ComponentDoor() : ComponentBase() constructor{
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 		});
 		self.subscribe("animation_end", function() {
-			animation_end = true;	
+			animation_end = true;
 		});
+	}
+	
+	self.draw = function(){
+		draw_sprite(Sprite47, 0, self.get_instance().x, self.get_instance().y)	
 	}
 	
 	self.step = function(){//this code looks like the old engine because i dont think
 		//the door needs a snowstate. 
-		
+		//return;
 		//log(animation_end)
 		
 		var _inst = self.get_instance();
@@ -55,7 +59,7 @@ function ComponentDoor() : ComponentBase() constructor{
 				}
 			}
 			
-			var _player = instance_nearest(_inst.x,_inst.y, obj_player);
+			//var _player = instance_nearest(_inst.x,_inst.y, obj_player);
 		}
 		
 		if(!activated){
@@ -67,32 +71,32 @@ function ComponentDoor() : ComponentBase() constructor{
 				state_segment = 1;
 				time_offset = CURRENT_FRAME + time_delay;
 				curr_player = physics.get_place_meeting(_inst.x, _inst.y, obj_player);
+				if(curr_player == undefined){
+					curr_player = instance_nearest(_inst.x, _inst.y, obj_player)
+				}
+				log(curr_player)
 				curr_player.components.get(ComponentPlayerMove).locked = true;
 				curr_player.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
 				curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
-				curr_player.components.get(ComponentAnimation).animation.__speed = 0;
+				curr_player.components.get(ComponentAnimationPalette).animation.__speed = 0;
 				with(obj_camera){
 					components.get(ComponentCamera).target = noone;
 					other.curr_cam = components.get(ComponentCamera);
 				}
 				camera_total_movement = GAME_W;
 			}
-			//log(physics.check_place_meeting(_inst.x,_inst.y, obj_player));
-			
-			var _str = "" + string(_inst.x) + " " + string(_inst.y) + " " + string(_inst.x - _player.x) + " " + string(_inst.y - _player.y)
-			
-			//log(_str)
 		}
 		
 		#region states
 		if(activated){
+			curr_player.components.get(ComponentPlayerMove).locked = true;
 			switch(state_segment){
 				case(1):
 				//open the door
 				if(animation_end){//this will trigger when animation end is called
 					state_segment++;  
 					if(curr_player.components.get(ComponentPhysics).is_on_floor())
-						curr_player.components.get(ComponentAnimation).animation.__speed = 1;
+						curr_player.components.get(ComponentAnimationPalette).animation.__speed = 1;
 					coll.y -= 1025;
 					self.publish("animation_play", { name: "stay_open" });
 				}
@@ -118,7 +122,7 @@ function ComponentDoor() : ComponentBase() constructor{
 						} else {
 							curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
 						}
-						curr_player.components.get(ComponentAnimation).animation.__speed = 1;
+						curr_player.components.get(ComponentAnimationPalette).animation.__speed = 1;
 						curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
 					}
 				//}
@@ -132,6 +136,10 @@ function ComponentDoor() : ComponentBase() constructor{
 					state_segment = -1;
 					activated = false;
 					curr_player.components.get(ComponentPlayerMove).locked = false;
+					
+					with(Boss_Spawn_Point){
+						spawn_boss();
+					}
 				} else {
 					prev_cam_x = curr_cam.x;
 				}
@@ -144,14 +152,14 @@ function ComponentDoor() : ComponentBase() constructor{
 				if(flipped){
 					if(instance_nearest(_inst.x,_inst.y,obj_player).x < _inst.x){
 						flipped = false;
-						publish("animation_xscale", 1)
+						//publish("animation_xscale", 1)
 						//_inst.image_xscale = 1;
 						//_inst.x -= 32;
 					}
 				} else {
 					if(instance_nearest(_inst.x - 32,_inst.y,obj_player).x > _inst.x){
 						flipped = true;
-						publish("animation_xscale", -1)
+						//publish("animation_xscale", -1)
 						//_inst.image_xscale = -1;
 						//_inst.x += 32;
 					}
@@ -174,5 +182,8 @@ function ComponentDoor() : ComponentBase() constructor{
 		_inst.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
 		_inst.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
 		
+		_inst.visible = true;
+		
+		log(_inst.components.get(ComponentAnimationPalette).animation.__animation)
 	}
 }

@@ -22,8 +22,7 @@ function AnimationController(_character = "") constructor {
     self.__alpha = 1;
     self.__character = _character;
     self.__types = {//probably didnt need to hardcode this, but we need better doccumentation anyways. 
-        "normal": [""],
-		"shoot": ["_shoot"]
+        "normal": [""]
     };
     self.__actions = [];
 	self.__animations = [];
@@ -261,6 +260,9 @@ function AnimationController(_character = "") constructor {
 					
 					if (!is_undefined(_sprite)) {
 						currentAnimation[$ "sprites"][$ _action] = _sprite;
+					} else {
+						if(!__input_string_contains(_sprite_name, "x"))
+							log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
 					}
 				}
 	        }));
@@ -587,8 +589,8 @@ function AnimationController(_character = "") constructor {
     }
 	/// @param {struct} data
 	/// @returns {AnimationController} self
-	static parse_data = function(_data) {
-        if (!is_struct(_data)) return;
+	static parse_data = function(_data, _return_self = true) {
+        if (!is_struct(_data)) {log("crap");return;}
     
         if (struct_exists(_data, "type_combinations")) {
             self.add_type_combinations(_data.type_combinations);
@@ -646,18 +648,21 @@ function AnimationController(_character = "") constructor {
                 }
 				
 				//shot offsets. i know i can get the active animation here. 
-				
-                self.add_animation(_name, {
+				var _anim_data = {
                     action: _action,
                     keyframes: _keyframes,
                     loop_begin: _loop_begin,
 					index_events: _index_events,
 					shot_offsets: _shot_offsets,
                     speed: _speed
-                });
+                }
+                self.add_animation(_name, _anim_data);
             }
         }
-        return self;
+		if(_return_self)
+			return self;
+		else
+			return _anim_data;
     }
 	static clear = function() {
 	    self.__collection = {};
@@ -665,8 +670,7 @@ function AnimationController(_character = "") constructor {
 	    self.__index = 0; 
 		self.__frame = 0;
 	    self.__types = {
-	        "normal": [""],
-			"shoot": ["_shoot"]
+	        "normal": [""]
 	    };
 	    self.__actions = [];
 		self.__animations = [];

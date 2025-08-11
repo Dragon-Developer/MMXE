@@ -2,7 +2,8 @@ event_inherited();
 
 components.add([
 	ComponentDialouge,
-	ComponentPlayerInput
+	ComponentPlayerInput,
+	ComponentNode
 ]);
 
 components.init();
