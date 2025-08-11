@@ -6,6 +6,10 @@ function BaseEnemy() constructor{
 		
 	}
 	
+	self.init_default = function(_self){
+		_self.health = self.health;
+	}
+	
 	self.step = function(_self){
 		
 	}

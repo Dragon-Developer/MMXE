@@ -2,7 +2,7 @@ function BaseCharacter() constructor{
 	self.default_health = 12;
 	self.player = noone;
 	self.image_folder = "x";
-	self.states = {
+	self.states = {	
 		walk: {
 			speed: 376/256,	
 			animation: "walk"
@@ -29,7 +29,13 @@ function BaseCharacter() constructor{
 		hurt: {
 			speed: -138 / 256
 		}
-	}
+	}//if we have the default values in here its kinda redundant
+	self.possible_armors = [];
+	self.armor_use_requirements = [];
+	
+	self.weapons = [xBuster, XenoMissile];
+	self.weapon_ammo_max = 28;
+	
 	self.init = function(_player){
 		self.init_default(_player);
 	}

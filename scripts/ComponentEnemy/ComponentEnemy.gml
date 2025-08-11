@@ -1,5 +1,5 @@
 function ComponentEnemy() : ComponentBase() constructor{
-	self.health = -1;//because I dont want to manually get a reference to the damageable
+	self.health = 1;//because I dont want to manually get a reference to the damageable
 	self.contact_damage = 1;//the amount of contact damage enemies deal
 	
 	self.init = function(){
@@ -26,8 +26,10 @@ function ComponentEnemy() : ComponentBase() constructor{
 			EnemyData = _dir;
 			EnemyEnum = new EnemyData();
 			EnemyEnum.setComponent(self);
+			self.health = EnemyEnum.health;
 			EnemyEnum.init(self.get_instance());	
-			
+			self.get_instance().components.get(ComponentDamageable).health = self.health;
+			self.get_instance().components.get(ComponentDamageable).health_max = self.health;
 		});
 	}
 	

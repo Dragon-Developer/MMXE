@@ -52,7 +52,7 @@ void main()
     {
         for( float i=1.0/float(Quality);i<=1.0;i+=1.0/float(Quality) )
         {
-			temp = texture2D( gm_BaseTexture, v_vTexcoord+(vec2(cos(d),sin(d))*radius*i)+offset);
+			temp = texture2D( gm_BaseTexture, v_vTexcoord+(vec2(cos(d),sin(d) * 0.25)*radius*i)+offset);
 			temp *= sqrt((temp.r + temp.b + temp.g) / 45.0) + 0.9;
 			Color += temp;
 		}

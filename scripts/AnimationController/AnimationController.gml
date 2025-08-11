@@ -260,10 +260,10 @@ function AnimationController(_character = "") constructor {
 					
 					if (!is_undefined(_sprite)) {
 						currentAnimation[$ "sprites"][$ _action] = _sprite;
-					} else {
-						if(!__input_string_contains(_sprite_name, "x"))
-							log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
-					}
+					} //else {
+						//if(!__input_string_contains(_sprite_name, "x"))
+							//log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
+					//}
 				}
 	        }));
         });
@@ -641,10 +641,16 @@ function AnimationController(_character = "") constructor {
                     _key_events = _anim_data.key_events;
                 }
 				
-				var _shot_offsets = [];
+				var _shot_offset_x = 0;
 				
-				if (struct_exists(_anim_data, "shot_offsets")) {
-                    _shot_offsets = _anim_data.shot_offsets;
+				if (struct_exists(_anim_data, "shot_offset_x")) {
+                    _shot_offset_x = _anim_data.shot_offset_x;
+                }
+				
+				var _shot_offset_y = 0;
+				
+				if (struct_exists(_anim_data, "shot_offset_y")) {
+                    _shot_offset_y = _anim_data.shot_offset_y;
                 }
 				
 				//shot offsets. i know i can get the active animation here. 
@@ -653,7 +659,8 @@ function AnimationController(_character = "") constructor {
                     keyframes: _keyframes,
                     loop_begin: _loop_begin,
 					index_events: _index_events,
-					shot_offsets: _shot_offsets,
+					shot_offset_x: _shot_offset_x,
+					shot_offset_y: _shot_offset_y,
                     speed: _speed
                 }
                 self.add_animation(_name, _anim_data);

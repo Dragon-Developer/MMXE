@@ -16,6 +16,8 @@ on_spawn = function(_player) {
 	_charge.depth = _player.depth - 1;
 	_charge.components.publish("character_set", "player");
 	_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
+	_player.components.get(ComponentWeaponUse).weapon_list = global.player_character.weapons;
+	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_character.weapon_ammo_max;
 	//
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);
@@ -34,6 +36,13 @@ on_spawn = function(_player) {
 		_player.components.get(ComponentPlayerMove).camera = _camera;
 		_camera.components.publish("target_set", _player);	
 		_camera.components.get(ComponentHealthbar).compDamageable = _player.components.get(ComponentDamageable);
+		_camera.components.get(ComponentHealthbar).barCount = 2;
+		_camera.components.get(ComponentHealthbar).barOffsets = [new Vec2(12,78), new Vec2(28,78)];
+		
+		_camera.components.get(ComponentHealthbar).barValues = [_player.components.get(ComponentWeaponUse).weapon_ammo[_player.components.get(ComponentWeaponUse).current_weapon[0]]]
+		_camera.components.get(ComponentHealthbar).barValueMax = [_player.components.get(ComponentWeaponUse).weapon_max_ammo]
+		
+		_player.components.get(ComponentWeaponUse).bar = _camera.components.get(ComponentHealthbar);
 		_player.components.get(ComponentAnimationPalette).max_queue_size = 0;
 		_player.components.get(ComponentPlayerInput).__BufferLength = global.settings.Input_Buffer;
 		_player.components.get(ComponentPlayerInput).buffer_reset();

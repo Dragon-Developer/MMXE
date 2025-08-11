@@ -10,10 +10,7 @@
   "data": {
     "layers": [
       "normal",
-      "legs",
-      "helm",
-      "body",
-      "arms"
+      "full"
     ],
     "animations": {
       "speed": 1,
@@ -24,19 +21,11 @@
         ],
         [
           "",
-          "x1",
-          "x2",
-          "x3",
-          "falcon",
-          "blade",
-          "ult"
+          "x1"
         ],
         [
           "",
-          "legs",
-          "body",
-          "arms",
-          "helm"
+          ""
         ]
       ],
       "list": [
@@ -558,8 +547,28 @@
                 "frame": 0
               },
               {
-                "key": 3,
+                "key": 1,
                 "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 5
               }
             ],
             "loop_begin": 3

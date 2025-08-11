@@ -6,7 +6,7 @@
   "name":"FlameStagBoss",
   "parent":{
     "name":"Boss",
-    "path":"folders/Scripts/Boss.yy",
+    "path":"folders/Scripts/Game/Boss.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

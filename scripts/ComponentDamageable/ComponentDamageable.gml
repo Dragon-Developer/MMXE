@@ -65,6 +65,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(self.health <= 0)
 		{
+			log("you are dead. no big suprise")
+			log(self.health)
 			self.death_function();
 		}
 	}

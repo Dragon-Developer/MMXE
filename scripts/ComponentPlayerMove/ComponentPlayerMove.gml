@@ -271,7 +271,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
-		log(self.states.walk.animation)
 	}
 	
 	self.apply_full_armor_set = function(_armors){
@@ -404,7 +403,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			},
 			step: function() {
 				self.set_hor_movement(self.dash_dir);
-				if(CURRENT_FRAME == self.timer - self.states.dash.interval + 2)
+				if(CURRENT_FRAME >= self.timer - self.states.dash.interval + 2)
 					self.current_hspd = self.states.dash.speed;	
 				if(CURRENT_FRAME mod 8 == 0){
 					var _inst = self.get_instance();

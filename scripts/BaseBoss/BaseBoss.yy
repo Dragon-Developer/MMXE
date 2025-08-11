@@ -6,7 +6,7 @@
   "name":"BaseBoss",
   "parent":{
     "name":"Base",
-    "path":"folders/Scripts/Enemy/Base.yy",
+    "path":"folders/Scripts/Game/Enemy/Base.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
