@@ -19,6 +19,12 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		
 	self.__inputBufferActive = {left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true, switchLeft: false, switchRight: false};
 		
+	self.using_scripted_inputs = false;
+	self.scripted_inputs = [{left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true, switchLeft: false, switchRight: false}];
+	self.scripted_input_index = 0;
+	
+	self.write_inputs = global.settings.write_inputs;
+		
 	self.init = function(){
 		self.buffer_reset();
 	}
@@ -36,6 +42,17 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		self.__player_index = _index;	
 	}
 	self.__input_check = function(_verb) {
+		if(self.using_scripted_inputs)
+			return self.input_check_scripted(_verb);
+		else
+			return self.input_check_regular(_verb);
+	}
+	
+	self.input_check_scripted = function(_verb){
+		return self.scripted_inputs[self.scripted_input_index][$ _verb];
+	}
+	
+	self.input_check_regular = function(_verb){
 		if (self.__locked) return false;
 		if (self.__swap_horizontal) {
 			if (_verb == "right") {

@@ -5,7 +5,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	xBuster,
 	XenoMissile
 	];
-	self.weapon_ammo = [28,28,28];
+	self.weapon_ammo = [28];
 	self.weapon_max_ammo = 28;
 	self.charge = noone;
 	self.charge_time = [30, 105, 180, 255];
@@ -31,6 +31,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		if(self.input.get_input_pressed("switchLeft")){
 			self.current_weapon[0]++;
 			self.current_weapon[0] = self.current_weapon[0] mod array_length(self.weapon_list)
+		}
+		
+		if(self.input.get_input_pressed("switchRight")){
+			self.current_weapon[0]--;
+			self.current_weapon[0] = (self.current_weapon[0] + array_length(self.weapon_list)) mod array_length(self.weapon_list)
 		}
 		
 		if self.bar != noone {
@@ -74,7 +79,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			with(_shot_code){
 				script_execute(other.weapon_list[other.current_weapon[_id]]);
 			}
-			log(_shot_code)
+			//log(_shot_code)
 			
 			if(self.input.get_input_released(_input) && self.charge != noone){
 				//nobody said i was a CLEAN coder
@@ -110,9 +115,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			self.get_instance().components.get(ComponentAnimationPalette).animation.__type = "shoot";
 			
 			
-		log("QWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOP START")
+		//log("QWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOP START")
 			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
-			self.apply_shot_offset(_shot);
+			//self.apply_shot_offset(_shot);
 			_shot.dir = self.get_instance().components.find("animation").animation.__xscale;
 			
 			if(_anim_name == "wall_slide"){

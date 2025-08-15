@@ -23,6 +23,12 @@
         "x": 16,
         "y": 16
       }
+    },
+    "wheel": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
     }
   },
   "data": {
@@ -139,6 +145,54 @@
               }
             ],
             "loop_begin": 5
+          }
+        },
+        {
+          "name": "wheel",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 5
+              },
+              {
+                "key": 13,
+                "frame": 6
+              },
+              {
+                "key": 16,
+                "frame": 7
+              },
+              {
+                "key": 19,
+                "frame": 8
+              },
+              {
+                "key": 22,
+                "frame": 8
+              }
+            ],
+            "loop_begin": 13
           }
         },
         {

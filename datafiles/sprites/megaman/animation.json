@@ -510,6 +510,14 @@
               {
                 "key": 3,
                 "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
               }
             ],
             "loop_begin": 3

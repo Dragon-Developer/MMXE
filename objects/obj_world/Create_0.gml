@@ -19,5 +19,4 @@ self.play_sound = function(_sound){
 
 self.stop_sound = function(_sound){
 	self.components.get(ComponentSoundLoader).stop_sound(_sound);
-	log("sound stopped")
 }

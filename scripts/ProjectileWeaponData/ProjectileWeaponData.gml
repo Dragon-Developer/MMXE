@@ -17,6 +17,9 @@ function ProjectileData() constructor{
 	self.general_init = function(_comp){
 		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
 	}
+	self.draw = function(){
+		//add your shit here
+	}
 }
 
 /*

@@ -121,12 +121,17 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * Checks if the entity is on the floor.
 	 * @returns {bool} True if entity is on the floor.
 	 */
-	is_on_floor = function() {
+	is_on_floor = function(_dist = 1) {
 		var _inst = self.get_instance();
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
-		self.move_step(self.up.multiply(-1));
-		var _on_floor = (_previous_y == _inst.y && _previous_x == _inst.x);
+		self.move_step(self.up.multiply(_dist * -1));
+		var _on_floor = 0;
+		if(_dist == 1){
+			_on_floor = (_previous_x == _inst.x && _previous_y == _inst.y)
+		} else {
+			_on_floor = (abs(_previous_x - _inst.x) < _dist - 1 && abs(_previous_y - _inst.y) < _dist - 1);
+		}
 		_inst.x = _previous_x;
 		_inst.y = _previous_y;
 		return _on_floor;

@@ -7,16 +7,16 @@ uniform float width;
 uniform float height;
 uniform float ScreenScale;
 
-const vec3 size = vec3(275,275,1);//width,height,radius
-const vec4 colOffset = vec4(0.02,-0.01,-0.01, 0.0);//width,height,radius
+const vec3 size = vec3(255,255,1);//width,height,radius
+const vec4 colOffset = vec4(0.0,-0.05,0.0, 0.0);//width,height,radius
 
 const int Quality = 3;
 const int Directions = 8;
 const float Pi = 6.28318530718;//pi * 2
 
-const float blendVal = 1.75;
+const float blendVal = 1.05;
 const float cutoffVal = 0.05;
-const float cutoffMult = 1.8;
+const float cutoffMult = 1.1;
 
 vec4 apply_scanlines(vec4 val)
 {
@@ -46,13 +46,11 @@ void main()
 	
 	offset.x -= ((Color.r + Color.g + Color.b) / width / 6.0);
 	
-	//Color = apply_scanlines(Color);
-	
     for( float d=0.0;d<Pi;d+=Pi/float(Directions) )
     {
         for( float i=1.0/float(Quality);i<=1.0;i+=1.0/float(Quality) )
         {
-			temp = texture2D( gm_BaseTexture, v_vTexcoord+(vec2(cos(d),sin(d) * 0.25)*radius*i)+offset);
+			temp = texture2D( gm_BaseTexture, v_vTexcoord+(vec2(cos(d),sin(d) * 0.1)*radius*i)+offset);
 			temp *= sqrt((temp.r + temp.b + temp.g) / 45.0) + 0.9;
 			Color += temp;
 		}
@@ -65,7 +63,7 @@ void main()
 	
 	final = apply_scanlines(final);
 	
-	//final += colOffset;
+	final += colOffset;
 	
 	gl_FragColor = final;
 }

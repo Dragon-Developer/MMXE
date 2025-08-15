@@ -90,9 +90,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if !_hits return;
 		
-		
-		//log("hit")
-		if(self.invuln_offset > CURRENT_FRAME && _proj.components.get(ComponentProjectile).weaponCreate.comboiness < self.comboiness){
+		if(self.invuln_offset > CURRENT_FRAME && _proj.components.get(ComponentProjectile).weaponCreate.comboiness <= self.combo_count){
 			//if the comboiness is too high and the projectile is not comboy enough
 			return;
 		}
@@ -101,6 +99,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.health -= _proj.components.get(ComponentProjectile).weaponCreate.damage;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+			self.combo_count = _proj.components.get(ComponentProjectile).weaponCreate.comboiness;
 		}
 		
 	}

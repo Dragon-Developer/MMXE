@@ -86,7 +86,19 @@ function ComponentProjectile() : ComponentBase() constructor{
 		try{
 			weaponCreate.step(self.get_instance());
 		} catch(_exception){
-			
+			log(_exception)
+		}
+	}
+	
+	self.draw = function(){
+		if (!variable_struct_exists(
+		weaponCreate, 
+		"draw")) 
+			return;
+		try{
+			weaponCreate.draw(self.get_instance());
+		} catch(_exception){
+			log(_exception)
 		}
 	}
 	

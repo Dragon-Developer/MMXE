@@ -22,7 +22,7 @@ function ComponentNPC() : ComponentInteractibleInteract() constructor{
 	}
 	
 	self.Interacted_Script = function(_plr){
-		if(!_plr.components.get(ComponentPlayerMove).physics.is_on_floor) {self.interacted = false; return;}
+		if(!_plr.components.get(ComponentPlayerMove).physics.is_on_floor()) {self.interacted = false; return;}
 		var _inst = self.get_instance();
 		_plr.components.get(ComponentPlayerMove).locked = true;
 		_plr.components.get(ComponentPlayerMove).fsm.trigger("t_dialouge");

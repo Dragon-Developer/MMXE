@@ -33,7 +33,7 @@ function BaseCharacter() constructor{
 	self.possible_armors = [];
 	self.armor_use_requirements = [];
 	
-	self.weapons = [xBuster, XenoMissile];
+	self.weapons = [xBuster];
 	self.weapon_ammo_max = 28;
 	
 	self.init = function(_player){
