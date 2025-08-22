@@ -1,0 +1,69 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          "",
+          "x1",
+          "x2",
+          //"x3",
+         // "falcon",
+          "blade"//,
+          //"ult"
+        ],
+        [
+          "",
+          "legs",
+          "body",
+          "arms",
+          "helm"
+        ]
+      ],
+      "list": [
+        {
+          "name": "x",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "zero",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "bg",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "lines",
+          "properties": {
+            "speed": 1
+          }
+        }
+      ]
+    }
+  }
+}

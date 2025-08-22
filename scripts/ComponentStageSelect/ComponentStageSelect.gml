@@ -8,11 +8,17 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	self.stage_select_height = 4;
 	
 	self.stages = [
-	{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: Sprite20, music: "blast_hole_2.0"},//'beat' will be replaced with save data info
-	{room: rm_gate_2, x: 67, y: 18, beat: false, icon: Sprite20, music: "intro_stage"},
+	{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: spr_undefined, music: "blast_hole_2.0"},//'beat' will be replaced with save data info
+	{room: rm_gate_2, x: 67, y: 18, beat: false, icon: gate_mugshot_quickine, music: "intro_stage"},
 	{room: rm_headquarters, x: 140, y: 11, beat: false, icon: Sprite20, music: "HQ"},
 	{room: rm_intro, x: 213, y: 18, beat: false, icon: X_Mugshot1, music: "tutorial"},
-	{room: rm_metroid, x: 261, y: 18, beat: false, icon: Sprite20, music: "HQ"}
+	{room: rm_metroid, x: 261, y: 18, beat: false, icon: spr_undefined, music: "HQ"},
+	
+	{room: rm_explose_horneck, x: 19, y: 182, beat: false, icon: spr_undefined, music: "blast_hole_2.0"},//'beat' will be replaced with save data info
+	{room: rm_gate_2, x: 67, y: 182, beat: false, icon: gate_mugshot_quickine, music: "intro_stage"},
+	{room: rm_char_select, x: 140, y: 189, beat: false, icon: Sprite20, music: undefined},
+	{room: rm_intro, x: 213, y: 182, beat: false, icon: X_Mugshot1, music: "tutorial"},
+	{room: rm_metroid, x: 261, y: 182, beat: false, icon: spr_undefined, music: "HQ"}
 	];//not much for the moment
 	
 	self.on_register = function() {

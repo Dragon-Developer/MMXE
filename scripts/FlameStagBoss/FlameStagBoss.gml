@@ -7,6 +7,8 @@ function FlameStagBoss() : BaseBoss() constructor{
 		}
 	];
 	self.enter_init = function(_par){
-		_par.publish("animation_play", { name: "fsi" });
+		_par.publish("animation_play", { name: "idle" });
 	}
+	
+	self.pose_animation_name = "complete";
 }

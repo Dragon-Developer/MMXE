@@ -16,7 +16,7 @@ const float Pi = 6.28318530718;//pi * 2
 
 const float blendVal = 1.05;
 const float cutoffVal = 0.05;
-const float cutoffMult = 1.1;
+const float cutoffMult = 0.78;
 
 vec4 apply_scanlines(vec4 val)
 {
@@ -60,6 +60,8 @@ void main()
     final =  Color *  v_vColour;
 	
 	final = vec4((final.r - cutoffVal) * cutoffMult, (final.g - cutoffVal) * cutoffMult, (final.b - cutoffVal) * cutoffMult, 1);
+	
+	final = vec4(log(final.r + 1.0),log(final.g + 1.0),log(final.b + 1.0),1.0);
 	
 	final = apply_scanlines(final);
 	

@@ -11,16 +11,14 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.locked = false;
 	self.paused = false;
 	self.can_wall_jump = true;
+	self.states = {};
 	
 	self.timer = 0;
 	#endregion
 	
 	self.armor_parts = [
-		new XSecondArmorHead(), 
-		//new XFirstArmorBody(), 
-		//new XFirstArmorArms(), 
-		//new XSecondArmorBoot()
-		];// Head, Body, Arms, Boot
+		new XBladeArmorBoot()
+	]
 		
 	self.character = global.player_character;
 	
@@ -38,7 +36,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		#endregion
 	
 	self.reset_state_variables = function(){
-		self.states = self.character.states;
+		self.states = variable_clone(global.player_character.states);
 	}
 	
 	// Finite State Machine initialization
@@ -274,6 +272,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.apply_full_armor_set = function(_armors){
+		self.reset_state_variables();
 		self.armor_parts = [[],[],["/normal"]];
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm){
@@ -302,8 +301,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.publish("armor_set",self.armor_parts[1]);
 		self.get_instance().components.get(ComponentAnimationPalette).set_subdirectories(self.armor_parts[2]);
 		self.get_instance().components.get(ComponentAnimationPalette).reload_animations();
-		log(self.armor_parts[1])
-		log(self.armor_parts[2])
+		//log(self.armor_parts[1])
+		//log(self.armor_parts[2])
 		//fix the armor_parts array. it does not need to store an array of strings
 		self.armor_parts = self.armor_parts[0];
 	}
@@ -371,6 +370,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		// Updates the FSM
 		if (self.fsm.event_exists("step"))
 			self.fsm.step();	
+	}
+		
+	self.draw = function(){
+		if (self.fsm.event_exists("draw"))
+			self.fsm.draw();		
 	}
 	
 	self.draw_gui = function() {

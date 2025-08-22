@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Stage Select",
-    "path":"folders/Objects/Level Assets/Generic/Stage Select.yy",
+    "path":"folders/Objects/Menus/Stage Select.yy",
   },
   "parentObjectId":{
     "name":"par_spawner",

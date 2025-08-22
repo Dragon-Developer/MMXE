@@ -2,7 +2,7 @@ function BaseEnemy() constructor{
 	self.health = 1;
 	self.stun_offset = 0;
 	EnemyComponent = noone;
-	self.init = function(){
+	self.init = function(_self){
 		
 	}
 	

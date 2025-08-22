@@ -29,7 +29,35 @@ function BaseCharacter() constructor{
 		hurt: {
 			speed: -138 / 256
 		}
-	}//if we have the default values in here its kinda redundant
+	}
+	self.states_default = {	
+		walk: {
+			speed: 376/256,	
+			animation: "walk"
+		},
+		dash: {
+			speed: 885/256,	
+			interval: 32,
+			animation: "dash"
+		},
+		jump: {
+			strength: 1363/256,
+			animation: "jump"
+		},
+		fall:{
+			animation: "fall"
+		},
+		wall_jump: {
+			strength: 5
+		},
+		ladder: {
+			speed: 376/256
+			//496/256 if its with arm parts
+		},
+		hurt: {
+			speed: -138 / 256
+		}
+	}
 	self.possible_armors = [];
 	self.armor_use_requirements = [];
 	

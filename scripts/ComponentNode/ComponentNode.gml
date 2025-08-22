@@ -26,6 +26,7 @@ function ComponentNode() : ComponentBase() constructor{
 		with(_child){
 			self.publish("child_connected_to_parent", other);
 		}
+		return _child;
 	}
 	
 	self.remove_child = function(_child){

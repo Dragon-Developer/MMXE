@@ -5,4 +5,7 @@ function ComponentMusicPlayer() : ComponentSoundLoader() constructor{
 	self.init = function(){
 		self.play_sound(global.stage_Data.music);
 	}
+	self.stop = function(){
+		self.clear_sound();
+	}
 }

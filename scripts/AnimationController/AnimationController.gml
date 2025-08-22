@@ -94,6 +94,16 @@ function AnimationController(_character = "") constructor {
 		self.__yscale = _yscale;
 		return self;
 	}
+	/// @param {real} xscale
+	/// @returns {AnimationController} self
+	static set_color = function(_color) {
+		self.__color = _color;
+		return self;
+	}
+	/// @returns {real}	
+	static get_color = function() {
+		return self.__color;
+	}
 	/// @param {real} angle
 	/// @returns {AnimationController} self
 	static set_angle = function(_angle) {
@@ -260,10 +270,10 @@ function AnimationController(_character = "") constructor {
 					
 					if (!is_undefined(_sprite)) {
 						currentAnimation[$ "sprites"][$ _action] = _sprite;
-					} //else {
+					} else {
 						//if(!__input_string_contains(_sprite_name, "x"))
 							//log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
-					//}
+					}
 				}
 	        }));
         });

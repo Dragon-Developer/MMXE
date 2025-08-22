@@ -8,13 +8,14 @@ function ComponentDoor() : ComponentBase() constructor{
 	time_offset = -1;
 	activated = false;
 	state_segment = -1;// 1 is opening door, 2 is moving player through door, 3 is closing door, and -1 means the door is shut
-	multidirectional = true;//if its monodirectional, check the x scale
+	multidirectional = false;//if its monodirectional, check the x scale
 	curr_player = noone;
 	curr_cam = noone;
 	camera_total_movement = GAME_W;
 	animation_end = false;
 	physics = noone;
 	flipped = false;
+	spawn_boss = true;
 	
 	prev_cam_x = -1;
 
@@ -27,10 +28,6 @@ function ComponentDoor() : ComponentBase() constructor{
 		self.subscribe("animation_end", function() {
 			animation_end = true;
 		});
-	}
-	
-	self.draw = function(){
-		draw_sprite(Sprite47, 0, self.get_instance().x, self.get_instance().y)	
 	}
 	
 	self.step = function(){//this code looks like the old engine because i dont think
@@ -75,6 +72,7 @@ function ComponentDoor() : ComponentBase() constructor{
 					curr_player = instance_nearest(_inst.x, _inst.y, obj_player)
 				}
 				log(curr_player)
+				curr_player.components.get(ComponentPlayerInput).__locked = true;
 				curr_player.components.get(ComponentPlayerMove).locked = true;
 				curr_player.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
 				curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
@@ -89,6 +87,7 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 		#region states
 		if(activated){
+			curr_player.components.get(ComponentPlayerInput).__locked = true;
 			curr_player.components.get(ComponentPlayerMove).locked = true;
 			switch(state_segment){
 				case(1):
@@ -108,8 +107,8 @@ function ComponentDoor() : ComponentBase() constructor{
 					
 					if(physics.check_place_meeting(_inst.x,_inst.y, obj_player)){
 						curr_player.x += (74/256) * (flipped * -2 + 1);
-						//log("COLLISION")
-						curr_cam.x += (flipped * -2 + 1) * (178/256);
+						// the camera movement value is larger than snes, but its also 
+						curr_cam.x += (flipped * -2 + 1) * (223/256);
 					} else {
 						state_segment++;
 						with(obj_camera){
@@ -136,7 +135,10 @@ function ComponentDoor() : ComponentBase() constructor{
 					state_segment = -1;
 					activated = false;
 					curr_player.components.get(ComponentPlayerMove).locked = false;
-					
+					if(!spawn_boss) {
+						curr_player.components.get(ComponentPlayerInput).__locked = false;
+						return;
+					}
 					with(Boss_Spawn_Point){
 						spawn_boss();
 					}

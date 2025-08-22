@@ -1,5 +1,5 @@
 function HoloTutuorialEnemy() : BaseEnemy() constructor{
-	self.health = 4;
+	self.health = 3;
 	
 	self.init = function(_self){
 		self.EnemyComponent.publish("animation_play", { name: "skull_bot" });
@@ -7,6 +7,7 @@ function HoloTutuorialEnemy() : BaseEnemy() constructor{
 }
 
 function HoloTutuorialEnemyWithShield() : HoloTutuorialEnemy() constructor{
+	self.health = 2;
 	self.init = function(_self){
 		self.EnemyComponent.publish("animation_play", { name: "skull_bot_shield" });
 		var _inst = self.EnemyComponent.get_instance();

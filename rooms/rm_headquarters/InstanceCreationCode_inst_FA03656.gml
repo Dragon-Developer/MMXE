@@ -1,0 +1,1 @@
+armorComponent = new ChipJumper();

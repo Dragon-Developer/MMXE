@@ -1,0 +1,1 @@
+self.armorComponent = new XFirstArmorBody();

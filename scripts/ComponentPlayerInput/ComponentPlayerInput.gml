@@ -49,7 +49,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	}
 	
 	self.input_check_scripted = function(_verb){
-		return self.scripted_inputs[self.scripted_input_index][$ _verb];
+		self.scripted_input_index++;
+		return self.scripted_inputs[self.scripted_input_index - 1][$ _verb];
 	}
 	
 	self.input_check_regular = function(_verb){
@@ -89,6 +90,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	
 	self.step = function() {
 		self.update_inputs();
+		log(string(__locked ? "Locked" : "Free") + " " + __locked)
 	}
 
     self.get_input = function(_verb) {

@@ -17,3 +17,7 @@ if (keyboard_check_pressed(ord("Q"))) {
 	GAME.add_input(5, 1, _generate_input(["right"]));
 	GAME.step();
 }
+
+if(transition_data.transitioning){
+	
+}

@@ -76,12 +76,16 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	}
 
 	self.play_sound = function(_filename, _start_frame = 0, _volume = volume){
+		try {
 		var _id = self.load_sound(_filename);
 		var _snd = audio_play_sound(_id, 1, self.loops, _volume, _start_frame / 60)
 		
 		array_push(self.sounds, {sound_id: _snd, sound_asset: _id, volume: _volume, start_frame: _start_frame})
 		log(_snd)
 		return _snd;
+		} catch (_exception){
+			log("sound didnt load")
+		}
 	}
 	
 	self.stop_sound = function(_snd){
@@ -89,6 +93,13 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 			if(_snd = self.sounds[g].sound_id){
 				audio_destroy_stream(self.sounds[g].sound_asset);
 			}
+		}
+	}
+	
+	self.clear_sound = function(){
+		for(var g = 0; g < array_length(self.sounds); g++){
+			log(self.sounds[g].sound_asset)
+			audio_destroy_stream(self.sounds[g].sound_asset);
 		}
 	}
 	

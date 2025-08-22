@@ -10,6 +10,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.position_queue = []; 
 	self.max_queue_size = 5;
 	self.last_game_frame = 0;
+	self.do_drawing = true;
 	
 	self.serializer
 		.addVariable("armors")
@@ -37,6 +38,12 @@ function ComponentAnimation() : ComponentBase() constructor {
 		});
 		self.subscribe("animation_xscale", function(_xscale) {
 			self.animation.set_xscale(_xscale)
+		});
+		self.subscribe("animation_yscale", function(_yscale) {
+			self.animation.set_yscale(_yscale)
+		});
+		self.subscribe("animation_angle", function(_angle) {
+			self.rotation_angle = _angle;
 		});
 		self.subscribe("animation_visible", function(_visible) {
 			self.animation.set_visible(_visible)
@@ -154,12 +161,13 @@ function ComponentAnimation() : ComponentBase() constructor {
 	};
 
 	self.draw = function(){
-		self.draw_regular();
+		if(!self.do_drawing) return;
+		self.draw_regular(self.get_interpolated_position());
 	}
 
 	
-	self.draw_regular = function() {
-		var _pos = self.get_interpolated_position();
+	self.draw_regular = function(_pos, _col = c_white) {
+		if(is_undefined(_pos)) _pos = self.get_interpolated_position();
 		var _instance_x = floor(_pos[0]);
 		var _instance_y = floor(_pos[1]);
 		var _animation = _pos[2];
@@ -184,10 +192,10 @@ function ComponentAnimation() : ComponentBase() constructor {
 			.set_xscale(_xscale)
 			.set_angle(-self.rotation_angle)
 			.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
-			//log(_action)
-			
+		var _modifier = self.animation.__types[$ self.animation.__type][0];
+		if(_modifier != "") _modifier += "_"
 		for (var _q = 0; _q < array_length(self.armors); _q++){
-			self.animation.draw_action(_action, self.armors[_q], _frame, floor(_x), floor(_y));
+			self.animation.draw_action(_action,_modifier + self.armors[_q], _frame, floor(_x), floor(_y));
 		}
 		self.animation.set_xscale(_previous_xscale);
 

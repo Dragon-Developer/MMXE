@@ -2,11 +2,11 @@ function ComponentBoss() : ComponentEnemy() constructor{
 	
 	self.has_done_dialouge = false;
 	self.boss_data = new FlameStagBoss();//for example purposes
+	self.instance = self.get_instance();
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
-		//self.publish("animation_play", { name: "idle" });
-		//self.publish("animation_play", { name: "idle" });
+		self.publish("animation_play", { name: "idle" });
 	}
 	
 	self.step = function() {
@@ -21,7 +21,9 @@ function ComponentBoss() : ComponentEnemy() constructor{
 				boss_data.enter_init(self);
 			},
 			step: function() {
+				log("steppn")
 				boss_data.enter_step();
+				log("steppd")
 			}
 		})
 		.add("pose", {
@@ -31,6 +33,11 @@ function ComponentBoss() : ComponentEnemy() constructor{
 			step: function() {
 				//if the pose animation is finished, then make the healthbar,
 				// fill it, then move to idle and free the player
+			},
+			leave: function(){
+				with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
+					components.get(ComponentPlayerInput).__locked = false;
+				}
 			}
 		})
 		.add("idle", { })
@@ -48,10 +55,14 @@ function ComponentBoss() : ComponentEnemy() constructor{
 			//do something. will probably add functionality later.	
 		});
 		self.subscribe("enemy_data_set", function(_dir){
-			EnemyData = _dir;
-			EnemyEnum = new EnemyData();
-			boss_data.setComponent(self);
-			EnemyEnum.init(self.get_instance());	
+			boss_data = _dir;
+			log("step 1")
+			EnemyEnum = new boss_data();
+			log("step 2")
+			EnemyEnum.setComponent(self);
+			log("step 3")
+			EnemyEnum.init(self.get_instance());
+			log("step 4")
 			
 		});
 	}

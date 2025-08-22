@@ -9,11 +9,7 @@
   },
   "data": {
     "layers": [
-      "normal",
-      "legs",
-      "helm",
-      "body",
-      "arms"
+      "normal"
     ],
     "animations": {
       "speed": 1,

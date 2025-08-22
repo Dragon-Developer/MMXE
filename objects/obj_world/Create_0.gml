@@ -20,3 +20,7 @@ self.play_sound = function(_sound){
 self.stop_sound = function(_sound){
 	self.components.get(ComponentSoundLoader).stop_sound(_sound);
 }
+
+self.stop_music = function(){
+	self.components.get(ComponentMusicPlayer).stop();
+}
