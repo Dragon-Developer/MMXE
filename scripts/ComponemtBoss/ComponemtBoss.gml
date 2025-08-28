@@ -10,6 +10,8 @@ function ComponentBoss() : ComponentEnemy() constructor{
 	}
 	
 	self.step = function() {
+		self.fsm.trigger("t_transition");
+	
 		if (self.fsm.event_exists("step"))
 			self.fsm.step();
 	}
