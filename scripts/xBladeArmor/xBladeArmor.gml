@@ -32,6 +32,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				change_direction: false
 			})
 			
+			if(!struct_exists(global.player_character.states_default, "mach_dash"))
 			struct_set(global.player_character.states_default, "mach_dash", {
 				speed: 1298/256, 
 				interval: 25, 
