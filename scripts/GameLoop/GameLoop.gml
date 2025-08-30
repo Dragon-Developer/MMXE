@@ -30,6 +30,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	self.entities_step = function() {
 		var _step = function(_component) { 
 			try{
+				if(!is_struct(_component)) return;
 				if (!_component.step_enabled) return; 
 				_component.step(); 
 			} catch(_exception) {
