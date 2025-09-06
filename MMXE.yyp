@@ -2138,6 +2138,7 @@
     {"id":{"name":"GuiSprite","path":"scripts/GuiSprite/GuiSprite.yy",},},
     {"id":{"name":"GuiText","path":"scripts/GuiText/GuiText.yy",},},
     {"id":{"name":"GuiTextInput","path":"scripts/GuiTextInput/GuiTextInput.yy",},},
+    {"id":{"name":"GuiWaitingMenu","path":"scripts/GuiWaitingMenu/GuiWaitingMenu.yy",},},
     {"id":{"name":"HeadPartBase","path":"scripts/HeadPartBase/HeadPartBase.yy",},},
     {"id":{"name":"HoloTutuorialEnemy","path":"scripts/HoloTutuorialEnemy/HoloTutuorialEnemy.yy",},},
     {"id":{"name":"image_get_uvs","path":"scripts/image_get_uvs/image_get_uvs.yy",},},

@@ -38,6 +38,7 @@ function GuiRoot() : GuiContainer() constructor {
 			}, global.server.getAllSockets());
 		}//if this fails, youre a client
 		
+		WaitingContainer.setEnabled(false);
 		
 		room_goto(rm_headquarters);
 	}
@@ -56,6 +57,7 @@ function GuiRoot() : GuiContainer() constructor {
 	lobbyMenuContainer = new GuiLobbyMenu();
 	clientMenuContainer = new GuiClientMenu();
 	SettingsContainer = new GuiSettings();
+	WaitingContainer = new GuiWaitingMenu();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
@@ -64,9 +66,10 @@ function GuiRoot() : GuiContainer() constructor {
 	lobbyMenuContainer.setEnabled(false);
 	clientMenuContainer.setEnabled(false);
 	SettingsContainer.setEnabled(false);
+	WaitingContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer, SettingsContainer]);
+	addChild([mainMenuContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer, SettingsContainer, WaitingContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;

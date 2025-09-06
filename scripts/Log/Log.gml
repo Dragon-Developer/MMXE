@@ -5,7 +5,7 @@ function log(_string, _stack = false, _stacklength = 5){
 	    for (var i = 0; i < array_length(_a); i++)
 	    {
 	        //show_debug_message(_a[i]);
-			_msg += _a[i]
+			_msg += string(_a[i]);
 	    }
 	}
 	_string = string(_string) + _msg;

@@ -12,7 +12,7 @@ function GameServer(_port) : NET_TcpServer(_port) constructor {
 		global.game.on_ping_received(_ping);
 	}
 	self.setEvent("connected", function(_client) {
-		log(_client)
+		log("client connected")
 		pingRpc.sendPing(_client.socket);
 	});
 	self.setEvent("error", function(_err) {

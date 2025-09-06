@@ -282,19 +282,18 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			if(_arm != noone){
 				var _directory_name = "/armor" + string(_arm.sprite_name)
 				_directory_name = string_replace(_directory_name, "_", "/")
-				log(_directory_name);
+				//log(_directory_name);
 				self.get_instance().components.get(ComponentAnimationPalette).add_subdirectories([_directory_name]);
 				if(variable_struct_exists(_arm, "apply_armor_effects"))
 					_arm.apply_armor_effects(self);
-				else
-					log("this thing doesnt have an armor effect variable!")
+					//log("this thing doesnt have an armor effect variable!")
 				array_push(self.armor_parts[2], _directory_name);
 			}
 			//add the armor to the _armor_set array so we can set the armors in the animator
 			var _armor_name = string(_arm.sprite_name);
 			_armor_name = string_delete(_armor_name, 0, 1);
 			_armor_name = string_replace(_armor_name, "/", "_");
-			log(_armor_name)
+			//log(_armor_name)
 			array_push(self.armor_parts[1], _armor_name);
 		});
 		//publish the armor set
@@ -374,7 +373,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		
 	self.draw = function(){
 		if (self.fsm.event_exists("draw"))
-			self.fsm.draw();		
+			self.fsm.draw();	
+		if(variable_struct_exists(self, "hdir"))
+			draw_string(string(self.hdir), self.get_instance().x, self.get_instance().y - 32)
+		if(variable_struct_exists(self, "vdir"))
+			draw_string(string(self.vdir), self.get_instance().x, self.get_instance().y - 24)
+		draw_string(string(self.physics.get_vspd()), self.get_instance().x + 16, self.get_instance().y - 24)
+		draw_string(string(self.physics.get_hspd()), self.get_instance().x + 16, self.get_instance().y - 32)
 	}
 	
 	self.draw_gui = function() {

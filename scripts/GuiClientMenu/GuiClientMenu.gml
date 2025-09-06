@@ -24,6 +24,7 @@ function GuiClientMenu() : GuiContainer() constructor {
 		global.socket = global.client;
 		self.setEnabled(false);
 		parent.lobbyMenuContainer.setEnabled(false);
+		parent.WaitingContainer.setEnabled(true);
 	});
 	
 	inputIpPort = new GuiTextInput();

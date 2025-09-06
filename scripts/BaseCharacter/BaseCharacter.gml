@@ -70,7 +70,7 @@ function BaseCharacter() constructor{
 	
 	self.init_default = function(_player){
 		self.player = _player;
-		log(self.player)
+		//log(self.player)
 		struct_foreach(self.states, function(_state){
 			if(struct_exists(self.player.states, string(_state)))
 				variable_struct_set(self.player.states, string(_state),
@@ -80,6 +80,6 @@ function BaseCharacter() constructor{
 		with(_player){
 			get_instance().components.find("animation").reload_animations();
 		}
-		log(image_folder)
+		//log(image_folder)
 	}
 }

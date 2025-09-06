@@ -30,6 +30,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 	self.entities_step = function() {
 		var _step = function(_component) { 
 			try{
+				if(is_undefined(_component)) return;
 				if(!is_struct(_component)) return;
 				if (!_component.step_enabled) return; 
 				_component.step(); 
@@ -73,12 +74,19 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		//would make it easier to test
 	}
 	self.step = function() {
-		self.game_timer += self.game_speed;
-		while (self.game_timer >= 1) {
-			self.game_timer -= 1;
-			self.entities_step();
+		try{
+			self.game_timer += self.game_speed;
+			while (self.game_timer >= 1) {
+				self.game_timer -= 1;
+				self.entities_step();
+			}
+		}catch(_exception) {
+			show_debug_message(_exception.message);
+			show_debug_message(_exception.longMessage);
+			show_debug_message(_exception.script);
+			show_debug_message(_exception.stacktrace);
+			show_debug_message("this error was caught in the gameloop's step update. hopefully this helps!")
 		}
-		//CURRENT_FRAME++;//this is here so rollback can function more effectively
 	}
 	
 	self.draw_gui_begin = function(){

@@ -21,8 +21,8 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		with(_player){
 			struct_set(states, "mach_dash", {
-				speed: 1298/256, 
-				interval: 25, 
+				speed: 1298/256, //1298/256, 
+				interval: 25, //25,
 				max_dashes: 1, 
 				curr_dashes: 0, 
 				animation: "mach_dash", 
@@ -42,7 +42,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				angle: new Vec2(0,1), 
 				only_cardinals: true, 
 				golden: false,
-				change_direction: false
+				change_direction: true
 			})
 			
 			if(keyboard_check(ord("P"))){

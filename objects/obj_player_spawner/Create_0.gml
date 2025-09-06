@@ -45,9 +45,13 @@ on_spawn = function(_player) {
 		
 		_player.components.get(ComponentWeaponUse).bar = _camera.components.get(ComponentHealthbar);
 		_player.components.get(ComponentAnimationPalette).max_queue_size = 0;
-		_player.components.get(ComponentPlayerInput).__BufferLength = global.settings.Input_Buffer;
-		_player.components.get(ComponentPlayerInput).buffer_reset();
+		//_player.components.get(ComponentPlayerInput).__BufferLength = global.settings.Input_Buffer;
+		//_player.components.get(ComponentPlayerInput).buffer_reset();
 	}
+	
+	_player.components.get(ComponentPlayerInput).__BufferLength = 3;
+	_player.components.get(ComponentPlayerInput).buffer_reset();
+	
 	current_spawn++;
 }
 spawn_times = GAME.inputs.getTotalPlayers();

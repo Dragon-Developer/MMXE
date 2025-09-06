@@ -52,18 +52,26 @@ function EntityManager() constructor {
 	 * @param {Instance} _inst - The instance to be destroyed.
 	 */
 	static destroy_instance = function(_inst) {
-		var _index = array_get_index(self.__instances, _inst);
-		if (_index <= -1) return false;
-		var _id = _inst.components.__id;
+		try{
+			var _index = array_get_index(self.__instances, _inst);
+			if (_index <= -1) return false;
+			var _id = _inst.components.__id;
 		
 		
-		_inst.components.publish("entity_destroyed", _inst);
-		remove_all_components(_inst);
-		array_delete(self.__instances, _index, 1);
-		struct_remove(self.__instance_map, _id);
-		instance_destroy(_inst);
+			_inst.components.publish("entity_destroyed", _inst);
+			remove_all_components(_inst);
+			array_delete(self.__instances, _index, 1);
+			struct_remove(self.__instance_map, _id);
+			instance_destroy(_inst);
 		
-		return true;
+			return true;
+		} catch(_err){
+			log(_inst)
+			show_debug_message(_err.message);
+			show_debug_message(_err.longMessage);
+		    show_debug_message(_err.script);
+		    show_debug_message(_err.stacktrace);
+		}
 	};
 
 	/**
@@ -71,12 +79,21 @@ function EntityManager() constructor {
 	 * @param {Instance} _inst - The instance from which to remove all components.
 	 */
 	static remove_all_components = function(_inst) {
-		// Iterate over all components of the entity
-		array_foreach(_inst.components.__components, method({ this: other, inst: _inst }, function(_component) {
-			if (!instance_exists(inst)) return;
-		    this.remove_component(_component);
-		}));
-		_inst.components.__components = [];
+		try{
+			if(!instance_exists(_inst)) return;
+			// Iterate over all components of the entity
+			array_foreach(_inst.components.__components, method({ this: other, inst: _inst }, function(_component) {
+				if (!instance_exists(inst)) return;
+			    this.remove_component(_component);
+			}));
+			_inst.components.__components = [];
+		} catch(_err){
+			log(_inst)
+			show_debug_message(_err.message);
+			show_debug_message(_err.longMessage);
+		    show_debug_message(_err.script);
+		    show_debug_message(_err.stacktrace);
+		}
 	};
 
 	/**

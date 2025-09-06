@@ -17,8 +17,8 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 		global.local_player_index = _id._id;
 	});
 	rpc.registerHandler("game_start", function(_params) {
-		players = _params.players;
-		totalPlayers = array_length(players);
+		var players = _params.players;
+		var totalPlayers = array_length(players);
 		global.game.add_local_players([global.local_player_index]);
 		global.game.inputs.setTotalPlayers(totalPlayers);
 		global.gui.lobbyMenuContainer.setEnabled(false);	

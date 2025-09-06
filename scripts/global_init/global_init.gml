@@ -29,6 +29,7 @@ function global_init() {
 	
 	input_source_set(INPUT_KEYBOARD, 0);
 	global_prepare_application();
+	
 }
 
 function global_prepare_application(){	

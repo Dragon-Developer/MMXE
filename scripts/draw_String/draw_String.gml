@@ -8,7 +8,7 @@ function draw_string(_string, _x, _y){
 		if _char == " " _char_ord = 3;
 		if _char == "/" _char_ord = 14;
 		if _char == "\\" _char_ord = 14;
-		draw_sprite(spr_text_font_normal, _char_ord, _x + q * 8 - 4, _y);
+		draw_sprite(spr_text_font_normal, _char_ord, floor(_x + q * 8 - 4), floor(_y));
 	}
 	
 	/* fuck it we do a regular for loop

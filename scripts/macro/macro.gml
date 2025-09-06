@@ -7,4 +7,4 @@
 #macro LOG global.logger
 #macro GAME_W 320
 #macro GAME_H 240
-#macro CURRENT_FRAME floor(current_time * 60 / 1000)
+#macro CURRENT_FRAME global.game.__current_frame

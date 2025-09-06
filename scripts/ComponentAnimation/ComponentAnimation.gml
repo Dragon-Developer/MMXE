@@ -61,7 +61,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	}
 	
 	self.load_sprites = function() {
-		log(working_directory + "sprites/" + self.character)
+		//log(working_directory + "sprites/" + self.character)
 		SpriteLoader.reload_collage(self.collage,"sprites/" + self.character, self.subdirectories);
 	}
 	
