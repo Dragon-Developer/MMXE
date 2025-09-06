@@ -11,4 +11,29 @@ function FlameStagBoss() : BaseBoss() constructor{
 	}
 	
 	self.pose_animation_name = "complete";
+	
+	self.add_states = function(_fsm){
+		log("states gonn be added")
+		with(_fsm){
+			fsm.add("idle", { 
+					enter: function(){
+						self.dir = self.dir * -1;
+					}
+				})
+			.add("dash", {
+					enter: function(){
+					
+					}, 
+					step: function(){
+						self.get_instance().x += self.dir * 3.25;
+					}
+				})
+			.add_transition("t_transition", "dash", "idle", function()
+					{return self.get_instance().components.get(ComponentPhysics).check_place_meeting(self.get_instance().x + self.dir * 12, self.get_instance().y, obj_square_16)
+				})
+			.add_transition("t_transition", "idle", "dash", function(){return (CURRENT_FRAME mod 90) <= 1})
+		}
+		log("states added")
+		//for now, lets just do dashing from one side of the arena to the other. 
+	}
 }

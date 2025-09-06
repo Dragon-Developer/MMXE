@@ -22,5 +22,7 @@ function BaseBoss() : BaseEnemy() constructor{
 	
 	self.pose_animation_name = "flame_stag_idle";
 	
-	
+	self.add_states = function(_boss){
+		_boss.add("idle", { });
+	}
 }

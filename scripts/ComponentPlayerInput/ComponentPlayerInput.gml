@@ -90,7 +90,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	
 	self.step = function() {
 		self.update_inputs();
-		log(string(__locked ? "Locked" : "Free") + " " + __locked)
+		//log(string(__locked ? "Locked" : "Free") + " " + string(__locked))
 	}
 
     self.get_input = function(_verb) {

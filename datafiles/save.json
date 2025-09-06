@@ -9,7 +9,7 @@
   },
   "settings": {
     "Music_Volume": 0.1,
-    "Sound_Effect_Volume": 1,
+    "Sound_Effect_Volume": 0.5,
     "Dash_On_Land": 0,
     "PSX_Style_Dash_Jumping": 1,
     "write_inputs": true,

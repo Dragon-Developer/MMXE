@@ -14,6 +14,11 @@ function ComponentProjectile() : ComponentBase() constructor{
 	self.death_requirements = [
 	function(){
 		var _inst = self.get_instance();
+		
+		if(!instance_exists(_inst)){
+			log("shit");
+			return true;
+		}
 		// i need to get the sprite width and height so i can account them when deleting projectiles.
 		// currently, i just give a quarter of the screen as leeway so sprites can leave the viewport
 		// before dying
@@ -32,6 +37,10 @@ function ComponentProjectile() : ComponentBase() constructor{
 	},
 	function(){
 		var _inst = self.get_instance();
+		if(!instance_exists(_inst)){
+			log("shit");
+			return true;
+		}
 		return _inst.components.get(ComponentPhysics).check_place_meeting(_inst.x,_inst.y, obj_reflect_block);
 	}
 	];
@@ -74,6 +83,12 @@ function ComponentProjectile() : ComponentBase() constructor{
 	
 	self.step = function() {
 		self.verify_can_die();
+		
+		if(!instance_exists(self.get_instance())){
+			log("shit");
+			return true;
+		}
+		
 		if(variable_instance_exists(self.get_instance(), "components")){
 			if(variable_instance_exists(self.get_instance().components, "_id"))
 				log(string(self.get_instance().components._id) + " is the id for a projectile")

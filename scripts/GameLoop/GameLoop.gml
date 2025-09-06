@@ -34,10 +34,10 @@ function GameLoop() : NET_GameLoopBase() constructor {
 				if (!_component.step_enabled) return; 
 				_component.step(); 
 			} catch(_exception) {
-				//show_debug_message(_exception.message);
-			   // show_debug_message(_exception.longMessage);
-			   // show_debug_message(_exception.script);
-			   // show_debug_message(_exception.stacktrace);
+				show_debug_message(_exception.message);
+				show_debug_message(_exception.longMessage);
+			    show_debug_message(_exception.script);
+			    show_debug_message(_exception.stacktrace);
 			}
 		};
 		

@@ -2,6 +2,8 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	self.sounds = [];
 	self.file_extensions = [".ogg", ".wav"];
 	self.source_folder = "sounds/";
+	self.sounds_folder = "sounds/";
+	self.music_folder = "music/"
 	self.loops = false;
 	self.volume = global.settings.Sound_Effect_Volume * 0.9;
 
@@ -77,23 +79,26 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 
 	self.play_sound = function(_filename, _start_frame = 0, _volume = volume){
 		try {
-		var _id = self.load_sound(_filename);
-		var _snd = audio_play_sound(_id, 1, self.loops, _volume, _start_frame / 60)
+			var _id = self.load_sound(_filename);
+			var _snd = audio_play_sound(_id, 1, self.loops, _volume, _start_frame / 60)
 		
-		array_push(self.sounds, {sound_id: _snd, sound_asset: _id, volume: _volume, start_frame: _start_frame})
-		log(_snd)
-		return _snd;
+			array_push(self.sounds, {sound_id: _snd, sound_asset: _id, volume: _volume, start_frame: _start_frame})
+			log(_snd)
+			return _snd;
 		} catch (_exception){
-			log("sound didnt load")
+			log(_exception)
 		}
 	}
 	
-	self.stop_sound = function(_snd){
+	self.stop_sound = function(_snd = ""){
 		for(var g = 0; g < array_length(self.sounds); g++){
-			if(_snd = self.sounds[g].sound_id){
+			if(_snd = self.sounds[g].sound_id || _snd = ""){
 				audio_destroy_stream(self.sounds[g].sound_asset);
+				return;
 			}
 		}
+		log("jack shit!")
+		return;
 	}
 	
 	self.clear_sound = function(){

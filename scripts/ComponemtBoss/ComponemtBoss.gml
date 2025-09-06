@@ -1,56 +1,95 @@
-function ComponentBoss() : ComponentEnemy() constructor{
+function ComponentBoss() : ComponentBase() constructor{
+	
+	log("i was made!")
 	
 	self.has_done_dialouge = false;
-	self.boss_data = new FlameStagBoss();//for example purposes
-	self.instance = self.get_instance();
+	self.boss_data = noone//for example purposes
+	
+	self.health_tick = false;
+	
+	self.dir = -1;//always presume they start off facing left. that's towards the player, usually
+	
+	log("variables made")
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: "idle" });
 	}
 	
-	self.step = function() {
-		self.fsm.trigger("t_transition");
-	
-		if (self.fsm.event_exists("step"))
-			self.fsm.step();
-	}
+	log("init set up")
 	
 	self.fsm = new SnowState("enter", true);
 	self.fsm
 		.add("enter", {
 			enter: function() {
-				boss_data.enter_init(self);
+				WORLD.stop_sound();
+				WORLD.play_music("BossEncounterL");
 			},
 			step: function() {
-				log("steppn")
-				boss_data.enter_step();
-				log("steppd")
+				//log("step")
 			}
 		})
 		.add("pose", {
 			enter: function() {
-				self.publish("animation_play", { name: boss_data.pose_animation_name });
+				self.publish("animation_play", { name: "walk" });
+				self.get_instance().components.add([ComponentHealthbar]);
+				self.get_instance().components.get(ComponentHealthbar).init();
+				self.get_instance().components.get(ComponentHealthbar).barOffsets[0] = new Vec2(GAME_W - 24,78)
+				self.get_instance().components.get(ComponentDamageable).health_max = 32;
+				self.get_instance().components.get(ComponentDamageable).health = 1;
 			},
 			step: function() {
 				//if the pose animation is finished, then make the healthbar,
 				// fill it, then move to idle and free the player
+				
+				if(self.health_tick){
+					if(self.get_instance().components.get(ComponentDamageable).health < self.get_instance().components.get(ComponentDamageable).health_max)
+						self.get_instance().components.get(ComponentDamageable).health++;
+					self.health_tick = false;
+				} else {
+					self.health_tick = true;
+					log("tick")
+				}
 			},
 			leave: function(){
 				with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
 					components.get(ComponentPlayerInput).__locked = false;
 				}
+				WORLD.stop_sound();
+				WORLD.play_music("BossBattleL");
 			}
 		})
-		.add("idle", { })
 		.add("die", {
 			enter: function() {
-				//die is the only function that is the exact same accross bosses
+				with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
+					components.get(ComponentPlayerInput).__locked = true;
+				}
+				WORLD.stop_sound();
 			},
 			step: function() {
 				//therefore it may be more effective to have a boss_death_type instead
 			}
 		})
+	self.fsm.add_transition("t_transition", "enter", "pose", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor();})
+		.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= 32;})
+		.add_wildcard_transition("t_transition", "die", function(){return self.fsm.get_current_state() != "die" && self.get(ComponentDamageable).health <= 0})
+		
+	log("fsm made")
+	
+	self.step = function() {
+		try {
+			self.fsm.trigger("t_transition");
+		} catch(_err){
+			log(_err)
+		}
+	
+		if (self.fsm.event_exists("step")){
+			self.fsm.step();
+			
+		}
+	}
+	
+	log("step made")
 	
 	self.on_register = function() {
 		self.subscribe("animation_end", function() {
@@ -67,17 +106,10 @@ function ComponentBoss() : ComponentEnemy() constructor{
 			log("step 4")
 			
 		});
+		self.subscribe("animation_end", function() {
+			self.fsm.trigger("t_animation_end");	
+		});
 	}
 	
-	/*
-		how to handle death/intro/dialouge
-		
-		have a FSM that has four states:
-			- enter [handles the animation of entering the boss arena and the idle that follows]
-			- pose [handles the pose the boss strikes and adding the associated healthbar]
-			- fight [whatever the boss actually does against the player. 
-					very simple, just reference the associated boss struct]
-			- die [handles the boss death, associated screen fade and handling 
-					the player's associated reactions]
-	*/
+	log("on register made")
 }

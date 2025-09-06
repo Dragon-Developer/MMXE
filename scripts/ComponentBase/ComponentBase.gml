@@ -63,4 +63,13 @@ function ComponentBase() constructor {
 	self.load = function() {
 		self.serializer.deserialize();
 	}
+	
+	//forte fuckery. gonna add a helper function for getting other components in the same object
+	self.get = function(_component){
+		return self.get_instance().components.get(_component);
+	}
+	//same thing as above, but for find. find is needed for animation type stuff.
+	self.find = function(_component){
+		return self.get_instance().components.find(_component)
+	}
 }

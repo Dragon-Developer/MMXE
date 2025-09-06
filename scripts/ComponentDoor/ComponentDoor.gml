@@ -141,6 +141,7 @@ function ComponentDoor() : ComponentBase() constructor{
 					}
 					with(Boss_Spawn_Point){
 						spawn_boss();
+						log("boss spawned")
 					}
 				} else {
 					prev_cam_x = curr_cam.x;
