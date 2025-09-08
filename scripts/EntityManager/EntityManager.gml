@@ -3,6 +3,7 @@ function EntityManager() constructor {
 	self.__instance_map = {};
 	self.__next_id = 0;
 	self.__component_map = {};
+	sel.__destroy_list = [];
 	/**
 	 * Caches the given component to be reused later.
 	 * Ensures the component is stored in the corresponding constructor-based map.
@@ -52,25 +53,32 @@ function EntityManager() constructor {
 	 * @param {Instance} _inst - The instance to be destroyed.
 	 */
 	static destroy_instance = function(_inst) {
-		try{
-			var _index = array_get_index(self.__instances, _inst);
-			if (_index <= -1) return false;
-			var _id = _inst.components.__id;
-		
-		
-			_inst.components.publish("entity_destroyed", _inst);
-			remove_all_components(_inst);
-			array_delete(self.__instances, _index, 1);
-			struct_remove(self.__instance_map, _id);
-			instance_destroy(_inst);
-		
-			return true;
-		} catch(_err){
-			log(_inst)
-			show_debug_message(_err.message);
-			show_debug_message(_err.longMessage);
-		    show_debug_message(_err.script);
-		    show_debug_message(_err.stacktrace);
+		array_push(self.__destroy_list, _inst);
+	}
+
+	static clear_delete_pool = function(){
+		for(var p = 0; p < array_length(self.__destroy_list); p++){
+			try{
+				var _inst = self.__destroy_list[p];
+				var _index = array_get_index(self.__instances, _inst);
+				if (_index <= -1) return false;
+				var _id = _inst.components.__id;
+			
+			
+				_inst.components.publish("entity_destroyed", _inst);
+				remove_all_components(_inst);
+				array_delete(self.__instances, _index, 1);
+				struct_remove(self.__instance_map, _id);
+				instance_destroy(_inst);
+			
+				return true;
+			} catch(_err){
+				log(_inst)
+				show_debug_message(_err.message);
+				show_debug_message(_err.longMessage);
+			    show_debug_message(_err.script);
+			    show_debug_message(_err.stacktrace);
+			}
 		}
 	};
 
