@@ -9,6 +9,8 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 	self.dir = -1;//always presume they start off facing left. that's towards the player, usually
 	
+	self.death_time = -1;
+	
 	log("variables made")
 	
 	self.init = function(){
@@ -64,15 +66,28 @@ function ComponentBoss() : ComponentBase() constructor{
 				with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
 					components.get(ComponentPlayerInput).__locked = true;
 				}
-				WORLD.stop_sound();
+				WORLD.clear_sound();
 				self.publish("animation_play", { name: "death" });
+				self.death_time = CURRENT_FRAME;
 			},
 			step: function() {
 				//im going to presume regular boss deaths. 
 				
-				if(CURRENT_FRAME mod 4 == 0){
+				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 500){
 					var _cam = instance_nearest(0,0,obj_camera)
-					WORLD.spawn_particle(new ExplosionParticle(_cam.x + random_range(0,GAME_W),_cam.y + random_range(0,GAME_H),1))
+					var _inst = self.get_instance();
+					var _spot = new Vec2(_inst.x + (random_range(-128,128)),_inst.y + (random_range(-128,128)))
+					
+					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
+				}
+				
+				if(CURRENT_FRAME mod 16 == 0 && CURRENT_FRAME - death_time < 500){
+					WORLD.play_sound("Explosion");
+				}
+				
+				if(CURRENT_FRAME - death_time == 590){
+					WORLD.clear_sound();
+					room_goto(rm_stage_select);
 				}
 			}
 		})
@@ -118,4 +133,10 @@ function ComponentBoss() : ComponentBase() constructor{
 	}
 	
 	log("on register made")
+	
+	self.draw_gui = function(){
+		if(self.death_time != -1 && CURRENT_FRAME - death_time > 500){
+			draw_sprite_ext(spr_fade, 0,0,0,32,32,0,c_white, (CURRENT_FRAME - death_time - 500) / 70)
+		}
+	}
 }

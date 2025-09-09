@@ -7,6 +7,8 @@ show_debug_message(_save)
 global.player_data = _save.player_data;
 global.settings = _save.settings;
 
+
+
 transition_fade = function(_room){
 	if(transition_data.transitioning) return;
 	transition_data.transitioning = true;

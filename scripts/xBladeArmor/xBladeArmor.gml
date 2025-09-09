@@ -48,7 +48,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 			if(keyboard_check(ord("P"))){
 				self.states.mach_dash.golden = true;
 				self.states.mach_dash.only_cardinals = false;
-				self.states.mach_dash.speed *= 1.75;
+				self.states.mach_dash.speed *= 1.5;
 				self.states.mach_dash.interval *= 1.25;
 			}
 			

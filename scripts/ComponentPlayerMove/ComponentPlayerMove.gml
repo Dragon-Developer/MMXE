@@ -100,7 +100,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("land", {
 			enter: function() {
-				WORLD.play_sound("land");
+				var _land = WORLD.play_sound("land");
 				self.publish("animation_play", { name: "land" });
 				self.input.__useBuffer = true;
 			},
@@ -208,7 +208,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_custom_end", "custom", "idle")
 		//.add_transition("t_custom", ["air", "walk"], "custom")  why does this line exist when the above line covers it
 		.add_transition("t_custom_exit", "custom", "jump")
-		.add_wildcard_transition("t_death", "death")
+		.add_wildcard_transition("t_death", "death", function(){return self.fsm.get_current_state() != "death"})
 		.add_transition("t_animation_end", ["start", "land", "dash_end","ladder_exit", "hurt"], "idle")
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
 		.add_wildcard_transition("t_dialouge", "idle")
@@ -269,6 +269,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
+		global.settings.input = input_player_export(,false);
 	}
 	
 	self.apply_full_armor_set = function(_armors){

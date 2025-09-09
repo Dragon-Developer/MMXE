@@ -34,7 +34,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 		spriteDrawer.load_sprites();
 		spriteDrawer.add_sprites_to_storage(["menu"]);
 		self.menu_sprite = spriteDrawer.get_sprite("menu")
-		WORLD.play_music("StageSelect")
+		//WORLD.play_music("StageSelect")
 	}
 	
 	self.step = function(){

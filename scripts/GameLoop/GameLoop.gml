@@ -104,6 +104,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
+		ENTITIES.for_each_component(ComponentBoss, _draw_gui);
 		
 		if(self.debug){
 		

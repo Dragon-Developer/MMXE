@@ -15,8 +15,12 @@ spawn_particle = function(_particle){
 	self.components.get(ComponentParticles).add_particle(_particle);
 };
 
-self.play_sound = function(_sound){
-	return self.components.get(ComponentSoundLoader).play_sound(_sound);
+self.play_sound = function(_sound, _start_frame = 0, _loops = false){
+	return self.components.get(ComponentSoundLoader).play_sound(_sound,_start_frame, _loops);
+}
+
+self.swap_sound = function(_sound, _new_sound){
+	return self.components.get(ComponentSoundLoader).swap_sound(_sound, _new_sound);
 }
 
 self.play_music = function(_sound){

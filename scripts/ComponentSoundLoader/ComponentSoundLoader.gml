@@ -82,7 +82,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	//filename: a string containing the name of the file to play. does not include extension.
 	//start frame: the frame of the sound to start from. 
 	//volume: the volume the sound plays. usually uses global settings data.
-	self.play_sound = function(_filename, _start_frame = 0, _volume = volume){
+	self.play_sound = function(_filename, _start_frame = 0, loops = self.loops, _volume = volume){
 		try {
 			var _id = self.load_sound(_filename);
 			var _snd = audio_play_sound(_id, 1, self.loops, _volume, _start_frame / 60)
@@ -99,13 +99,15 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	//sound: the sound that will be turned off
 	//filename: the file of the new sound
 	//
-	self.swap_sound = function(){
-		
+	self.swap_sound = function(_sound, _filename){
+		var _time = audio_sound_get_track_position(_sound);
+		self.stop_sound(_sound);
+		self.play_sound(_filename, _time * 60);
 	}
 	
 	self.stop_sound = function(_snd = ""){
 		for(var g = 0; g < array_length(self.sounds); g++){
-			if(_snd = self.sounds[g].sound_id || _snd = ""){
+			if(_snd == self.sounds[g].sound_id || _snd == ""){
 				audio_destroy_stream(self.sounds[g].sound_asset);
 				self.sounds[g] = "Delete me!"
 				return;
@@ -134,6 +136,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 		//shut the fuck up i know im doing sound shit in draw
 		var _snds = [];
 		for(var g = 0; g < array_length(self.sounds); g++){
+			if(self.sounds[g] == "Delete me!") continue;
 			if(audio_is_playing(self.sounds[g].sound_id))
 				array_push(_snds, self.sounds[g])
 		}
