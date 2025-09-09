@@ -48,7 +48,7 @@ function ComponentBoss() : ComponentBase() constructor{
 					self.health_tick = false;
 				} else {
 					self.health_tick = true;
-					log("tick")
+					//log("tick")
 				}
 			},
 			leave: function(){
@@ -65,9 +65,15 @@ function ComponentBoss() : ComponentBase() constructor{
 					components.get(ComponentPlayerInput).__locked = true;
 				}
 				WORLD.stop_sound();
+				self.publish("animation_play", { name: "death" });
 			},
 			step: function() {
-				//therefore it may be more effective to have a boss_death_type instead
+				//im going to presume regular boss deaths. 
+				
+				if(CURRENT_FRAME mod 4 == 0){
+					var _cam = instance_nearest(0,0,obj_camera)
+					WORLD.spawn_particle(new ExplosionParticle(_cam.x + random_range(0,GAME_W),_cam.y + random_range(0,GAME_H),1))
+				}
 			}
 		})
 	self.fsm.add_transition("t_transition", "enter", "pose", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor();})

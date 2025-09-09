@@ -1,6 +1,6 @@
 function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
-	self.charge_limit = 2;
+	self.charge_limit = 3;
 }
 
 function xBuster11Data() : ProjectileData() constructor{
@@ -64,8 +64,9 @@ function xBuster13Data() : ProjectileData() constructor{
 
 function xBuster14Data() : ProjectileData() constructor{
 	self.comboiness = 15;//all the drill bits should connect
+	self.damage = 32;
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "xShot1" });
+		_inst.components.publish("animation_play", { name: "xShot3X2" });
 	}
 	self.step = function(_inst){
 		

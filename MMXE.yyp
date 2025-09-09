@@ -192,6 +192,8 @@
     {"$GMIncludedFile":"","%Name":"HQ.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"HQ.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"intro_stage.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"intro_stage.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Saphira_The_Unleashed_Power.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"Saphira_The_Unleashed_Power.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"StageSelect.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"StageSelect.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"StageSelectL.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"StageSelectL.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"tutorial.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"tutorial.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"vs_unknown..ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"vs_unknown..ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"WeaponGet.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"WeaponGet.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

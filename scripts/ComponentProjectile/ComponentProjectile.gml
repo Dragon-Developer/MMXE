@@ -16,7 +16,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 		var _inst = self.get_instance();
 		
 		if(!instance_exists(_inst)){
-			log("shit");
+			//log("shit");
 			return true;
 		}
 		// i need to get the sprite width and height so i can account them when deleting projectiles.
@@ -38,7 +38,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 	function(){
 		var _inst = self.get_instance();
 		if(!instance_exists(_inst)){
-			log("shit");
+			//log("shit");
 			return true;
 		}
 		return _inst.components.get(ComponentPhysics).check_place_meeting(_inst.x,_inst.y, obj_reflect_block);
@@ -85,7 +85,7 @@ function ComponentProjectile() : ComponentBase() constructor{
 		self.verify_can_die();
 		
 		if(!instance_exists(self.get_instance())){
-			log("shit");
+			//log("shit");
 			return true;
 		}
 		
@@ -106,6 +106,11 @@ function ComponentProjectile() : ComponentBase() constructor{
 	}
 	
 	self.draw = function(){
+		if(!instance_exists(self.get_instance())){
+			//log("shit");
+			return true;
+		}
+		
 		if (!variable_struct_exists(
 		weaponCreate, 
 		"draw")) 
@@ -119,8 +124,11 @@ function ComponentProjectile() : ComponentBase() constructor{
 	
 	self.verify_can_die = function(){
 		array_foreach(self.death_requirements, function(_req){
-			if(_req())
+			if(_req()){
+				delete weaponCreate;
+				
 				ENTITIES.destroy_instance(self.get_instance());
+			}
 		});
 	}
 }

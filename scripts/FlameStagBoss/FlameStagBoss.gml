@@ -18,11 +18,13 @@ function FlameStagBoss() : BaseBoss() constructor{
 			fsm.add("idle", { 
 					enter: function(){
 						self.dir = self.dir * -1;
+						self.publish("animation_xscale", self.dir);
+						self.publish("animation_play", { name: "idle" });
 					}
 				})
 			.add("dash", {
 					enter: function(){
-					
+						self.publish("animation_play", { name: "dash" });
 					}, 
 					step: function(){
 						self.get_instance().x += self.dir * 3.25;

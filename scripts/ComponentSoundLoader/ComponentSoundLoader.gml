@@ -22,6 +22,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	
 	//from https://forum.gamemaker.io/index.php?threads/can-i-stream-wav-files.99231/
 	//by FoxyOfJungle
+	//i dont think it works, at least with the modifications i made. it presumes .ogg filetype
 	self.audio_create_stream = function(file_audio) {
 	    if (file_exists(file_audio)) {
 			if(filename_ext(file_audio) == ".ogg") {return audio_create_stream(file_audio);}
@@ -77,6 +78,10 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	    return undefined;
 	}
 
+	//plays a sound
+	//filename: a string containing the name of the file to play. does not include extension.
+	//start frame: the frame of the sound to start from. 
+	//volume: the volume the sound plays. usually uses global settings data.
 	self.play_sound = function(_filename, _start_frame = 0, _volume = volume){
 		try {
 			var _id = self.load_sound(_filename);
@@ -90,22 +95,39 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 		}
 	}
 	
+	//takes one sound asset, destroys it's stream, and plays another sound at the same time offset.
+	//sound: the sound that will be turned off
+	//filename: the file of the new sound
+	//
+	self.swap_sound = function(){
+		
+	}
+	
 	self.stop_sound = function(_snd = ""){
 		for(var g = 0; g < array_length(self.sounds); g++){
 			if(_snd = self.sounds[g].sound_id || _snd = ""){
 				audio_destroy_stream(self.sounds[g].sound_asset);
+				self.sounds[g] = "Delete me!"
 				return;
 			}
 		}
+		var _new_sounds = [];
+		for(var g = 0; g < array_length(self.sounds); g++){
+			if(self.sounds[g] != "Delete me!"){
+				array_push(_new_sounds, self.sounds[g]);
+			}
+		}
+		self.sounds = _new_sounds;
+		
 		log("jack shit!")
 		return;
 	}
 	
 	self.clear_sound = function(){
 		for(var g = 0; g < array_length(self.sounds); g++){
-			log(self.sounds[g].sound_asset)
 			audio_destroy_stream(self.sounds[g].sound_asset);
 		}
+		self.sounds = [];
 	}
 	
 	self.draw = function(){
