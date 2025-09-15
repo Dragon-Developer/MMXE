@@ -1,51 +1,71 @@
-# Mega Man X Engine Version 2
+## Notice
 We decided to restart after a few years of hiatus. This is to take advantage of changes made to gamemaker, the tool used to make MMXE run.
 
-Mega Man X Engine is a framework being developed using GameMaker that implements common Mega Man X games so you don't have to start from scratch, plus a few assets showing what you can do with the engine.
+We intend to use as little code as possible from the old version going forward. This includes things like weapons, stages, bosses, and enemies.
 
-This is NOT a game. We will NOT add things if you ask us.
+# Mega Man X Engine Version 2
+Mega Man X Engine is a framework being developed using GameMaker that implements common Mega Man X game features so you don't have to start from scratch, plus a few extra features to make better games. 
+
+This is NOT a game. We will NOT add things if you ask us. We CANNOT take money from people. 
 
 ## Social Media
 - YouTube: https://www.youtube.com/@MMXEngine
 - Discord: https://discord.gg/dXygbY9
 
-The majority of updates come from discord. If you need help, go there!
+The majority of updates come from discord. If you need help, go ask there!
 
 # How to use
-Get Gamemaker, any variety should do. 
+Get Gamemaker. For best compatibility, use 2024.4.1.152 as this is the version used to develop MMXE.
 
-For best compatibility, use 2024.4.1.152 as this is the version used to develop MMXE.
+After that, go click on the code button here in the github page and click on the download option in the dropdown menu. This will download a copy of the project files onto your computer so you can edit your own local copy of the code.
 
-After that, go click on the code button in the github (here) and click on the download option in the dropdown. This will download a copy of the project files so you can edit them as you want.
+Once you have your own local copy of the engine, you are capable of making your own changes! Read the wiki for help, and if the wiki does not contain what you need go to the discord and ask help there!
 
-This Github features a wiki page (found at the top of the page). If you want to learn the ins and outs of the engine, start here.
+# Wiki
+This Github features a wiki page 
+
+https://github.com/Dragon-Developer/MMXE/wiki
+
+If you want to learn the ins and outs of the engine, start there. It includes pages on:
+
+- A description of the animation system
+- Doccumentation on adding new characters, armors, etc
+- How to add new enemies (Currently unfinished)
+- Some programming syntax
+- How to add new levels and some tips and tricks for creating good levels.
+
+  New features will be added with time. If you want a feature we cannot/do not want to add, feel free to fork this repository and add it in yourself. The mmxe team is happy to show you the inner workings of the engine.
+
 # Features
 Currently notable features include:
 - Basic Movement (walking, jumping, walljumping, etc)
 - Enemies (Though there isnt much to use yet)
-- Dialouge
+- Dialouge (While complete, text effects arent added yet)
 - Scene rotation/flipping
-- Armors
+- Armors (Including chips)
 - Ladders
+- Seperate Characters
+- Projectile based special weapons (Currently only projectile based weapons)
+
 
 In progress features:
-- Shooting
-- Special weapons
-- Bosses
+- Bosses (Death state is unclean, scene fades instead of setting player into complete state. )
+- stage select (Needs boss tease, fortress stages, transitions in/out)
 
 Features not added:
 - Pause menu
-- Stage select
 - Armor Capsules
-- Multiple characters
+- melee special weapons
+- state based special weapons
 
 Feel free to suggest new features in the discord. 
+
 # Contributors
 ### Programming:
-- Dark Shadow (Dragon-Developer): main programmer.
-- ApselTheBlue: creates test stages and helps with programming. (Only in V1)
-- AxlForte: tried his best
-- Gacel: general programming, SNES game data
+- Dark Shadow (Dragon-Developer): main programmer. (Animation system, Component system, Base player)
+- ApselTheBlue: creates test stages and helps with programming in v1 of the engine.
+- AxlForte: tried his best (Special weapon use code, projectile base code, enemy base code, boss base code, armor code)
+- Gacel: general programming, SNES game data, SNES palette shader
 
 ### Music:
 - K-Lips-O
@@ -66,7 +86,6 @@ Feel free to suggest new features in the discord.
 - yesilovenachos: Secret content, X sprites
 - Victor from Maverick Wars: General spriting.
 - Fen: Glide armor
-- Fncilipeeps: Secret Content
 - AxlForte: General spriting
 - Mikael(?)
 
