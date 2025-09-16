@@ -195,7 +195,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("animation_play", { name: "death" });
 				self.physics.set_grav(new Vec2(0,0));
 				self.physics.set_speed(0,0)
-				self.locked = true;
+				//self.locked = true;
+				ENTITIES.remove_component(self.get(ComponentDamageable));
+				self.timer = CURRENT_FRAME + 150;
+			},
+			step: function(){
+				if(self.timer < CURRENT_FRAME)
+					room_goto(rm_stage_select);
 			}
 		})
 		.add_transition("t_init", "init", "idle")

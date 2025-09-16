@@ -1767,6 +1767,7 @@
     {"id":{"name":"rm_minimum_requirements","path":"rooms/rm_minimum_requirements/rm_minimum_requirements.yy",},},
     {"id":{"name":"rm_stage_select","path":"rooms/rm_stage_select/rm_stage_select.yy",},},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},},
+    {"id":{"name":"rm_training_stage","path":"rooms/rm_training_stage/rm_training_stage.yy",},},
     {"id":{"name":"__CollageBuilderClass","path":"scripts/__CollageBuilderClass/__CollageBuilderClass.yy",},},
     {"id":{"name":"__CollageBuildImage","path":"scripts/__CollageBuildImage/__CollageBuildImage.yy",},},
     {"id":{"name":"__CollageConfig","path":"scripts/__CollageConfig/__CollageConfig.yy",},},
@@ -2436,6 +2437,7 @@
     {"roomId":{"name":"rm_intro","path":"rooms/rm_intro/rm_intro.yy",},},
     {"roomId":{"name":"rm_metroid","path":"rooms/rm_metroid/rm_metroid.yy",},},
     {"roomId":{"name":"rm_char_select","path":"rooms/rm_char_select/rm_char_select.yy",},},
+    {"roomId":{"name":"rm_training_stage","path":"rooms/rm_training_stage/rm_training_stage.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
