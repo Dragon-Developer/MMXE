@@ -89,6 +89,8 @@ function ComponentBoss() : ComponentBase() constructor{
 					WORLD.clear_sound();
 					room_goto(rm_stage_select);
 				}
+				
+				
 			}
 		})
 	self.fsm.add_transition("t_transition", "enter", "pose", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor();})
@@ -137,6 +139,17 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.draw_gui = function(){
 		if(self.death_time != -1 && CURRENT_FRAME - death_time > 500){
 			draw_sprite_ext(spr_fade, 0,0,0,32,32,0,c_white, (CURRENT_FRAME - death_time - 500) / 70)
+		}
+		
+		if(self.death_time != -1 && CURRENT_FRAME - death_time > 500){
+			draw_sprite_ext(spr_fade, 0,0,0,32,32,0,c_white, (CURRENT_FRAME - death_time - 500) / 70)
+		}
+		
+		if(self.death_time != -1 && CURRENT_FRAME - death_time < 300 && CURRENT_FRAME - death_time > 200){
+			if(CURRENT_FRAME - death_time < 250)
+				draw_sprite_ext(spr_bright, 0,0,0,32,32,0,c_white, (death_time - CURRENT_FRAME - 200) / 50)
+			else 
+				draw_sprite_ext(spr_bright, 0,0,0,32,32,0,c_white, ((CURRENT_FRAME - death_time - 250) / 50) - 1)
 		}
 	}
 }
