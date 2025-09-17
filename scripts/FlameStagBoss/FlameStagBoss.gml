@@ -13,7 +13,6 @@ function FlameStagBoss() : BaseBoss() constructor{
 	self.pose_animation_name = "complete";
 	
 	self.add_states = function(_fsm){
-		log("states gonn be added")
 		with(_fsm){
 			fsm.add("idle", { 
 					enter: function(){
@@ -35,7 +34,5 @@ function FlameStagBoss() : BaseBoss() constructor{
 				})
 			.add_transition("t_transition", "idle", "dash", function(){return (CURRENT_FRAME mod 90) <= 1})
 		}
-		log("states added")
-		//for now, lets just do dashing from one side of the arena to the other. 
 	}
 }

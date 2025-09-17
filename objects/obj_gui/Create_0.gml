@@ -9,18 +9,31 @@ global.settings = _save.settings;
 
 
 
-transition_fade = function(_room){
+transition_fade = function(_room, _rate = 90){
 	if(transition_data.transitioning) return;
+	transition_data.type = "fade";
 	transition_data.transitioning = true;
 	transition_data.room = _room;
-	transition_data.visual_rate = 90;
+	transition_data.visual_rate = _rate;
+	transition_data.opacity += 0.001;
+}
+
+transition_white_to_black = function(_room, _rate = 90, _rate_2 = 90){
+	transition_data.type = "white to black";
+	transition_data.transitioning = true;
+	transition_data.room = _room;
+	transition_data.visual_rate = _rate;
+	transition_data.visual_rate_2 = _rate_2;
 	transition_data.opacity += 0.001;
 }
 
 transition_data = {
+	type: "fade",
 	opacity: 0,
+	opacity_2: 0,
 	sprite: spr_fade,
 	transitioning: false,
 	visual_rate: 1,
+	visual_rate_2: 1,
 	room: -1
 }

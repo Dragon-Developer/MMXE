@@ -26,6 +26,7 @@ function global_init() {
 	global.player_character = new XCharacter();
 	
 	global.debug = false;
+	global.last_run_type_of_component = "none"
 	
 	input_source_set(INPUT_KEYBOARD, 0);
 	global_prepare_application();

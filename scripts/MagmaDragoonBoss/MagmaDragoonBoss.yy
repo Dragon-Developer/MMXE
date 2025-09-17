@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"BaseBoss",
+  "%Name":"MagmaDragoonBoss",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"BaseBoss",
+  "name":"MagmaDragoonBoss",
   "parent":{
-    "name":"Parent",
-    "path":"folders/Scripts/Game/Boss/Parent.yy",
+    "name":"Boss",
+    "path":"folders/Scripts/Game/Boss.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

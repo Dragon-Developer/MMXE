@@ -119,7 +119,23 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("on_crouch", false);		
 			}
 		})
-		
+		.add("complete", {
+			enter: function(){
+				self.publish("animation_play", { name: "complete" });
+				self.physics.set_speed(0, 0);
+			}
+		})
+		.add("outro", {
+			enter: function(){
+				self.publish("animation_play", { name: "outro" });
+			}
+		})
+		.add("leave", {
+			enter: function(){
+				//self.publish("animation_play", { name: "leave" });
+				self.physics.set_speed(0, -5);
+			}
+		})
 		.add("ride", {
 			enter: function() {
 				self.publish("animation_play", { name: "crouch" });
@@ -191,17 +207,47 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("death", {
 			enter: function(){
-				WORLD.play_sound("die");
 				self.publish("animation_play", { name: "death" });
 				self.physics.set_grav(new Vec2(0,0));
 				self.physics.set_speed(0,0)
-				//self.locked = true;
+				self.input.__locked = true;
 				ENTITIES.remove_component(self.get(ComponentDamageable));
 				self.timer = CURRENT_FRAME + 150;
 			},
 			step: function(){
-				if(self.timer < CURRENT_FRAME)
-					room_goto(rm_stage_select);
+					
+					switch (CURRENT_FRAME - self.timer) {
+						// Light Palette
+						case 30:
+							//light = true;
+							break;
+						// Orbs
+						case 31:
+						case 64:
+						case 98:
+						case 141:
+						case 184:
+							//player_create_orbs(8);
+							break;
+						case 32:
+							//player_create_orbs(8, 360 / 16);
+							break;
+						// Sound
+						case 34:
+							WORLD.play_sound("die");
+							break;
+						// Stop Sound
+						case 199:
+							WORLD.stop_music();
+							break;
+						
+						//screen fades to white, THEN black!
+						//will add transition mode for that
+						
+						case 92:
+							room_transition_to(rm_stage_select, "white to black");
+							break;
+					}
 			}
 		})
 		.add_transition("t_init", "init", "idle")
@@ -216,6 +262,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_custom_exit", "custom", "jump")
 		.add_wildcard_transition("t_death", "death", function(){return self.fsm.get_current_state() != "death"})
 		.add_transition("t_animation_end", ["start", "land", "dash_end","ladder_exit", "hurt"], "idle")
+		.add_transition("t_animation_end", "complete", "outro")
+		.add_transition("t_animation_end", "outro", "leave")
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
 		.add_wildcard_transition("t_dialouge", "idle")
 		//.add_wildcard_transition("t_hurt", "idle", function() { return !(self.get_wall_jump_dir() != 0 && !self.physics.is_on_floor()); })
@@ -233,6 +281,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
 		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
+		.add_wildcard_transition("t_complete", "complete")
 	}
 	
 	self.wall_slide_possible = function(){
@@ -267,6 +316,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		});
 		self.subscribe("took_damage", function() {
 			self.fsm.trigger("t_hurt")
+		});
+		self.subscribe("complete", function() {
+			self.fsm.trigger("t_complete")
 		});
 	}
 	
@@ -381,6 +433,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.draw = function(){
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
+			
+		if !self.debug return;
+		
 		if(variable_struct_exists(self, "hdir"))
 			draw_string(string(self.hdir), self.get_instance().x, self.get_instance().y - 32)
 		if(variable_struct_exists(self, "vdir"))

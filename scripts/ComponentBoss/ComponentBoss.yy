@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"ComponemtBoss",
+  "%Name":"ComponentBoss",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ComponemtBoss",
+  "name":"ComponentBoss",
   "parent":{
     "name":"Enemy",
     "path":"folders/Scripts/Game/Entity Components/Stage Gimmicks/Enemy.yy",

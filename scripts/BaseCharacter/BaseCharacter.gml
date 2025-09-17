@@ -61,6 +61,23 @@ function BaseCharacter() constructor{
 	self.possible_armors = [];
 	self.armor_use_requirements = [];
 	
+	self.default_palette = [
+		#203080,//Blue Armor Bits
+		#0040f0,
+		#0080f8,
+		#1858b0,//Under Armor Teal Bits
+		#50a0f0,
+		#78d8f0,
+		#181818,//black
+		#804020,//Face
+		#b86048,
+		#f8b080,
+		#989898,//glove
+		#e0e0e0,
+		#f0f0f0,//eye white
+		#f04010//red
+	];
+	
 	self.weapons = [xBuster];
 	self.weapon_ammo_max = 28;
 	
@@ -78,8 +95,14 @@ function BaseCharacter() constructor{
 		});
 		_player.publish("character_set", self.image_folder)
 		with(_player){
-			get_instance().components.find("animation").reload_animations();
+			find("animation").reload_animations();
 		}
-		//log(image_folder)
+		var _animation = _player.find("animation");
+		for(var i = 0; i < array_length(self.default_palette); i++){
+			_animation.set_base_color(i, self.default_palette[i]);
+		}
+		for(var i = 0; i < array_length(self.default_palette); i++){
+			_animation.set_palette_color(i, #303030);
+		}
 	}
 }

@@ -1,7 +1,5 @@
 function ComponentBoss() : ComponentBase() constructor{
 	
-	log("i was made!")
-	
 	self.has_done_dialouge = false;
 	self.boss_data = noone//for example purposes
 	
@@ -11,14 +9,10 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 	self.death_time = -1;
 	
-	log("variables made")
-	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: "idle" });
 	}
-	
-	log("init set up")
 	
 	self.fsm = new SnowState("enter", true);
 	self.fsm
@@ -73,21 +67,19 @@ function ComponentBoss() : ComponentBase() constructor{
 			step: function() {
 				//im going to presume regular boss deaths. 
 				
-				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 500){
-					var _cam = instance_nearest(0,0,obj_camera)
+				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
 					var _inst = self.get_instance();
-					var _spot = new Vec2(_inst.x + (random_range(-128,128)),_inst.y + (random_range(-128,128)))
+					var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
 					
 					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
-				}
-				
-				if(CURRENT_FRAME mod 16 == 0 && CURRENT_FRAME - death_time < 500){
 					WORLD.play_sound("Explosion");
 				}
 				
-				if(CURRENT_FRAME - death_time == 590){
+				if(CURRENT_FRAME - death_time == 507){
 					WORLD.clear_sound();
-					room_goto(rm_stage_select);
+					with(obj_player){
+						components.publish("complete");
+					}
 				}
 				
 				
@@ -97,7 +89,6 @@ function ComponentBoss() : ComponentBase() constructor{
 		.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= 32;})
 		.add_wildcard_transition("t_transition", "die", function(){return self.fsm.get_current_state() != "die" && self.get(ComponentDamageable).health <= 0})
 		
-	log("fsm made")
 	
 	self.step = function() {
 		try {
@@ -111,8 +102,6 @@ function ComponentBoss() : ComponentBase() constructor{
 			
 		}
 	}
-	
-	log("step made")
 	
 	self.on_register = function() {
 		self.subscribe("animation_end", function() {
@@ -134,22 +123,16 @@ function ComponentBoss() : ComponentBase() constructor{
 		});
 	}
 	
-	log("on register made")
-	
 	self.draw_gui = function(){
-		if(self.death_time != -1 && CURRENT_FRAME - death_time > 500){
-			draw_sprite_ext(spr_fade, 0,0,0,32,32,0,c_white, (CURRENT_FRAME - death_time - 500) / 70)
-		}
 		
-		if(self.death_time != -1 && CURRENT_FRAME - death_time > 500){
-			draw_sprite_ext(spr_fade, 0,0,0,32,32,0,c_white, (CURRENT_FRAME - death_time - 500) / 70)
-		}
 		
-		if(self.death_time != -1 && CURRENT_FRAME - death_time < 300 && CURRENT_FRAME - death_time > 200){
-			if(CURRENT_FRAME - death_time < 250)
-				draw_sprite_ext(spr_bright, 0,0,0,32,32,0,c_white, (death_time - CURRENT_FRAME - 200) / 50)
-			else 
-				draw_sprite_ext(spr_bright, 0,0,0,32,32,0,c_white, ((CURRENT_FRAME - death_time - 250) / 50) - 1)
-		}
+	}
+	
+	self.face_player = function(){
+		var _inst = self.get_instance();
+		if(instance_nearest(_inst.x, _inst.y, obj_player).x > _inst.x)
+			self.dir = 1;
+		else 
+			self.dir = -1;
 	}
 }

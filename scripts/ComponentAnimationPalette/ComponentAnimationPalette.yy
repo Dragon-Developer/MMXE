@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"ComponentAnimationPallete",
+  "%Name":"ComponentAnimationPalette",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ComponentAnimationPallete",
+  "name":"ComponentAnimationPalette",
   "parent":{
     "name":"General",
     "path":"folders/Scripts/Game/Entity Components/General.yy",

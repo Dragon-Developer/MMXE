@@ -43,4 +43,4 @@ self.clear_sound = function(){
 	audio_stop_all();
 }
 
-self.stop_music = self.clear_sound();
+self.stop_music = function(){self.stop_sound(self.music)};

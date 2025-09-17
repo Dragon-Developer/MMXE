@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"BaseBoss",
+  "%Name":"room_transition_to",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"BaseBoss",
+  "name":"room_transition_to",
   "parent":{
-    "name":"Parent",
-    "path":"folders/Scripts/Game/Boss/Parent.yy",
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

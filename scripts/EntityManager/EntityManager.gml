@@ -63,6 +63,7 @@ function EntityManager() constructor {
 			remove_all_components(_inst);
 			array_delete(self.__instances, _index, 1);
 			struct_remove(self.__instance_map, _id);
+			_inst.components = {};
 			instance_destroy(_inst);
 			
 			return true;
