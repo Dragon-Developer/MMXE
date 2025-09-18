@@ -70,6 +70,11 @@ function Entity() constructor {
 		}
 		return false;
 	}
+	static reset = function(_constructor){
+		self.remove(_constructor);
+		self.add(_constructor);
+		self.get(_constructor).init();
+	}
 	static pause = function(_value) {
 		array_foreach(self.__components, method({ value: _value }, function(_component) {
 			_component.step_enabled = !value;
