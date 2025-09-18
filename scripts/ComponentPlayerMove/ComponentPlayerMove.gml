@@ -133,7 +133,19 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("leave", {
 			enter: function(){
 				//self.publish("animation_play", { name: "leave" });
-				self.physics.set_speed(0, -5);
+				self.physics.set_grav(new Vec2(0,0));
+				var _inst = self.get_instance();
+				var _cam = instance_nearest(_inst.x, _inst.y, obj_camera)
+				_cam.components.get(ComponentCamera).bounds = noone;
+				self.timer = CURRENT_FRAME + 75;
+			},
+			step: function(){
+				var _inst = self.get_instance();
+				_inst.y -= 4;
+				
+				if(self.timer < CURRENT_FRAME){
+					room_transition_to(rm_stage_select);
+				}
 			}
 		})
 		.add("ride", {

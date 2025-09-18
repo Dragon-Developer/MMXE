@@ -9,7 +9,7 @@ switch(transition_data.type){
 				if(transition_data.room != -1)
 					room_goto(transition_data.room)
 			}
-		} else if(transition_data.opacity < 0 && transition_data.transitioning){
+		} else if(transition_data.opacity <= 0 && transition_data.transitioning){
 			transition_data.transitioning = false;
 		}
 	break;
@@ -30,7 +30,7 @@ switch(transition_data.type){
 				if(transition_data.room != -1)
 					room_goto(transition_data.room)
 			}
-		} else if(transition_data.opacity_2 < 0 && transition_data.opacity < 0 && transition_data.transitioning){
+		} else if(transition_data.opacity_2 <= 0 && transition_data.opacity <= 0 && transition_data.transitioning){
 			transition_data.transitioning = false;
 		}
 	break;

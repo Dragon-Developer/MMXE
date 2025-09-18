@@ -105,10 +105,10 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 				//with(curr_player){
 					
-					if(physics.check_place_meeting(_inst.x,_inst.y, obj_player)){
+					if(physics.check_place_meeting(_inst.x + 12,_inst.y, obj_player) || physics.check_place_meeting(_inst.x - 12,_inst.y, obj_player)){
 						curr_player.x += (74/256) * (flipped * -2 + 1);
 						// the camera movement value is larger than snes, but its also 
-						curr_cam.x += (flipped * -2 + 1) * (223/256);
+						curr_cam.x += (flipped * -2 + 1) * (383/256);
 					} else {
 						state_segment++;
 						with(obj_camera){

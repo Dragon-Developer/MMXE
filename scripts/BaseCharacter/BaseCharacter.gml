@@ -102,7 +102,7 @@ function BaseCharacter() constructor{
 			_animation.set_base_color(i, self.default_palette[i]);
 		}
 		for(var i = 0; i < array_length(self.default_palette); i++){
-			_animation.set_palette_color(i, #303030);
+			_animation.set_palette_color(i, self.default_palette[i]);
 		}
 	}
 }

@@ -1,0 +1,1 @@
+self.contact_damage = 16;
