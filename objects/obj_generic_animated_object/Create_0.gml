@@ -1,7 +1,7 @@
 event_inherited();
 
 components.add([
-	ComponentAnimationPalette
+	ComponentAnimationShadered
 ]);
 
 components.init();

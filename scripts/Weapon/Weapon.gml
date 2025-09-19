@@ -42,6 +42,8 @@ function Weapon() constructor{
 		
 	*/
 	
+	self.term = "undefined";
+	
 	self.maxAmmo = 28;
 	self.cost = 1;//should this be an array?
 	self.refillRate = 0;// 1/60 would be one tick every second

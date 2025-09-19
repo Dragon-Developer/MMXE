@@ -13,6 +13,7 @@ function FlameStagBoss() : BaseBoss() constructor{
 	self.add_states = function(_fsm){
 		
 		with(_fsm){
+			self.get(ComponentPhysics).set_grav(new Vec2(0,0.0625));
 			self.pose_animation_name = "mach_hold";
 			self.attack_states = ["dash", "jump", "walkdown"]
 			fsm.add("idle", { 
@@ -41,14 +42,17 @@ function FlameStagBoss() : BaseBoss() constructor{
 				enter: function(){
 					self.publish("animation_play", { name: "jump" });
 					
-					self.get(ComponentPhysics).set_vspd(-6);
+					self.get(ComponentPhysics).set_vspd(-5);
+					self.get(ComponentPhysics).set_hspd(self.dir)
 					//self.get(ComponentPhysics).set_grav(0.5)
 				},
 				step: function(){
-					self.get(ComponentPhysics).set_vspd(self.get(ComponentPhysics).get_vspd() + 0.25);
+					//self.get(ComponentPhysics).set_vspd(self.get(ComponentPhysics).get_vspd() + 0.1);
+					log(self.get(ComponentPhysics).velocity)
 				},
 				leave: function(){
 					self.get(ComponentPhysics).set_vspd(0);
+					self.get(ComponentPhysics).set_hspd(0)
 				}
 			})
 			.add("fall",{
@@ -68,11 +72,11 @@ function FlameStagBoss() : BaseBoss() constructor{
 			.add_transition("t_transition", ["dash", "walkdown"], "idle", function()
 				{return self.get_instance().components.get(ComponentPhysics).check_place_meeting(self.get_instance().x + self.dir * 12, self.get_instance().y, obj_square_16)
 			})
-			.add_transition("t_transition", "fall", "idle", function()
+			.add_transition("t_transition", ["fall", "jump"], "idle", function()
 				{return self.get_instance().components.get(ComponentPhysics).is_on_floor()
 			})
 			.add_transition("t_transition", "jump", "fall", function()
-				{return self.get(ComponentPhysics).get_vspd >= 0
+				{return self.get(ComponentPhysics).get_vspd() >= 0
 			})
 		}
 	}

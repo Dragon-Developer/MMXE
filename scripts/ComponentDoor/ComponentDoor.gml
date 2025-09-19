@@ -76,7 +76,7 @@ function ComponentDoor() : ComponentBase() constructor{
 				curr_player.components.get(ComponentPlayerMove).locked = true;
 				curr_player.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
 				curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
-				curr_player.components.get(ComponentAnimationPalette).animation.__speed = 0;
+				curr_player.components.get(ComponentAnimationShadered).animation.__speed = 0;
 				with(obj_camera){
 					components.get(ComponentCamera).target = noone;
 					other.curr_cam = components.get(ComponentCamera);
@@ -95,7 +95,7 @@ function ComponentDoor() : ComponentBase() constructor{
 				if(animation_end){//this will trigger when animation end is called
 					state_segment++;  
 					if(curr_player.components.get(ComponentPhysics).is_on_floor())
-						curr_player.components.get(ComponentAnimationPalette).animation.__speed = 1;
+						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
 					coll.y -= 1025;
 					self.publish("animation_play", { name: "stay_open" });
 				}
@@ -121,7 +121,7 @@ function ComponentDoor() : ComponentBase() constructor{
 						} else {
 							curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
 						}
-						curr_player.components.get(ComponentAnimationPalette).animation.__speed = 1;
+						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
 						curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
 					}
 				//}
@@ -187,6 +187,6 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 		_inst.visible = true;
 		
-		log(_inst.components.get(ComponentAnimationPalette).animation.__animation)
+		log(_inst.components.get(ComponentAnimationShadered).animation.__animation)
 	}
 }

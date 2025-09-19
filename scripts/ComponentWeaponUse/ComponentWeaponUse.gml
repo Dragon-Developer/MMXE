@@ -12,6 +12,17 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.shoot_inputs = ["shoot","shoot2","shoot3", "shoot4"]
 	self.bar = noone;
 	
+	self.state_blacklist = [
+	"death",
+	"mach_dash",
+	"mach_hold",
+	"hurt",
+	"intro",
+	"complete",
+	"outro",
+	"leave"
+	]
+	
 	self.serializer
 		.addVariable("shot_end_time")
 		.addVariable("current_weapon")
@@ -28,13 +39,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	
 	self.step = function(){
 		
-		if(self.input.get_input_pressed("switchLeft")){
-			self.current_weapon[0]++;
-			self.current_weapon[0] = self.current_weapon[0] mod array_length(self.weapon_list)
-		}
+		var _change_direction = self.input.get_input_pressed("switchLeft") - self.input.get_input_pressed("switchRight")
 		
-		if(self.input.get_input_pressed("switchRight")){
-			self.current_weapon[0]--;
+		if(_change_direction != 0){
+			self.current_weapon[0] += _change_direction;
 			self.current_weapon[0] = (self.current_weapon[0] + array_length(self.weapon_list)) mod array_length(self.weapon_list)
 			var _wep = {};
 			
@@ -108,11 +116,27 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					return;
 				}
 			}
+			var _type = _shot_code.term;
+			log(_type)
+			if(_type == "Projectile"){
+				self.create_projectile(_shot_code, _shot_index, _input, _id);
+			} 
+		}
+	}
 			
-			
-			_shot_code = _shot_code.data[_shot_index];
-			
-			var _anim_name = self.get_instance().components.get(ComponentAnimationPalette).animation.__animation;
+	self.create_projectile = function(_shot_code, _shot_index, _input, _id){
+		//playing with fire here
+		
+		//get the name of the current animation
+		var _anim_name = self.get_instance().components.get(ComponentAnimationShadered).animation.__animation;
+		
+		for(var i = 0; i < array_length(self.state_blacklist); i++){
+			if(_anim_name == self.state_blacklist[i])
+				return;
+		}
+		
+		//if the shot animation is shoot, go ahead and do animation stuff
+		if(_shot_code.animation_append == "_shoot"){
 			if(_anim_name == "idle"){
 				self.publish("animation_play", {name: "shoot"})
 			}
@@ -120,23 +144,27 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			if(_anim_name == "shoot"){
 				self.publish("animation_play", {name: "shoot", reset: true})
 			}
-			
-			//set the time for shooting to end
-			self.shot_end_time = CURRENT_FRAME + 15;
-			self.get_instance().components.get(ComponentAnimationPalette).animation.__type = "shoot";
-			
-			
-		//log("QWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOP START")
-			var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
-			//self.apply_shot_offset(_shot);
-			_shot.dir = self.get_instance().components.find("animation").animation.__xscale;
-			
-			if(_anim_name == "wall_slide"){
-				_shot.dir*= -1
-			}
-			
-			_shot.weaponData = _shot_code;
+			self.get_instance().components.get(ComponentAnimationShadered).animation.__type = "shoot";
 		}
+		
+		//turn the shot data into the actual projectile data
+		_shot_code = _shot_code.data[_shot_index];
+		
+		//set the time for shooting to end
+		self.shot_end_time = CURRENT_FRAME + 15;
+			
+		//create the projectile itself
+		var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
+		//set the projectile's direction to the player's
+		_shot.dir = self.get_instance().components.find("animation").animation.__xscale;
+		
+		//flip the direction if wallsliding
+		if(_anim_name == "wall_slide"){
+			_shot.dir*= -1
+		}
+			
+		//set the projectile's data to _shot_data
+		_shot.weaponData = _shot_code;
 	}
 	
 	self.apply_shot_offsets = function(_shot){

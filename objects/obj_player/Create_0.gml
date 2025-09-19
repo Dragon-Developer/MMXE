@@ -5,7 +5,7 @@ components.add([
 	ComponentPlayerInput,
 	ComponentPlayerMove,
 	ComponentPhysics,
-	ComponentAnimationPalette,
+	ComponentAnimationShadered,
 	ComponentMask,
 	ComponentWeaponUse,
 	ComponentNode,

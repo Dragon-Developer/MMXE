@@ -2,7 +2,7 @@ event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
 on_spawn = function(_player) {
-	_player.components.get(ComponentAnimationPalette).set_subdirectories(
+	_player.components.get(ComponentAnimationShadered).set_subdirectories(
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", "weapon");
@@ -44,7 +44,7 @@ on_spawn = function(_player) {
 		_camera.components.get(ComponentHealthbar).barValueMax = [_player.components.get(ComponentWeaponUse).weapon_max_ammo]
 		
 		_player.components.get(ComponentWeaponUse).bar = _camera.components.get(ComponentHealthbar);
-		_player.components.get(ComponentAnimationPalette).max_queue_size = 0;
+		_player.components.get(ComponentAnimationShadered).max_queue_size = 0;
 		//_player.components.get(ComponentPlayerInput).__BufferLength = global.settings.Input_Buffer;
 		//_player.components.get(ComponentPlayerInput).buffer_reset();
 	}

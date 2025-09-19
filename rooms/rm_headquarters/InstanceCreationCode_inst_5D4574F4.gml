@@ -1,1 +1,0 @@
-armorComponent = new ChipDashLengthIncrease();

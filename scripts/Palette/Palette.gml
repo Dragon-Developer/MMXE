@@ -60,14 +60,12 @@ function Palette() constructor {
 		array_set(self.colorsArray[0],_index, _base_red / 255)
 		array_set(self.colorsArray[1],_index, _base_green / 255)
 		array_set(self.colorsArray[2],_index, _base_blue / 255)
-		log(self.colorsArray)
 	}
 	
 	static setPaletteColorAt = function(_index, _new_red, _new_green, _new_blue){
 		array_set(self.swapArray[0],_index, _new_red / 255)
 		array_set(self.swapArray[1],_index, _new_green / 255)
 		array_set(self.swapArray[2],_index, _new_blue / 255)
-		log(self.swapArray)
 	}
 	
 	static setBaseColorByHex = function(_index, _hex){

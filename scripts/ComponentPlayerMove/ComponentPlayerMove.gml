@@ -367,8 +367,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		});
 		//publish the armor set
 		self.publish("armor_set",self.armor_parts[1]);
-		self.get_instance().components.get(ComponentAnimationPalette).set_subdirectories(self.armor_parts[2]);
-		self.get_instance().components.get(ComponentAnimationPalette).reload_animations();
+		self.get_instance().components.get(ComponentAnimationShadered).set_subdirectories(self.armor_parts[2]);
+		self.get_instance().components.get(ComponentAnimationShadered).reload_animations();
 		//log(self.armor_parts[1])
 		//log(self.armor_parts[2])
 		//fix the armor_parts array. it does not need to store an array of strings

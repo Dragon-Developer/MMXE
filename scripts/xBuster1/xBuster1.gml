@@ -1,6 +1,6 @@
 function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
-	self.charge_limit = 3;
+	self.charge_limit = 2;
 }
 
 function xBuster11Data() : ProjectileData() constructor{
