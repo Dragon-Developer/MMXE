@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"SecondArmorRadar",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SecondArmorRadar",
+  "parent":{
+    "name":"Projectile",
+    "path":"folders/Scripts/Game/Weapons/Projectile.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

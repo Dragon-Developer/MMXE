@@ -13,9 +13,7 @@ function BaseBoss() : BaseEnemy() constructor{
 
 	self.enter_step = function(){
 		var _inst = EnemyComponent.instance;
-		log(_inst)
 		var _ret = _inst.components.get(ComponentPhysics)//.check_place_meeting(_inst.x, _inst.y + 1, obj_square_16);
-		log(_ret)
 		if(_ret)
 			EnemyComponent.fsm.change("pose")
 	}

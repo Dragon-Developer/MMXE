@@ -85,6 +85,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	self.play_sound = function(_filename, _start_frame = 0, loops = self.loops, _volume = volume){
 		try {
 			var _id = self.load_sound(_filename);
+			if _id == -4 return;
 			var _snd = audio_play_sound(_id, 1, self.loops, _volume, _start_frame / 60)
 		
 			array_push(self.sounds, {sound_id: _snd, sound_asset: _id, volume: _volume, start_frame: _start_frame})

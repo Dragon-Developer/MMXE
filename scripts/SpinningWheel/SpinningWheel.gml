@@ -1,6 +1,22 @@
 function SpinningWheel() : ProjectileWeapon() constructor{
 	self.data = [SpinningWheelData,SpinningWheelData,SpinningWheelData,SpinningWheelData,SpinningWheelData];
 	self.charge_limit = 0;
+	self.weapon_palette = [
+		#287048,//Blue Armor Bits
+		#489870,
+		#90f0c0,
+		#7048b0,//Under Armor Teal Bits
+		#c068f0,
+		#e0b8f8,
+		#181818,//black
+		#804020,//Face
+		#b86048,
+		#f8b080,
+		#989898,//glove
+		#e0e0e0,
+		#f0f0f0,//eye white
+		#f04010//red
+	];
 }
 
 function SpinningWheelData() : ProjectileData() constructor{

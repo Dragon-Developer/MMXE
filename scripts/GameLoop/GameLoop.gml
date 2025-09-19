@@ -100,6 +100,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		// some things use the draw_gui function regardless of debug
 		ENTITIES.for_each_component(ComponentHealthbar, _draw_gui);
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
+		ENTITIES.for_each_component(ComponentMinimap, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
