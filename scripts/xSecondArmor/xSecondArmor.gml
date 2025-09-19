@@ -2,6 +2,12 @@
 function XSecondArmorHead() : HeadPartBase() constructor{
 	//nothing special
 	self.sprite_name = "/x2/helm"//this is more for filepath.
+	self.apply_armor_effects = function(_player){
+		with(_player){
+			get_instance().components.add(ComponentMinimap);
+			get(ComponentMinimap).init();
+		}
+	}
 }
 
 function XSecondArmorBody() : BodyPartBase() constructor{

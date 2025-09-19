@@ -9,9 +9,12 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 	self.death_time = -1;
 	
+	self.pose_animation_name = "walk";
+	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: "idle" });
+		self.publish("animation_xscale", -1);
 	}
 	
 	self.fsm = new SnowState("enter", true);
@@ -27,7 +30,7 @@ function ComponentBoss() : ComponentBase() constructor{
 		})
 		.add("pose", {
 			enter: function() {
-				self.publish("animation_play", { name: "walk" });
+				self.publish("animation_play", { name: self.pose_animation_name });
 				self.get_instance().components.add([ComponentHealthbar]);
 				self.get_instance().components.get(ComponentHealthbar).init();
 				self.get_instance().components.get(ComponentHealthbar).barOffsets[0] = new Vec2(GAME_W - 24,78)
@@ -69,9 +72,10 @@ function ComponentBoss() : ComponentBase() constructor{
 				
 				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
 					var _inst = self.get_instance();
-					var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
+					var _spot = new Vec2(_inst.x + (random_range(-64,0)),_inst.y + (random_range(-64,0)))
 					
 					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
+					if(CURRENT_FRAME mod 8 == 0)
 					WORLD.play_sound("Explosion");
 				}
 				

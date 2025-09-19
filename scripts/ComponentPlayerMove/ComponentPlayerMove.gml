@@ -16,9 +16,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.timer = 0;
 	#endregion
 	
-	self.armor_parts = [
-		new XBladeArmorBoot()
-	]
+	self.armor_parts = []
 		
 	self.character = global.player_character;
 	

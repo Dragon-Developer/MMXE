@@ -1,6 +1,22 @@
 function XenoMissile() : ProjectileWeapon() constructor{
 	self.data = [XenoMissileData,XenoMissileData,XenoMissileData,XenoMissileData,XenoMissileData];
 	self.charge_limit = 0;
+	self.weapon_palette = [
+		#203080,//Blue Armor Bits
+		#0040f0,
+		#0080f8,
+		#1858b0,//Under Armor Teal Bits
+		#50a0f0,
+		#78d8f0,
+		#181818,//black
+		#804020,//Face
+		#b86048,
+		#f8b080,
+		#989898,//glove
+		#e0e0e0,
+		#f0f0f0,//eye white
+		#f04010//red
+	];
 }
 
 function XenoMissileData() : ProjectileData() constructor{

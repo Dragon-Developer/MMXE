@@ -36,6 +36,17 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		if(self.input.get_input_pressed("switchRight")){
 			self.current_weapon[0]--;
 			self.current_weapon[0] = (self.current_weapon[0] + array_length(self.weapon_list)) mod array_length(self.weapon_list)
+			var _wep = {};
+			
+			with(_wep){
+				script_execute(other.weapon_list[other.current_weapon[0]]);
+			}
+			if(_wep == undefined) return;
+			log(_wep)
+			for(var i = 0; i < array_length(_wep.weapon_palette); i++){
+				find("animation").set_palette_color(i, _wep.weapon_palette[i]);
+			}
+			
 		}
 		
 		if self.bar != noone {
