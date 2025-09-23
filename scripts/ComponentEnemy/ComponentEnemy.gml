@@ -4,16 +4,16 @@ function ComponentEnemy() : ComponentBase() constructor{
 	
 	self.init = function(){
 		self.publish("animation_play", { name: "idle" });
+		get(ComponentDamageable).death_function = function(){
+			var _inst = self.get_instance();
+			WORLD.spawn_particle(new ExplosionParticle(_inst.x, _inst.y,1))
+			WORLD.play_sound("Explosion");
+			ENTITIES.destroy_instance(_inst)
+		}
 	}
 	
 	self.EnemyData = BaseEnemy;//enemy 
 	self.EnemyEnum = noone;
-	
-	self.serializer = new NET_Serializer(self);
-	self.serializer
-		.addVariable("EnemyData")
-		.addVariable("EnemyEnum")
-		.addVariable("health");
 
 	//you need this because specific stuff needs to happen. if you
 	//REALLY want to move this to somewhere else, make sure to call

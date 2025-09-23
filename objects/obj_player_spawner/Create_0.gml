@@ -7,6 +7,8 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", "weapon");
 	_player.components.publish("character_set", global.player_character.image_folder);
+	//log(string(global.player_character.image_folder) + " is the character folder")
+//	log(string(global.player_character) + " is the character")
 	_player.components.publish("armor_set",
 	[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
 	

@@ -22,6 +22,7 @@ function SpinningWheel() : ProjectileWeapon() constructor{
 function SpinningWheelData() : ProjectileData() constructor{
 	//the lemon
 	self.comboiness = 2;
+	self.real_comboiness = 2;
 	self.hspd = 0;
 	self.vspd = 0;
 	self.bounce_count_max = 4;
@@ -51,7 +52,8 @@ function SpinningWheelData() : ProjectileData() constructor{
 			self.vspd += 0.15;
 			self.vspd = clamp(self.vspd, 0, 3)
 		}
-		comboiness+= 0.1;
+		real_comboiness+= 0.1;
+		comboiness = clamp(floor(real_comboiness), 0, 10)
 		
 		if(_inst.components.get(ComponentPhysics).check_place_meeting(_inst.x + self.dir * self.hspd, _inst.y, obj_square_16)){
 			self.dir *= -1;

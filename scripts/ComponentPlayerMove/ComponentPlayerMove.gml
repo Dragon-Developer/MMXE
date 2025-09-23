@@ -18,7 +18,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	self.armor_parts = []
 		
-	self.character = global.player_character;
+	self.character = variable_clone(global.player_character, 256);
 	
 	#region serializer
 	self.serializer
@@ -29,6 +29,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.addVariable("dash_jump")
 		.addVariable("dash_tapped")
 		.addVariable("armor_parts")
+		.addVariable("paused")
 		.addCustom("double_tap")
 		.addCustom("fsm");
 		#endregion
@@ -168,13 +169,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function() {
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(0);
-				self.get_instance().components.get(ComponentAnimationPalette).animation.__speed = 0;
+				self.find("animation").animation.__speed = 0;
 				//self.publish("animation_play", { name: "ladder" });
 			},
 			leave: function(){
 				self.physics.update_gravity();
 				self.physics.set_vspd(0);
-				self.get_instance().components.get(ComponentAnimationPalette).animation.__speed = 1;
+				self.find("animation").animation.__speed = 1;
 			}
 		})
 		.add_child("ladder", "ladder_enter", {
@@ -191,7 +192,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function(){
 				self.fsm.inherit();
 				self.publish("animation_play", { name: "ladder_move" });
-				self.get_instance().components.get(ComponentAnimationPalette).animation.__speed = 1;
+				self.find("animation").animation.__speed = 1;
 			},
 			step: function(){
 				self.get_instance().y += self.vdir * self.states.ladder.speed;
@@ -199,7 +200,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("ladder_exit", {
 			enter: function(){
-				self.get_instance().components.get(ComponentAnimationPalette).animation.__speed = 1;
+				self.find("animation").animation.__speed = 1;
 				self.publish("animation_play", { name: "ladder_exit" });
 				self.fsm.change("fall")
 			},
@@ -222,7 +223,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_speed(0,0)
 				self.input.__locked = true;
 				ENTITIES.remove_component(self.get(ComponentDamageable));
-				self.timer = CURRENT_FRAME + 150;
+				self.timer = CURRENT_FRAME;
 			},
 			step: function(){
 					
@@ -334,6 +335,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
+		self.character = variable_clone(global.player_character, 256);
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
@@ -503,7 +505,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if (!self.dash_jump)
 					self.current_hspd = self.states.walk.speed;	
 				self.dash_dir = self.dir;
-				self.publish("animation_play", { name: "dash_end" });
+				self.publish("animation_play", { name: self.states.dash.animation + "_end" });
 				self.dash_tapped = false;
 			},
 			step: function() {
@@ -545,7 +547,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function() {
 				WORLD.play_sound("jump");
 				self.input.__useBuffer = false;
-				self.timer = 0;
+				self.timer = CURRENT_FRAME;
 				self.publish("animation_play", { name: "wall_jump" });
 				self.dir = self.get_wall_jump_dir();
 				if (self.dir != 0) self.publish("animation_xscale", self.dir)
@@ -556,16 +558,15 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.update_gravity();
 			},
 			step: function() {
-				self.timer++;
-				if (self.timer > 11){
+				if (self.timer + 11 < CURRENT_FRAME){
 					self.input.__useBuffer = true;
 					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
 					self.set_hor_movement();
-				} else if (self.timer > 7) {
+				} else if (self.timer + 7 < CURRENT_FRAME) {
 					//please this looks so much better
 					//self.publish("animation_play_at_loop", { name: "jump", frame: 10});
 				}
-				if (self.timer == 5) {
+				if (self.timer + 5 == CURRENT_FRAME) {
 					self.physics.update_gravity();
 					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
 						self.current_hspd = self.states.dash.speed;	

@@ -1212,6 +1212,121 @@
           }
         },
         {
+          "name": "flame_dash",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 3,
+                "frame": 2
+              },
+              {
+                "key": 5,
+                "frame": 3
+              },
+              {
+                "key": 6,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 9,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "giga_crush",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 40,
+                "frame": 1
+              },
+              {
+                "key": 47,
+                "frame": 2
+              },
+              {
+                "key": 118,
+                "frame": 3
+              },
+              {
+                "key": 124,
+                "frame": 4
+              },
+              {
+                "key": 126,
+                "frame": 3
+              },
+              {
+                "key": 131,
+                "frame": 4
+              },
+              {
+                "key": 132,
+                "frame": 3
+              },
+              {
+                "key": 135,
+                "frame": 4
+              },
+              {
+                "key": 136,
+                "frame": 3
+              },
+              {
+                "key": 139,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 139
+          }
+        },
+        {
+          "name": "quick_giga",
+          "properties": {
+            "action": "giga_crush",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 40,
+                "frame": 1
+              },
+              {
+                "key": 55,
+                "frame": 2
+              },
+              {
+                "key": 70,
+                "frame": 3
+              },
+              {
+                "key": 76,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
           "name": "mach_hold",
           "properties": {
             "action": "mach_dash",

@@ -15,7 +15,11 @@ function ComponentCharge() : ComponentBase() constructor{
 		self.publish("animation_play", { 
 					name: "charge_1"
 				}); 
-				self.publish("animation_visible", false);
+		self.publish("animation_visible", false);
+		self.publish("character_set", "player");
+		find("animation").set_subdirectories(["/normal"]);
+		find("animation").load_sprites();
+		log("DA CHARGE SPRITES WERE FUCKEN LOADED WHERE THE FUCK ARE THEY")
 	}
 	
 	self.on_register = function(){
@@ -53,22 +57,32 @@ function ComponentCharge() : ComponentBase() constructor{
 			//self.publish("animation_visible", false);
 			WORLD.stop_sound(self.charge_sound);
 			charging = false;
+			self.publish("animation_visible", false);
 		} else if(_pressed && !charging){//prevent charge shot delay rapidly increasing
 			self.start_time = CURRENT_FRAME;
 			self.charge_sound = WORLD.play_sound("charge");
 			charging = true;
+			self.publish("animation_visible", true);
 		}
 		
 		self.get_instance().x = self.get_instance().components.get(ComponentNode).node_parent.get_instance().x;
 		self.get_instance().y = self.get_instance().components.get(ComponentNode).node_parent.get_instance().y;
 
-
-		//log(string(self.charge_time))
-		if(self.start_time == -1 || 
-		self.start_time + self.charge_time[0] > CURRENT_FRAME) return;
+		//log(find("animation").animation.__visible)
+		//log(find("animation").animation.__animation)
 		
-		if(floor(self.start_time + self.charge_time[0]) == floor(CURRENT_FRAME) || floor(self.start_time + self.charge_time[0] + 1) == floor(CURRENT_FRAME)) { 
-			self.publish("animation_visible", true);
+		if(self.start_time == -1 || 
+		self.start_time + self.charge_time[0] >= CURRENT_FRAME) {
+			self.publish("animation_play", { 
+				name: "charge_0",
+				reset: false
+			});
+			self.get_instance().x = -1000;
+			self.get_instance().y = -1000;
+			self.get_instance().visible = false;
+			return;
+		} else {
+			self.get_instance().visible = true;
 		}
 		
 		var _shot_code = noone;
@@ -81,11 +95,9 @@ function ComponentCharge() : ComponentBase() constructor{
 			}
 		}
 		
-		if(_shot_code != noone){
-			self.publish("animation_play", { 
-				name: "charge_1",
-				reset: false
-			});
-		}
+		self.publish("animation_play", { 
+			name: "charge_" + string(_shot_code + 1),
+			reset: false
+		});
 	}
 }

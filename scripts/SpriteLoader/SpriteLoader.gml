@@ -47,7 +47,7 @@ function SpriteLoader() constructor {
 		else{
 			array_foreach(_png_files, function(_png){
 				//////log(_png + " was found")
-				////log(_png + " : " + (file_exists(_png) ? "exists" : "does not exist"))
+				//log(_png + " : " + (file_exists(_png) ? "exists" : "does not exist"))
 			})
 		}
 
@@ -142,6 +142,7 @@ function SpriteLoader() constructor {
 		_collage.FinishBatch();
 	}
 	static reload_collage = function(_collage, _dir, _subdirs) {
+		//log(directory_exists(working_directory + _dir) ? (_dir + " does in fact exist") : (_dir + " does not exist you stoopid"))
 		////log("reloading collage")
 		var _files = [];
 		for (var _i = 0, _len = array_length; _i < array_length(_subdirs); _i++) {

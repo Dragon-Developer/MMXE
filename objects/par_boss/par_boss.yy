@@ -12,8 +12,8 @@
     "path":"folders/Objects/Level Assets/Boss.yy",
   },
   "parentObjectId":{
-    "name":"par_enemy",
-    "path":"objects/par_enemy/par_enemy.yy",
+    "name":"obj_entity",
+    "path":"objects/obj_entity/obj_entity.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

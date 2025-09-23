@@ -11,8 +11,11 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.bounds = noone;//if bounds are noone, just lock onto player pos. otherwise, abide by bounds
 	self.physics = noone;
 	
-	self.movement_limit_x = 4.05;//the camera cant move faster than this
-	self.movement_limit_y = 7;
+	self.reset_movement_limits = function(){
+		self.movement_limit_x = 4.05 * self.timescale;//the camera cant move faster than this
+		self.movement_limit_y = 7 * self.timescale;
+	}
+	self.reset_movement_limits();
 	
 	self.bounds_top_left_x = 4;
 	self.bounds_top_left_y = 0;
@@ -51,6 +54,13 @@ function ComponentCamera() : ComponentBase() constructor {
 	}
 
     self.step = function() {
+		
+		if(self.timescale != 1){
+			//self.movement_limit_x *= self.timescale;
+			//self.movement_limit_y *= self.timescale;
+			self.timescale = 1;
+		}
+		
         self.rotation_controller.step();
 		self.angle = self.rotation_controller.current_angle;
 		camera_set_view_angle(self.camera, self.angle);

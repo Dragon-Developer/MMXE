@@ -111,4 +111,9 @@ function Entity() constructor {
 	static subscribe = function(_event, _callback) {
 		self.__event_bus.subscribe(_event, _callback);	
 	}
+	static change_timescale = function(_scale){
+		array_foreach(self.__components, method({ scale: _scale }, function(_component) {
+			_component.timescale = scale;
+		}));
+	}
 }

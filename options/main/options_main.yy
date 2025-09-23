@@ -2,7 +2,7 @@
   "$GMMainOptions":"v1",
   "%Name":"Main",
   "name":"Main",
-  "option_author":"",
+  "option_author":"Dragon Developer",
   "option_collision_compatibility":true,
   "option_copy_on_write_enabled":false,
   "option_draw_colour":4294967295,

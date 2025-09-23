@@ -1,7 +1,8 @@
 function ComponentCharacterSelect() : ComponentBase() constructor{
 	self.characters = [
 		new ZeroCharacter(),
-		new XCharacter()
+		new XCharacter(),
+		new RockCharacter()
 	]
 	self.character_index = 0;
 	
@@ -55,18 +56,21 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 		_inst.x = _inst.x mod GAME_W;
 		
 		if(self.input.get_input_pressed("left")){
-			self.character_index = (self.character_index - 1) mod array_length(self.characters)
+			self.character_index = (self.character_index - 1 + array_length(self.characters)) mod array_length(self.characters)
 			character_art.components.publish("animation_play", {name: self.characters[self.character_index].image_folder});
 		}
 		
 		if(self.input.get_input_pressed("right")){
-			self.character_index = (self.character_index + 1) mod array_length(self.characters)
+			self.character_index = (self.character_index + 1 + array_length(self.characters)) mod array_length(self.characters)
 			character_art.components.publish("animation_play", {name: self.characters[self.character_index].image_folder});
 		}
 		
 		if(self.input.get_input_pressed("down")){
-			global.player_character = self.characters[self.character_index];
-			transition_fade(rm_stage_select);
+			global.player_character = variable_clone(self.characters[self.character_index]);
+			log(self.character_index);
+			log(self.characters[self.character_index]);
+			log(global.player_character);
+			room_transition_to(rm_stage_select);
 		}
 		
 		_inst = self.backup_lines;

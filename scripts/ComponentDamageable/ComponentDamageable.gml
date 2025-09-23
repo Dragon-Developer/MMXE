@@ -15,6 +15,13 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
 	
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addVariable("health")
+		.addVariable("health_max")
+		.addVariable("combo_count")
+		.addVariable("invuln_offset")
+	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
@@ -61,6 +68,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.check_for_collision = function(){
 		self.check_for_projectiles();
 		self.check_for_enemies();
+		self.check_for_bosses();
 		self.check_for_damage_zones();
 		
 		if(self.health <= 0)
@@ -98,6 +106,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.combo_count = _proj.components.get(ComponentProjectile).weaponCreate.comboiness;
+			log("hit by projectile")
 		}
 		
 	}
@@ -119,6 +128,32 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.health -= _enemy.components.get(ComponentEnemy).contact_damage;
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+			log("hit by enemy")
+			log(_enemy.components.get(ComponentEnemy).contact_damage)
+			log(object_get_name(_enemy.object_index))
+		}
+	}
+	
+	self.check_for_bosses = function(){
+		if(self.get_instance() == par_boss) return;
+		
+		var _enemy = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,par_boss);
+		
+		if(!variable_instance_exists(_enemy, "components")){ 
+			return;
+		}
+		
+		if(self.invuln_offset > CURRENT_FRAME){
+			return;
+		}
+		
+		if(_enemy.components.get(ComponentBoss).contact_damage > 0){
+			self.health -= _enemy.components.get(ComponentBoss).contact_damage;
+			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+			log("hit by enemy")
+			log(_enemy.components.get(ComponentBoss).contact_damage)
+			log(object_get_name(_enemy.object_index))
 		}
 	}
 	
@@ -137,6 +172,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.health -= _zone.contact_damage;
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+			log("hit by zone")
 		}
 	}
 }

@@ -9,7 +9,8 @@ components.add([
 	ComponentMask,
 	ComponentWeaponUse,
 	ComponentNode,
-	ComponentDamageable
+	ComponentDamageable,
+	ComponentHealable
 	//component input display should be on the camera. because its the camera, which only gets made once
 ]);
 

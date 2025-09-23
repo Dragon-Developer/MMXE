@@ -1,0 +1,1 @@
+log("Draw! "+ string(CURRENT_FRAME))

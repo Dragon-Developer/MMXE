@@ -1,1 +1,1 @@
-self.contact_damage = 32;
+self.contact_damage = 2;

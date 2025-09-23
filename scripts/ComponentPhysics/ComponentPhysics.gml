@@ -6,6 +6,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.grav_magnitude = self.grav.length(); 
 	self.up_to_right_dir = -1;
 	self.terminal_velocity = 6.25;
+	self.time_physics_multiplier = 1;
 	self.objects = {
 		block: obj_square_16,
 		projectile : par_projectile,
@@ -79,11 +80,17 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * Updates entity physics, applies gravity, and handles movement.
 	 */
 	step = function() {
-		self.move_step(self.velocity);
-		self.velocity = self.velocity.add(self.grav);
+		if(self.timescale != 1){
+			self.time_physics_multiplier = variable_clone(self.timescale);
+			self.timescale = 1;
+			log(string(time_physics_multiplier) + " is the time mult")
+		}
+		
+		self.move_step(self.velocity.multiply(self.time_physics_multiplier));
+		self.velocity = self.velocity.add(self.grav.multiply(self.time_physics_multiplier));
 		
 		if (self.get_vspd() > self.terminal_velocity){
-			self.set_vspd(self.terminal_velocity);
+			self.set_vspd(self.terminal_velocity * (self.time_physics_multiplier));
 		}
 		
 		if (self.is_on_floor()) self.set_vspd(0);

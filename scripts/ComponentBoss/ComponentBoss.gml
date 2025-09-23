@@ -11,6 +11,16 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 	self.pose_animation_name = "walk";
 	
+	self.contact_damage = 3;
+	
+	self.desperate = false;//you dont start out desperate
+	self.desperation_rate = 1/3;//how low the boss has to be in order to be desperate
+	
+	self.serializer = new NET_Serializer();
+	self.serializer
+		.addCustom("fsm")
+		.addCustom("boss_data")
+	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: "idle" });
@@ -23,6 +33,7 @@ function ComponentBoss() : ComponentBase() constructor{
 			enter: function() {
 				WORLD.stop_sound();
 				WORLD.play_music("BossEncounterL");
+				
 			},
 			step: function() {
 				//log("step")
@@ -95,6 +106,12 @@ function ComponentBoss() : ComponentBase() constructor{
 		
 	
 	self.step = function() {
+		
+		if(get(ComponentDamageable).health <= get(ComponentDamageable).health_max * self.desperation_rate && 
+			self.fsm.get_current_state() != "enter" && self.fsm.get_current_state() != "pose"){
+				self.desperate = true;
+		}
+		
 		try {
 			self.fsm.trigger("t_transition");
 		} catch(_err){
@@ -103,7 +120,6 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 		if (self.fsm.event_exists("step")){
 			self.fsm.step();
-			
 		}
 	}
 	

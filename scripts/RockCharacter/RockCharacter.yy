@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"FlameStagBoss",
+  "%Name":"RockCharacter",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"FlameStagBoss",
+  "name":"RockCharacter",
   "parent":{
-    "name":"Boss",
-    "path":"folders/Scripts/Game/Boss.yy",
+    "name":"Characters",
+    "path":"folders/Scripts/Game/Characters.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -50,6 +50,12 @@
           "properties": {
             "speed":  1
           }
+        },
+        {
+          "name": "rock",
+          "properties": {
+            "speed":  1
+          }
         }, 
         {
           "name": "bg",

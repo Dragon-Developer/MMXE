@@ -107,8 +107,12 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	}
 	
 	self.stop_sound = function(_snd = ""){
+		
+		if(_snd == "Delete me!") return;
+		
 		for(var g = 0; g < array_length(self.sounds); g++){
-			if(_snd == self.sounds[g].sound_id || _snd == ""){
+			if(self.sounds[g] == "Delete me!") continue;
+			if(string(_snd) == string(self.sounds[g].sound_id) || _snd == ""){
 				audio_destroy_stream(self.sounds[g].sound_asset);
 				self.sounds[g] = "Delete me!"
 				return;

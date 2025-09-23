@@ -27,7 +27,7 @@ self.play_music = function(_sound){
 	self.components.get(ComponentSoundLoader).source_folder = self.components.get(ComponentSoundLoader).music_folder;
 	self.components.get(ComponentSoundLoader).volume = global.settings.Music_Volume * 1.1;
 	self.components.get(ComponentSoundLoader).stop_sound(self.music);
-	self.music = self.components.get(ComponentSoundLoader).play_sound(_sound);
+	self.music = self.components.get(ComponentSoundLoader).play_sound(_sound,,true);
 	self.components.get(ComponentSoundLoader).source_folder = self.components.get(ComponentSoundLoader).sounds_folder;
 	self.components.get(ComponentSoundLoader).volume = global.settings.Sound_Effect_Volume * 0.9;
 	return self.music;
@@ -44,3 +44,6 @@ self.clear_sound = function(){
 }
 
 self.stop_music = function(){self.stop_sound(self.music)};
+
+self.play_music(global.stage_Data.music)
+log(string(global.settings.Music_Volume) + " is the volume")

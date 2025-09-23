@@ -33,7 +33,11 @@ function GameLoop() : NET_GameLoopBase() constructor {
 				if(is_undefined(_component)) return;
 				if(!is_struct(_component)) return;
 				if (!_component.step_enabled) return; 
-				_component.step(); 
+				_component.current_step_time += _component.timescale;
+				if(_component.current_step_time >= 1){
+					_component.step(); 
+					_component.current_step_time -= 1;
+				}
 			} catch(_exception) {
 				show_debug_message(_exception.message);
 				show_debug_message(_exception.longMessage);

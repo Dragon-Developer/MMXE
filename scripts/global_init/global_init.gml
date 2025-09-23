@@ -23,6 +23,7 @@ function global_init() {
 		icon: X_Mugshot_Angy1, 
 		music: "HQ"
 	}
+	
 	global.player_character = new XCharacter();
 	
 	global.debug = false;

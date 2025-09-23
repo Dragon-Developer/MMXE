@@ -26,12 +26,22 @@ switch(transition_data.type){
 			if(transition_data.opacity_2 > 1){
 				transition_data.visual_rate *= -1;
 				transition_data.visual_rate_2 *= -1;
-				transition_data.opacity = 0;
+				transition_data.opacity = -0.5;
 				if(transition_data.room != -1)
 					room_goto(transition_data.room)
 			}
-		} else if(transition_data.opacity_2 <= 0 && transition_data.opacity <= 0 && transition_data.transitioning){
-			transition_data.transitioning = false;
+		} else if(transition_data.opacity_2 <= 0 && transition_data.visual_rate <= 0 && transition_data.transitioning){
+			log("done transitioning")
+			transition_data = {
+				type: "fade",
+				opacity: 0,
+				opacity_2: 0,
+				sprite: spr_fade,
+				transitioning: false,
+				visual_rate: 1,
+				visual_rate_2: 1,
+				room: -1
+			}
 		}
 	break;
 }

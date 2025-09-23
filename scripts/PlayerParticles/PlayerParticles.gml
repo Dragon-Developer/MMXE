@@ -49,7 +49,7 @@ function ExplosionParticle(_x, _y, _dir) : ParticleBase() constructor{
 	self.velocity = new Vec2(0,0);
 	self.position = new Vec2(_x,_y);
 	self.time = 0;
-	self.time_max = 5;
+	self.time_max = 3;
 	self.frame = 0;
 	self.dir = _dir;
 }

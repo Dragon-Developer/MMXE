@@ -40,7 +40,7 @@ function GuiRoot() : GuiContainer() constructor {
 		
 		WaitingContainer.setEnabled(false);
 		
-		room_goto(rm_headquarters);
+		room_goto(rm_training_stage);
 	}
 	
 	startEditor = function(){

@@ -3,7 +3,7 @@ event_inherited();
 components.add([
 	ComponentInstance,
 	ComponentNode,
-	ComponentAnimation,
+	ComponentAnimationShadered,
 	ComponentCharge
 ]);
 

@@ -39,7 +39,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	
 	self.step = function(){
 		
-		var _change_direction = self.input.get_input_pressed("switchLeft") - self.input.get_input_pressed("switchRight")
+		var _change_direction = self.input.get_input_pressed("switchRight") - self.input.get_input_pressed("switchLeft")
 		
 		if(_change_direction != 0){
 			self.current_weapon[0] += _change_direction;
