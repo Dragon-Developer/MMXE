@@ -1984,7 +1984,7 @@
     {"id":{"name":"ComponentProjectile","path":"scripts/ComponentProjectile/ComponentProjectile.yy",},},
     {"id":{"name":"ComponentRide","path":"scripts/ComponentRide/ComponentRide.yy",},},
     {"id":{"name":"ComponentSoundLoader","path":"scripts/ComponentSoundLoader/ComponentSoundLoader.yy",},},
-    {"id":{"name":"ComponentSpriteDrawer","path":"scripts/ComponentSpriteDrawer/ComponentSpriteDrawer.yy",},},
+    {"id":{"name":"ComponentSpriteRenderer","path":"scripts/ComponentSpriteRenderer/ComponentSpriteRenderer.yy",},},
     {"id":{"name":"ComponentStageSelect","path":"scripts/ComponentStageSelect/ComponentStageSelect.yy",},},
     {"id":{"name":"ComponentWeaponUse","path":"scripts/ComponentWeaponUse/ComponentWeaponUse.yy",},},
     {"id":{"name":"ComponentWorld","path":"scripts/ComponentWorld/ComponentWorld.yy",},},

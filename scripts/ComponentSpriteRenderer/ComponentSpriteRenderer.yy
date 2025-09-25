@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"ComponentSpriteDrawer",
+  "%Name":"ComponentSpriteRenderer",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ComponentSpriteDrawer",
+  "name":"ComponentSpriteRenderer",
   "parent":{
     "name":"General",
     "path":"folders/Scripts/Game/Entity Components/General.yy",

@@ -446,6 +446,18 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
 			
+		var _inst = self.get_instance();
+			
+		var _sprite = (find("animation").animation.get_sprite("walk"));
+		
+		if (!CollageIsImage(_sprite) && !sprite_exists(_sprite)) return;
+		else {
+			log("damn")
+			draw_image_ext(_sprite, 0, _inst.x, _inst.y - 64, 1, 1, 0, c_white, 1); 
+		}
+		
+		//draw_sprite(find("animation").animation.__sprite, 0, _inst.x - 32, _inst.y - 32)
+			
 		if !self.debug return;
 		
 		if(variable_struct_exists(self, "hdir"))

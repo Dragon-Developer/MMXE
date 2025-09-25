@@ -1,4 +1,4 @@
-function ComponentAnimation() : ComponentBase() constructor {
+function ComponentSpriteRenderer() : ComponentBase() constructor {
 	static collage = new Collage();
 	self.add_tags("animation");
 	self.rotation_point = { x: 0, y: 0 };
@@ -35,18 +35,6 @@ function ComponentAnimation() : ComponentBase() constructor {
 				self.animation.set_index(_index);	
 			}
 			self.animation.__frame = _animation.frame;
-		});
-		self.subscribe("animation_xscale", function(_xscale) {
-			self.animation.set_xscale(_xscale)
-		});
-		self.subscribe("animation_yscale", function(_yscale) {
-			self.animation.set_yscale(_yscale)
-		});
-		self.subscribe("animation_angle", function(_angle) {
-			self.rotation_angle = _angle;
-		});
-		self.subscribe("animation_visible", function(_visible) {
-			self.animation.set_visible(_visible)
 		});
 	}
 	
@@ -159,15 +147,6 @@ function ComponentAnimation() : ComponentBase() constructor {
 		var _first = self.position_queue[0];
 		return _first;
 	};
-
-	self.draw = function(){
-		if(!self.do_drawing) return;
-		self.draw_regular(self.get_interpolated_position());
-	}
-
-	self.get_sprite = function(){
-		return variable_clone(self.animation.__sprite);
-	}
 	
 	self.draw_regular = function(_pos, _col = c_white) {
 		if(is_undefined(_pos)) _pos = self.get_interpolated_position();
@@ -210,4 +189,6 @@ function ComponentAnimation() : ComponentBase() constructor {
 		    draw_circle(_instance_x + _ox, _instance_y + _oy, 2, false);
 		}
 	};
+		
+	self.sprites = [];
 }
