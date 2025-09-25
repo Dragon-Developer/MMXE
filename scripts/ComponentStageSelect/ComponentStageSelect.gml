@@ -29,11 +29,6 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	
 	self.init = function(){
 		self.stage_select_height = floor(array_length(self.stages) / self.stage_select_width);
-		spriteDrawer = self.get_instance().components.get(ComponentSpriteDrawer);
-		spriteDrawer.directory = "stage_select/"
-		spriteDrawer.load_sprites();
-		spriteDrawer.add_sprites_to_storage(["menu"]);
-		self.menu_sprite = spriteDrawer.get_sprite("menu")
 	}
 	
 	self.step = function(){

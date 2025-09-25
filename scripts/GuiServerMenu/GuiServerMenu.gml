@@ -24,7 +24,7 @@ function GuiServerMenu() : GuiContainer() constructor {
 		parent.lobbyMenuContainer.setEnabled(true);
 	});
 	
-	inputPort = new GuiTextInput();
+	inputPort = new GuiTextInput()
 	inputPort.setSize(200, 50);
 	inputPort.setValue("3000");
 	

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiDebugMenu",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiDebugMenu",
+  "parent":{
+    "name":"Gui",
+    "path":"folders/Scripts/Gui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
