@@ -83,29 +83,28 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.check_for_projectiles = function(){//seperated because this will definitely be expanded later
 		//place_meeting takes all masks into account, so I only need the one
-		var _proj = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.projectile);
-		if(!variable_instance_exists(_proj, "components") || !instance_exists(_proj)) return;
-		if(_proj.components.get(ComponentProjectile) == undefined) return;
-		//log(_proj)
+		var _proj = PROJECTILES.get_collision(self.get_instance())
+		if(_proj == false) return;
+		log(_proj)
 		
 		var _hits = false;
 		for(var g = 0; g < array_length(self.projectile_tags); g++){
-			if(_proj.components.get(ComponentProjectile).hurtable_tag == self.projectile_tags[g])
+			if(_proj.code.hurtable_tag == self.projectile_tags[g])
 				_hits = true;
 		}
 		
 		if !_hits return;
 		
-		if(self.invuln_offset > CURRENT_FRAME && _proj.components.get(ComponentProjectile).weaponCreate.comboiness <= self.combo_count){
+		if(self.invuln_offset > CURRENT_FRAME && _proj.code.comboiness <= self.combo_count){
 			//if the comboiness is too high and the projectile is not comboy enough
 			return;
 		}
 		
-		if(_proj.components.get(ComponentProjectile).weaponCreate.damage > 0){
-			self.health -= _proj.components.get(ComponentProjectile).weaponCreate.damage;
+		if(_proj.code.damage > 0){
+			self.health -= _proj.code.damage;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
-			self.combo_count = _proj.components.get(ComponentProjectile).weaponCreate.comboiness;
+			self.combo_count = _proj.code.comboiness;
 			log("hit by projectile")
 		}
 		

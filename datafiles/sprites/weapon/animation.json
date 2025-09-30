@@ -56,17 +56,6 @@
       ],
       "list": [
         {
-          "name": "shot",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
-          }
-        },
-        {
           "name": "xShot1",
           "properties": {
             "keyframes": [

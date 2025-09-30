@@ -1,0 +1,300 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "menu",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "x",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "zero",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "axl",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "megaman",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_start_cap",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_end_cap",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_full_tick",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_empty_tick",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "settings",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "navigator",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "exit",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "sub_tank",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "weapon_tank",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_tick",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_cap",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_fill",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_icon_x",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {//i doubt this works
+          "name": "healthbar_icon_zero",
+          "properties": {
+            "action": "healthbar_icon",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_icon_megaman",
+          "properties": {
+            "action": "healthbar_icon",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        //example icon
+        {
+          "name": "X_BUSTER",
+          "properties": {
+            "action": "icons",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "S_WHEEL",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "RADAR_FUNC",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 19
+              }
+            ]
+          }
+        },
+        {
+          "name": "XENO_M",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        }
+
+      ]
+    }
+  }
+}

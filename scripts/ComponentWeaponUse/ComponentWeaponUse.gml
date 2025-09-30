@@ -37,24 +37,29 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		});
 	}
 	
+	self.change_weapon = function(_change){
+		self.current_weapon[0] = _change;
+		self.current_weapon[0] = (self.current_weapon[0] + array_length(self.weapon_list)) mod array_length(self.weapon_list)
+		var _wep = {};
+			
+		with(_wep){
+			script_execute(other.weapon_list[other.current_weapon[0]]);
+		}
+		if(_wep == undefined) return;
+		log(_wep)
+		for(var i = 0; i < array_length(_wep.weapon_palette); i++){
+			find("animation").set_palette_color(i, _wep.weapon_palette[i]);
+		}
+		
+		return _wep.weapon_palette;
+	}
+	
 	self.step = function(){
 		
 		var _change_direction = self.input.get_input_pressed("switchRight") - self.input.get_input_pressed("switchLeft")
 		
 		if(_change_direction != 0){
-			self.current_weapon[0] += _change_direction;
-			self.current_weapon[0] = (self.current_weapon[0] + array_length(self.weapon_list)) mod array_length(self.weapon_list)
-			var _wep = {};
-			
-			with(_wep){
-				script_execute(other.weapon_list[other.current_weapon[0]]);
-			}
-			if(_wep == undefined) return;
-			log(_wep)
-			for(var i = 0; i < array_length(_wep.weapon_palette); i++){
-				find("animation").set_palette_color(i, _wep.weapon_palette[i]);
-			}
-			
+			self.change_weapon(self.current_weapon[0] + _change_direction)
 		}
 		
 		if self.bar != noone {
@@ -152,19 +157,29 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		//set the time for shooting to end
 		self.shot_end_time = CURRENT_FRAME + 15;
+		
+		var _x = self.get_instance().x;
+		
+		var _y = self.get_instance().y;
 			
 		//create the projectile itself
-		var _shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
+		var _shot = noone
+		
+		_shot = PROJECTILES.create_projectile(_x, _y, _shot_code);
+		
+		//old method
+		//_shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
+		
 		//set the projectile's direction to the player's
-		_shot.dir = self.get_instance().components.find("animation").animation.__xscale;
+		//_shot.dir = self.get_instance().components.find("animation").animation.__xscale;
 		
 		//flip the direction if wallsliding
 		if(_anim_name == "wall_slide"){
-			_shot.dir*= -1
+			//_shot.dir*= -1
 		}
 			
 		//set the projectile's data to _shot_data
-		_shot.weaponData = _shot_code;
+		//_shot.weaponData = _shot_code;
 	}
 	
 	self.apply_shot_offsets = function(_shot){

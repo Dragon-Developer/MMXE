@@ -49,10 +49,12 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentNode, _step);
 		ENTITIES.for_each_component(ComponentPlayerInput, _step);
 		ENTITIES.for_each_component(ComponentPlayerMove, _step);
+		ENTITIES.for_each_component(ComponentPauseMenu, _step);
 		ENTITIES.for_each_component(ComponentEnemy, _step);
 		ENTITIES.for_each_component(ComponentBoss, _step);
 		ENTITIES.for_each_component(ComponentWeaponUse, _step);
-		ENTITIES.for_each_component(ComponentProjectile, _step);
+		ENTITIES.for_each_component(ComponentProjectile, _step);//may be deprecated
+		ENTITIES.for_each_component(ComponentProjectileManager, _step);
 		ENTITIES.for_each_component(ComponentGravityChanger, _step);
 		ENTITIES.for_each_component(ComponentStageSelector, _step);
 		ENTITIES.for_each_component(ComponentCharacterSelect, _step);
@@ -61,6 +63,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentCharge, _step);
 		ENTITIES.for_each_component(ComponentAnimation, _step);
 		ENTITIES.for_each_component(ComponentAnimationShadered, _step);
+		ENTITIES.for_each_component(ComponentSpriteRenderer, _step);
 		ENTITIES.for_each_component(ComponentNPC, _step);
 		ENTITIES.for_each_component(ComponentInteractibleContact, _step);
 		ENTITIES.for_each_component(ComponentParallax, _step);
@@ -105,10 +108,12 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentHealthbar, _draw_gui);
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
 		ENTITIES.for_each_component(ComponentMinimap, _draw_gui);
+		ENTITIES.for_each_component(ComponentSpriteRenderer, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
 		ENTITIES.for_each_component(ComponentBoss, _draw_gui);
+		ENTITIES.for_each_component(ComponentPauseMenu, _draw_gui);
 		
 		if(self.debug){
 		

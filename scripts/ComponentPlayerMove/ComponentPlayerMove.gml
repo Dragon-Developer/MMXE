@@ -409,6 +409,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.default_step = function(){
+		
+		
 		// Gets horizontal and vertical directions from player input
 		self.hdir = self.input.get_input("right") - self.input.get_input("left");
 		self.vdir = self.input.get_input("down") - self.input.get_input("up");
@@ -440,6 +442,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		// Updates the FSM
 		if (self.fsm.event_exists("step"))
 			self.fsm.step();	
+			
+		//if you want the pause menu, we make it here
+		if(self.input.get_input_pressed_raw("pause")){
+			with(obj_entity){
+				array_foreach(components.__components, function(_comp){
+					_comp.step_enabled = false;
+				})
+			}
+			
+			var _pause = ENTITIES.create_instance(obj_pause_menu);
+		}
 	}
 		
 	self.draw = function(){

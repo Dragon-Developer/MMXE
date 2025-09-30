@@ -17,6 +17,7 @@ function SpinningWheel() : ProjectileWeapon() constructor{
 		#f0f0f0,//eye white
 		#f04010//red
 	];
+	self.title = "S. WHEEL";
 }
 
 function SpinningWheelData() : ProjectileData() constructor{

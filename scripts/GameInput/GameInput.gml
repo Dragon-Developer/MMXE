@@ -11,7 +11,8 @@ function GameInput() : NET_InputManager() constructor {
 		"shoot3",
 		"shoot4",
 		"switchLeft",
-		"switchRight"
+		"switchRight",
+		"pause"
 	]);
     self.getLocal = function(_index = 0) {
         var _input = {};

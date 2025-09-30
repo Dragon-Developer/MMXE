@@ -1,5 +1,6 @@
 function ProjectileWeapon() : Weapon() constructor{
-	self.term = "Projectile"
+	self.term = "Projectile";
+	self.title = "Undefined";
 	self.data = [noone,noone,noone,noone, noone];//hmmm
 	//self.charge_time = [30, 105, 180, 255];//i dont think mmxe uses this, but battle network has some busters charge faster than others
 	self.charge_limit = 2;
@@ -30,6 +31,9 @@ function ProjectileData() constructor{
 	self.damage = 1;
 	self.comboiness = 1;//gonna follow z3's system
 	self.init_time = CURRENT_FRAME;
+	self.animation = "xShot1";
+	self.hitbox_scale = new Vec2(8,8);
+	self.tag = "enemy"
 	self.general_init = function(_comp){
 		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
 	}

@@ -17,6 +17,7 @@ function XenoMissile() : ProjectileWeapon() constructor{
 		#f0f0f0,//eye white
 		#f04010//red
 	];
+	self.title = "XENO M.";
 }
 
 function XenoMissileData() : ProjectileData() constructor{

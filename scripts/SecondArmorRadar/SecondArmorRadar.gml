@@ -20,6 +20,7 @@ function SecondArmorRadar() : ProjectileWeapon() constructor{
 		#f0f0f0,//eye white
 		#ff4f1f//red
 	];
+	self.title = "RADAR FUNC.";
 }
 
 function RadarData() : ProjectileData() constructor{

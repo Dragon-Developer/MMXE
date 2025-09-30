@@ -1,7 +1,7 @@
 global.gui = new GuiRoot();
 last_input = 0;
 
-var _save = JSON.load("%localappdata%/MMXE/" + "save.json");
+var _save = JSON.load(working_directory + "save.json");
 if(_save == -1){
 	_save = {
 		"player_data":{

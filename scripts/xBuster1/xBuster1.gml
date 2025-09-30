@@ -1,6 +1,8 @@
 function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
 	self.charge_limit = 2;
+	self.title = "X BUSTER";
+	self.description = "X's Default Arm Cannon."
 }
 
 function xBuster11Data() : ProjectileData() constructor{
@@ -9,8 +11,6 @@ function xBuster11Data() : ProjectileData() constructor{
 	self.create = function(_inst){
 		//log(init_time)
 		//may make this default
-		_inst.components.publish("animation_play", { name: "xShot1" });
-		_inst.mask_index = spr_lemon_mask;
 		WORLD.play_sound("shoot_1");
 	}
 	self.step = function(_inst){
@@ -29,7 +29,7 @@ function xBuster12Data() : ProjectileData() constructor{
 	self.comboiness = 1;//same combo damage as lemons, so it could be a good combo ender?
 	self.damage = 2;
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "xShot2" });
+		//_inst.components.publish("animation_play", { name: "xShot2" });
 		WORLD.play_sound("shoot_2");
 	}
 	self.step = function(_inst){
@@ -48,7 +48,7 @@ function xBuster13Data() : ProjectileData() constructor{
 	self.comboiness = 2;
 	self.damage = 3;
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "xShot3X1" });
+		//_inst.components.publish("animation_play", { name: "xShot3X1" });
 		WORLD.play_sound("shoot_3");
 	}
 	self.step = function(_inst){

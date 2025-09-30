@@ -9,6 +9,7 @@ components.add([
 
 components.init();
 
+#region Sound Stuff
 self.music = self.components.get(ComponentSoundLoader).play_sound(global.stage_Data.music,0,true);
 
 self.spawn_particle = function(_particle){
@@ -46,4 +47,10 @@ self.clear_sound = function(){
 self.stop_music = function(){self.stop_sound(self.music)};
 
 self.play_music(global.stage_Data.music)
-log(string(global.settings.Music_Volume) + " is the volume")
+#endregion
+
+#region making the projectile Manager
+
+PROJECTILES = instance_create_depth(0,0,0,projectile_manager);
+
+#endregion

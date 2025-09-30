@@ -1,4 +1,5 @@
 #macro ENTITIES global.entities
+#macro PROJECTILES global.projectileManager
 #macro SOUND global.soundManager
 #macro GAME global.game
 #macro WORLD global.world
