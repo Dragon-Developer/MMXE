@@ -10,7 +10,7 @@ function InputRpc(_is_server = false) constructor {
 		});
 	}
 	self.sendInput = function(_id, _frame, _input) {
-		var _sockets = (isServer) ? socket.getAllSockets() : undefined;
+		var _sockets = (isServer) ? socket.getAllSockets() : 0;
 		socket.rpc.sendNotification("input_update", {
 			id: _id,
 			frame: _frame,

@@ -271,8 +271,8 @@ function AnimationController(_character = "") constructor {
 					if (!is_undefined(_sprite)) {
 						currentAnimation[$ "sprites"][$ _action] = _sprite;
 					} else {
-						if(!__input_string_contains(_sprite_name, "x"))
-							log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
+						//if(!__input_string_contains(_sprite_name, "x"))
+							//log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
 					}
 				}
 	        }));

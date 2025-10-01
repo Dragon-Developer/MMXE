@@ -7,16 +7,16 @@ uniform float width;
 uniform float height;
 uniform float ScreenScale;
 
-const vec3 size = vec3(255,255,1);//width,height,radius
+const vec3 size = vec3(285,285,1);//width,height,radius
 const vec4 colOffset = vec4(0.0,-0.05,0.0, 0.0);//width,height,radius
 
-const int Quality = 3;
+const int Quality = 4;
 const int Directions = 8;
 const float Pi = 6.28318530718;//pi * 2
 
 const float blendVal = 1.05;
 const float cutoffVal = 0.05;
-const float cutoffMult = 0.78;
+const float cutoffMult = 0.95;
 
 vec4 apply_scanlines(vec4 val)
 {

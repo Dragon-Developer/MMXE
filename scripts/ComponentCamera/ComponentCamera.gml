@@ -22,6 +22,10 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.bounds_bottom_right_x = 356;
 	self.bounds_bottom_right_y = 0;
 	
+	self.serializer
+		.addVariable("x")
+		.addVariable("y")
+	
 	self.on_register = function() {
 		self.subscribe("target_set", function(_target) {
 			self.target = _target;

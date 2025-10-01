@@ -21,7 +21,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		var _players = ENTITIES.find_all(["player"]);
 		self.__log = "";
 		array_foreach(_players, function(_player) {
-			var _index = _player.components.get(EntityComponentPlayerInput).__player_index;
+			var _index = _player.components.get(ComponentPlayerInput).__player_index;
 			
 			self.__log += json_stringify({ x: _player.x, y: _player.y, index: _index });
 		});

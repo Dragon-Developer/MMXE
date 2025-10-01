@@ -1,4 +1,4 @@
-#macro NET_ROLLBACK_DEBUG false
+#macro NET_ROLLBACK_DEBUG true
 function NET_GameRollback() : NET_GameBase() constructor {
 	enum NET_ROLLBACK_MODE {
 		NORMAL,
@@ -101,7 +101,7 @@ function NET_GameRollback() : NET_GameBase() constructor {
 		_log += "  predicted_frames: " + string(self.__current_frame - self.__last_confirmed_frame) + "\n";
 
 
-		var _players = 2;
+		var _players = array_length(self.__local_players);
 		var _start_frame = max(0, self.__current_frame - _input_window);
 		var _end_frame = self.__current_frame;
 
@@ -113,8 +113,10 @@ function NET_GameRollback() : NET_GameBase() constructor {
 			}
 			_log += "\n";
 		}
+		
+		log(_log);
 
-		if (NET_ROLLBACK_DEBUG) LOG.print(_log);
+		if (NET_ROLLBACK_DEBUG) log(_log);
 	}
 
 	self.start = function() {
@@ -137,9 +139,10 @@ function NET_GameRollback() : NET_GameBase() constructor {
 	self.__debug_keys = function() {
 		if (keyboard_check_pressed(vk_f1)) {
 			self.debug_rollback_state("DEBUG F1", 10);
+			log("F1")
 		}
 		if (keyboard_check_pressed(vk_f2)) {
-			if (NET_ROLLBACK_DEBUG) LOG.print("canContinue(" + string(self.__current_frame) + "): " + string(self.inputs.canContinue(self.__current_frame)));
+			if (NET_ROLLBACK_DEBUG) log("canContinue(" + string(self.__current_frame) + "): " + string(self.inputs.canContinue(self.__current_frame)));
 		}
 	};
 

@@ -165,7 +165,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//create the projectile itself
 		var _shot = noone
 		
-		_shot = PROJECTILES.create_projectile(_x, _y, _shot_code);
+		var _dir = self.get_instance().components.find("animation").animation.__xscale;
+		
+		if(_anim_name == "wall_slide"){
+			_dir *= -1
+		}
+		
+		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_code);
 		
 		//old method
 		//_shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);

@@ -17,6 +17,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	#endregion
 	
 	self.armor_parts = []
+	
 		
 	self.character = variable_clone(global.player_character, 256);
 	
@@ -222,7 +223,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_grav(new Vec2(0,0));
 				self.physics.set_speed(0,0)
 				self.input.__locked = true;
-				ENTITIES.remove_component(self.get(ComponentDamageable));
+				//ENTITIES.remove_component(self.get(ComponentDamageable));
 				self.timer = CURRENT_FRAME;
 			},
 			step: function(){
@@ -271,12 +272,12 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_custom_end", "custom", "idle")
 		//.add_transition("t_custom", ["air", "walk"], "custom")  why does this line exist when the above line covers it
 		.add_transition("t_custom_exit", "custom", "jump")
-		.add_wildcard_transition("t_death", "death", function(){return self.fsm.get_current_state() != "death"})
 		.add_transition("t_animation_end", ["start", "land", "dash_end","ladder_exit", "hurt"], "idle")
 		.add_transition("t_animation_end", "complete", "outro")
 		.add_transition("t_animation_end", "outro", "leave")
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
 		.add_wildcard_transition("t_dialouge", "idle")
+		.add_transition("t_hadouken", "idle", "land")
 		//.add_wildcard_transition("t_hurt", "idle", function() { return !(self.get_wall_jump_dir() != 0 && !self.physics.is_on_floor()); })
 		/*automatic transitions between states*/
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
@@ -310,14 +311,26 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
+			self.motion = self.get(ComponentMotionInput) ?? new ComponentMotionInput();
 			//What the heck is the parent of this? is it the player object?
 			self.weaponHandler = self.parent.find("weaponHandler") ?? new ComponentWeaponUse();
+			
+			motion
+				.set_input(self.input)
+			    .set_buttons(["shoot"])
+			    .add_motion("hadouken", [2, 3, 6], "shoot", function() {
+			        fsm.trigger("t_hadouken");
+			    })
+			    .add_motion("shoryuken", [6, 2, 3], "shoot", function() {
+			        fsm.trigger("t_shoryuken");
+			    });
 		});
 		self.subscribe("animation_end", function() {
 			self.fsm.trigger("t_animation_end");	
 		});
 		self.subscribe("death", function() {
-			self.fsm.trigger("t_death");	
+			if(self.fsm.get_current_state() != "death")
+				self.fsm.change("death");
 		});
 		self.subscribe("player_set_armor_full", function(_armors) {
 			self.apply_full_armor_set(_armors);
@@ -409,7 +422,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.default_step = function(){
+		self.motion.set_facing(self.dir)
 		
+		self.motion.step();
+		
+		//i love janky fixes
+		if(self.fsm.get_current_state() == "death") {
+			if (self.fsm.event_exists("step"))
+				self.fsm.step();	
+			
+			return;
+		}
 		
 		// Gets horizontal and vertical directions from player input
 		self.hdir = self.input.get_input("right") - self.input.get_input("left");

@@ -15,7 +15,7 @@ function GuiRoot() : GuiContainer() constructor {
 		room_goto(_id);
 	}
 	
-	startMultiplayerLobby = function() {
+	startMultiplayerLobby = function(_room) {
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		global.game.start();
@@ -27,20 +27,25 @@ function GuiRoot() : GuiContainer() constructor {
 			for(var t = 0; t < array_length(global.server.getAllSockets()); t++){
 				array_push(_plrs, t + 1)
 				global.server.rpc.sendNotification("set_player_id", {
-					_id: t + 1
+					_id: t + 1,
+					players: array_length(global.server.getAllSockets()) + 1
 				}, global.server.getAllSockets()[t]);
 				log(global.server.getAllSockets()[t])
 			}
-			log(_plrs)
-			global.game.inputs.setTotalPlayers(array_length(_plrs));
+			global.game.inputs.setTotalPlayers(array_length(global.server.getAllSockets()) + 1);
+			global.game.add_local_players(_plrs);
+			
 			global.server.rpc.sendNotification("game_start", {
-				players: _plrs
+				players: _plrs,
+				room: _room
 			}, global.server.getAllSockets());
+			
+			log("server done")
 		}//if this fails, youre a client
 		
 		WaitingContainer.setEnabled(false);
 		
-		room_goto(rm_training_stage);
+		room_goto(rm_headquarters);
 	}
 	
 	startEditor = function(){

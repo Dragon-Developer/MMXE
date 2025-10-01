@@ -83,13 +83,21 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.check_for_projectiles = function(){//seperated because this will definitely be expanded later
 		//place_meeting takes all masks into account, so I only need the one
-		var _proj = PROJECTILES.get_collision(self.get_instance())
+		var _proj = false;
+		
+		var _projectiles = PROJECTILES.components.get(ComponentProjectileManager).projectiles;
+		
+		for(var u = 0; u < array_length(_projectiles); u++){
+			if(position_meeting(floor(_projectiles[u].position.x), floor(_projectiles[u].position.y), self.get_instance())){
+				_proj = _projectiles[u];
+			}
+		}
+		
 		if(_proj == false) return;
-		log(_proj)
 		
 		var _hits = false;
 		for(var g = 0; g < array_length(self.projectile_tags); g++){
-			if(_proj.code.hurtable_tag == self.projectile_tags[g])
+			if(_proj.code.tag == self.projectile_tags[g])
 				_hits = true;
 		}
 		

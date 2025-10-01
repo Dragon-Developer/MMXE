@@ -45,3 +45,6 @@ switch(transition_data.type){
 		}
 	break;
 }
+	
+	
+draw_string(global.local_player_index, 1, 1, "pause menu")

@@ -83,7 +83,7 @@ function ComponentBoss() : ComponentBase() constructor{
 				
 				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
 					var _inst = self.get_instance();
-					var _spot = new Vec2(_inst.x + (random_range(-64,0)),_inst.y + (random_range(-64,0)))
+					var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
 					
 					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
 					if(CURRENT_FRAME mod 8 == 0)

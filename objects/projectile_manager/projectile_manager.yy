@@ -33,6 +33,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":null,
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_pixel",
+    "path":"sprites/spr_pixel/spr_pixel.yy",
+  },
   "visible":true,
 }

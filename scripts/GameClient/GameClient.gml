@@ -3,7 +3,7 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 	input_source_set(INPUT_KEYBOARD, 1);
 	global.local_player_index = 1;
 	global.game.add_event_listener("input_local", function(_data) {
-		self.inputRpc.sendInput(0, _data.frame, _data.inputs[0]);
+		self.inputRpc.sendInput(global.local_player_index, _data.frame, _data.inputs[0]);
 	});
 	self.started = false;
 	self.inputRpc = new InputRpc(false);
@@ -12,7 +12,9 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 		global.game.on_ping_received(_ping);
 	}
 	rpc.registerHandler("set_player_id", function(_id) {
-		log("player id was set to " + string(_id._id))
+		//global.game.inputs.setTotalPlayers(_id.players);
+		log(string(global.game.inputs.totalPlayers) + " is the player count for " + string(_id._id))
+		log(_id.players)
 		input_source_set(INPUT_KEYBOARD, _id._id);
 		global.local_player_index = _id._id;
 	});
@@ -21,8 +23,9 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 		var totalPlayers = array_length(players);
 		global.game.add_local_players([global.local_player_index]);
 		global.game.inputs.setTotalPlayers(totalPlayers);
+		global.game.add_local_players(players);
 		global.gui.lobbyMenuContainer.setEnabled(false);	
-		global.gui.startMultiplayerLobby();
+		global.gui.startMultiplayerLobby(_params.room);
 		self.started = true;
 	});
 	self.setEvent("connected", function() {
