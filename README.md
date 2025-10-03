@@ -17,6 +17,8 @@ The majority of updates come from discord. If you need help, go ask there!
 # How to use
 Get Gamemaker. For best compatibility, use 2024.4.1.152 as this is the version used to develop MMXE.
 
+You can find the version here: https://releases.gamemaker.io/release-notes/2024/4
+
 After that, go click on the code button here in the github page and click on the download option in the dropdown menu. This will download a copy of the project files onto your computer so you can edit your own local copy of the code.
 
 Once you have your own local copy of the engine, you are capable of making your own changes! Read the wiki for help, and if the wiki does not contain what you need go to the discord and ask help there!
