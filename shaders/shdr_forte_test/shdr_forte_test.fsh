@@ -14,7 +14,7 @@ const int Quality = 4;
 const int Directions = 8;
 const float Pi = 6.28318530718;//pi * 2
 
-const float blendVal = 1.05;
+const float blendVal = 1.17;
 const float cutoffVal = 0.05;
 const float cutoffMult = 0.95;
 
@@ -22,7 +22,7 @@ vec4 apply_scanlines(vec4 val)
 {
 	vec4 ret = val;
 	
-	float mixVal = blendVal * abs((mod((v_vTexcoord.y * (height * ScreenScale)), ScreenScale)) - 1.0);
+	float mixVal = blendVal * abs((mod((v_vTexcoord.y * (height * ScreenScale)), ScreenScale)) - 0.9);
 	//mixVal = mixVal * ((abs(mod((v_vTexcoord.x * (width * ScreenScale)), ScreenScale)) - 1.0) / 2.0 + 1.0);
 	
 	ret = vec4(ret.r / mixVal,ret.g / mixVal,ret.b / mixVal,1);
@@ -63,7 +63,9 @@ void main()
 	
 	final = vec4(log(final.r + 1.0),log(final.g + 1.0),log(final.b + 1.0),1.0);
 	
-	final = apply_scanlines(final);
+	vec4 scanlines = apply_scanlines(final);
+	
+	final = vec4((final.rgb + scanlines.rgb) / 1.75, final.a);
 	
 	final += colOffset;
 	

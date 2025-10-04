@@ -1,7 +1,7 @@
 function SpriteLoader() constructor {
 	static loaded_files = {};
 	// Generates the nested directory structure first, then processes it
-	static __generate_directory_structure = function (_current_dir) {
+	static __generate_directory_structure = function (_current_dir, _debug = true) {
 		_current_dir = working_directory + _current_dir;
 		////log("generating directory structure. directory is " + _current_dir)
 	    var result = {
@@ -44,9 +44,9 @@ function SpriteLoader() constructor {
 		
 		if(_png_files == [])
 			log("no png files were found in " + _current_dir)
-		else{
+		else if(_debug){
 			array_foreach(_png_files, function(_png){
-				//////log(_png + " was found")
+				//log(_png + " was found")
 				//log(_png + " : " + (file_exists(_png) ? "exists" : "does not exist"))
 			})
 		}
@@ -55,7 +55,7 @@ function SpriteLoader() constructor {
 	};
 
 	// Recursively scans the directory structure and loads files
-	static __scan_directory = function (_directory_structure, _files, _settings, _default_origin) {
+	static __scan_directory = function (_directory_structure, _files, _settings, _default_origin, _debug = true) {
 	    // Process files in the current directory first
 	    for (var _i = 0; _i < array_length(_directory_structure.files); _i++) {
 	        var _file_path = _directory_structure.files[_i];
@@ -98,9 +98,9 @@ function SpriteLoader() constructor {
 	};
 
 	// Public function to start the process
-	static get_all_png_files = function (_dir, _subdir) {
+	static get_all_png_files = function (_dir, _subdir, _debug) {
 		////log("getting all png files")
-	    var _directory_structure = self.__generate_directory_structure(_dir + _subdir);
+	    var _directory_structure = self.__generate_directory_structure(_dir + _subdir, _debug);
 	    var _files = [];
 
 	    // Load settings if available
@@ -141,12 +141,12 @@ function SpriteLoader() constructor {
 		}
 		_collage.FinishBatch();
 	}
-	static reload_collage = function(_collage, _dir, _subdirs) {
+	static reload_collage = function(_collage, _dir, _subdirs, _debug = true) {
 		//log(directory_exists(working_directory + _dir) ? (_dir + " does in fact exist") : (_dir + " does not exist you stoopid"))
 		////log("reloading collage")
 		var _files = [];
 		for (var _i = 0, _len = array_length; _i < array_length(_subdirs); _i++) {
-			_files = array_concat(_files, SpriteLoader.get_all_png_files(_dir, _subdirs[_i]));
+			_files = array_concat(_files, SpriteLoader.get_all_png_files(_dir, _subdirs[_i], _debug));
 		}
 		
 		SpriteLoader.load_png_files(_collage, _files);

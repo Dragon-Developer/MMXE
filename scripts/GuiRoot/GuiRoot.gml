@@ -18,7 +18,6 @@ function GuiRoot() : GuiContainer() constructor {
 	startMultiplayerLobby = function(_room) {
 		hudContainer.setEnabled(true);
 		refreshChildren();
-		global.game.start();
 		
 		if (!is_undefined(global.server)) {
 		//excuse my cancer, but i also dont give a fuck
@@ -27,13 +26,13 @@ function GuiRoot() : GuiContainer() constructor {
 			for(var t = 0; t < array_length(global.server.getAllSockets()); t++){
 				array_push(_plrs, t + 1)
 				global.server.rpc.sendNotification("set_player_id", {
-					_id: t + 1,
-					players: array_length(global.server.getAllSockets()) + 1
+					_id: t + 1
 				}, global.server.getAllSockets()[t]);
-				log(global.server.getAllSockets()[t])
+				//log(global.server.getAllSockets()[t])
 			}
+			
 			global.game.inputs.setTotalPlayers(array_length(global.server.getAllSockets()) + 1);
-			global.game.add_local_players(_plrs);
+			global.game.add_local_players([0]);
 			
 			global.server.rpc.sendNotification("game_start", {
 				players: _plrs,
@@ -42,10 +41,11 @@ function GuiRoot() : GuiContainer() constructor {
 			
 			log("server done")
 		}//if this fails, youre a client
+		global.game.start();
 		
 		WaitingContainer.setEnabled(false);
 		
-		room_goto(rm_headquarters);
+		room_goto(_room);
 	}
 	
 	startEditor = function(){

@@ -127,6 +127,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("outro", {
 			enter: function(){
+				with(obj_camera){
+					components.get(ComponentCamera).target = noone;
+				}
 				self.publish("animation_play", { name: "outro" });
 			}
 		})
@@ -563,7 +566,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.timer = 0;
 				self.publish("animation_play", { name: "wall_slide" });
 				self.physics.set_speed(0, 0);
-				self.physics.set_grav(0);
+				self.physics.set_grav(new Vec2(0,0));
 				self.dash_jump = false;
 				self.current_hspd = self.states.walk.speed;	
 			},
@@ -588,7 +591,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.dir = self.get_wall_jump_dir();
 				if (self.dir != 0) self.publish("animation_xscale", self.dir)
 				self.physics.set_speed(0, 0);
-				self.physics.set_grav(0);
+				self.physics.set_grav(new Vec2(0,0));
 			},
 			leave: function() {	
 				self.physics.update_gravity();

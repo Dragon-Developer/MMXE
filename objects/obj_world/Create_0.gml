@@ -51,6 +51,9 @@ self.play_music(global.stage_Data.music)
 
 #region making the projectile Manager
 
-PROJECTILES = instance_create_depth(0,0,0,projectile_manager);
+PROJECTILES = instance_create_depth(0,0,depth,projectile_manager);
+
+PROJECTILES.components.get(ComponentSpriteRenderer).character = "weapon";
+PROJECTILES.components.get(ComponentSpriteRenderer).load_sprites();
 
 #endregion

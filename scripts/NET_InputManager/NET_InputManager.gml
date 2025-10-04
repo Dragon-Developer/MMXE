@@ -3,6 +3,7 @@ function NET_InputManager() constructor {
 	self.totalPlayers = 3;
 	self.lastInput = {};
 	self.keys = [];
+	
 	static getFormattedInputs = function(_frame) {
 		var _raw_inputs = self.getAll(_frame);
 		var _formatted_inputs = array_create(self.totalPlayers);
@@ -28,7 +29,6 @@ function NET_InputManager() constructor {
 		for (var _i = 0; _i < self.totalPlayers; _i++) {
 			array_push(_inputs, variable_clone(self.getInput(_frame, _i)));
 		}
-		log(_inputs)
 		return _inputs;
 	}
 	static setKeys = function(_keys) {

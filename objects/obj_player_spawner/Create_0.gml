@@ -2,10 +2,10 @@ event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
 on_spawn = function(_player) {
+	_player.x += current_spawn * 20
 	_player.components.get(ComponentAnimationShadered).set_subdirectories(
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
-	_player.components.publish("character_set", "weapon");
 	_player.components.publish("character_set", global.player_character.image_folder);
 	//log(string(global.player_character.image_folder) + " is the character folder")
 //	log(string(global.player_character) + " is the character")

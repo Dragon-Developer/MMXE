@@ -10,7 +10,16 @@ switch(transition_data.type){
 					room_goto(transition_data.room)
 			}
 		} else if(transition_data.opacity <= 0 && transition_data.transitioning){
-			transition_data.transitioning = false;
+			transition_data = {
+				type: "fade",
+				opacity: 0,
+				opacity_2: 0,
+				sprite: spr_fade,
+				transitioning: false,
+				visual_rate: 1,
+				visual_rate_2: 1,
+				room: -1
+			}
 		}
 	break;
 	case "white to black":

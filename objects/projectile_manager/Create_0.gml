@@ -2,7 +2,8 @@ event_inherited();
 
 components.add([
 	ComponentProjectileManager,
-	ComponentSpriteRenderer
+	ComponentSpriteRenderer,
+	ComponentAnimationShadered
 ])
 
 components.init();

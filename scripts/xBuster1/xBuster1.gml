@@ -2,7 +2,7 @@ function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
 	self.charge_limit = 2;
 	self.title = "X BUSTER";
-	self.description = "X's Default Arm Cannon."
+	self.description = "Mega Buster Mark 17"
 }
 
 function xBuster11Data() : ProjectileData() constructor{
@@ -28,6 +28,10 @@ function xBuster11Data() : ProjectileData() constructor{
 function xBuster12Data() : ProjectileData() constructor{
 	self.comboiness = 1;//same combo damage as lemons, so it could be a good combo ender?
 	self.damage = 2;
+	
+	self.hitbox_scale = new Vec2(16,16);
+	self.animation = "xShot2";
+
 	self.create = function(_inst){
 		//_inst.components.publish("animation_play", { name: "xShot2" });
 		WORLD.play_sound("shoot_2");
@@ -47,6 +51,10 @@ function xBuster12Data() : ProjectileData() constructor{
 function xBuster13Data() : ProjectileData() constructor{
 	self.comboiness = 2;
 	self.damage = 3;
+	
+	self.animation = "xShot3X1";
+	self.hitbox_scale = new Vec2(24,24);
+	
 	self.create = function(_inst){
 		//_inst.components.publish("animation_play", { name: "xShot3X1" });
 		WORLD.play_sound("shoot_3");

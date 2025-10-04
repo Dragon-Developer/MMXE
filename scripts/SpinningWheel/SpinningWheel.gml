@@ -28,8 +28,10 @@ function SpinningWheelData() : ProjectileData() constructor{
 	self.vspd = 0;
 	self.bounce_count_max = 4;
 	self.bounce_count = 0;
+	
+	self.animation = "wheel";
+	
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "wheel" });
 		_inst.mask_index = spr_small_mask;
 		_inst.components.get(ComponentPhysics).step = function(){};
 		/*with(_inst.components.get(ComponentProjectile)){

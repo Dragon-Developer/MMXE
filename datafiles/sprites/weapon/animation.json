@@ -67,6 +67,29 @@
           }
         },
         {
+          "name": "shot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "undefined",
+          "properties": {
+            "action": "shot",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "xShot2",
           "properties": {
             "keyframes": [

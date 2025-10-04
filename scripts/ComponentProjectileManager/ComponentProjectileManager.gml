@@ -7,8 +7,9 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		.addCustom("to_delete")
 	
 	self.init = function(){
-		get(ComponentSpriteRenderer).character = "weapon";
+		//get(ComponentSpriteRenderer).character = "pause";
 		get(ComponentSpriteRenderer).load_sprites();
+		log("inited")
 	}
 	
 	self.create_projectile = function(_x, _y,_dir,  _code){
@@ -22,7 +23,10 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		_shot.code.dir = _dir;
 		_shot.code.create(_shot.position);
 		
-		struct_set(_shot, "sprite", get(ComponentSpriteRenderer).add_sprite(_shot.code.animation, _x, _y));
+		log(_shot.code.animation)
+		
+		struct_set(_shot, "sprite", get(ComponentSpriteRenderer).add_sprite(_shot.code.animation,false,  _x, _y, _dir));
+		log(_shot.sprite)
 		struct_set(_shot, "hitbox", _shot.code.hitbox_scale);
 		
 		array_push(self.projectiles, _shot);
@@ -40,15 +44,22 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		array_foreach(self.to_delete, function(_shot){
 			for(var p = 0; p < array_length(self.projectiles); p++){
 				if(self.projectiles[p] == _shot){
-					array_delete(self.projectiles, p,1)
+					get(ComponentSpriteRenderer).clear_sprite(_shot.sprite);
+					array_delete(self.projectiles, p,1);
 				}
 			}
 		})
 	}
 	self.draw = function(){
 		array_foreach(self.projectiles, function(_shot){
-			draw_circle(_shot.position.x, _shot.position.y, 4, false);
+			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y)
 		})
+	}
+	
+	self.draw_gui = function(){
+		for(var p = 0; p < array_length(self.projectiles); p++){
+			draw_string(self.projectiles[p].code.animation, 2, 2 + p * 8)
+		}
 	}
 	
 	self.get_collision = function(_object){

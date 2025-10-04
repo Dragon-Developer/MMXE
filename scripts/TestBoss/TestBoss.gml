@@ -90,6 +90,9 @@ function TestBoss() : BaseBoss() constructor{
 			})
 			.add_child("jump", "wall_jump", {
 				enter: function(){
+					if(self.get(ComponentPhysics).is_on_ceil())
+						self.dir = self.dir * -1;
+					
 					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
 					self.get(ComponentPhysics).set_hspd(self.dir)
 				}

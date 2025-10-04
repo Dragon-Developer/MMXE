@@ -2,7 +2,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	static collage = new Collage();
 	self.add_tags("sprite renderer");
 	self.character = "weapon";
-	self.subdirectories = ["","/normal"];
+	self.subdirectories = [ "/normal"];
 	
 	self.serializer
 		.addVariable("sprites")
@@ -10,7 +10,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	self.sprites = [];//holds every currently used sprite. 
 	
 	//adds a new sprite into the pool
-	self.add_sprite = function(_animation = "", _on_gui_layer = false, _x = 0, _y = 0, _collage = collage, _char = self.character){
+	self.add_sprite = function(_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _char = self.character){
 		//prepares a struct
 		var _spr = {};
 		
@@ -20,24 +20,46 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		struct_set(_spr, "is_gui", _on_gui_layer);
 		struct_set(_spr, "x", _x);
 		struct_set(_spr, "y", _y);
+		struct_set(_spr, "dir", _dir);
 		
 		_spr.animationController.play(_spr.animation);
 		_spr.animationController.__animation = _spr.animation;
 		
 		//adds the struct to the sprites array
-		array_push(self.sprites, _spr);
+		var _index = -1;
 		
-		self.reload_animation_controller(array_length(self.sprites) - 1,_collage, _char);
+		for(var p = 0; p < array_length(self.sprites); p++){
+			if(self.sprites[p] == undefined){
+				_index = p;
+				break;
+			}
+		}
 		
-		return array_length(self.sprites) - 1;
+		if(1 == 1){
+			array_push(self.sprites, _spr);
+			_index = array_length(self.sprites) - 1
+		} else {
+			array_set(self.sprites, _spr, _index)
+		}
+		
+		self.reload_animation_controller(_index,collage, _char);
+		
+		log("Sprite made")
+		
+		return _index
 	}
 	
 	//deletes unused sprites. 
 	self.clear_sprite = function(_id = 0){
-		array_delete(self.sprites, _id, 1);
+		if(_id == 0) return;//the first sprite can be used for drawing so it needs to exist
+		
+		self.sprites[_id] = undefined;
 	}
 	
 	self.init = function(){
+		//character = "x";
+		load_sprites();
+		add_sprite("shot", true, 32, 32);
 	}
 	
 	self.set_position = function(_id = 0, _x = 0, _y = 0){
@@ -56,14 +78,13 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		if(_animation == -1) return;
 		var _current_animation = undefined;
 		if (!is_undefined(self.sprites[_index].animation)) {
-			_current_animation = "undefined";
+			_current_animation = self.sprites[_index].animation;
+			log("what in the goddamn fuck did you do")
 		}
 		self.sprites[_index].animationController
 			.clear()
 			.set_character(_char)
 			.use_collage(_collage)
-			.add_type("hitbox") 
-			.add_type("hurtbox") 
 			.parse_data(_animation.data.animations)
 			.init();
 		
@@ -74,8 +95,11 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	
 	self.step = function(){
 		array_foreach(self.sprites, function(_spr){
-			if(struct_exists(_spr, "step"))
-				_spr.step();
+			if(_spr != undefined){
+				if(struct_exists(_spr, "step"))
+					_spr.step();
+				_spr.animationController.step();
+			}
 		})
 	}
 	
@@ -97,35 +121,44 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 					//this is DOGSHIT and i hope that you NEVER do this
 					_action = _sprite.animation;
 				}
+				
+				var _animation = _sprite.animation;
+				
+				if _animation == "undefined" log("dat aint supposed to happen!")
 					
 				var ret = [
 					_sprite.x, _sprite.y,
-					_animator.__animation, 
+					_animation, 
 					_animator.__frame,
 					_action,
 					_animator.__xscale,
 				];
+				//log(ret)
 				return ret;
 			}
+		log("shitted my pants")
 	}
 	
 	self.draw = function(){
 		array_foreach(self.sprites, function(_sprite){
-			if(!_sprite.is_gui){
-				draw_regular(get_interpolated_position(_sprite), _sprite, c_white)
-				draw_sprite(spr_player_mask,0,get_interpolated_position(_sprite)[0], get_interpolated_position(_sprite)[1]);
+			if(_sprite != undefined){
+				if(!_sprite.is_gui){
+					draw_regular(get_interpolated_position(_sprite), _sprite, c_white, false)
+				}
 			}
 		})
 	}
 	
 	self.draw_gui = function(){
 		array_foreach(self.sprites, function(_sprite){
-			if(_sprite.is_gui)
-				draw_regular(get_interpolated_position(_sprite), _sprite, c_white)
+			if(_sprite != undefined){
+				if(_sprite.is_gui)
+					draw_regular(get_interpolated_position(_sprite), _sprite, c_white, true)
+			}
 		})
 	}
 	
-	self.draw_regular = function(_pos, _sprite, _col = c_white) {
+	self.draw_regular = function(_pos, _sprite, _col = c_white, _on_gui = false) {
 		var _animator = _sprite.animationController;
 		if(is_undefined(_pos)) _pos = self.get_interpolated_position(_animator);
 		var _instance_x = floor(_pos[0]);
@@ -135,9 +168,9 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		var _action = _pos[4];
 		var _xscale = _pos[5];
 		
-	    _animator
-			.set_xscale(_xscale)
-			.draw_action(_action, undefined, _frame, floor(_instance_x), floor(_instance_y))
+	    _animator.set_xscale(_sprite.dir);
+		_animator.draw_action(_action, undefined, _frame, floor(_instance_x), floor(_instance_y))
+		//log("sprite's on screen")
 	};
 	
 	self.draw_sprite = function(_action, _frame, _x, _y, _renderer = 0){

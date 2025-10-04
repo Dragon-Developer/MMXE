@@ -10,7 +10,7 @@
   "option_windows_description_info":"Megaman X Engine Version 2",
   "option_windows_disable_sandbox":true,
   "option_windows_display_cursor":true,
-  "option_windows_display_name":"MMXE v2",
+  "option_windows_display_name":"MMXE",
   "option_windows_enable_steam":false,
   "option_windows_executable_name":"${project_name}.exe",
   "option_windows_icon":"${options_dir}/windows/icons/icon.ico",
