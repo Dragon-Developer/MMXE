@@ -1,0 +1,10 @@
+{
+	"client_data":{
+		"friendly_fire": true,
+		"allow_armors": false
+	},
+	"server_only_data": {
+		"timeout":1000
+
+	}
+}

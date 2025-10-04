@@ -2,7 +2,7 @@ event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
 on_spawn = function(_player) {
-	_player.x += current_spawn * 20
+	_player.x += current_spawn * 5
 	_player.components.get(ComponentAnimationShadered).set_subdirectories(
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
@@ -25,6 +25,11 @@ on_spawn = function(_player) {
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);
 	_player.components.get(ComponentDamageable).invuln_time = 120;
+	
+	if(global.server_settings.client_data.friendly_fire){
+		_player.components.get(ComponentDamageable).projectile_tags = ["player" + string(current_spawn)]
+	}
+	
 	with(_player.components.get(ComponentDamageable)){
 		self.death_function = function(){
 			self.publish("death");
@@ -51,7 +56,7 @@ on_spawn = function(_player) {
 		//_player.components.get(ComponentPlayerInput).buffer_reset();
 	}
 	
-	_player.components.get(ComponentPlayerInput).__BufferLength = 3;
+	_player.components.get(ComponentPlayerInput).__BufferLength = 0;
 	_player.components.get(ComponentPlayerInput).buffer_reset();
 	
 	current_spawn++;

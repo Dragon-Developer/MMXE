@@ -31,6 +31,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.addVariable("dash_tapped")
 		.addVariable("armor_parts")
 		.addVariable("paused")
+		.addVariable("locked")
 		.addCustom("double_tap")
 		.addCustom("fsm");
 		#endregion
@@ -217,7 +218,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			enter: function(){
 				WORLD.play_sound("hurt");
 				self.publish("animation_play", { name: "hurt" });
-				self.physics.velocity = new Vec2(self.dir * self.states.hurt.speed,-2);
+				//self.physics.velocity = new Vec2(self.dir * self.states.hurt.speed,-2);
+				self.physics.set_speed(self.dir * self.states.hurt.speed,-2)
 			}
 		})
 		.add("death", {
@@ -260,6 +262,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 						//will add transition mode for that
 						
 						case 92:
+							if(!is_undefined(global.server))
 							room_transition_to(rm_stage_select, "white to black");
 							break;
 					}

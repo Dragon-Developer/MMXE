@@ -23,6 +23,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	"leave"
 	]
 	
+	self.projectile_count = 0;
+	
 	self.serializer
 		.addVariable("shot_end_time")
 		.addVariable("current_weapon")
@@ -95,7 +97,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 	
 	self.shoot = function(_input, _id){
-		if(self.input.get_input_pressed(_input) || self.input.get_input_released(_input)){
+		if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input)){
 			
 			var _shot_index = 0;
 			var _shot_code = {};
@@ -122,8 +124,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				}
 			}
 			var _type = _shot_code.term;
-			log(_type)
-			if(_type == "Projectile"){
+			
+			var _shot_data = {};
+			with(_shot_data){
+				script_execute(_shot_code.data[_shot_index])
+			}
+			
+			if(_type == "Projectile" && self.projectile_count < _shot_data.shot_limit){
 				self.create_projectile(_shot_code, _shot_index, _input, _id);
 			} 
 		}
@@ -171,7 +178,24 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			_dir *= -1
 		}
 		
-		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_code);
+		var _tags = [];
+		
+		if(global.server_settings.client_data.friendly_fire){
+			for(var t = 0; t < instance_number(obj_player); t++){
+				var _tag = "player" + string(t)
+				
+				if(get(ComponentDamageable).projectile_tags[0] != _tag)
+					array_push(_tags, _tag);
+			}
+		}
+		
+		log(string(_tags) + " are the projectile tagts")
+		
+		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_code, self, _tags);
+		
+		self.projectile_count++;
+		
+		
 		
 		//old method
 		//_shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);

@@ -24,9 +24,14 @@ if(_save == -1){
 		}
 	}
 }
-show_debug_message(_save)
+
+
+var _server = JSON.load(working_directory + "server.json");
+
+//show_debug_message(_save)
 global.player_data = _save.player_data;
 global.settings = _save.settings;
+global.server_settings = _server;
 
 
 

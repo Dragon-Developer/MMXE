@@ -73,7 +73,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.reload_animation_controller = function(_index, _collage = collage, _char = self.character) {
-		self.load_sprites();
+		//self.load_sprites();
 		var _animation = JSON.load("sprites/" + _char + "/animation.json");
 		if(_animation == -1) return;
 		var _current_animation = undefined;

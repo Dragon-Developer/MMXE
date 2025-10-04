@@ -29,11 +29,12 @@ function ProjectileData() constructor{
 	*/
 	self.dir = 1;
 	self.damage = 1;
+	self.shot_limit = 1;
 	self.comboiness = 1;//gonna follow z3's system
 	self.init_time = CURRENT_FRAME;
 	self.animation = "xShot1";
 	self.hitbox_scale = new Vec2(8,8);
-	self.tag = "enemy"
+	self.tag = ["enemy"]
 	self.general_init = function(_comp){
 		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
 	}

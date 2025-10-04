@@ -12,15 +12,19 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		log("inited")
 	}
 	
-	self.create_projectile = function(_x, _y,_dir,  _code){
+	self.create_projectile = function(_x, _y,_dir,  _code, _shooter, _tags){
 		var _shot = {};
 		
+		log(string(_tags) + " are the tags i got")
+		
+		struct_set(_shot, "shooter", _shooter);
 		struct_set(_shot, "position", new Vec2(_x,_y));
 		struct_set(_shot, "code", {});
 		
 		with(_shot.code){script_execute(_code)}
 		
 		_shot.code.dir = _dir;
+		_shot.code.tag = array_concat(_shot.code.tag, _tags);
 		_shot.code.create(_shot.position);
 		
 		log(_shot.code.animation)
@@ -36,14 +40,30 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		array_foreach(self.projectiles, function(_shot){
 			_shot.code.step(_shot.position);
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y);
+				
+			//get every player instance and see if they are within a screen's distance away from the projectile
+			//if none return true, kill yourself NOW
 			
-			if(_shot.position.x > room_width || _shot.position.x < 0 || _shot.position.y > room_height || _shot.position.y < 0)
+			var _near_player = false;
+			for(var p = 0; p < instance_number(obj_player); p++){
+				var _plr = instance_find(obj_player, p);
+				
+				if(_plr.x - GAME_W < _shot.position.x &&
+					_plr.x + GAME_W > _shot.position.x &&
+					_plr.y - GAME_W < _shot.position.y &&
+					_plr.y + GAME_W > _shot.position.y)
+						_near_player = true
+			}
+			
+			if(!_near_player)
 				array_push(to_delete, _shot);
 		})
 		
 		array_foreach(self.to_delete, function(_shot){
 			for(var p = 0; p < array_length(self.projectiles); p++){
 				if(self.projectiles[p] == _shot){
+					_shot.shooter.projectile_count--;
+					
 					get(ComponentSpriteRenderer).clear_sprite(_shot.sprite);
 					array_delete(self.projectiles, p,1);
 				}

@@ -203,6 +203,7 @@
     {"$GMIncludedFile":"","%Name":"WeaponGet.ogg","CopyToMask":-1,"filePath":"datafiles/music","name":"WeaponGet.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"save.json","CopyToMask":-1,"filePath":"datafiles","name":"save.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"sdl2.txt","CopyToMask":-1,"filePath":"datafiles","name":"sdl2.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"server.json","CopyToMask":-1,"filePath":"datafiles","name":"server.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"04 - MMX - X Charge.ogg","CopyToMask":-1,"filePath":"datafiles/sounds","name":"04 - MMX - X Charge.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"05 - MMX - X Charge + Shot.ogg","CopyToMask":-1,"filePath":"datafiles/sounds","name":"05 - MMX - X Charge + Shot.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"06 - MMX - X Charge + Super Shot.ogg","CopyToMask":-1,"filePath":"datafiles/sounds","name":"06 - MMX - X Charge + Super Shot.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

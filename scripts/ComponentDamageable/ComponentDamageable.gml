@@ -21,6 +21,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		.addVariable("health_max")
 		.addVariable("combo_count")
 		.addVariable("invuln_offset")
+		.addVariable("invuln_time")
 	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -99,8 +100,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		var _hits = false;
 		for(var g = 0; g < array_length(self.projectile_tags); g++){
-			if(_proj.code.tag == self.projectile_tags[g])
-				_hits = true;
+			for(var h = 0; h < array_length(_proj.code.tag); h++){
+				if(_proj.code.tag[h] == self.projectile_tags[g])
+					_hits = true;
+			}
 		}
 		
 		if !_hits return;

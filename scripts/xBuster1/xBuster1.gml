@@ -8,6 +8,9 @@ function xBuster() : ProjectileWeapon() constructor{
 function xBuster11Data() : ProjectileData() constructor{
 	//the lemon
 	self.comboiness = 0;//one full volley of lemons
+	
+	self.shot_limit = 3;
+	
 	self.create = function(_inst){
 		//log(init_time)
 		//may make this default
