@@ -15,7 +15,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	{room: rm_metroid, x: 261, y: 18, beat: false, icon: spr_undefined, music: "HQ"},
 	
 	{room: rm_training_stage, x: 19, y: 182, beat: false, icon: X_Mugshot_Bored1, music: "blast_hole"},//'beat' will be replaced with save data info
-	{room: rm_test, x: 67, y: 182, beat: false, icon: spr_undefined, music: "intro_stage"},
+	{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: spr_undefined, music: "intro_stage"},
 	{room: rm_char_select, x: 140, y: 189, beat: false, icon: Sprite20, music: undefined},
 	{room: rm_intro, x: 213, y: 182, beat: false, icon: spr_undefined, music: "tutorial"},
 	{room: rm_metroid, x: 261, y: 182, beat: false, icon: spr_undefined, music: "HQ"}

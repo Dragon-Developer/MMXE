@@ -33,6 +33,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":null,
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_small_mask",
+    "path":"sprites/spr_small_mask/spr_small_mask.yy",
+  },
   "visible":true,
 }

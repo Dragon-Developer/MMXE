@@ -2,7 +2,8 @@ event_inherited();
 
 components.add([
 	ComponentAnimationShadered,
-	ComponentPickup
+	ComponentPickup,
+	ComponentPhysics
 ]);
 
 components.init();

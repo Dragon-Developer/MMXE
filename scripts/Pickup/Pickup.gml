@@ -4,4 +4,5 @@ function Pickup() constructor{
 	self.apply = function(_damageable){
 		_damageable.heal(self.count, self.pause);
 	}
+	self.sprite = "life_1"
 }
