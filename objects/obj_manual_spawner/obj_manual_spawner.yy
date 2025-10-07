@@ -1,11 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"obj_contact_interactible_spawner",
+  "%Name":"obj_manual_spawner",
   "eventList":[
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_contact_interactible_spawner",
+  "name":"obj_manual_spawner",
   "overriddenProperties":[],
   "parent":{
     "name":"Generic",

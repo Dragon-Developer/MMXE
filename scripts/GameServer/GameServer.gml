@@ -1,5 +1,8 @@
 function GameServer(_port) : NET_TcpServer(_port) constructor {
 //	self.enableConnectionMode();
+
+	self.player_xs = [];
+
 	global.local_player_index = 0;
 	global.game.add_local_players([0]);
 	global.game.inputs.setTotalPlayers(3);

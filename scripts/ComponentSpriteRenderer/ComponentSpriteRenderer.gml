@@ -49,6 +49,12 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		return _index
 	}
 	
+	self.change_sprite = function(_id, _sprite, _char = self.character){
+		self.sprites[_id].animation = _sprite;
+		
+		self.reload_animation_controller(_id,collage, _char);
+	}
+	
 	//deletes unused sprites. 
 	self.clear_sprite = function(_id = 0){
 		if(_id == 0) return;//the first sprite can be used for drawing so it needs to exist
@@ -124,7 +130,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 				
 				var _animation = _sprite.animation;
 				
-				if _animation == "undefined" log("dat aint supposed to happen!")
+				//if _animation == "undefined"
 					
 				var ret = [
 					_sprite.x, _sprite.y,

@@ -65,7 +65,7 @@ void main()
 	
 	vec4 scanlines = apply_scanlines(final);
 	
-	final = vec4((final.rgb + scanlines.rgb) / 1.75, final.a);
+	final = vec4((final.rgb + final.rgb + scanlines.rgb) / 2.5, final.a);
 	
 	final += colOffset;
 	

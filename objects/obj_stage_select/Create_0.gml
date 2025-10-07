@@ -2,7 +2,8 @@ event_inherited();
 
 components.add([
 	ComponentStageSelector,
-	ComponentPlayerInput
+	ComponentPlayerInput,
+	ComponentSpriteRenderer
 ]);
 
 components.init();

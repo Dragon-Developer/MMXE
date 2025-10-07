@@ -2,8 +2,8 @@
   "sprites": {
     "default": {
       "origin": {
-        "x": 35,
-        "y": 35
+        "x": 0,
+        "y": 0
       }
     }
   },
@@ -26,14 +26,45 @@
       ],
       "list": [
         {
-          "name": "charge_1",
+          "name": "x_happy",
           "properties": {
             "speed":  1
           }
-        },{
-          "name": "charge_2",
+        },
+        {
+          "name": "gate",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "x_sad",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "menu",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "undefined",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "x_mad",
           "properties": {
             "speed": 1
+          }
+        },
+        {
+          "name": "reticle",
+          "properties": {
+            "speed": 0.2
           }
         }
       ]

@@ -14,15 +14,24 @@ function ComponentHealable() : ComponentBase() constructor{
 		});
 	}
 	
+	self.step = function(){
+		self.detect_pickup();
+	}
+	
 	self.detect_pickup = function(){
 		var _inst = self.get_instance();
 		var _pickup = self.physics.check_place_meeting(_inst.x, _inst.y, par_pickup)
 		
-		if(!instance_exists(_pickup)) return;
+		if(!instance_exists(_pickup) || _pickup == 0) return;
+		
+		log(_pickup)
+		
+		return;//temp
 		
 		var _data = _pickup.components.get(ComponentPickup).data;
 		
 		_data.apply(self);
+		ENTITIES.destroy_instance(_pickup);
 	}
 	
 	self.heal = function(_count, _pause){

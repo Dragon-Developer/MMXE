@@ -161,6 +161,8 @@ function ComponentCamera() : ComponentBase() constructor {
 		room_set_viewport(room, 0, true, 0, 0, GAME_W / 2, GAME_H);
 		self.x = self.get_instance().x;
 		self.y = self.get_instance().y;
+		
+		if(self.x < 0) self.x = 0;
 		camera_set_view_pos(self.camera, self.get_instance().x, self.get_instance().y);
 	}
 	

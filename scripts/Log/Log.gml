@@ -1,4 +1,4 @@
-function log(_string, _stack = false, _stacklength = 5){
+function log(_string, _stack = global.stacktracking, _stacklength = 5){
 	var _msg = "";
 	if(_stack){
 		var _a = debug_get_callstack(_stacklength);

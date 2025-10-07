@@ -52,7 +52,13 @@
           }
         },
         {
-          "name": "rock",
+          "name": "megaman",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "psx",
           "properties": {
             "speed":  1
           }

@@ -4,7 +4,7 @@ components.add([
 	ComponentCharacterSelect,
 	ComponentPlayerInput,
 	ComponentNode,
-	ComponentAnimation
+	ComponentSpriteRenderer
 ]);
 
 components.init();

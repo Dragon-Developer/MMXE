@@ -24,6 +24,36 @@ if(_save == -1){
 		}
 	}
 }
+self.rand_range = function(_bottom, _top){
+	var _ret = random_range(_bottom, _top);
+	total += floor(_ret - 1);
+	return _ret;
+}
+
+self.get_random_sequence = function(_iterations){
+	var _max = 100;
+	for(var p = 0; p < _iterations; p++){
+		_max = get_random(_max);
+	}
+}
+
+self.get_random = function(_max){
+
+	self.total = 0;
+
+	randomize();
+	var _array = [];
+	for(var p = 0; p < _max; p++){
+		var _rand = floor(rand_range(1,3))
+		show_debug_message(_rand)
+		array_push(_array, _rand);
+	}
+
+	show_debug_message(string(total) + " is the total of this run")
+	return total;
+}
+
+self.get_random_sequence(10);
 
 
 var _server = JSON.load(working_directory + "server.json");

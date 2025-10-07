@@ -29,6 +29,10 @@ function ComponentInteractibleContact() : ComponentBase() constructor{
 		
 	}
 	
+	self.set_interacted_script = function(_script){
+		self.Interacted_Script = _script;
+	}
+	
 	self.die = function(){
 		ENTITIES.destroy_instance(self.get_instance());
 	}

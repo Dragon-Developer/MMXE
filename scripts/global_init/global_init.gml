@@ -24,9 +24,10 @@ function global_init() {
 		music: "HQ"
 	}
 	
-	global.player_character = new XCharacter();
+	global.player_character = [new XCharacter()];
 	
 	global.debug = false;
+	global.stacktracking = false;
 	global.last_run_type_of_component = "none"
 	
 	input_source_set(INPUT_KEYBOARD, 0);

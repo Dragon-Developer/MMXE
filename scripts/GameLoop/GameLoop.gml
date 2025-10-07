@@ -66,6 +66,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentSpriteRenderer, _step);
 		ENTITIES.for_each_component(ComponentNPC, _step);
 		ENTITIES.for_each_component(ComponentInteractibleContact, _step);
+		ENTITIES.for_each_component(ComponentInteractibleInteract, _step);
 		ENTITIES.for_each_component(ComponentParallax, _step);
 		ENTITIES.for_each_component(ComponentCamera, _step);
 		ENTITIES.for_each_component(ComponentRide, _step);
@@ -73,6 +74,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentDamageable, _step);
 		ENTITIES.for_each_component(ComponentDialouge, _step);
 		ENTITIES.for_each_component(ComponentHealthbar, _step);
+		ENTITIES.for_each_component(ComponentHealable, _step);
 		ENTITIES.for_each_component(ComponentParticles, _step);
 		ENTITIES.for_each_component(ComponentCameraRecorder, _step);
 		//Forte:
@@ -80,6 +82,8 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		//would make it easier to test
 	}
 	self.step = function() {
+		
+		
 		try{
 			self.game_timer += self.game_speed;
 			while (self.game_timer >= 1) {
@@ -147,6 +151,12 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		
 		if(keyboard_check_pressed(ord("5")))
 			self.blur = !self.blur;
+			
+		if(keyboard_check_pressed(ord("4")))
+			global.debug = !global.debug
+			
+		if(keyboard_check_pressed(ord("2")))
+			global.stacktracking = !global.stacktracking;
 		
 		if(self.blur){
 			shader_set(shdr_forte_test);

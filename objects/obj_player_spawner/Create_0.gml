@@ -6,7 +6,7 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentAnimationShadered).set_subdirectories(
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
-	_player.components.publish("character_set", global.player_character.image_folder);
+	_player.components.publish("character_set", global.player_character[current_spawn].image_folder);
 	//log(string(global.player_character.image_folder) + " is the character folder")
 //	log(string(global.player_character) + " is the character")
 	_player.components.publish("armor_set",
@@ -18,9 +18,9 @@ on_spawn = function(_player) {
 	_charge.depth = _player.depth - 1;
 	_charge.components.publish("character_set", "player");
 	_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
-	_player.components.get(ComponentWeaponUse).weapon_list = global.player_character.weapons;
-	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_character.weapon_ammo_max;
-	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.player_character.weapons), global.player_character.weapon_ammo_max);
+	_player.components.get(ComponentWeaponUse).weapon_list = global.player_character[current_spawn].weapons;
+	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_character[current_spawn].weapon_ammo_max;
+	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.player_character[current_spawn].weapons), global.player_character[current_spawn].weapon_ammo_max);
 	//
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);
@@ -41,6 +41,11 @@ on_spawn = function(_player) {
 		log("this is the player!")
 		WORLD = ENTITIES.create_instance(obj_world);
 		var _camera = ENTITIES.create_instance(obj_camera, x - GAME_W / 2, y - GAME_H / 2);
+		
+		log(_camera.x)
+		
+		if(_camera.x < 0) _camera.x = 0
+		
 		_player.components.get(ComponentPlayerMove).camera = _camera;
 		_camera.components.publish("target_set", _player);	
 		_camera.components.get(ComponentHealthbar).compDamageable = _player.components.get(ComponentDamageable);

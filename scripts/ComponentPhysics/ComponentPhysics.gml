@@ -147,7 +147,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * Checks if the entity has hit the ceiling.
 	 * @returns {bool} True if entity is colliding with the ceiling.
 	 */
-	is_on_ceil = function(_dist = 2) {
+	is_on_ceil = function(_dist = 3) {
 		var _inst = self.get_instance();
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
@@ -186,14 +186,27 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * @returns {real} The x origin offset (16 if up is horizontal, else 8).
 	 */
 	get_x_origin = function() {
-		return (abs(self.up.x) == 1) ? 16 : 8;
+		var _sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
+		var _sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		
+		return (abs(self.up.x) == 1) ? _sprite_height : _sprite_width;
 	};
 	/**
 	 * Gets the vertical origin offset based on the entity's up direction.
 	 * @returns {real} The y origin offset (16 if up is vertical, else 8).
 	 */
 	get_y_origin = function() {
-		return (abs(self.up.y) == 1) ? 16 : 8;
+		var _sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
+		var _sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		
+		return (abs(self.up.y) == 1) ? _sprite_height : _sprite_width;
+	};
+	
+	get_y_origin_reversed = function() {
+		var _sprite_width =  sprite_get_width(self.get_instance().mask_index) - sprite_get_xoffset(self.get_instance().mask_index);
+		var _sprite_height = sprite_get_height(self.get_instance().mask_index) - sprite_get_yoffset(self.get_instance().mask_index);
+		
+		return (abs(self.up.y) == 1) ? _sprite_height : _sprite_width;
 	};
 	/**
 	 * Moves the entity to the right, stopping at the closest collision.
@@ -265,7 +278,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	move_down = function(_vy, _coll = self.objects.block) {
 		var _inst = self.get_instance();
 		var _target_y = _inst.y + _vy;
-		var _origin = self.get_y_origin();
+		var _origin = self.get_y_origin_reversed();
 
 		var _nearest_block = noone;
 		var _object = _coll;

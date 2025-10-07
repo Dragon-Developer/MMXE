@@ -19,7 +19,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.armor_parts = []
 	
 		
-	self.character = variable_clone(global.player_character, 256);
+	self.character = variable_clone(global.player_character[global.local_player_index], 256);
 	
 	#region serializer
 	self.serializer
@@ -37,7 +37,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		#endregion
 	
 	self.reset_state_variables = function(){
-		self.states = variable_clone(global.player_character.states);
+		self.states = variable_clone(self.character.states);
 	}
 	
 	// Finite State Machine initialization
@@ -262,8 +262,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 						//will add transition mode for that
 						
 						case 92:
-							if(!is_undefined(global.server))
-							room_transition_to(rm_stage_select, "white to black");
+							if(is_undefined(global.server))
+								room_transition_to(rm_stage_select, "white to black");
+							else
+								room_restart();
 							break;
 					}
 			}
@@ -354,7 +356,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
-		self.character = variable_clone(global.player_character, 256);
+		self.character = variable_clone(global.player_character[global.local_player_index], 256);
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
