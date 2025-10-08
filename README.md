@@ -42,23 +42,26 @@ If you want to learn the ins and outs of the engine, start there. It includes pa
 Currently notable features include:
 - Basic Movement (walking, jumping, walljumping, etc)
 - Enemies (Though there isnt much to use yet)
-- Dialouge (While complete, text effects arent added yet)
+- Dialouge (While complete, text effects arent added yet. needs to be redone using spriteloader)
 - Scene rotation/flipping
-- Armors (Including chips)
+- Armors
 - Ladders
 - Seperate Characters
 - Projectile based special weapons (Currently only projectile based weapons)
 
 
 In progress features:
-- Bosses (Death state is unclean, scene fades instead of setting player into complete state. )
-- stage select (Needs boss tease, fortress stages, transitions in/out)
+- Bosses (Death state is unclean. )
+- stage select (Needs boss tease, fortress stages, transitions in/out, boss preview)
+- Pause menu (sub tanks dont work, settings dont work, settings section doesnt show which icon is selected)
 
 Features not added:
-- Pause menu
 - Armor Capsules
 - melee special weapons
 - state based special weapons
+- aimed special weapons
+- armor select
+- weapon get screen
 
 Feel free to suggest new features in the discord. 
 
@@ -67,7 +70,7 @@ Feel free to suggest new features in the discord.
 - Dark Shadow (Dragon-Developer): main programmer. (Animation system, Component system, Base player)
 - ApselTheBlue: creates test stages and helps with programming in v1 of the engine.
 - AxlForte: tried his best (Special weapon use code, projectile base code, enemy base code, boss base code, armor code)
-- Gacel: general programming, SNES game data, SNES palette shader
+- Gacel: general programming, X game data, SNES palette shader
 
 ### Music:
 - K-Lips-O
