@@ -966,11 +966,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
+                "frame": 0,
+                "shot_offset_x": 12,
+                "shot_offset_y":  -3
               },
               {
                 "key": 4,
-                "frame": 1
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y":  -3
               }
             ],
             "loop_begin": 4
@@ -1183,11 +1187,11 @@
                 "frame": 3
               },
               {
-                "key": 5,
+                "key": 6,
                 "frame": 4
               }
             ],
-            "loop_begin": 5
+            "loop_begin": 6
           }
         },
         {
@@ -1204,11 +1208,11 @@
                 "frame": 6
               },
               {
-                "key": 5,
+                "key": 6,
                 "frame": 7
               }
             ],
-            "loop_begin": 5
+            "loop_begin": 6
           }
         },
         {

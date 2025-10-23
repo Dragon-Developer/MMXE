@@ -64,7 +64,7 @@
         {
           "name": "reticle",
           "properties": {
-            "speed": 0.2
+            "speed": 0.5
           }
         }
       ]

@@ -24,7 +24,7 @@ function global_init() {
 		music: "HQ"
 	}
 	
-	global.player_character = [new XCharacter()];
+	global.player_character = [new XCharacter(),new XCharacter(),new XCharacter(),new XCharacter()];
 	
 	global.debug = false;
 	global.stacktracking = false;

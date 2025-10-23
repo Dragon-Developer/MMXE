@@ -16,10 +16,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.timer = 0;
 	#endregion
 	
-	self.armor_parts = []
+	self.armor_parts = [new XBladeArmorBoot(), new XFirstArmorHead(), new XSecondArmorBody()];
 	
 		
-	self.character = variable_clone(global.player_character[global.local_player_index], 256);
+	self.character = variable_clone(global.player_character[0], 256);
 	
 	#region serializer
 	self.serializer
@@ -356,7 +356,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
-		self.character = variable_clone(global.player_character[global.local_player_index], 256);
+		self.character = variable_clone(global.player_character[self.input.get_player_index()], 256);
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
@@ -375,7 +375,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				var _directory_name = "/armor" + string(_arm.sprite_name)
 				_directory_name = string_replace(_directory_name, "_", "/")
 				//log(_directory_name);
-				self.get_instance().components.get(ComponentAnimationPalette).add_subdirectories([_directory_name]);
+				find("animation").add_subdirectories([_directory_name]);
 				if(variable_struct_exists(_arm, "apply_armor_effects"))
 					_arm.apply_armor_effects(self);
 					//log("this thing doesnt have an armor effect variable!")
@@ -483,6 +483,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			}
 			
 			var _pause = ENTITIES.create_instance(obj_pause_menu);
+			_pause.components.get(ComponentPauseMenu).input = input;
+			_pause.components.get(ComponentPauseMenu).player = self.get_instance();
 		}
 	}
 		

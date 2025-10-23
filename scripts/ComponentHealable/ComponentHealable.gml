@@ -20,13 +20,13 @@ function ComponentHealable() : ComponentBase() constructor{
 	
 	self.detect_pickup = function(){
 		var _inst = self.get_instance();
-		var _pickup = self.physics.check_place_meeting(_inst.x, _inst.y, par_pickup)
-		
+		var _pickup = self.physics.get_place_meeting(_inst.x, _inst.y, par_pickup)
+
 		if(!instance_exists(_pickup) || _pickup == 0) return;
 		
 		log(_pickup)
 		
-		return;//temp
+		//return;//temp
 		
 		var _data = _pickup.components.get(ComponentPickup).data;
 		
@@ -38,7 +38,7 @@ function ComponentHealable() : ComponentBase() constructor{
 		if(self.damageable.health + _count > self.damageable.health_max){
 			self.add_to_sub_tank((self.damageable.health + _count - self.damageable.health_max));
 		}
-		self.damageable.heal(_count)
+		self.get(ComponentDamageable).heal(_count)
 	}
 	
 	self.add_to_sub_tank = function(_count){

@@ -43,7 +43,7 @@ function Weapon() constructor{
 	*/
 	
 	self.term = "undefined";
-	
+	self.data = [noone,noone,noone,noone, noone];
 	self.maxAmmo = 28;
 	self.cost = 1;//should this be an array?
 	self.refillRate = 0;// 1/60 would be one tick every second
@@ -59,6 +59,10 @@ function WeaponSlot() constructor{
 		
 		could we use the weapon system for enemies too? it would make things like an a-trans 
 		enemy weapon copy easy. -forte
+		
+		hell no! that sounds so unusable! future forte is prioritizing usability, so if
+		something like that were to be implemented, it would be seperate from an easier
+		variation of enemies. Options, people, options!
 		
 		stuff included in WeaponSlot:
 		current ammo

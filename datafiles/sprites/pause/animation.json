@@ -261,6 +261,94 @@
           }
         },
         {
+          "name": "S_ICE",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "B_CUTTER",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "E_SPARK",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "STORM_T",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "FIRE_WAVE",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "R_SHIELD",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "C_STING",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "HOMING_T",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
           "name": "S_WHEEL",
           "properties": {
             "keyframes": [

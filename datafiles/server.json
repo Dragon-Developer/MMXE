@@ -1,7 +1,8 @@
 {
 	"client_data":{
 		"friendly_fire": true,
-		"allow_armors": false
+		"allow_armors": false,
+		"ping_rate": 2
 	},
 	"server_only_data": {
 		"timeout":1000

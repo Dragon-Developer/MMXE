@@ -206,7 +206,8 @@ function GuiContainer() : GuiBase() constructor {
 		}
 		
 		for (var i = 0, _len = array_length(children); i < _len; i++) {
-	        children[i].onHover(_pos);
+			// i need the damn child!
+	        children[i].onHover(_pos, children[i]);
 	    }
 	}
 	
@@ -329,6 +330,7 @@ function GuiContainer() : GuiBase() constructor {
 	}
 	
     step = function() {
+		emitEvent("step");
 		if (hover && scrollEnabled) {
 			var scrollDelta = mouse_wheel_up() - mouse_wheel_down(); 
 			if (scrollDelta != 0) {

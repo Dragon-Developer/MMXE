@@ -1,60 +1,4 @@
-global.gui = new GuiRoot();
-last_input = 0;
-
 var _save = JSON.load(working_directory + "save.json");
-if(_save == -1){
-	_save = {
-		"player_data":{
-			"weapons":[],
-			"max_health":12.0,
-			"health":12.0,
-			"last_played_character":"x",
-			"x_armors":["x1","x2","x3"],
-			"equipped_weapons":[]
-			},
-			"settings":{
-			"Has_done_intro_stage": true,
-			"Input_Buffer":3.0,
-			"Sound_Effect_Volume":0.5,
-			"Dash_On_Land":0.0,
-			"PSX_Style_Dash_Jumping":1.0,
-		    "Music_Volume":0.25,
-		    "write_inputs": true,
-		    "Game_Scale":3.0
-		}
-	}
-}
-self.rand_range = function(_bottom, _top){
-	var _ret = random_range(_bottom, _top);
-	total += floor(_ret - 1);
-	return _ret;
-}
-
-self.get_random_sequence = function(_iterations){
-	var _max = 100;
-	for(var p = 0; p < _iterations; p++){
-		_max = get_random(_max);
-	}
-}
-
-self.get_random = function(_max){
-
-	self.total = 0;
-
-	randomize();
-	var _array = [];
-	for(var p = 0; p < _max; p++){
-		var _rand = floor(rand_range(1,3))
-		show_debug_message(_rand)
-		array_push(_array, _rand);
-	}
-
-	show_debug_message(string(total) + " is the total of this run")
-	return total;
-}
-
-self.get_random_sequence(10);
-
 
 var _server = JSON.load(working_directory + "server.json");
 
@@ -63,7 +7,8 @@ global.player_data = _save.player_data;
 global.settings = _save.settings;
 global.server_settings = _server;
 
-
+global.gui = new GuiRoot();
+last_input = 0;
 
 transition_fade = function(_room, _rate = 60){
 	if(transition_data.transitioning) return;

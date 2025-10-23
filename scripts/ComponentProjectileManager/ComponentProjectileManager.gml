@@ -36,6 +36,13 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		array_push(self.projectiles, _shot);
 	}
 	
+	self.destroy_projectile = function(_proj){
+		for(var p = 0; p < array_length(self.projectiles); p++){
+			if(self.projectiles[p].code == _proj)
+				array_push(self.to_delete, self.projectiles[p])
+		}
+	}
+	
 	self.step = function(){
 		array_foreach(self.projectiles, function(_shot){
 			_shot.code.step(_shot.position);

@@ -34,13 +34,17 @@ function GuiText(_text) : GuiBase() constructor {
 	}
 
 	getContentWidth = function() {
-		draw_set_font(font);
-		return string_width(text) ;
+		//draw_set_font(font);
+		
+		return string_get_text_length(text) + 6;
+		
+		//return string_width(text) ;
 	}
 	
 	getContentHeight = function() {
-		draw_set_font(font);
-		return string_height(text + " ");
+		return 7;
+		//draw_set_font(font);
+		//return string_height(text + " ");
 	}
 
     drawMe = function() {

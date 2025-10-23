@@ -65,7 +65,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	self.init = function(){
 		//character = "x";
 		load_sprites();
-		add_sprite("shot", true, 32, 32);
+		add_sprite("shot", true, -32, -32);
 	}
 	
 	self.set_position = function(_id = 0, _x = 0, _y = 0){

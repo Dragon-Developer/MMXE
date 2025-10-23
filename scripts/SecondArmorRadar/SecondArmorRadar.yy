@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"SecondArmorRadar",
   "parent":{
-    "name":"Projectile",
-    "path":"folders/Scripts/Game/Weapons/Projectile.yy",
+    "name":"MMX",
+    "path":"folders/Scripts/Game/Weapons/Projectile/MMX.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

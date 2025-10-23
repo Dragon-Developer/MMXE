@@ -13,3 +13,7 @@ self.create_projectile = function(_x, _y,_dir, _code, _shooter, _tags){
 self.get_collision = function(_object){
 	return components.get(ComponentProjectileManager).get_collision(_object);
 }
+
+self.destroy_projectile = function(_proj){
+	components.get(ComponentProjectileManager).destroy_projectile(_proj)
+}

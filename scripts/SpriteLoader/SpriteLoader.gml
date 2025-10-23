@@ -142,8 +142,6 @@ function SpriteLoader() constructor {
 		_collage.FinishBatch();
 	}
 	static reload_collage = function(_collage, _dir, _subdirs, _debug = true) {
-		//log(directory_exists(working_directory + _dir) ? (_dir + " does in fact exist") : (_dir + " does not exist you stoopid"))
-		////log("reloading collage")
 		var _files = [];
 		for (var _i = 0, _len = array_length; _i < array_length(_subdirs); _i++) {
 			_files = array_concat(_files, SpriteLoader.get_all_png_files(_dir, _subdirs[_i], _debug));

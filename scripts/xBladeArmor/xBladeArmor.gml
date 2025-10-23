@@ -32,8 +32,8 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				change_direction: false
 			})
 			
-			if(!struct_exists(global.player_character.states_default, "mach_dash"))
-			struct_set(global.player_character.states_default, "mach_dash", {
+			if(!struct_exists(global.player_character[self.input.get_player_index()].states_default, "mach_dash"))
+			struct_set(global.player_character[self.input.get_player_index()].states_default, "mach_dash", {
 				speed: 1298/256, 
 				interval: 25, 
 				max_dashes: 1, 
@@ -46,12 +46,11 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 			})
 			
 			if(keyboard_check(ord("P"))){
-				self.states.mach_dash.golden = true;
 				self.states.mach_dash.only_cardinals = false;
-				self.states.mach_dash.speed *= 1.5;
 				self.states.mach_dash.interval *= 1.25;
 			}
 			
+			//falcon flight emulation
 			if(keyboard_check(ord("N"))){
 				self.states.mach_dash.change_direction = true;
 				self.states.mach_dash.golden = true;
@@ -69,8 +68,8 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 						self.states.mach_dash.curr_dashes++;
 					var _inst = self.get_instance()
 					
-					self.timer = CURRENT_FRAME + self.states.mach_dash.interval;
 					self.current_hspd = self.states.mach_dash.speed;	
+					self.physics.terminal_velocity = 1025;
 					
 					var _input_dir = new Vec2(self.hdir, self.vdir);
 					if (_input_dir.x == 0 && _input_dir.y == 0) _input_dir = new Vec2(self.dir, 0);
@@ -96,6 +95,12 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 					}
 					
 					_input_dir = _input_dir.normalize();
+					
+					_input_dir.setY(_input_dir.y * 1.5)
+					
+					var _timer_mult = 1 / _input_dir.length();
+					
+					self.timer = CURRENT_FRAME + self.states.mach_dash.interval * _timer_mult;
 					
 					self.states.mach_dash.angle = _input_dir;
 						
@@ -126,12 +131,14 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 					}
 					
 					self.states.mach_dash.angle = _input_dir;
+					
 					self.physics.set_speed(self.states.mach_dash.angle.x * self.states.mach_dash.speed, self.states.mach_dash.angle.y * self.states.mach_dash.speed);
 					
 				},
 				leave: function() {
 					self.physics.set_grav(new Vec2(0,0.25));
 					self.physics.set_speed(0,0);
+					self.physics.terminal_velocity = self.physics.terminal_velocity_default;
 					self.publish("animation_yscale", 1);
 					self.publish("animation_angle", 0);
 					self.publish("animation_xscale", self.dir);

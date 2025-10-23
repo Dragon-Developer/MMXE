@@ -27,6 +27,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	self.palette = new Palette();
 	
 	self.input = noone;
+	self.animation_timescale = 0;
 	
 	self.can_unpause = false;//to prevent immediately leaving the pause menu
 	
@@ -70,16 +71,21 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	#endregion
 	
 	self.init = function(){
-		for(var i = 0; i < array_length(global.player_character.default_palette); i++){
-			palette.setBaseColorByHex(i, global.player_character.default_palette[i]);
-		}
 		
 		with(obj_player){
 			if(components.get(ComponentPlayerInput).__player_index == global.local_player_index){
 				components.get(ComponentPlayerInput).step_enabled = 1;
 				other.input = components.get(ComponentPlayerInput);
 				other.player = self;
+				components.find("animation").step_enabled = true;
+				other.animation_timescale = components.find("animation").timescale;
+				components.find("animation").timescale = 0;
+				log("GOTTEM GGS!!                             LESGO")
 			}
+		}
+		
+		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette); i++){
+			palette.setBaseColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
 		}
 		
 		self.weapon_selection = self.player.components.get(ComponentWeaponUse).current_weapon[0]
@@ -93,11 +99,11 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).character = "pause";
 		get(ComponentSpriteRenderer).load_sprites();
 		get(ComponentSpriteRenderer).add_sprite("menu", true)
-		for(var i = 0; i < array_length(global.player_character.weapons); i++){
+		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].weapons); i++){
 			var _wep = {};
 			
 			with(_wep){
-				script_execute(global.player_character.weapons[floor(i)]);
+				script_execute(global.player_character[other.player.components.get(ComponentPlayerInput).get_player_index()].weapons[floor(i)]);
 			}
 			
 			var _name = string(_wep.title);
@@ -138,7 +144,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	self.step = function(){
 		if(self.opacity < 1){
 			self.opacity += self.opacity_rate;
-			get(ComponentSpriteRenderer).sprites[0].animationController.__alpha = self.opacity;
+			if(array_length(get(ComponentSpriteRenderer).sprites) > 0)
+				get(ComponentSpriteRenderer).sprites[0].animationController.__alpha = self.opacity;
 		}
 		
 		if(!can_unpause){
@@ -158,15 +165,22 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 				})
 			}
 			
+			player.components.find("animation").timescale = self.animation_timescale;
+			
 			ENTITIES.destroy_instance(self.get_instance());
 		}
 	}
 	
 	self.draw_gui = function(){
+		try{
+			//log(player)
+			var _damageable = player.components.get(ComponentDamageable);
+		} catch(_err){
+			log(_err)
+			return;
+		}
 		
-		var _damageable = player.components.get(ComponentDamageable);
-		
-		get(ComponentSpriteRenderer).draw_sprite("healthbar_icon_" + global.player_character.image_folder, 0,241,86)
+		get(ComponentSpriteRenderer).draw_sprite("healthbar_icon_" + global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].image_folder, 0,241,86)
 		
 		for(var p = 0; p < _damageable.health_max; p++){
 			get(ComponentSpriteRenderer).draw_sprite("healthbar_tick", 0,241,84 - p * 2)
@@ -204,12 +218,13 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			}
 		}
 		
-		if(string_length(self.weapon_descs[self.weapon_selection]) > 15){
-			draw_string(string_copy(self.weapon_descs[0], 0,15), 36, 204, "pause menu")
-			draw_string(string_copy(self.weapon_descs[0],16,15), 36, 212, "pause menu")
-		} else {
-			draw_string(self.weapon_descs[self.weapon_selection], 36, 204, "pause menu")
-		}
+		if(array_length(self.weapon_descs) > 0)
+			if(string_length(self.weapon_descs[self.weapon_selection]) > 15){
+				draw_string(string_copy(self.weapon_descs[0], 0,15), 36, 204, "pause menu")
+				draw_string(string_copy(self.weapon_descs[0],16,15), 36, 212, "pause menu")
+			} else {
+				draw_string(self.weapon_descs[self.weapon_selection], 36, 204, "pause menu")
+			}
 		
 		//draw the tanks menu
 		draw_string("E", 176, 176, "orange")
@@ -219,7 +234,19 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		draw_string("TANKS", 168, 160, "orange")
 		
 		palette.apply();
-		get(ComponentSpriteRenderer).draw_sprite(global.player_character.image_folder, 0, 160, 32);
+		
+		//get(ComponentSpriteRenderer).draw_sprite(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].image_folder, 0, 160, 32);
+		
+		var _player_animator = player.components.find("animation");
+		
+		var _anim_data = _player_animator.get_interpolated_position();
+		
+		_anim_data[0] = 160 + 35 - 4;
+		_anim_data[1] = 32 + 41 - 7;
+		
+		_player_animator.draw_regular(_anim_data)
+		
+		
 		palette.reset();
 	}
 }

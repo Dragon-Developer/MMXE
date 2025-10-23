@@ -5,7 +5,10 @@ function GuiLobbyMenu() : GuiContainer() constructor {
 		rm_training_stage,
 		rm_intro,
 		rm_gate_2,
-		rm_explose_horneck
+		rm_explose_horneck,
+		rm_flame_stag,
+		rm_metroid,
+		rm_test
 	];
 	
     setMaximize();

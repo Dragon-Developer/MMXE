@@ -6,6 +6,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.grav_magnitude = self.grav.length(); 
 	self.up_to_right_dir = -1;
 	self.terminal_velocity = 6.25;
+	self.terminal_velocity_default = 6.25;
 	self.time_physics_multiplier = 1;
 	self.objects = {
 		block: obj_square_16,

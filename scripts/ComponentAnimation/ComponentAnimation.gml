@@ -165,8 +165,11 @@ function ComponentAnimation() : ComponentBase() constructor {
 		self.draw_regular(self.get_interpolated_position());
 	}
 
-	self.get_sprite = function(){
-		return variable_clone(self.animation.__sprite);
+	self.get_shot_offsets = function(){
+		var _frame = self.animation.__frame;
+		
+		return [self.animation.get_props().keyframes[_frame].shot_offset_x, 
+		self.animation.get_props().keyframes[_frame].shot_offset_y];
 	}
 	
 	self.draw_regular = function(_pos, _col = c_white) {

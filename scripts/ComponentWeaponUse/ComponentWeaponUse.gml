@@ -5,6 +5,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	xBuster,
 	XenoMissile
 	];
+	self.stock_shot = noone;
 	self.weapon_ammo = [28];
 	self.weapon_max_ammo = 28;
 	self.charge = noone;
@@ -62,6 +63,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		if(_change_direction != 0){
 			self.change_weapon(self.current_weapon[0] + _change_direction)
+			self.stock_shot = noone;
 		}
 		
 		if self.bar != noone {
@@ -168,6 +170,21 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		var _x = self.get_instance().x;
 		
 		var _y = self.get_instance().y;
+		
+		//if we have an animator, add the shot offsets
+		try{
+			if(find("animation") != noone){
+				log("gon add offsets " + string( find("animation").get_shot_offsets()))
+				var _offsets = find("animation").get_shot_offsets();
+				_x += _offsets[0];
+				_y += _offsets[1];
+				log("added offsets")
+			} else {
+				//log(find("animation"))
+			}
+		} catch(_exception){
+			
+		}
 			
 		//create the projectile itself
 		var _shot = noone

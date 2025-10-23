@@ -1,0 +1,52 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 16,
+        "y": 8
+      }
+    },
+    "dr_cain_ghost": {
+      "origin": {
+        "x": 12,
+        "y": 23
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "xSuperParticles",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -10,3 +10,10 @@ function get_projectile_collision(_proj){
 		return _proj;
 		return -1;
 }
+
+function projectile_collision_check(_x, _y, _width, _height, _object){
+			
+	if(collision_rectangle(_x - _width / 2, _y - _height / 2, _x + _width / 2, _y + _height / 2, _object, false, true))
+		return true;
+	return false;
+}

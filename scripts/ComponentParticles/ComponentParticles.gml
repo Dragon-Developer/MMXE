@@ -50,9 +50,11 @@ function ComponentParticles() : ComponentBase() constructor{
 	
 	self.draw = function(){
 		array_foreach(particles,function(_particle){
-			//if(exists)
 			if (is_struct(_particle)) {
-				draw_sprite_ext(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
+				if(is_string(_particle.sprite))
+					_particle.sprite = real(_particle.sprite);
+				else
+					draw_sprite_ext(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
 			}
 		});
 	}

@@ -5,13 +5,13 @@ function GuiProgressBar(_width, _height) : GuiContainer() constructor {
     setAlignItems("center");
     
     progressValue = 0;
-	maxProgressValue = 100;
+	maxProgressValue = _width;
     
     textChild = new GuiText(""); 
     addChild(textChild);
 
     backgroundSprite = spr_gui_panel;
-	setSprite(spr_gui_debug_9slice);
+	setSprite(spr_gui_panel_fill);
 
     setProgressValue = function(_value) {
         progressValue = clamp(_value, 0, maxProgressValue);

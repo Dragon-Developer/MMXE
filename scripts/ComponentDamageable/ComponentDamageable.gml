@@ -33,6 +33,13 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 	}
 	
+	self.heal = function(_count){
+		if(_count + self.health > self.health_max){
+			_count = self.health_max - self.health;
+		}
+		self.health += _count;
+	}
+	
 	self.add_max_health = function(_add){
 		self.health_max += _add;
 		self.health += _add;

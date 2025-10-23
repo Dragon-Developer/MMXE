@@ -41,6 +41,11 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	self.set_player_index = function(_index) {
 		self.__player_index = _index;	
 	}
+	
+	self.get_player_index = function(){
+		return self.__player_index;
+	}
+	
 	self.__input_check = function(_verb) {
 		if(self.using_scripted_inputs)
 			return self.input_check_scripted(_verb);

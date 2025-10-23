@@ -1,6 +1,6 @@
 function XCharacter() : BaseCharacter() constructor{
 	
-	self.weapons = [xBuster, SpinningWheel, SecondArmorRadar, XenoMissile, xBuster,xBuster,xBuster,xBuster,xBuster,xBuster];
+	self.weapons = [xBuster, shotgunIce, boomerangCutter, electricSpark, stormTornado, fireWave, rollingShield, chameleonSting, homingTorpedo, SpinningWheel];
 	
 	self.init = function(_player){
 		

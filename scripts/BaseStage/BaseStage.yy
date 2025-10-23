@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"Script574",
+  "%Name":"BaseStage",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Script574",
+  "name":"BaseStage",
   "parent":{
-    "name":"Projectile",
-    "path":"folders/Scripts/Game/Weapons/Projectile.yy",
+    "name":"parent",
+    "path":"folders/Scripts/Game/stages/parent.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -31,6 +31,7 @@ function xBuster11Data() : ProjectileData() constructor{
 function xBuster12Data() : ProjectileData() constructor{
 	self.comboiness = 1;//same combo damage as lemons, so it could be a good combo ender?
 	self.damage = 2;
+	self.shot_limit = 3;
 	
 	self.hitbox_scale = new Vec2(16,16);
 	self.animation = "xShot2";
@@ -54,6 +55,7 @@ function xBuster12Data() : ProjectileData() constructor{
 function xBuster13Data() : ProjectileData() constructor{
 	self.comboiness = 2;
 	self.damage = 3;
+	self.shot_limit = 3;
 	
 	self.animation = "xShot3X1";
 	self.hitbox_scale = new Vec2(24,24);
