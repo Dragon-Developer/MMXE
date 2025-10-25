@@ -19,6 +19,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 	//increased dash speed
 	self.sprite_name = "/blade/legs"//this is more for filepath.
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
+		_player.states.dash.speed *= 1.1;
 		with(_player){
 			struct_set(states, "mach_dash", {
 				speed: 1298/256, //1298/256, 
@@ -30,19 +31,6 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				only_cardinals: true, 
 				golden: false,
 				change_direction: false
-			})
-			
-			if(!struct_exists(global.player_character[self.input.get_player_index()].states_default, "mach_dash"))
-			struct_set(global.player_character[self.input.get_player_index()].states_default, "mach_dash", {
-				speed: 1298/256, 
-				interval: 25, 
-				max_dashes: 1, 
-				curr_dashes: 0, 
-				animation: "mach_dash", 
-				angle: new Vec2(0,1), 
-				only_cardinals: true, 
-				golden: false,
-				change_direction: true
 			})
 			
 			if(keyboard_check(ord("P"))){
@@ -162,6 +150,14 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				step: function() {
 					if(self.input.get_input_released("dash") || self.input.get_input_released("shoot4"))
 						self.fsm.change("mach_dash");
+					if(self.input.get_input_pressed_raw("left")){
+						self.publish("animation_xscale", -1);
+						self.dir = -1;
+					}
+					if(self.input.get_input_pressed_raw("right")){
+						self.publish("animation_xscale", 1);
+						self.dir = 1;
+					}
 				},
 				leave: function() {
 				},

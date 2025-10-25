@@ -18,7 +18,7 @@ on_spawn = function(_player) {
 	_charge.depth = _player.depth - 1;
 	_charge.components.publish("character_set", "player");
 	_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
-	_player.components.get(ComponentWeaponUse).weapon_list = global.player_character[current_spawn].weapons;
+	_player.components.get(ComponentWeaponUse).set_weapons(global.player_character[current_spawn].weapons);
 	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_character[current_spawn].weapon_ammo_max;
 	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.player_character[current_spawn].weapons), global.player_character[current_spawn].weapon_ammo_max);
 	//
@@ -35,7 +35,10 @@ on_spawn = function(_player) {
 			self.publish("death");
 		}
 	}
-	_player.components.get(ComponentPlayerMove).apply_full_armor_set(_player.components.get(ComponentPlayerMove).armor_parts);
+	
+	log(global.armors[current_spawn])
+	
+	_player.components.get(ComponentPlayerMove).apply_full_armor_set(global.armors[current_spawn]);
 	
 	if (current_spawn == global.local_player_index) {
 		log("this is the player!")

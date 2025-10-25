@@ -14,12 +14,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.states = {};
 	
 	self.timer = 0;
-	#endregion
 	
-	self.armor_parts = [new XBladeArmorBoot(), new XFirstArmorHead(), new XSecondArmorBody()];
-	
-		
 	self.character = variable_clone(global.player_character[0], 256);
+	
+	self.armor_parts = [];
+	#endregion
 	
 	#region serializer
 	self.serializer
@@ -45,7 +44,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		
 	self.reset_state_variables();
 	
-	self.fsm = new SnowState("init", false);
+	self.fsm = new SnowState("init", true);
 	self.fsm
 		.history_enable()
 		.history_set_max_size(10)
@@ -53,7 +52,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("start", {
 			enter: function() {
 				self.publish("animation_play", { name: "intro" });
-			},
+				//self.apply_full_armor_set(self.armor_parts);
+			}
 		})
 		.add("idle", {
 			enter: function() {
@@ -357,6 +357,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	// Initialization
 	self.init = function() {
 		self.character = variable_clone(global.player_character[self.input.get_player_index()], 256);
+		self.armor_parts = variable_clone(global.armors[self.input.get_player_index()],256);
+		//self.apply_full_armor_set(self.armor_parts);
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
@@ -364,32 +366,55 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.apply_full_armor_set = function(_armors){
+		log("MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR ")
 		self.reset_state_variables();
 		self.armor_parts = [[],[],["/normal"]];
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm){
-			//add the currently listed armor to the armor array
-			array_push(self.armor_parts[0], _arm)
+			log(typeof(_arm))
+			log(_arm)
+			if(typeof(_arm) != "struct" && _arm != noone){
+				log("Converted method to struct!")
+				var _temp = {};
+			
+				with(_temp){
+					script_execute(_arm)
+				}
+			
+				_arm = _temp;
+			} else {
+				log("that was a struct")
+			}
+			log(typeof(_arm))
 			//run any code and load it's directory
-			if(_arm != noone){
+			if(typeof(_arm) == "struct"){
+				//add the currently listed armor to the armor array
+				array_push(self.armor_parts[0], _arm)
 				var _directory_name = "/armor" + string(_arm.sprite_name)
 				_directory_name = string_replace(_directory_name, "_", "/")
 				//log(_directory_name);
 				find("animation").add_subdirectories([_directory_name]);
 				if(variable_struct_exists(_arm, "apply_armor_effects"))
 					_arm.apply_armor_effects(self);
-					//log("this thing doesnt have an armor effect variable!")
+					
+				if(variable_struct_exists(_arm, "damage_rate"))
+					get(ComponentDamageable).damage_rate = _arm.damage_rate;
+				
 				array_push(self.armor_parts[2], _directory_name);
+				
+				//add the armor to the _armor_set array so we can set the armors in the animator
+				var _armor_name = string(_arm.sprite_name);
+				_armor_name = string_delete(_armor_name, 0, 1);
+				_armor_name = string_replace(_armor_name, "/", "_");
+				//log(_armor_name)
+				array_push(self.armor_parts[1], _armor_name);
 			}
-			//add the armor to the _armor_set array so we can set the armors in the animator
-			var _armor_name = string(_arm.sprite_name);
-			_armor_name = string_delete(_armor_name, 0, 1);
-			_armor_name = string_replace(_armor_name, "/", "_");
-			//log(_armor_name)
-			array_push(self.armor_parts[1], _armor_name);
+			
 		});
 		//publish the armor set
 		self.publish("armor_set",self.armor_parts[1]);
+		log("the armor sprites are")
+		log(self.armor_parts[2])
 		self.get_instance().components.get(ComponentAnimationShadered).set_subdirectories(self.armor_parts[2]);
 		self.get_instance().components.get(ComponentAnimationShadered).reload_animations();
 		//log(self.armor_parts[1])
@@ -452,8 +477,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.double_tap.step();
 		
 		array_foreach(self.armor_parts, function(_part) {
-			if(_part.step_armor_effects != undefined)
-				_part.step_armor_effects(self);
+			if(typeof(_part) == "struct")
+				if(_part.step_armor_effects != undefined)
+					_part.step_armor_effects(self);
 		})
 		
 		// Trigger FSM transitions

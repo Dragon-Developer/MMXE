@@ -31,6 +31,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		.addVariable("current_weapon")
 		.addVariable("weapon_list")
 		
+	self.init = function(){
+		
+	}
+		
 	self.on_register = function(){
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
@@ -38,6 +42,36 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 			//idk physics would be good for speed burner/charge kick
 		});
+	}
+	
+	self.set_weapons = function(_weapons){
+		self.weapon_list = _weapons;
+		
+		if(!is_array(_weapons)){
+			_weapons = [_weapons];
+		}
+		
+		array_foreach(_weapons, function(_wep){
+			var _code = {};
+			
+			with(_code){
+				script_execute(_wep)
+			}
+			
+			array_foreach(_code.data, function(_proj){
+				
+				var _proj_code = {};
+			
+				with(_proj_code){
+					script_execute(_proj)
+				}
+				
+				if(_proj_code.term == "State Based"){
+					_proj_code.init(self.get(ComponentPlayerMove))
+					log("state added!")
+				}
+			})
+		})
 	}
 	
 	self.change_weapon = function(_change){
@@ -125,16 +159,19 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					return;
 				}
 			}
-			var _type = _shot_code.term;
 			
 			var _shot_data = {};
 			with(_shot_data){
 				script_execute(_shot_code.data[_shot_index])
 			}
 			
+			var _type = _shot_data.term;
+			
 			if(_type == "Projectile" && self.projectile_count < _shot_data.shot_limit){
 				self.create_projectile(_shot_code, _shot_index, _input, _id);
-			} 
+			} else if(_type == "State Based"){
+				get(ComponentPlayerMove).fsm.change(_shot_data.state_name)
+			}
 		}
 	}
 			
@@ -171,12 +208,18 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		var _y = self.get_instance().y;
 		
+		var _dir = self.get_instance().components.find("animation").animation.__xscale;
+		
+		if(_anim_name == "wall_slide"){
+			_dir *= -1
+		}
+		
 		//if we have an animator, add the shot offsets
 		try{
 			if(find("animation") != noone){
 				log("gon add offsets " + string( find("animation").get_shot_offsets()))
 				var _offsets = find("animation").get_shot_offsets();
-				_x += _offsets[0];
+				_x += _offsets[0] * _dir;
 				_y += _offsets[1];
 				log("added offsets")
 			} else {
@@ -189,11 +232,6 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//create the projectile itself
 		var _shot = noone
 		
-		var _dir = self.get_instance().components.find("animation").animation.__xscale;
-		
-		if(_anim_name == "wall_slide"){
-			_dir *= -1
-		}
 		
 		var _tags = [];
 		
@@ -211,31 +249,5 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_code, self, _tags);
 		
 		self.projectile_count++;
-		
-		
-		
-		//old method
-		//_shot = instance_create_depth(self.get_instance().x,self.get_instance().y,self.get_instance().depth, spawn_projectile);
-		
-		//set the projectile's direction to the player's
-		//_shot.dir = self.get_instance().components.find("animation").animation.__xscale;
-		
-		//flip the direction if wallsliding
-		if(_anim_name == "wall_slide"){
-			//_shot.dir*= -1
-		}
-			
-		//set the projectile's data to _shot_data
-		//_shot.weaponData = _shot_code;
-	}
-	
-	self.apply_shot_offsets = function(_shot){
-		log(self.get_instance().components.find("animation").animation.get_props())
-		log("QWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOPQWERTYUIOP END")
-		//var _xOff = self.get_instance().components.find("animation").animation.shot_offset_x;
-		//var _yOff = self.get_instance().components.find("animation").animation.shot_offset_y;
-		
-		//_shot.x += _xOff;
-		//_shot.y += _yOff;
 	}
 } 

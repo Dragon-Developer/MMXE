@@ -74,10 +74,13 @@ function ComponentDamageable() : ComponentBase() constructor{
 	}
 	
 	self.check_for_collision = function(){
-		self.check_for_projectiles();
-		self.check_for_enemies();
-		self.check_for_bosses();
-		self.check_for_damage_zones();
+		var _damage = 0;
+		_damage += self.check_for_projectiles();
+		_damage += self.check_for_enemies();
+		_damage += self.check_for_bosses();
+		_damage += self.check_for_damage_zones();
+		
+		self.health -= floor(_damage * self.damage_rate);
 		
 		if(self.health <= 0)
 		{
@@ -103,7 +106,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 				_proj = _test
 		}
 		
-		if(_proj == false) return;
+		if(_proj == false) return 0;
 		
 		var _hits = false;
 		for(var g = 0; g < array_length(self.projectile_tags); g++){
@@ -113,21 +116,20 @@ function ComponentDamageable() : ComponentBase() constructor{
 			}
 		}
 		
-		if !_hits return;
+		if !_hits return 0;
 		
 		if(self.invuln_offset > CURRENT_FRAME && _proj.code.comboiness <= self.combo_count){
 			//if the comboiness is too high and the projectile is not comboy enough
-			return;
+			return 0;
 		}
 		
 		if(_proj.code.damage > 0){
-			self.health -= _proj.code.damage;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.combo_count = _proj.code.comboiness;
-			log("hit by projectile")
+			return _proj.code.damage;
 		}
-		
+		return 0;
 	}
 
 	self.check_for_enemies = function(){
@@ -136,21 +138,22 @@ function ComponentDamageable() : ComponentBase() constructor{
 		var _enemy = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.enemy);
 		
 		if(!variable_instance_exists(_enemy, "components")){ 
-			return;
+			return 0;
 		}
 		
 		if(self.invuln_offset > CURRENT_FRAME){
-			return;
+			return 0;
 		}
 		
 		if(_enemy.components.get(ComponentEnemy).contact_damage > 0){
-			self.health -= _enemy.components.get(ComponentEnemy).contact_damage;
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			log("hit by enemy")
 			log(_enemy.components.get(ComponentEnemy).contact_damage)
 			log(object_get_name(_enemy.object_index))
+			return _enemy.components.get(ComponentEnemy).contact_damage;
 		}
+		return 0;
 	}
 	
 	self.check_for_bosses = function(){
@@ -159,39 +162,41 @@ function ComponentDamageable() : ComponentBase() constructor{
 		var _enemy = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,par_boss);
 		
 		if(!variable_instance_exists(_enemy, "components")){ 
-			return;
+			return 0;
 		}
 		
 		if(self.invuln_offset > CURRENT_FRAME){
-			return;
+			return 0;
 		}
 		
 		if(_enemy.components.get(ComponentBoss).contact_damage > 0){
-			self.health -= _enemy.components.get(ComponentBoss).contact_damage;
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			log("hit by enemy")
 			log(_enemy.components.get(ComponentBoss).contact_damage)
 			log(object_get_name(_enemy.object_index))
+			return _enemy.components.get(ComponentBoss).contact_damage;
 		}
+		return 0;
 	}
 	
 	self.check_for_damage_zones = function(){
 		var _zone = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,obj_hurt_zone);
 		
 		if(!variable_instance_exists(_zone, "contact_damage")){ 
-			return;
+			return 0;
 		}
 		
 		if(self.invuln_offset > CURRENT_FRAME){
-			return;
+			return 0;
 		}
 		
 		if(_zone.contact_damage > 0){
-			self.health -= _zone.contact_damage;
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			log("hit by zone")
+			return _zone.contact_damage;
 		}
+		return 0;
 	}
 }

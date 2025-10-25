@@ -30,8 +30,13 @@ function BaseCharacter() constructor{
 			speed: -138 / 256
 		}
 	}
-	self.states_default = variable_clone(self.states, 3);
-	self.possible_armors = [];
+	self.possible_armors = [
+		[],//heads
+		[],//arms
+		[],//bodies
+		[],//boots
+		[]//full sets
+	];
 	self.armor_use_requirements = [];
 	
 	self.default_palette = [

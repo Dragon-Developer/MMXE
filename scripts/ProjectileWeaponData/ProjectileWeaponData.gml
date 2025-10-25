@@ -1,25 +1,5 @@
 function ProjectileWeapon() : Weapon() constructor{
 	self.term = "Projectile";
-	self.title = "Undefined";
-	self.data = [noone,noone,noone,noone, noone];//hmmm
-	//self.charge_time = [30, 105, 180, 255];//i dont think mmxe uses this, but battle network has some busters charge faster than others
-	self.charge_limit = 2;
-	self.weapon_palette = [
-		#203080,//Blue Armor Bits
-		#0040f0,
-		#0080f8,
-		#1858b0,//Under Armor Teal Bits
-		#50a0f0,
-		#78d8f0,
-		#181818,//black
-		#804020,//Face
-		#b86048,
-		#f8b080,
-		#989898,//glove
-		#e0e0e0,
-		#f0f0f0,//eye white
-		#f04010//red
-	];
 }
 
 function ProjectileData() constructor{
@@ -27,6 +7,7 @@ function ProjectileData() constructor{
 		projectileData is the data that a projectile uses to function.
 		this also includes stuff like damage and comboiness
 	*/
+	self.term = "Projectile";
 	self.dir = 1;
 	self.damage = 1;
 	self.shot_limit = 1;

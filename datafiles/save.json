@@ -7,9 +7,8 @@
     "weapons":["ref","script",102855.0],
     "max_health":12.0,
     "health":12.0,
-    "last_played_character":"x",
-    "x_armors":["x1","x2","x3"],
-    "equipped_weapons":["ref","script",102855.0,"ref","script",102855.0,"ref","script",102855.0,"ref","script",102855.0]
+    "last_used_character": "x",
+    "last_used_armor":[0,0,0,1,0]
   },
   "settings":{
     "Has_done_intro_stage":true,

@@ -172,6 +172,14 @@ function ComponentAnimation() : ComponentBase() constructor {
 		self.animation.get_props().keyframes[_frame].shot_offset_y];
 	}
 	
+	//returns the listed variable
+	//_variable must be a string!
+	self.get_variable_from_frame_data = function(_variable){
+		var _frame = self.animation.__frame;
+		
+		return struct_get(self.animation.get_props().keyframes[_frame], _variable);
+	}
+	
 	self.draw_regular = function(_pos, _col = c_white) {
 		if(is_undefined(_pos)) _pos = self.get_interpolated_position();
 		var _instance_x = floor(_pos[0]);

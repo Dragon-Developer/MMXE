@@ -38,9 +38,111 @@
           "helm"
         ]
       ],
-      "list": [
+      "list": [ 
+        {
+          "name": "head_part",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "arms_part",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "body_part",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "boot_part",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "full_armor",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "presets",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "confirm",
+          "properties": {
+            "speed":  1
+          }
+        },  
+        {
+          "name": "cancel",
+          "properties": {
+            "speed":  1
+          }
+        }, 
         {
           "name": "x",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x1_helm",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x2_helm",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x1_arms",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x2_arms",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x1_body",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x2_body",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x1_legs",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_x2_legs",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_blade_legs",
           "properties": {
             "speed":  1
           }

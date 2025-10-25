@@ -46,40 +46,44 @@ function GameLoop() : NET_GameLoopBase() constructor {
 			}
 		};
 		
-		ENTITIES.for_each_component(ComponentNode, _step);
-		ENTITIES.for_each_component(ComponentSpriteRenderer, _step);
-		ENTITIES.for_each_component(ComponentPlayerInput, _step);
-		ENTITIES.for_each_component(ComponentPlayerMove, _step);
-		ENTITIES.for_each_component(ComponentPauseMenu, _step);
-		ENTITIES.for_each_component(ComponentEnemy, _step);
-		ENTITIES.for_each_component(ComponentBoss, _step);
-		ENTITIES.for_each_component(ComponentWeaponUse, _step);
-		ENTITIES.for_each_component(ComponentProjectile, _step);//may be deprecated
-		ENTITIES.for_each_component(ComponentProjectileManager, _step);
-		ENTITIES.for_each_component(ComponentGravityChanger, _step);
-		ENTITIES.for_each_component(ComponentStageSelector, _step);
-		ENTITIES.for_each_component(ComponentCharacterSelect, _step);
-		ENTITIES.for_each_component(ComponentMask, _step);
-		ENTITIES.for_each_component(ComponentPhysics, _step);
-		ENTITIES.for_each_component(ComponentCharge, _step);
-		ENTITIES.for_each_component(ComponentAnimation, _step);
-		ENTITIES.for_each_component(ComponentAnimationShadered, _step);
-		ENTITIES.for_each_component(ComponentNPC, _step);
-		ENTITIES.for_each_component(ComponentInteractibleContact, _step);
-		ENTITIES.for_each_component(ComponentInteractibleInteract, _step);
-		ENTITIES.for_each_component(ComponentParallax, _step);
-		ENTITIES.for_each_component(ComponentCamera, _step);
-		ENTITIES.for_each_component(ComponentRide, _step);
-		ENTITIES.for_each_component(ComponentDoor, _step);
-		ENTITIES.for_each_component(ComponentDamageable, _step);
-		ENTITIES.for_each_component(ComponentDialouge, _step);
-		ENTITIES.for_each_component(ComponentHealthbar, _step);
-		ENTITIES.for_each_component(ComponentHealable, _step);
-		ENTITIES.for_each_component(ComponentParticles, _step);
-		ENTITIES.for_each_component(ComponentCameraRecorder, _step);
+		self.do_action_with_all_components(_step)
 		//Forte:
 		//some way to have all components not defined here still run their step method
 		//would make it easier to test
+	}
+	
+	self.do_action_with_all_components = function(_func){
+		ENTITIES.for_each_component(ComponentNode, _func);
+		ENTITIES.for_each_component(ComponentSpriteRenderer, _func);
+		ENTITIES.for_each_component(ComponentPlayerInput, _func);
+		ENTITIES.for_each_component(ComponentPlayerMove, _func);
+		ENTITIES.for_each_component(ComponentPauseMenu, _func);
+		ENTITIES.for_each_component(ComponentEnemy, _func);
+		ENTITIES.for_each_component(ComponentBoss, _func);
+		ENTITIES.for_each_component(ComponentWeaponUse, _func);
+		ENTITIES.for_each_component(ComponentProjectileManager, _func);
+		ENTITIES.for_each_component(ComponentGravityChanger, _func);
+		ENTITIES.for_each_component(ComponentStageSelector, _func);
+		ENTITIES.for_each_component(ComponentCharacterSelect, _func);
+		ENTITIES.for_each_component(ComponentArmorSelect, _func);
+		ENTITIES.for_each_component(ComponentMask, _func);
+		ENTITIES.for_each_component(ComponentPhysics, _func);
+		ENTITIES.for_each_component(ComponentCharge, _func);
+		ENTITIES.for_each_component(ComponentAnimation, _func);
+		ENTITIES.for_each_component(ComponentAnimationShadered, _func);
+		ENTITIES.for_each_component(ComponentNPC, _func);
+		ENTITIES.for_each_component(ComponentInteractibleContact, _func);
+		ENTITIES.for_each_component(ComponentInteractibleInteract, _func);
+		ENTITIES.for_each_component(ComponentParallax, _func);
+		ENTITIES.for_each_component(ComponentCamera, _func);
+		ENTITIES.for_each_component(ComponentRide, _func);
+		ENTITIES.for_each_component(ComponentDoor, _func);
+		ENTITIES.for_each_component(ComponentDamageable, _func);
+		ENTITIES.for_each_component(ComponentDialouge, _func);
+		ENTITIES.for_each_component(ComponentHealthbar, _func);
+		ENTITIES.for_each_component(ComponentHealable, _func);
+		ENTITIES.for_each_component(ComponentParticles, _func);
+		ENTITIES.for_each_component(ComponentCameraRecorder, _func);
 	}
 	self.step = function() {
 		
@@ -113,6 +117,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
 		ENTITIES.for_each_component(ComponentMinimap, _draw_gui);
 		ENTITIES.for_each_component(ComponentSpriteRenderer, _draw_gui);
+		ENTITIES.for_each_component(ComponentArmorSelect, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);

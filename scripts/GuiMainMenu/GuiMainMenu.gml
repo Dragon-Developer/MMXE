@@ -19,6 +19,24 @@ function GuiMainMenu() : GuiContainer() constructor {
 	buttonStart.addEventListener("click", function() { 
 		self.setEnabled(false);
 		global.game = new GameOffline();
+		global.player_character[0] = StringToCharacter(global.player_data.last_used_character)
+		
+		var _possible_armors = global.player_character[0].possible_armors;
+		var _selected_armors = global.player_data.last_used_armor;
+		
+		var _ret = array_create(array_length(_selected_armors))
+		
+		for(var p = 0; p < array_length(_selected_armors); p++){
+			log(_selected_armors[p])
+			log(_possible_armors[_selected_armors[p]])
+			_ret[p] = _possible_armors[p][_selected_armors[p]]
+		}
+		
+		log(_possible_armors)
+		log("rat")
+		log(_ret)
+			
+		global.armors[0] = _ret;
 		if(!global.settings.Has_done_intro_stage){
 			global.stage_Data.music = "tutorial"
 			parent.startGame(rm_intro);
@@ -31,27 +49,6 @@ function GuiMainMenu() : GuiContainer() constructor {
 		self.setEnabled(false);
 		parent.playOnlineContainer.setEnabled(true);
 	});
-	
-	buttonQuickCreate = new GuiButton(160, 32, "Quick Create Server");
-	buttonQuickCreate.addEventListener("click", function() { 
-		global.game = new GameOnline();
-		global.server = new GameServer(real("3000"));
-		global.socket = global.server;
-		self.setEnabled(false);
-		parent.lobbyMenuContainer.setEnabled(true);
-	});
-	
-	buttonQuickConnect = new GuiButton(160, 32, "Quick Connect");
-	buttonQuickConnect.addEventListener("click", function() { 
-		var _ip_port = "127.0.0.1:3000";
-		var _split = string_split(_ip_port,":");
-		global.game = new GameOnline();
-		global.client = new GameClient(_split[0], real(_split[1]));
-		global.socket = global.client;
-		self.setEnabled(false);
-		parent.lobbyMenuContainer.setEnabled(false);
-		parent.WaitingContainer.setEnabled(true);
-	});
 		
     buttonOptions = new GuiButton(80, 32,"Options");
 	buttonOptions.addEventListener("click", function() { 
@@ -61,6 +58,6 @@ function GuiMainMenu() : GuiContainer() constructor {
 	
     buttonExit = new GuiButton(60, 27, "Exit"); 
     
-    mainContainer.addChild([buttonStart, buttonOnline, buttonQuickCreate, buttonQuickConnect, buttonOptions, buttonExit]);
+    mainContainer.addChild([buttonStart, buttonOnline, buttonOptions, buttonExit]);
     addChild(mainContainer);
 }

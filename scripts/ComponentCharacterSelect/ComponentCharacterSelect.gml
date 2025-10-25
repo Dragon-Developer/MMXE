@@ -52,13 +52,14 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 		if(self.input.get_input_pressed("down")){
 			global.player_character[global.local_player_index] = variable_clone(self.characters[self.character_index]);
 			room_transition_to(rm_stage_select,"default",20);
-			ENTITIES.destroy_instance(self.get_instance());
+			
+			struct_set(global.player_data, "last_used_character", global.player_character[global.local_player_index]);
 		}
 		
 		if(self.input.get_input_pressed("up")){
 			global.player_character[global.local_player_index] = variable_clone(self.characters[self.character_index]);
 			room_transition_to(rm_armor_select,"default",25);
-			ENTITIES.destroy_instance(self.get_instance());
+			//ENTITIES.destroy_instance(self.get_instance());
 		}
 	}
 }

@@ -44,7 +44,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		
 		self.reload_animation_controller(_index,collage, _char);
 		
-		log("Sprite made")
+		//log("Sprite made")
 		
 		return _index
 	}
@@ -85,7 +85,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		var _current_animation = undefined;
 		if (!is_undefined(self.sprites[_index].animation)) {
 			_current_animation = self.sprites[_index].animation;
-			log("what in the goddamn fuck did you do")
+			//log("what in the goddamn fuck did you do")
 		}
 		self.sprites[_index].animationController
 			.clear()
@@ -142,7 +142,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 				//log(ret)
 				return ret;
 			}
-		log("shitted my pants")
+		//log("shitted my pants")
 	}
 	
 	self.draw = function(){

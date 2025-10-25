@@ -119,13 +119,34 @@ function ComponentCamera() : ComponentBase() constructor {
 	
 	self.update_pos = function(_x, _y) {
 		
+		var _target_always_in_view = true;
+		
 		var _cam_x = floor(_x - self.width / 2);
 		var _cam_y = floor(_y - self.height / 2);
+		
+		if(self.x > self.bounds_bottom_right_x) 
+			_target_always_in_view = false;
+		if(self.x < self.bounds_top_left_x)
+			_target_always_in_view = false;
+		if(self.y > self.bounds_bottom_right_y + GAME_H)
+			_target_always_in_view = false;
+		if(self.y < self.bounds_top_left_y)
+			_target_always_in_view = false;
 		
 		_cam_x = clamp(_cam_x, self.bounds_top_left_x, self.bounds_bottom_right_x);
 		_cam_y = clamp(_cam_y, self.bounds_top_left_y, self.bounds_bottom_right_y);
 		
-		if(abs(x - _cam_x) > self.movement_limit_x){
+		//catch up to the target if possible
+		//if the target is more than a third of a screen's worth of space away, 
+		//go to exactly a third of a screens worth away
+		if(abs(x - _cam_x) > GAME_W / 2 && _target_always_in_view){
+			if(x > _cam_x){
+				_cam_x = x - (abs(x - _cam_x) - GAME_W / 2 + 1);
+			} else {
+				_cam_x = x + (abs(x - _cam_x) - GAME_W / 2 + 1);
+			}
+			log("Too far!")
+		} else if(abs(x - _cam_x) > self.movement_limit_x){
 			if(x > _cam_x){
 				_cam_x = x - self.movement_limit_x;
 			} else {
@@ -133,14 +154,19 @@ function ComponentCamera() : ComponentBase() constructor {
 			}
 		}
 		
-		if(abs(y - _cam_y) > self.movement_limit_y){
+		if(abs(y - _cam_y) > GAME_H / 2 && _target_always_in_view){
+			if(y > _cam_y){
+				_cam_y = y - (abs(y - _cam_y) - GAME_H / 2);
+			} else {
+				_cam_y = y + (abs(y - _cam_y) - GAME_H / 2);
+			}
+		} else if(abs(y - _cam_y) > self.movement_limit_y){
 			if(y > _cam_y){
 				_cam_y = y - self.movement_limit_y;
 			} else {
 				_cam_y = y + self.movement_limit_y;
 			}
 		}
-		
 		
 		if (self.flipped_y) {
 			camera_set_view_pos(self.camera, _cam_x, _cam_y + self.height);

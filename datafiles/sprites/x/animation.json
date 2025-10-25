@@ -1331,6 +1331,33 @@
           }
         },
         {
+          "name": "speed_burner",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
           "name": "mach_hold",
           "properties": {
             "action": "mach_dash",

@@ -1,5 +1,5 @@
 function shotgunIce() : ProjectileWeapon() constructor{
-	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
+	self.data = [SpeedBurnerFullCharge,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
 	self.charge_limit = 0;
 	self.weapon_palette = [
 		#3973f7,//Blue Armor Bits
@@ -18,6 +18,45 @@ function shotgunIce() : ProjectileWeapon() constructor{
 		#f04010//red
 	];
 	self.title = "S. ICE";
+}
+
+function SpeedBurnerFullCharge() : StateBasedData() constructor{
+	self.state_name = "Speed Burner"
+	
+	self.init = function(_player){
+		with(_player){
+			fsm.add(other.state_name,{
+				enter: function() {//
+					WORLD.play_sound("dash");
+					var _inst = self.get_instance()
+					WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+					self.timer = CURRENT_FRAME + self.states.dash.interval / 1.5;
+					self.current_hspd = self.states.dash.speed * 1.5;	
+					self.dash_dir = self.dir;
+					if(self.dash_dir == 0)
+						self.dash_dir = self.hdir;
+					self.publish("animation_play", { name: "speed_burner" });
+					self.physics.set_speed(0, 0);
+					self.physics.set_grav(new Vec2(0,0));
+				},
+				step: function() {
+					self.set_hor_movement(self.dash_dir);
+				},
+				leave: function() {
+					//if (!self.dash_jump && self.physics.is_on_floor())
+						//self.current_hspd = self.states.walk.speed;	
+					self.physics.set_grav(new Vec2(0,0.25));
+				}
+			})
+			.add_wildcard_transition("t_dash", other.state_name, function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
+			.add_transition("t_dash_end", other.state_name, "fall", function() { return self.physics.is_on_floor(); })
+			.add_transition("t_transition", other.state_name, "fall", function() 
+				{ 
+					var _facing_correct_direction = (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped))
+					var _timer_up = self.timer <= CURRENT_FRAME;
+					return _facing_correct_direction || _timer_up; })
+		}
+	}
 }
 
 function boomerangCutter() : ProjectileWeapon() constructor{
