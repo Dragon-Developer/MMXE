@@ -11,6 +11,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.max_queue_size = 5;
 	self.last_game_frame = 0;
 	self.do_drawing = true;
+	self.draw_base_sprite = true;
 	
 	self.serializer
 		.addVariable("armors")
@@ -202,10 +203,12 @@ function ComponentAnimation() : ComponentBase() constructor {
 		
 		var _previous_xscale = self.animation.get_xscale();
 		
-	    self.animation
-			.set_xscale(_xscale)
-			.set_angle(-self.rotation_angle)
-			.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+		if(self.draw_base_sprite){
+		    self.animation
+				.set_xscale(_xscale)
+				.set_angle(-self.rotation_angle)
+				.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+		}
 		var _modifier = self.animation.__types[$ self.animation.__type][0];
 		if(_modifier != "") _modifier += "_"
 		for (var _q = 0; _q < array_length(self.armors); _q++){

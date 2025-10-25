@@ -180,7 +180,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	}
 	
 	self.draw_gui = function(){
-		if(self.selected_part <= 4)
+		if(self.selected_part >= 5) return;
 		draw_set_color(c_white)
 		//draw_line_width(0,0,GAME_W,GAME_H,3)
 		draw_line_percentage(

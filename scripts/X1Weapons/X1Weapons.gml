@@ -48,7 +48,6 @@ function SpeedBurnerFullCharge() : StateBasedData() constructor{
 					self.physics.set_grav(new Vec2(0,0.25));
 				}
 			})
-			.add_wildcard_transition("t_dash", other.state_name, function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
 			.add_transition("t_dash_end", other.state_name, "fall", function() { return self.physics.is_on_floor(); })
 			.add_transition("t_transition", other.state_name, "fall", function() 
 				{ 
