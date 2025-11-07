@@ -54,3 +54,9 @@ switch(transition_data.type){
 		}
 	break;
 }
+
+if(keyboard_check_pressed(ord("6"))){
+	var _screenshot = working_directory + "Screenshot" + string(current_month) + string(current_day) + string(current_minute) + string(current_second) + ".png"
+	screen_save(_screenshot)
+	log("image saved as " + _screenshot)
+}

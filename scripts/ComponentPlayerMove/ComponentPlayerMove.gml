@@ -148,7 +148,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				_inst.y -= 4;
 				
 				if(self.timer < CURRENT_FRAME){
-					room_transition_to(rm_stage_select);
+					room_transition_to(rm_weapon_get);
 				}
 			}
 		})
@@ -399,6 +399,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					
 				if(variable_struct_exists(_arm, "damage_rate"))
 					get(ComponentDamageable).damage_rate = _arm.damage_rate;
+					
+				if(variable_struct_exists(_arm, "buster_weapon")){
+					global.player_character[get(ComponentPlayerInput).get_player_index()].weapons[0] = _arm.buster_weapon;
+					get(ComponentWeaponUse).set_weapons(global.player_character[get(ComponentPlayerInput).get_player_index()].weapons);
+				}
 				
 				array_push(self.armor_parts[2], _directory_name);
 				

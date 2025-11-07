@@ -179,17 +179,8 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		//log("sprite's on screen")
 	};
 	
-	self.draw_sprite = function(_action, _frame, _x, _y, _renderer = 0){
+	self.draw_sprite = function(_action, _frame, _x, _y, _renderer = 0, _alpha = 1){
+		self.sprites[_renderer].animationController.__alpha = _alpha;
 		self.sprites[_renderer].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
 	}
-	
-	/*
-	
-	how am i going to handle this?
-	
-	I can probably make an array of AnimationControllers. might not be performant, but it would make it easier.
-	Projectiles need the full functionality of the animation controller if I want it to be a clean
-	transition, so it looks like the best plan of action
-	
-	*/
 }

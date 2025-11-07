@@ -187,8 +187,16 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * @returns {real} The x origin offset (16 if up is horizontal, else 8).
 	 */
 	get_x_origin = function() {
-		var _sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
-		var _sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		
+		var _sprite_width = 16;
+		var _sprite_height = 32;
+		
+		try{
+			_sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
+			_sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		} catch(_err){
+			
+		}
 		
 		return (abs(self.up.x) == 1) ? _sprite_height : _sprite_width;
 	};
@@ -197,15 +205,29 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * @returns {real} The y origin offset (16 if up is vertical, else 8).
 	 */
 	get_y_origin = function() {
-		var _sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
-		var _sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		var _sprite_width = 16;
+		var _sprite_height = 32;
+		
+		try{
+			_sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
+			_sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		} catch(_err){
+			
+		}
 		
 		return (abs(self.up.y) == 1) ? _sprite_height : _sprite_width;
 	};
 	
 	get_y_origin_reversed = function() {
-		var _sprite_width =  sprite_get_width(self.get_instance().mask_index) - sprite_get_xoffset(self.get_instance().mask_index);
-		var _sprite_height = sprite_get_height(self.get_instance().mask_index) - sprite_get_yoffset(self.get_instance().mask_index);
+		var _sprite_width = 16;
+		var _sprite_height = 32;
+		
+		try{
+			_sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
+			_sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+		} catch(_err){
+			
+		}
 		
 		return (abs(self.up.y) == 1) ? _sprite_height : _sprite_width;
 	};

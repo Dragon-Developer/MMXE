@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"X1ZeroArmor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"X1ZeroArmor",
+  "parent":{
+    "name":"Zero",
+    "path":"folders/Scripts/Game/Armors/Zero.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

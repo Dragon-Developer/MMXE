@@ -1,6 +1,6 @@
 event_inherited();
 entity_object = par_pickup;
-pickup_data = new Pickup();
+pickup_data = new BasePickup();
 on_spawn = function(_player) {
 	_player.components.get(ComponentAnimationShadered).set_subdirectories([ "/normal"]);
 	_player.components.get(ComponentPickup).data = pickup_data;

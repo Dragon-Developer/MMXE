@@ -1,4 +1,4 @@
-function Pickup() constructor{
+function BasePickup() constructor{
 	self.pause_on_pickup = false;
 	self.count = 2;
 	self.pause = false;

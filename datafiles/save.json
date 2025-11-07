@@ -8,7 +8,7 @@
     "max_health":12.0,
     "health":12.0,
     "last_used_character": "x",
-    "last_used_armor":[0,0,0,1,0]
+    "last_used_armor":[0,1,0,1,0]
   },
   "settings":{
     "Has_done_intro_stage":true,

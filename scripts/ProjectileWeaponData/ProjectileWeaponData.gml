@@ -14,6 +14,7 @@ function ProjectileData() constructor{
 	self.comboiness = 1;//gonna follow z3's system
 	self.init_time = CURRENT_FRAME;
 	self.animation = "xShot1";
+	self.animation_append = "_shoot";
 	self.hitbox_scale = new Vec2(8,8);
 	self.tag = ["enemy"]
 	self.general_init = function(_comp){

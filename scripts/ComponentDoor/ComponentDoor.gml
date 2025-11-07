@@ -18,8 +18,11 @@ function ComponentDoor() : ComponentBase() constructor{
 	spawn_boss = true;
 	
 	prev_cam_x = -1;
+	boss_spawn_timer = -1;
 
 	coll = noone;
+	self.serializer = new NET_Serializer();
+	self.serializer.addVariable("boss_spawn_timer")
 	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -77,9 +80,13 @@ function ComponentDoor() : ComponentBase() constructor{
 				curr_player.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
 				curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
 				curr_player.components.get(ComponentAnimationShadered).animation.__speed = 0;
-				with(obj_camera){
-					components.get(ComponentCamera).target = noone;
-					other.curr_cam = components.get(ComponentCamera);
+				if(curr_player.components.get(ComponentPlayerInput).get_player_index() == global.local_player_index){
+					with(obj_camera){
+						components.get(ComponentCamera).target = noone;
+						other.curr_cam = components.get(ComponentCamera);
+					}
+				} else {
+					curr_cam = new Vec2(0,0)
 				}
 				camera_total_movement = GAME_W;
 			}
@@ -111,8 +118,10 @@ function ComponentDoor() : ComponentBase() constructor{
 						curr_cam.x += (flipped * -2 + 1) * (383/256);
 					} else {
 						state_segment++;
-						with(obj_camera){
-							components.get(ComponentCamera).target = other.curr_player;
+						if(curr_player.components.get(ComponentPlayerInput).get_player_index() == global.local_player_index){
+							with(obj_camera){
+								components.get(ComponentCamera).target = other.curr_player;
+							}
 						}
 						prev_cam_x = curr_cam.x;
 						self.publish("animation_play", { name: "close" });
@@ -123,12 +132,13 @@ function ComponentDoor() : ComponentBase() constructor{
 						}
 						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
 						curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
+						boss_spawn_timer = CURRENT_FRAME + 90;
 					}
 				//}
 		
 				break;
 				case(3):
-				if(prev_cam_x == curr_cam.x){
+				if(boss_spawn_timer == CURRENT_FRAME){
 					curr_player.x = floor(curr_player.x) + (flipped * -2 + 1);
 					coll.y = _inst.y;
 					//self.publish("animation_play", { name: "stay_closed" });
@@ -144,7 +154,7 @@ function ComponentDoor() : ComponentBase() constructor{
 						log("boss spawned")
 					}
 				} else {
-					prev_cam_x = curr_cam.x;
+					log(boss_spawn_timer - CURRENT_FRAME)
 				}
 				break;
 			}

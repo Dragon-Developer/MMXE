@@ -101,7 +101,7 @@ function TestBoss() : BaseBoss() constructor{
 				enter: function(){
 					self.publish("animation_play", { name: "wall_jump" });
 					self.get(ComponentPhysics).set_speed(0, 0);
-					self.get(ComponentPhysics).set_grav(0);
+					self.get(ComponentPhysics).set_grav(new Vec2(0, 0));
 					self.timer = CURRENT_FRAME;
 				},
 				step: function(){
@@ -116,6 +116,9 @@ function TestBoss() : BaseBoss() constructor{
 							self.get(ComponentPhysics).set_hspd(self.dir * -1)
 						self.get(ComponentPhysics).set_vspd(-4);	
 					}
+				},
+				leave: function(){
+					self.get(ComponentPhysics).set_grav(new Vec2(0, 0.25));
 				}
 			})
 			.add("fall",{

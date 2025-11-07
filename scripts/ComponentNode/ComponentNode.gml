@@ -41,4 +41,8 @@ function ComponentNode() : ComponentBase() constructor{
 			}
 		}
 	}
+	
+	self.get_child = function(_index){
+		return self.children[_index];
+	}
 }

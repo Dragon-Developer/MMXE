@@ -51,6 +51,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		
 		self.renderer = get(ComponentSpriteRenderer);
 		get(ComponentSpriteRenderer).character = "char_select";
+		get(ComponentSpriteRenderer).subdirectories = [ "/normal", "/armor_select"];
 		get(ComponentSpriteRenderer).load_sprites();
 		self.character_art = get(ComponentSpriteRenderer).add_sprite(global.player_character[0].image_folder, true)
 		

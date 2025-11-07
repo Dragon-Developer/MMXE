@@ -19,7 +19,6 @@ function ComponentCharge() : ComponentBase() constructor{
 		self.publish("character_set", "player");
 		find("animation").set_subdirectories(["/normal"]);
 		find("animation").load_sprites();
-		log("DA CHARGE SPRITES WERE FUCKEN LOADED WHERE THE FUCK ARE THEY")
 	}
 	
 	self.on_register = function(){

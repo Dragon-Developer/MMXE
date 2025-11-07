@@ -109,10 +109,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			self.charge.shoot_inputs = self.shoot_inputs;
 		}
 		
-		var _anim_name = self.get_instance().components.find("animation").animation.__animation;
+		var _anim_name = self.find("animation").animation.__animation;
 		
 		if(self.shot_end_time < CURRENT_FRAME){
-			self.get_instance().components.find("animation").animation.__type = "normal";
+			self.find("animation").animation.__type = "normal";
 			if(_anim_name == "shoot"){
 				self.publish("animation_play", { 
 					name: "idle"
@@ -165,6 +165,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				script_execute(_shot_code.data[_shot_index])
 			}
 			
+			if(self.stock_shot != noone){
+				_shot_data = {};
+				with(_shot_data){
+					script_execute(other.stock_shot)
+				}
+			}
+			
 			var _type = _shot_data.term;
 			
 			if(_type == "Projectile" && self.projectile_count < _shot_data.shot_limit){
@@ -186,20 +193,28 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				return;
 		}
 		
-		//if the shot animation is shoot, go ahead and do animation stuff
-		if(_shot_code.animation_append == "_shoot"){
-			if(_anim_name == "idle"){
-				self.publish("animation_play", {name: "shoot"})
-			}
-			
-			if(_anim_name == "shoot"){
-				self.publish("animation_play", {name: "shoot", reset: true})
-			}
-			self.get_instance().components.get(ComponentAnimationShadered).animation.__type = "shoot";
-		}
-		
 		//turn the shot data into the actual projectile data
 		_shot_code = _shot_code.data[_shot_index];
+		
+		var _code = {};
+		
+		with(_code){
+			script_execute(_shot_code)
+		}
+		
+		log(string_copy(_code.animation_append,2,256))
+		
+		self.get_instance().components.get(ComponentAnimationShadered).animation.__type = string_copy(_code.animation_append,2,256);
+		
+		if(_anim_name == "idle"){
+			self.publish("animation_play", {name: "shoot"})
+		}
+			
+		if(_anim_name == "shoot"){
+			self.publish("animation_play", {name: "shoot", reset: true})
+		}
+		
+		
 		
 		//set the time for shooting to end
 		self.shot_end_time = CURRENT_FRAME + 15;

@@ -1,7 +1,7 @@
 function ComponentBoss() : ComponentBase() constructor{
 	
 	self.has_done_dialouge = false;
-	self.boss_data = noone//for example purposes
+	self.boss_data = new TestBoss();
 	
 	self.health_tick = false;
 	

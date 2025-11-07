@@ -1,3 +1,3 @@
 function ComponentPickup() : ComponentBase() constructor{
-	self.data = new Pickup();
+	self.data = new BasePickup();
 }

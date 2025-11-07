@@ -18,6 +18,18 @@
         "y": 24
       }
     },
+    "xShot3X3": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
+    "xShot4X3": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
     "missile": {
       "origin": {
         "x": 16,
@@ -134,7 +146,67 @@
           }
         },
         {
+          "name": "xShot4X3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
           "name": "xShot3X1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+
+        {
+          "name": "xShot3X3",
           "properties": {
             "keyframes": [
               {

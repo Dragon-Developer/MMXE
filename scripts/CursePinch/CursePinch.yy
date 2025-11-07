@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"CursePinch",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CursePinch",
+  "parent":{
+    "name":"MMX",
+    "path":"folders/Scripts/Game/Weapons/Projectile/MMX.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

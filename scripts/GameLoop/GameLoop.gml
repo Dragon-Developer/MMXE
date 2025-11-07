@@ -66,6 +66,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentStageSelector, _func);
 		ENTITIES.for_each_component(ComponentCharacterSelect, _func);
 		ENTITIES.for_each_component(ComponentArmorSelect, _func);
+		ENTITIES.for_each_component(ComponentWeaponGet, _func);
 		ENTITIES.for_each_component(ComponentMask, _func);
 		ENTITIES.for_each_component(ComponentPhysics, _func);
 		ENTITIES.for_each_component(ComponentCharge, _func);
@@ -122,6 +123,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
 		ENTITIES.for_each_component(ComponentBoss, _draw_gui);
+		ENTITIES.for_each_component(ComponentWeaponGet, _draw_gui);
 		ENTITIES.for_each_component(ComponentPauseMenu, _draw_gui);
 		ENTITIES.for_each_component(ComponentProjectileManager, _draw_gui);
 		
@@ -162,6 +164,8 @@ function GameLoop() : NET_GameLoopBase() constructor {
 			
 		if(keyboard_check_pressed(ord("2")))
 			global.stacktracking = !global.stacktracking;
+		
+		
 		
 		if(self.blur){
 			shader_set(shdr_forte_test);

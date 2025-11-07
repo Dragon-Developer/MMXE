@@ -39,6 +39,11 @@
           "properties": {
             "speed": 1
           }
+        },{
+          "name": "charge_3",
+          "properties": {
+            "speed": 1
+          }
         }
       ]
     }

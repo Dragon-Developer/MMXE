@@ -40,13 +40,16 @@ function NET_SerializerCustom(_owner, _name) : NET_SerializerVariable(_owner, _n
 		}
 	}
 	static deserialize = function(_data) {
+		//if(_data == -4) return;
 		var _value;
 		if (GM_NETCODE_SERIALIZER_HASH_ENABLED) {
 			_value = struct_get_from_hash(self.owner, self.hash);
 		} else {
 			_value = variable_struct_get(self.owner, self.hash);
 		}
-		_value.serializer.deserialize(_data);
+		
+		if(struct_exists(_value,"serializer"))
+			_value.serializer.deserialize(_data);
 	}
 }
 

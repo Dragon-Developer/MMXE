@@ -50,7 +50,6 @@ function Weapon() constructor{
 	self.refillRate = 0;// 1/60 would be one tick every second
 	self.paletteIndex = 0;
 	self.charge_limit = 2;
-	self.animation_append = "_shoot";//what is added to the end of the animation name. if the name of the animation is idle, remove _idle and then append
 	self.lock_until_animation_end = false;//for things like gigas where you lose control. PLEASE use this sparingly, removing control from players is never a good idea
 	self.weapon_palette = [
 		#203080,//Blue Armor Bits

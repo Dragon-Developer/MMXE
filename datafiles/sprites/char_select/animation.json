@@ -35,7 +35,8 @@
           "legs",
           "body",
           "arms",
-          "helm"
+          "helm",
+          "glow"
         ]
       ],
       "list": [ 
@@ -89,6 +90,12 @@
         }, 
         {
           "name": "x",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
+          "name": "x_glow",
           "properties": {
             "speed":  1
           }
@@ -167,6 +174,18 @@
         }, 
         {
           "name": "bg",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "weapon_get_background",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "weapon_get_board",
           "properties": {
             "speed":  1
           }

@@ -31,6 +31,18 @@ function BootPartBase() : ArmorBase() constructor{
 					self.physics.set_grav(new Vec2(0,0.25));
 				}
 			})
+			
+		.add("dash_end_air", {
+			enter: function() {
+				self.timer = 0;
+				self.dash_dir = self.dir;
+				self.publish("animation_play", { name: self.states.dash.animation + "_end" });
+				self.dash_tapped = false;
+			},
+			step: function() {
+				self.set_hor_movement();
+			},
+		})
 			.add_wildcard_transition("t_dash", "dash_air", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
 			.add_transition("t_dash_end", "dash_air", "dash_end_air", function() { return self.physics.is_on_floor(); })
 			.add_transition("t_transition", "dash_air", "dash_end_air", function() 
