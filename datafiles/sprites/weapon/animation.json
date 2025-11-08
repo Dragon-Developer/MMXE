@@ -12,6 +12,12 @@
         "y": 16
       }
     },
+    "charged_curse_pinch": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
     "xShot3X1": {
       "origin": {
         "x": 30,
@@ -87,6 +93,12 @@
                 "frame": 0
               }
             ]
+          }
+        },
+        {
+          "name": "curse_pinch",
+          "properties": {
+            "speed": 0.5
           }
         },
         {
@@ -170,6 +182,42 @@
                 "frame": 3
               }
             ]
+          }
+        },
+        {
+          "name": "charged_curse_pinch",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 5
+              }
+            ],
+            "loop_begin": 12
           }
         },
         {

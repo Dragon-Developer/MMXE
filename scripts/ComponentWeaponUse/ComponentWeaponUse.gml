@@ -21,7 +21,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	"intro",
 	"complete",
 	"outro",
-	"leave"
+	"leave",
+	"teleport_in",
+	"intro_end"
 	]
 	
 	self.projectile_count = 0;
@@ -76,6 +78,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	
 	self.change_weapon = function(_change){
 		self.current_weapon[0] = _change;
+		if(array_length(self.weapon_list) != 1)
 		self.current_weapon[0] = (self.current_weapon[0] + array_length(self.weapon_list)) mod array_length(self.weapon_list)
 		var _wep = {};
 			
@@ -83,7 +86,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			script_execute(other.weapon_list[other.current_weapon[0]]);
 		}
 		if(_wep == undefined) return;
-		log(_wep)
+		//log(_wep)
 		for(var i = 0; i < array_length(_wep.weapon_palette); i++){
 			find("animation").set_palette_color(i, _wep.weapon_palette[i]);
 		}
@@ -95,7 +98,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		var _change_direction = self.input.get_input_pressed("switchRight") - self.input.get_input_pressed("switchLeft")
 		
-		if(_change_direction != 0){
+		if(_change_direction != 0 && array_length(self.weapon_list) > 1){
 			self.change_weapon(self.current_weapon[0] + _change_direction)
 			self.stock_shot = noone;
 		}

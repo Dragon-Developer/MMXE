@@ -69,6 +69,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 		ENTITIES.for_each_component(ComponentWeaponGet, _func);
 		ENTITIES.for_each_component(ComponentMask, _func);
 		ENTITIES.for_each_component(ComponentPhysics, _func);
+		ENTITIES.for_each_component(ComponentSoundLoader, _func);
 		ENTITIES.for_each_component(ComponentCharge, _func);
 		ENTITIES.for_each_component(ComponentAnimation, _func);
 		ENTITIES.for_each_component(ComponentAnimationShadered, _func);

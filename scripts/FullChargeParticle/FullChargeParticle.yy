@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"FullChargeParticle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"FullChargeParticle",
+  "parent":{
+    "name":"Generic",
+    "path":"folders/Scripts/Game/Particles/Generic.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

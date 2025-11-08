@@ -26,7 +26,9 @@ function ComponentMask() : ComponentBase() constructor {
 		_inst.image_xscale = self.xscale;
 		_inst.image_yscale = self.yscale;
 		// Needs better ways to trigger draw debug mode
-		if (keyboard_check_pressed(ord("3"))) draw_enabled = !draw_enabled;
+		
+		if (keyboard_check_pressed(ord("3"))) {draw_enabled = !draw_enabled; log("toggled rendering hitboxes")}
+		
 		with (obj_block_parent) {
 			visible = other.draw_enabled;	
 		}

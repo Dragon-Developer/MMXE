@@ -84,9 +84,6 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	}
 	
 	self.draw_gui = function(){
-		for(var p = 0; p < array_length(self.projectiles); p++){
-			draw_string(self.projectiles[p].code.animation, 2, 2 + p * 8)
-		}
 	}
 	
 	self.get_collision = function(_object){

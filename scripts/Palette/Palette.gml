@@ -4,7 +4,7 @@ function Palette() constructor {
 		self.colorsArray = [
 			[32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 			[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-			[128,240,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+			[128,240,240,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 		];
 		
 		self.swapArray = [
@@ -57,26 +57,26 @@ function Palette() constructor {
 	}
 	
 	static setBaseColorAt = function(_index, _base_red, _base_green, _base_blue){
-		if(!variable_struct_exists(self, "colorsArray")) {
+		/*if(!variable_struct_exists(self, "colorsArray")) {
 			self.colorsArray = [
 				[32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				[128,240,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 			];
-		}
+		}*/
 		array_set(self.colorsArray[0],_index, _base_red / 255)
 		array_set(self.colorsArray[1],_index, _base_green / 255)
 		array_set(self.colorsArray[2],_index, _base_blue / 255)
 	}
 	
 	static setPaletteColorAt = function(_index, _new_red, _new_green, _new_blue){
-		if(!variable_struct_exists(self, "swapArray")){ 
+		/*if(!variable_struct_exists(self, "swapArray")){ 
 			self.swapArray = [
 				[32,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 				[128,240,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 			];
-		}
+		}*/
 		array_set(self.swapArray[0],_index, _new_red / 255)
 		array_set(self.swapArray[1],_index, _new_green / 255)
 		array_set(self.swapArray[2],_index, _new_blue / 255)

@@ -64,6 +64,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	
 	self.init = function(){
 		//character = "x";
+		//self.sprites = [];
 		load_sprites();
 		add_sprite("shot", true, -32, -32);
 	}
@@ -71,6 +72,10 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	self.set_position = function(_id = 0, _x = 0, _y = 0){
 		self.sprites[_id].x = _x;
 		self.sprites[_id].y = _y;
+	}
+	
+	self.get_position = function(_id = 0){
+		return new Vec2(self.sprites[_id].x,self.sprites[_id].y);
 	}
 	
 	self.load_sprites = function() {

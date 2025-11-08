@@ -7,10 +7,10 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	self.loops = false;
 	self.volume = global.settings.Sound_Effect_Volume * 0.9;
 
-	self.load_sound = function(_filename){
+	self.load_sound = function(_filename, _source_folder = self.source_folder){
 		var _final = noone;
 		for(var g = 0; g < array_length(self.file_extensions); g++){
-			var _snd = self.audio_create_stream(working_directory + self.source_folder + _filename + self.file_extensions[g]);
+			var _snd = self.audio_create_stream(working_directory + _source_folder + _filename + self.file_extensions[g]);
 			if(_snd != undefined)
 			{
 				_final = _snd;
@@ -82,14 +82,24 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	//filename: a string containing the name of the file to play. does not include extension.
 	//start frame: the frame of the sound to start from. 
 	//volume: the volume the sound plays. usually uses global settings data.
-	self.play_sound = function(_filename, _start_frame = 0, loops = self.loops, _volume = volume){
+	self.play_sound = function(_filename, _start_frame = 0, _loop_sound = noone, _volume = volume, _source_folder = self.source_folder){
 		try {
 			var _id = self.load_sound(_filename);
 			if _id == -4 return;
-			var _snd = audio_play_sound(_id, 1, self.loops, _volume, _start_frame / 60)
+			var _snd = audio_play_sound(_id, 1, false, _volume, _start_frame / 60)
 		
-			array_push(self.sounds, {sound_id: _snd, sound_asset: _id, volume: _volume, start_frame: _start_frame})
-			log(_snd)
+			array_push(self.sounds, {
+				sound_id: _snd, 
+				loop_sound: _loop_sound, 
+				sound_asset: _id, 
+				volume: _volume, 
+				start_frame: _start_frame, 
+				length: audio_sound_length(_snd) / 60, 
+				start_time: CURRENT_FRAME, 
+				source_folder: _source_folder})
+			//log(_snd - 400000)
+			log(string(_filename) + " is the filename")
+			log(string(_loop_sound) + " is the loop sound")
 			return _snd;
 		} catch (_exception){
 			log(_exception)
@@ -142,8 +152,15 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 		var _snds = [];
 		for(var g = 0; g < array_length(self.sounds); g++){
 			if(self.sounds[g] == "Delete me!") continue;
-			if(audio_is_playing(self.sounds[g].sound_id))
+			if(audio_is_playing(self.sounds[g].sound_id)){
 				array_push(_snds, self.sounds[g])
+			} else if(self.sounds[g].loop_sound != noone){
+				var _id = self.load_sound(self.sounds[g].loop_sound, self.sounds[g].source_folder);
+				if(_id != -4){
+					self.sounds[g].sound_id = audio_play_sound(_id, 1,false,self.sounds[g].volume);
+				}
+				array_push(_snds, self.sounds[g])
+			}
 		}
 		self.sounds = _snds
 	}

@@ -677,6 +677,18 @@
           }
         },
         {
+          "name": "tp_in",
+          "properties": {
+            "action": "intro",
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "intro",
           "properties": {
             "keyframes": [
@@ -729,43 +741,70 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 5,
                 "frame": 1
               },
               {
-                "key": 7,
+                "key": 4,
                 "frame": 2
               },
               {
-                "key": 9,
+                "key": 8,
                 "frame": 3
               },
               {
-                "key": 11,
+                "key": 12,
                 "frame": 4
               },
               {
-                "key": 13,
+                "key": 16,
                 "frame": 5
               },
               {
-                "key": 15,
+                "key": 20,
                 "frame": 6
               },
               {
-                "key": 18,
+                "key": 24,
                 "frame": 7
               },
               {
-                "key": 21,
+                "key": 28,
                 "frame": 8
               },
               {
-                "key": 60,
-                "frame": 8
+                "key": 32,
+                "frame": 9
+              },
+              {
+                "key": 36,
+                "frame": 10
+              },
+              {
+                "key": 40,
+                "frame": 11
+              },
+              {
+                "key": 47,
+                "frame": 12
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro2_end",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              },
+              {
+                "key": 29,
+                "frame": 1
               }
             ]
           }

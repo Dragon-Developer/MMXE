@@ -11,6 +11,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.locked = false;
 	self.paused = false;
 	self.can_wall_jump = true;
+	self.initial_y = -1;
 	self.states = {};
 	
 	self.timer = 0;
@@ -43,16 +44,43 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.add_base_state_machine = function(){
 		
 	self.reset_state_variables();
-	
 	self.fsm = new SnowState("init", true);
 	self.fsm
 		.history_enable()
 		.history_set_max_size(10)
-		.add("init", {})
-		.add("start", {
+		.add("init", {
 			enter: function() {
-				self.publish("animation_play", { name: "intro" });
-				//self.apply_full_armor_set(self.armor_parts);
+				self.publish("animation_play", { name: "idle" });
+				
+				
+			}
+		})
+		.add("teleport_in", {
+			enter: function() {
+				self.publish("animation_play", { name: "tp_in" });
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(new Vec2(0,0));
+				self.physics.does_collisions = false;
+				self.timer = (GAME_H / self.states.intro.speed) + CURRENT_FRAME + 1
+			},
+			step: function(){
+				self.get_instance().y += self.states.intro.speed;
+				
+			},
+			leave: function(){
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.does_collisions = true;
+			}
+		})
+		.add("intro", {
+			enter: function() {
+				self.publish("animation_play", { name: self.states.intro.animation });
+			}
+		})
+		.add("intro_end", {
+			enter: function() {
+				self.publish("animation_play", { name: "intro2_end" });
 			}
 		})
 		.add("idle", {
@@ -270,7 +298,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					}
 			}
 		})
-		.add_transition("t_init", "init", "idle")
+		.add_transition("t_init", "init", "teleport_in")
 		.add_transition("t_move_h", "idle", "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_move_h", "land", "walk", function() { return !self.physics.check_wall(self.hdir) && !self.input.get_input("dash"); })
 		.add_wildcard_transition("t_hurt", "hurt", function() { return !(self.get_wall_jump_dir() != 0 && !self.physics.is_on_floor()); })
@@ -281,6 +309,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		//.add_transition("t_custom", ["air", "walk"], "custom")  why does this line exist when the above line covers it
 		.add_transition("t_custom_exit", "custom", "jump")
 		.add_transition("t_animation_end", ["start", "land", "dash_end","ladder_exit", "hurt"], "idle")
+		.add_transition("t_animation_end", "intro", "intro_end")
+		.add_transition("t_animation_end", "intro_end", "idle")
 		.add_transition("t_animation_end", "complete", "outro")
 		.add_transition("t_animation_end", "outro", "leave")
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
@@ -288,6 +318,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_hadouken", "idle", "land")
 		//.add_wildcard_transition("t_hurt", "idle", function() { return !(self.get_wall_jump_dir() != 0 && !self.physics.is_on_floor()); })
 		/*automatic transitions between states*/
+		.add_transition("t_transition", "teleport_in", "intro", function() {return self.timer <= CURRENT_FRAME })
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
@@ -366,15 +397,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.apply_full_armor_set = function(_armors){
-		log("MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR MAKE ARMOR ")
 		self.reset_state_variables();
 		self.armor_parts = [[],[],["/normal"]];
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm){
-			log(typeof(_arm))
-			log(_arm)
 			if(typeof(_arm) != "struct" && _arm != noone){
-				log("Converted method to struct!")
 				var _temp = {};
 			
 				with(_temp){
@@ -383,9 +410,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			
 				_arm = _temp;
 			} else {
-				log("that was a struct")
 			}
-			log(typeof(_arm))
 			//run any code and load it's directory
 			if(typeof(_arm) == "struct"){
 				//add the currently listed armor to the armor array
@@ -418,8 +443,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		});
 		//publish the armor set
 		self.publish("armor_set",self.armor_parts[1]);
-		log("the armor sprites are")
-		log(self.armor_parts[2])
 		self.get_instance().components.get(ComponentAnimationShadered).set_subdirectories(self.armor_parts[2]);
 		self.get_instance().components.get(ComponentAnimationShadered).reload_animations();
 		//log(self.armor_parts[1])

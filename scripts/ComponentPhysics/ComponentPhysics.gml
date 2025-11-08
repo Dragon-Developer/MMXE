@@ -13,6 +13,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		projectile : par_projectile,
 		enemy: par_enemy
 	};
+	self.does_collisions = true;
 	self.serializer = new NET_Serializer(self);
 	self.serializer
 		.addClone("velocity")
@@ -22,6 +23,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		.addVariable("grav_magnitude")
 		.addVariable("up_to_right_dir")
 		.addVariable("terminal_velocity")
+		.addVariable("does_collisions")
 	/**
 	 * Sets the velocity of the entity.
 	 * @param {real} x - X velocity.
@@ -84,8 +86,9 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		if(self.timescale != 1){
 			self.time_physics_multiplier = variable_clone(self.timescale);
 			self.timescale = 1;
-			log(string(time_physics_multiplier) + " is the time mult")
 		}
+		
+		if(!self.does_collisions) return;
 		
 		self.move_step(self.velocity.multiply(self.time_physics_multiplier));
 		self.velocity = self.velocity.add(self.grav.multiply(self.time_physics_multiplier));

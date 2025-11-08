@@ -1,6 +1,7 @@
 event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
+y -= GAME_H + 9
 on_spawn = function(_player) {
 	_player.x += current_spawn * 5
 	_player.components.get(ComponentAnimationShadered).set_subdirectories(

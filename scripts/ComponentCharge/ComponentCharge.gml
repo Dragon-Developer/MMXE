@@ -84,6 +84,12 @@ function ComponentCharge() : ComponentBase() constructor{
 			self.get_instance().visible = true;
 		}
 		
+		if(self.start_time + self.charge_time[2] == CURRENT_FRAME){
+			WORLD.play_sound("full_charge");
+			var _inst = self.get_instance();
+			WORLD.spawn_particle(new FullChargeParticle(_inst.x, _inst.y, 1))
+		}
+		
 		var _shot_code = noone;
 		
 		//for(var p = 0; p < array_length(self.current_weapon.charge_time); p++){

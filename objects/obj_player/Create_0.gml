@@ -1,5 +1,7 @@
 event_inherited();
 
+y -= GAME_H;
+
 components.add([
 	ComponentInstance,
 	ComponentPlayerInput,

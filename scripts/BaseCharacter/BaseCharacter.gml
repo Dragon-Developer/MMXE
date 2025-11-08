@@ -3,6 +3,10 @@ function BaseCharacter() constructor{
 	self.player = noone;
 	self.image_folder = "x";
 	self.states = {	
+		intro: {
+			speed: 8,
+			animation: "intro2"
+		},
 		walk: {
 			speed: 376/256,	
 			animation: "walk"

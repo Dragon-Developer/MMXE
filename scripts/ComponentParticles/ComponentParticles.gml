@@ -51,6 +51,7 @@ function ComponentParticles() : ComponentBase() constructor{
 	self.draw = function(){
 		array_foreach(particles,function(_particle){
 			if (is_struct(_particle)) {
+				self.get_instance().depth = _particle.depth;
 				if(is_string(_particle.sprite))
 					_particle.sprite = real(_particle.sprite);
 				else
@@ -95,4 +96,5 @@ function ParticleBase() constructor{
 	self.dead = false;
 	self.dir = 1;
 	self.vdir = 1;
+	self.depth = 0;
 }
