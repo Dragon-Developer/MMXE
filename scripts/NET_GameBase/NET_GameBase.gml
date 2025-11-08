@@ -2,6 +2,7 @@
  * Serves as the base class for networked game instances, managing input, game loops, events, and player synchronization.
  */
 function NET_GameBase() constructor {
+	self.identifier = "base";
 	self.inputs = new NET_InputManager();
 	self.game_loop = new NET_GameLoopBase();
 	self.__current_frame = 0;

@@ -33,7 +33,9 @@ function NET_SerializerCustom(_owner, _name) : NET_SerializerVariable(_owner, _n
 		} else {
 			_value = variable_struct_get(self.owner, self.hash);
 		}
+		if(struct_exists(_value,"serializer"))
 		return _value.serializer.serialize();
+		log("failed to serialize " + string(self.owner.identifier) + "!")
 		} catch(_exception) {
 			log(_exception.message);
 			//log(self.owner)

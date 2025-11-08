@@ -4,6 +4,7 @@ function ComponentDoor() : ComponentBase() constructor{
 		this whole things is jank incarnate. it works the way i want it to though!
 	*/
 	
+	self.identifier = "door";
 	time_delay = 45;
 	time_offset = -1;
 	activated = false;
@@ -80,7 +81,7 @@ function ComponentDoor() : ComponentBase() constructor{
 				curr_player.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
 				curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
 				curr_player.components.get(ComponentAnimationShadered).animation.__speed = 0;
-				if(curr_player.components.get(ComponentPlayerInput).get_player_index() == global.local_player_index){
+				if(!IS_ONLINE){
 					with(obj_camera){
 						components.get(ComponentCamera).target = noone;
 						other.curr_cam = components.get(ComponentCamera);
@@ -138,7 +139,7 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 				break;
 				case(3):
-				if(boss_spawn_timer == CURRENT_FRAME){
+				if(boss_spawn_timer <= CURRENT_FRAME){
 					curr_player.x = floor(curr_player.x) + (flipped * -2 + 1);
 					coll.y = _inst.y;
 					//self.publish("animation_play", { name: "stay_closed" });
@@ -154,7 +155,7 @@ function ComponentDoor() : ComponentBase() constructor{
 						log("boss spawned")
 					}
 				} else {
-					log(boss_spawn_timer - CURRENT_FRAME)
+					//log(boss_spawn_timer - CURRENT_FRAME)
 				}
 				break;
 			}

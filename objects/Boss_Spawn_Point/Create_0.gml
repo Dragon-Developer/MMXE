@@ -1,6 +1,9 @@
 self.spawn_boss = function(){
 	
-	if(instance_exists(par_boss)) return;
+	if(instance_exists(par_boss)){ 
+		log("boss already exists! bailing")
+		return;
+	}
 	
 	log("spawning boss")
 	var _boss = ENTITIES.create_instance(par_boss);

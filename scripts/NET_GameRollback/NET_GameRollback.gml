@@ -6,6 +6,7 @@ function NET_GameRollback() : NET_GameBase() constructor {
 		ROLLBACK,
 		LOCKED
 	}
+	self.identifier = "rollback";
 	self.__last_input_frame = -1;
 	self.__input_delay = 1;
 	self.__max_predicted_frames = 5;

@@ -1,4 +1,5 @@
 function ComponentBoss() : ComponentBase() constructor{
+	self.identifier = "boss";
 	
 	self.has_done_dialouge = false;
 	self.boss_data = new TestBoss();
@@ -16,10 +17,10 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.desperate = false;//you dont start out desperate
 	self.desperation_rate = 1/3;//how low the boss has to be in order to be desperate
 	
-	self.serializer = new NET_Serializer();
+	//self.serializer = new NET_Serializer();
 	self.serializer
 		.addCustom("fsm")
-		.addCustom("boss_data")
+		.addVariable("desperation_rate")
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
@@ -104,7 +105,6 @@ function ComponentBoss() : ComponentBase() constructor{
 		.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= 32;})
 		.add_wildcard_transition("t_transition", "die", function(){return self.fsm.get_current_state() != "die" && self.get(ComponentDamageable).health <= 0})
 		
-	
 	self.step = function() {
 		
 		if(get(ComponentDamageable).health <= get(ComponentDamageable).health_max * self.desperation_rate && 

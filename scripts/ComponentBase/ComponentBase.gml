@@ -3,6 +3,7 @@ function ComponentBase() constructor {
 	self.__tags = {};
 	self.__constructor = -1;
 	self.__id = -1;
+	self.identifier = "undefined";
 	
 	self.step_enabled = true;
 	self.draw_enabled = true;

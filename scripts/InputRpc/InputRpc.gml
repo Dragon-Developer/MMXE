@@ -2,8 +2,6 @@ function InputRpc(_is_server = false) constructor {
 	socket = other;
 	isServer = _is_server;
 	
-	log(global.server_settings)
-	
 	self.packet_redundancy_level = global.server_settings.client_data.ping_rate;
 	
 	self.register = function() {
