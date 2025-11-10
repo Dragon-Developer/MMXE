@@ -8,8 +8,8 @@
   "name":"par_deathobj",
   "overriddenProperties":[],
   "parent":{
-    "name":"Collision",
-    "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
+    "name":"Parents",
+    "path":"folders/Objects/Level Assets/Blocks/Parents.yy",
   },
   "parentObjectId":{
     "name":"obj_square_parent",

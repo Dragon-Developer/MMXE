@@ -1,6 +1,6 @@
 {
   "$GMSprite":"",
-  "%Name":"spr_hurt_zone",
+  "%Name":"spr_boss_spawn_zone",
   "bboxMode":0,
   "bbox_bottom":15,
   "bbox_left":0,
@@ -17,11 +17,11 @@
   "gridX":0,
   "gridY":0,
   "height":16,
-  "HTile":true,
+  "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"0c06340f-f727-4cd0-801f-e1b5f4d7a3f5","blendMode":0,"displayName":"default","isLocked":false,"name":"0c06340f-f727-4cd0-801f-e1b5f4d7a3f5","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
-  "name":"spr_hurt_zone",
+  "name":"spr_boss_spawn_zone",
   "nineSlice":null,
   "origin":0,
   "parent":{
@@ -33,7 +33,7 @@
   "resourceVersion":"2.0",
   "sequence":{
     "$GMSequence":"",
-    "%Name":"spr_hurt_zone",
+    "%Name":"spr_boss_spawn_zone",
     "autoRecord":true,
     "backdropHeight":768,
     "backdropImageOpacity":0.5,
@@ -57,7 +57,7 @@
       "resourceType":"KeyframeStore<MomentsEventKeyframe>",
       "resourceVersion":"2.0",
     },
-    "name":"spr_hurt_zone",
+    "name":"spr_boss_spawn_zone",
     "playback":1,
     "playbackSpeed":30.0,
     "playbackSpeedType":0,
@@ -69,7 +69,7 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"355629dc-6cc5-4300-afa5-f38cac9bd653","path":"sprites/spr_hurt_zone/spr_hurt_zone.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"355629dc-6cc5-4300-afa5-f38cac9bd653","path":"sprites/spr_boss_spawn_zone/spr_boss_spawn_zone.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"be5325e1-719e-48ef-a0b0-ba214f365457","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
@@ -85,6 +85,6 @@
     "path":"texturegroups/Default",
   },
   "type":0,
-  "VTile":true,
+  "VTile":false,
   "width":16,
 }

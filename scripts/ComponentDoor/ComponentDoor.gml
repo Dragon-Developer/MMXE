@@ -4,7 +4,7 @@ function ComponentDoor() : ComponentBase() constructor{
 		this whole things is jank incarnate. it works the way i want it to though!
 	*/
 	
-	time_delay = 45;
+	time_delay = 90;
 	time_offset = -1;
 	activated = false;
 	state_segment = -1;// 1 is opening door, 2 is moving player through door, 3 is closing door, and -1 means the door is shut
@@ -23,6 +23,9 @@ function ComponentDoor() : ComponentBase() constructor{
 	coll = noone;
 	self.serializer = new NET_Serializer();
 	self.serializer.addVariable("boss_spawn_timer")
+	self.serializer.addVariable("time_offset")
+	self.serializer.addVariable("state_segment")
+	self.serializer.addVariable("curr_player")
 	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -82,8 +85,8 @@ function ComponentDoor() : ComponentBase() constructor{
 				curr_player.components.get(ComponentAnimationShadered).animation.__speed = 0;
 				if(curr_player.components.get(ComponentPlayerInput).get_player_index() == global.local_player_index){
 					with(obj_camera){
-						components.get(ComponentCamera).target = noone;
-						other.curr_cam = components.get(ComponentCamera);
+						//components.get(ComponentCamera).target = noone;
+						//other.curr_cam = components.get(ComponentCamera);
 					}
 				} else {
 					curr_cam = new Vec2(0,0)
@@ -99,62 +102,57 @@ function ComponentDoor() : ComponentBase() constructor{
 			switch(state_segment){
 				case(1):
 				//open the door
-				if(animation_end){//this will trigger when animation end is called
+				if(time_offset <= CURRENT_FRAME){//this will trigger when animation end is called
 					state_segment++;  
 					if(curr_player.components.get(ComponentPhysics).is_on_floor())
 						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
-					coll.y -= 1025;
+					coll.y -= 4096;
 					self.publish("animation_play", { name: "stay_open" });
 				}
 		
 				break;
 				case(2):
-		
-				//with(curr_player){
-					
-					if(physics.check_place_meeting(_inst.x + 12,_inst.y, obj_player) || physics.check_place_meeting(_inst.x - 12,_inst.y, obj_player)){
-						curr_player.x += (74/256) * (flipped * -2 + 1);
-						// the camera movement value is larger than snes, but its also 
-						curr_cam.x += (flipped * -2 + 1) * (383/256);
-					} else {
-						state_segment++;
-						if(curr_player.components.get(ComponentPlayerInput).get_player_index() == global.local_player_index){
-							with(obj_camera){
-								components.get(ComponentCamera).target = other.curr_player;
-							}
+				if(physics.check_place_meeting(_inst.x + 12,_inst.y, obj_player) || physics.check_place_meeting(_inst.x - 12,_inst.y, obj_player)){
+					curr_player.x += (74/256) * (flipped * -2 + 1);
+					//curr_cam_x += (flipped * -2 + 1) * (383/256);
+				} else {
+					state_segment++;
+					if(curr_player.components.get(ComponentPlayerInput).get_player_index() == global.local_player_index){
+						with(obj_camera){
+							//components.get(ComponentCamera).target = other.curr_player;
 						}
-						prev_cam_x = curr_cam.x;
-						self.publish("animation_play", { name: "close" });
-						if(curr_player.components.get(ComponentPhysics).is_on_floor()){
-							curr_player.components.get(ComponentPlayerMove).fsm.change("idle");
-						} else {
-							curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
-						}
-						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
-						curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
-						boss_spawn_timer = CURRENT_FRAME + 90;
 					}
-				//}
+					self.publish("animation_play", { name: "close" });
+					if(curr_player.components.get(ComponentPhysics).is_on_floor()){
+						curr_player.components.get(ComponentPlayerMove).fsm.change("idle");
+					} else {
+						curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
+					}
+					curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
+					curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
+					boss_spawn_timer = CURRENT_FRAME + 90;
+				}
 		
 				break;
 				case(3):
-				if(boss_spawn_timer == CURRENT_FRAME){
-					curr_player.x = floor(curr_player.x) + (flipped * -2 + 1);
+				if(boss_spawn_timer <= CURRENT_FRAME){
+					curr_player.x = (floor(curr_player.x) + (flipped * -2 + 1));
 					coll.y = _inst.y;
 					//self.publish("animation_play", { name: "stay_closed" });
-					state_segment = -1;
-					activated = false;
+					if(boss_spawn_timer + 3 <= CURRENT_FRAME){
+						state_segment = -1;
+						activated = false;
+					}
 					curr_player.components.get(ComponentPlayerMove).locked = false;
-					if(!spawn_boss) {
-						curr_player.components.get(ComponentPlayerInput).__locked = false;
-						return;
-					}
-					with(Boss_Spawn_Point){
-						spawn_boss();
-						log("boss spawned")
-					}
+					curr_player.components.get(ComponentPlayerInput).__locked = false;
+					curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
+					if(1 == 0)
+						with(Boss_Spawn_Point){
+							spawn_boss();
+							log("boss spawned")
+						}
 				} else {
-					log(boss_spawn_timer - CURRENT_FRAME)
+					//log(boss_spawn_timer - CURRENT_FRAME)
 				}
 				break;
 			}
@@ -197,6 +195,6 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 		_inst.visible = true;
 		
-		log(_inst.components.get(ComponentAnimationShadered).animation.__animation)
+		//log(_inst.components.get(ComponentAnimationShadered).animation.__animation)
 	}
 }
