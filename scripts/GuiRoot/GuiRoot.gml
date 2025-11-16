@@ -16,6 +16,7 @@ function GuiRoot() : GuiContainer() constructor {
 	}
 	
 	startMultiplayerLobby = function(_room) {
+		global.online = true
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		

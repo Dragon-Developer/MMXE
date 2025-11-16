@@ -2,9 +2,10 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.projectiles = [];
 	self.to_delete = [];
 	
-	self.serializer
-		.addCustom("projectiles")
-		.addCustom("to_delete")
+	
+	//self.serializer
+		//.addCustom("projectiles")
+		//.addCustom("to_delete")
 	
 	self.init = function(){
 		//get(ComponentSpriteRenderer).character = "pause";

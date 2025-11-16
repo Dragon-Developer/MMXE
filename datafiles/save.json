@@ -81,7 +81,7 @@
         "axis_thresholds":{"32775":{"mini":0.02,"maxi":1.0},"32785":{"mini":0.29999999999999999,"maxi":0.94999999999999996},"32786":{"mini":0.29999999999999999,"maxi":0.94999999999999996},"32776":{"mini":0.02,"maxi":1.0},"32787":{"mini":0.29999999999999999,"maxi":0.94999999999999996},"32788":{"mini":0.29999999999999999,"maxi":0.94999999999999996}},
         "gyro":{"axis_x":1,"axis_y":0,"sensitivity_x":2.0,"sensitivity_y":-2.0},"gamepad_type_override":null,"vibration_strength":1.0,"trigger_effect_strength":1.0},
     "PSX_Style_Dash_Jumping":1.0,
-    "Music_Volume":0.2,
+    "Music_Volume":0.05,
     "write_inputs":true,
     "Game_Scale":3.0
   }

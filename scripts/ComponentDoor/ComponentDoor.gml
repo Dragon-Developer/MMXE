@@ -22,10 +22,10 @@ function ComponentDoor() : ComponentBase() constructor{
 
 	coll = noone;
 	self.serializer = new NET_Serializer();
-	self.serializer.addVariable("boss_spawn_timer")
-	self.serializer.addVariable("time_offset")
-	self.serializer.addVariable("state_segment")
-	self.serializer.addVariable("curr_player")
+	//self.serializer.addVariable("boss_spawn_timer")
+	//self.serializer.addVariable("time_offset")
+	//self.serializer.addVariable("state_segment")
+	//self.serializer.addVariable("curr_player")
 	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -65,9 +65,18 @@ function ComponentDoor() : ComponentBase() constructor{
 			//var _player = instance_nearest(_inst.x,_inst.y, obj_player);
 		}
 		
+		switch(state_segment){
+			case(-1):
+				self.publish("animation_play", { name: "stay_closed" });
+			break;
+			case(2):
+				self.publish("animation_play", { name: "stay_open" });
+			break;
+		}
+		
 		if(!activated){
 			activated = physics.check_place_meeting(_inst.x,_inst.y, obj_player);
-			
+			time_offset = CURRENT_FRAME + time_delay;
 			if (activated){
 				self.publish("animation_play", { name: "open" });
 				animation_end = false;
@@ -77,7 +86,7 @@ function ComponentDoor() : ComponentBase() constructor{
 				if(curr_player == undefined){
 					curr_player = instance_nearest(_inst.x, _inst.y, obj_player)
 				}
-				log(curr_player)
+				curr_player.x = _inst.x + (16 + sprite_get_width(curr_player.mask_index) / 2) * (flipped * 2 - 1);
 				curr_player.components.get(ComponentPlayerInput).__locked = true;
 				curr_player.components.get(ComponentPlayerMove).locked = true;
 				curr_player.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
@@ -93,10 +102,42 @@ function ComponentDoor() : ComponentBase() constructor{
 				}
 				camera_total_movement = GAME_W;
 			}
-		}
-		
-		#region states
-		if(activated){
+			
+			coll.x = _inst.x - 15;
+			coll.y = _inst.y;
+			if(flipped){
+				if(instance_nearest(_inst.x,_inst.y,obj_player).x < _inst.x){
+					flipped = false;
+				}
+			} else {
+				if(instance_nearest(_inst.x - 32,_inst.y,obj_player).x > _inst.x){
+					flipped = true;
+				}
+			}
+			
+		} else {
+			if(curr_player == undefined){
+				curr_player = instance_nearest(_inst.x, _inst.y, obj_player)
+			}
+			
+			for(var w = 0; w < instance_number(obj_player); w++){
+				var _plr = instance_find(obj_player, w);
+				if(_plr == curr_player) continue;
+				
+				var _px = _plr.x;
+				var _diff = _px - self.get_instance().x
+				
+				if(abs(_diff) < 32){
+					
+					if(_diff > 0){
+						instance_find(obj_player, w).x += 4;
+					} else {
+						instance_find(obj_player, w).x -= 4;
+					}
+					
+				}
+			}
+			
 			curr_player.components.get(ComponentPlayerInput).__locked = true;
 			curr_player.components.get(ComponentPlayerMove).locked = true;
 			switch(state_segment){
@@ -108,12 +149,17 @@ function ComponentDoor() : ComponentBase() constructor{
 						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
 					coll.y -= 4096;
 					self.publish("animation_play", { name: "stay_open" });
+					log("DOOR OPEN")
+				} else {
+					curr_player.x = _inst.x + (16 + sprite_get_width(curr_player.mask_index) / 2) * (flipped * 2 - 1);
 				}
 		
 				break;
 				case(2):
 				if(physics.check_place_meeting(_inst.x + 12,_inst.y, obj_player) || physics.check_place_meeting(_inst.x - 12,_inst.y, obj_player)){
 					curr_player.x += (74/256) * (flipped * -2 + 1);
+					curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
+					boss_spawn_timer = CURRENT_FRAME + 90;
 					//curr_cam_x += (flipped * -2 + 1) * (383/256);
 				} else {
 					state_segment++;
@@ -128,57 +174,34 @@ function ComponentDoor() : ComponentBase() constructor{
 					} else {
 						curr_player.components.get(ComponentPlayerMove).fsm.change("fall");
 					}
-					curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
 					curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
-					boss_spawn_timer = CURRENT_FRAME + 90;
 				}
 		
 				break;
 				case(3):
 				if(boss_spawn_timer <= CURRENT_FRAME){
-					curr_player.x = (floor(curr_player.x) + (flipped * -2 + 1));
+					curr_player.x = _inst.x + (30 + sprite_get_width(curr_player.mask_index) / 2) * (flipped * -2 + 1);
 					coll.y = _inst.y;
 					//self.publish("animation_play", { name: "stay_closed" });
-					if(boss_spawn_timer + 3 <= CURRENT_FRAME){
+					if(boss_spawn_timer + 5 <= CURRENT_FRAME){
 						state_segment = -1;
 						activated = false;
+						curr_player.components.get(ComponentPlayerMove).locked = false;
+						curr_player.components.get(ComponentPlayerInput).__locked = false;
 					}
 					curr_player.components.get(ComponentPlayerMove).locked = false;
 					curr_player.components.get(ComponentPlayerInput).__locked = false;
-					curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
-					if(1 == 0)
-						with(Boss_Spawn_Point){
-							spawn_boss();
-							log("boss spawned")
+					if(IS_OFFLINE)
+						with(par_boss){
+							components.get(ComponentBoss).fsm.change("enter")
 						}
 				} else {
-					//log(boss_spawn_timer - CURRENT_FRAME)
+					curr_player.x = _inst.x + (30 + sprite_get_width(curr_player.mask_index) / 2) * (flipped * -2 + 1);
 				}
 				break;
 			}
-		} else {
-			//if the nearest player is on the left, flip yourself and move back to where you should be
-			coll.x = _inst.x - 15;
-			coll.y = _inst.y;
-				if(flipped){
-					if(instance_nearest(_inst.x,_inst.y,obj_player).x < _inst.x){
-						flipped = false;
-						//publish("animation_xscale", 1)
-						//_inst.image_xscale = 1;
-						//_inst.x -= 32;
-					}
-				} else {
-					if(instance_nearest(_inst.x - 32,_inst.y,obj_player).x > _inst.x){
-						flipped = true;
-						//publish("animation_xscale", -1)
-						//_inst.image_xscale = -1;
-						//_inst.x += 32;
-					}
-				}
 		}
-		#endregion
 		
-		//log(_inst.y)
 		animation_end = false;
 	}
 	
@@ -196,5 +219,11 @@ function ComponentDoor() : ComponentBase() constructor{
 		_inst.visible = true;
 		
 		//log(_inst.components.get(ComponentAnimationShadered).animation.__animation)
+	}
+	
+	self.draw = function(){
+		var _inst = self.get_instance();
+		draw_string(string(self.state_segment), _inst.x + 4, _inst.y - 8)
+		draw_string(string(self.state_segment), _inst.x - 14, _inst.y - 8)
 	}
 }

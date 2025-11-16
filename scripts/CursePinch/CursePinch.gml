@@ -28,7 +28,7 @@ function CursePinchData() : ProjectileData() constructor{
 	self.animation = "curse_pinch";
 	self.create = function(_inst){
 		//_inst.components.publish("animation_play", { name: "xShot3X1" });
-		WORLD.play_sound("dash");
+		WORLD.play_sound("rolling_shield_dink");
 	}
 	self.step = function(_inst){
 		self.hspd += 0.25;

@@ -9,3 +9,5 @@ components.add([
 ]);
 
 components.init();
+
+components.add([ComponentHealthbar]);

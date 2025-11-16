@@ -16,12 +16,12 @@ function ComponentDamageable() : ComponentBase() constructor{
 	// if they actually hurt the hurtable
 	
 	self.serializer = new NET_Serializer();
-	self.serializer
+	/*self.serializer
 		.addVariable("health")
 		.addVariable("health_max")
 		.addVariable("combo_count")
 		.addVariable("invuln_offset")
-		.addVariable("invuln_time")
+		.addVariable("invuln_time")*/
 	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
@@ -74,13 +74,19 @@ function ComponentDamageable() : ComponentBase() constructor{
 	}
 	
 	self.check_for_collision = function(){
+		if(self.damage_rate == undefined || !variable_struct_exists(self, "damage_rate")) self.damage_rate = 1;
+		
+		if(damage_rate <= 0) return;//cant take damage if your damage rate is below or at zero.
+		//anything times zero is zero
+		
 		var _damage = 0;
 		_damage += self.check_for_projectiles();
 		_damage += self.check_for_enemies();
 		_damage += self.check_for_bosses();
 		_damage += self.check_for_damage_zones();
 		
-		self.health -= floor(_damage * self.damage_rate);
+		self.health -= _damage
+		//floor(_damage * self.damage_rate);
 		
 		if(self.health <= 0)
 		{

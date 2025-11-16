@@ -1,6 +1,6 @@
 event_inherited();
-entity_object = par_enemy;
-enemyData = BaseEnemy;
+entity_object = par_boss;
+bossData = new TestBoss();
 
 on_spawn = function(_player) {
 	//leave empty

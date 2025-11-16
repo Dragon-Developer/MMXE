@@ -27,13 +27,16 @@ function NET_SerializerVariable(_owner, _name) constructor {
 function NET_SerializerCustom(_owner, _name) : NET_SerializerVariable(_owner, _name) constructor {
 	static serialize = function() {
 		try{
-		var _value;
-		if (GM_NETCODE_SERIALIZER_HASH_ENABLED) {
-			_value = struct_get_from_hash(self.owner, self.hash);
-		} else {
-			_value = variable_struct_get(self.owner, self.hash);
-		}
-		return _value.serializer.serialize();
+			var _value;
+			if (GM_NETCODE_SERIALIZER_HASH_ENABLED) {
+				_value = struct_get_from_hash(self.owner, self.hash);
+			} else {
+				_value = variable_struct_get(self.owner, self.hash);
+			}
+			
+			if(struct_exists(_value,"serializer"))
+				return _value.serializer.serialize();
+				
 		} catch(_exception) {
 			log(_exception.message);
 			//log(self.owner)

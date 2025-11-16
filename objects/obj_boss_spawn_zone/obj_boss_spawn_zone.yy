@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_hurt_zone",
-    "path":"sprites/spr_hurt_zone/spr_hurt_zone.yy",
+    "name":"spr_boss_spawn_zone",
+    "path":"sprites/spr_boss_spawn_zone/spr_boss_spawn_zone.yy",
   },
   "spriteMaskId":{
     "name":"spr_hurt_zone",

@@ -20,90 +20,97 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.serializer
 		.addCustom("fsm")
 		.addCustom("boss_data")
+		
+	self.fsm = new SnowState("patiently_wait_for_players", true);
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: "idle" });
 		self.publish("animation_xscale", -1);
-	}
-	
-	self.fsm = new SnowState("enter", true);
-	self.fsm
-		.add("enter", {
-			enter: function() {
-				WORLD.stop_sound();
-				WORLD.play_music("BossEncounterL");
-				
-			},
-			step: function() {
-				//log("step")
-			}
-		})
-		.add("pose", {
-			enter: function() {
-				self.publish("animation_play", { name: self.pose_animation_name });
-				self.get_instance().components.add([ComponentHealthbar]);
-				self.get_instance().components.get(ComponentHealthbar).init();
-				self.get_instance().components.get(ComponentHealthbar).barOffsets[0] = new Vec2(GAME_W - 24,78)
-				self.get_instance().components.get(ComponentDamageable).health_max = 32;
-				self.get_instance().components.get(ComponentDamageable).health = 1;
-			},
-			step: function() {
-				//if the pose animation is finished, then make the healthbar,
-				// fill it, then move to idle and free the player
-				
-				if(self.health_tick){
-					if(self.get_instance().components.get(ComponentDamageable).health < self.get_instance().components.get(ComponentDamageable).health_max)
-						self.get_instance().components.get(ComponentDamageable).health++;
-					self.health_tick = false;
-				} else {
-					self.health_tick = true;
-					//log("tick")
-				}
-			},
-			leave: function(){
-				with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
-					components.get(ComponentPlayerInput).__locked = false;
-				}
-				WORLD.stop_sound();
-				WORLD.play_music("BossBattleL");
-			}
-		})
-		.add("die", {
-			enter: function() {
-				with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
-					components.get(ComponentPlayerInput).__locked = true;
-				}
-				WORLD.clear_sound();
-				self.publish("animation_play", { name: "death" });
-				self.death_time = CURRENT_FRAME;
-			},
-			step: function() {
-				//im going to presume regular boss deaths. 
-				
-				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
-					var _inst = self.get_instance();
-					var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
-					
-					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
-					if(CURRENT_FRAME mod 8 == 0)
-					WORLD.play_sound("Explosion");
-				}
-				
-				if(CURRENT_FRAME - death_time == 507){
-					WORLD.clear_sound();
-					with(obj_player){
-						components.publish("complete");
-					}
-				}
-				
-				
-			}
-		})
-	self.fsm.add_transition("t_transition", "enter", "pose", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor();})
-		.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= 32;})
-		.add_wildcard_transition("t_transition", "die", function(){return self.fsm.get_current_state() != "die" && self.get(ComponentDamageable).health <= 0})
 		
+		self.fsm
+			.add("patiently_wait_for_players", {
+				enter: function() {
+					get(ComponentPhysics).set_speed(0,0);
+					get(ComponentPhysics).set_grav(new Vec2(0,0));
+					get(ComponentDamageable).damage_rate = 0;
+				}
+			})
+			.add("enter", {
+				enter: function() {
+					WORLD.stop_sound();
+					WORLD.play_music("BossEncounterL");
+				
+				},
+				step: function() {
+					//log("step")
+				}
+			})
+			.add("pose", {
+				enter: function() {
+					self.publish("animation_play", { name: self.pose_animation_name });
+					get(ComponentHealthbar).init();
+					get(ComponentHealthbar).barOffsets[0] = new Vec2(GAME_W - 24,78)
+					get(ComponentDamageable).health_max = 32;
+					get(ComponentDamageable).health = 1;
+				},
+				step: function() {
+					//if the pose animation is finished, then make the healthbar,
+					// fill it, then move to idle and free the player
+				
+					if(self.health_tick){
+						if(self.get_instance().components.get(ComponentDamageable).health < self.get_instance().components.get(ComponentDamageable).health_max)
+							self.get_instance().components.get(ComponentDamageable).health++;
+						self.health_tick = false;
+					} else {
+						self.health_tick = true;
+						//log("tick")
+					}
+				},
+				leave: function(){
+					with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
+						components.get(ComponentPlayerInput).__locked = false;
+					}
+					WORLD.stop_sound();
+					WORLD.play_music("BossBattleL");
+				}
+			})
+			.add("die", {
+				enter: function() {
+					with(instance_nearest(self.get_instance().x, self.get_instance().y, obj_player)){
+						components.get(ComponentPlayerInput).__locked = true;
+					}
+					WORLD.clear_sound();
+					self.publish("animation_play", { name: "death" });
+					self.death_time = CURRENT_FRAME;
+				},
+				step: function() {
+					//im going to presume regular boss deaths. 
+				
+					if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
+						var _inst = self.get_instance();
+						var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
+					
+						WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
+						if(CURRENT_FRAME mod 8 == 0)
+						WORLD.play_sound("Explosion");
+					}
+				
+					if(CURRENT_FRAME - death_time == 507){
+						WORLD.clear_sound();
+						with(obj_player){
+							components.publish("complete");
+						}
+					}
+				
+				
+				}
+			})
+		self.fsm.add_transition("t_transition", "enter", "pose", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor();})
+			.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= 32;})
+			.add_wildcard_transition("t_transition", "die", function(){return self.fsm.get_current_state() != "die" && self.get(ComponentDamageable).health <= 0})
+		
+	}
 	
 	self.step = function() {
 		

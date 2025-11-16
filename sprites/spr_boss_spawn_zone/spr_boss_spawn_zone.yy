@@ -19,7 +19,8 @@
   "height":16,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"0c06340f-f727-4cd0-801f-e1b5f4d7a3f5","blendMode":0,"displayName":"default","isLocked":false,"name":"0c06340f-f727-4cd0-801f-e1b5f4d7a3f5","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"729f1d08-3a5e-4a82-ba47-709f5629ea62","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"729f1d08-3a5e-4a82-ba47-709f5629ea62","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"0c06340f-f727-4cd0-801f-e1b5f4d7a3f5","blendMode":0,"displayName":"default","isLocked":false,"name":"0c06340f-f727-4cd0-801f-e1b5f4d7a3f5","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":false,},
   ],
   "name":"spr_boss_spawn_zone",
   "nineSlice":null,

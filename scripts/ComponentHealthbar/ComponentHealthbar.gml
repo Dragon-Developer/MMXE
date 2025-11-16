@@ -11,6 +11,8 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	
 	compDamageable = noone;
 	
+	self.serializer = new NET_Serializer();
+	
 	self.on_register = function(){
 		self.subscribe("components_update", function() {
 			self.compDamageable = self.parent.find("damageable");

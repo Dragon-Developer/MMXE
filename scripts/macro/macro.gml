@@ -9,3 +9,5 @@
 #macro GAME_W 320
 #macro GAME_H 240
 #macro CURRENT_FRAME global.game.__current_frame
+#macro IS_ONLINE global.online == true
+#macro IS_OFFLINE !IS_ONLINE

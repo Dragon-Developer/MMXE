@@ -14,6 +14,7 @@ function global_init() {
 	global.server = undefined;
 	global.client = undefined;
 	global.socket = undefined;
+	global.online = false;
 	
 	global.stage_Data = {
 		room: rm_explose_horneck, 
