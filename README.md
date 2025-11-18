@@ -24,7 +24,7 @@ After that, go click on the code button here in the github page and click on the
 Once you have your own local copy of the engine, you are capable of making your own changes! Read the wiki for help, and if the wiki does not contain what you need go to the discord and ask help there!
 
 # Wiki
-This Github features a wiki page 
+This Github features a wiki!
 
 https://github.com/Dragon-Developer/MMXE/wiki
 
@@ -34,9 +34,10 @@ If you want to learn the ins and outs of the engine, start there. It includes pa
 - Doccumentation on adding new characters, armors, etc
 - How to add new enemies (Currently unfinished)
 - Some programming syntax
-- How to add new levels and some tips and tricks for creating good levels.
+- How to add new levels
+- tips and tricks for creating good levels.
 
-  New features will be added with time. If you want a feature we cannot/do not want to add, feel free to fork this repository and add it in yourself. The mmxe team is happy to show you the inner workings of the engine.
+New features will be added with time. If you want a feature we cannot/do not want to add, feel free to fork this repository and add it in yourself. The mmxe team is happy to show you the inner workings of the engine.
 
 # Features
 Currently notable features include:
@@ -48,7 +49,8 @@ Currently notable features include:
 - Ladders
 - Seperate Characters
 - Projectile based special weapons (Currently only projectile based weapons)
-
+- weapon get screen
+- armor select
 
 In progress features:
 - Bosses (Death state is unclean. )
@@ -60,8 +62,6 @@ Features not added:
 - melee special weapons
 - state based special weapons
 - aimed special weapons
-- armor select
-- weapon get screen
 
 Feel free to suggest new features in the discord. 
 
