@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"BatEnemy",
+  "%Name":"PlayerRpc",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"BatEnemy",
+  "name":"PlayerRpc",
   "parent":{
-    "name":"Normal",
-    "path":"folders/Scripts/Game/stages/Enemy/Normal.yy",
+    "name":"RPC",
+    "path":"folders/Scripts/LIbraries/Netcode/RPC.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

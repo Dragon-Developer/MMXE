@@ -40,8 +40,11 @@ function GuiRoot() : GuiContainer() constructor {
 				room: _room
 			}, global.server.getAllSockets());
 			
+			//global.server.playerRpc.send_armors();
 			log("server done")
-		}//if this fails, youre a client
+		} else {
+			global.client.playerRpc.send_armors();
+		}
 		global.game.start();
 		
 		WaitingContainer.setEnabled(false);

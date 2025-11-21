@@ -6,7 +6,7 @@
   "name":"StateBasedWeapon",
   "parent":{
     "name":"State Based",
-    "path":"folders/Scripts/Game/Weapons/State Based.yy",
+    "path":"folders/Scripts/Game/Player Specific/Weapons/State Based.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -10,6 +10,7 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 	self.started = false;
 	self.inputRpc = new InputRpc(false);
 	self.pingRpc = new PingRpc();
+	self.playerRpc = new PlayerRpc(false);
 	self.pingRpc.onPingReceived = function(_ping) {
 		global.game.on_ping_received(_ping);
 	}
@@ -30,6 +31,7 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 		global.gui.startMultiplayerLobby(_params.room);
 		self.started = true;
 	});
+	
 	self.setEvent("connected", function() {
 		log("this client was connected")
 		global.gui.playOnlineContainer.setEnabled(false);

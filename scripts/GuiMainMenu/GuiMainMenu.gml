@@ -27,14 +27,8 @@ function GuiMainMenu() : GuiContainer() constructor {
 		var _ret = array_create(array_length(_selected_armors))
 		
 		for(var p = 0; p < array_length(_selected_armors); p++){
-			log(_selected_armors[p])
-			log(_possible_armors[_selected_armors[p]])
 			_ret[p] = _possible_armors[p][_selected_armors[p]]
 		}
-		
-		log(_possible_armors)
-		log("rat")
-		log(_ret)
 			
 		global.armors[0] = _ret;
 		if(!global.settings.Has_done_intro_stage){

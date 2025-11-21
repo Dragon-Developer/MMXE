@@ -6,7 +6,7 @@
   "name":"XFirstArmor",
   "parent":{
     "name":"X",
-    "path":"folders/Scripts/Game/Armors/X.yy",
+    "path":"folders/Scripts/Game/Player Specific/Armors/X.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

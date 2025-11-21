@@ -4,7 +4,7 @@
   "name":"X Armor Bonuses",
   "parent":{
     "name":"X",
-    "path":"folders/Scripts/Game/Armors/X.yy",
+    "path":"folders/Scripts/Game/Player Specific/Armors/X.yy",
   },
   "resourceType":"GMNotes",
   "resourceVersion":"2.0",

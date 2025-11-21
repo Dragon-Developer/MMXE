@@ -11,6 +11,7 @@ function GameServer(_port) : NET_TcpServer(_port) constructor {
 	});
 	pingRpc = new PingRpc();
 	inputRpc = new InputRpc(true);
+	self.playerRpc = new PlayerRpc(true);
 	pingRpc.onPingReceived = function(_ping) {
 		global.game.on_ping_received(_ping);
 	}

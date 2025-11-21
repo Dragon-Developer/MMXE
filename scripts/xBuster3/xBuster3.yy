@@ -6,7 +6,7 @@
   "name":"xBuster3",
   "parent":{
     "name":"Base",
-    "path":"folders/Scripts/Game/Weapons/Projectile/MMX/Base.yy",
+    "path":"folders/Scripts/Game/Player Specific/Weapons/Projectile/MMX/Base.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

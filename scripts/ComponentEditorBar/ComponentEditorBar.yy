@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ComponentEditorBar",
   "parent":{
-    "name":"Components",
-    "path":"folders/Scripts/Game/Level Editor/Components.yy",
+    "name":"Level Editor",
+    "path":"folders/Scripts/Game/Entity Components/Level Editor.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
