@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"XCharacter",
   "parent":{
-    "name":"Characters",
-    "path":"folders/Scripts/Game/Player Specific/Characters.yy",
+    "name":"X",
+    "path":"folders/Scripts/Game/Player Specific/Characters/X.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -6,7 +6,7 @@
   "name":"projectileHelperFunctions",
   "parent":{
     "name":"Projectile",
-    "path":"folders/Scripts/Game/Player Specific/Weapons/Projectile.yy",
+    "path":"folders/Scripts/Game/Player Specific/Weapon Functions/Projectile.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

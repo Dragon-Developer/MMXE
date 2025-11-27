@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"Weapon",
   "parent":{
-    "name":"Weapons",
-    "path":"folders/Scripts/Game/Player Specific/Weapons.yy",
+    "name":"Weapon Functions",
+    "path":"folders/Scripts/Game/Player Specific/Weapon Functions.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

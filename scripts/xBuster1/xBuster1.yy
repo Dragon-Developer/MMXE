@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"xBuster1",
   "parent":{
-    "name":"Base",
-    "path":"folders/Scripts/Game/Player Specific/Weapons/Projectile/MMX/Base.yy",
+    "name":"Weapons",
+    "path":"folders/Scripts/Game/Player Specific/Characters/X/Weapons.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
