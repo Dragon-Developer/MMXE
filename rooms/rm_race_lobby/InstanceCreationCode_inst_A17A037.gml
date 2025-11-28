@@ -36,5 +36,5 @@ on_spawn = function(_npc){
 	["/normal"]);
 	_npc.components.publish("character_set", "vent");
 	_npc.components.publish("animation_play", { name: "relaxed" });
-	//_npc.depth += 32
+	_npc.depth += 302
 }
