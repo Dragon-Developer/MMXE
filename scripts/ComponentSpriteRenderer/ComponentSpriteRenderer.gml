@@ -184,8 +184,10 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		//log("sprite's on screen")
 	};
 	
-	self.draw_sprite = function(_action, _frame, _x, _y, _renderer = 0, _alpha = 1){
-		self.sprites[_renderer].animationController.__alpha = _alpha;
-		self.sprites[_renderer].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1){
+		self.sprites[0].animationController.__xscale = _xscale;
+		self.sprites[0].animationController.__alpha = _alpha;
+		self.sprites[0].animationController.__color = _color;
+		self.sprites[0].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
 	}
 }

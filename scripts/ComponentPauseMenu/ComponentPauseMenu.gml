@@ -21,6 +21,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	self.tanks_width = 2;//the width of tanks to display. 
 	
 	self.settings_selection = 0;
+	self.settings_icons = [];
+	
 	self.player_art = -1;
 	self.player = noone;
 	
@@ -46,6 +48,9 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 						palette.setPaletteColorByHex(i, _wep[i]);
 					}
 				}
+			},
+			draw:{
+				
 			}
 		})
 		.add("settings", {
@@ -57,11 +62,17 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 					room_transition_to(rm_stage_select);
 					ENTITIES.destroy_instance(self.get_instance())
 				}
+			},
+			draw:{
+				
 			}
 		})
 		.add("tanks", {
 			step: function(){
 				//self.weapon_selection += self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up")
+			},
+			draw:{
+				
 			}
 		})
 		.add_transition("t_transition", "weapons", "tanks", function(){return self.input.get_input_pressed_raw("right")})
@@ -72,6 +83,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	
 	self.init = function(){
 		
+		//free player enough to pull data
 		with(obj_player){
 			if(components.get(ComponentPlayerInput).__player_index == global.local_player_index){
 				components.get(ComponentPlayerInput).step_enabled = 1;
@@ -80,14 +92,16 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 				components.find("animation").step_enabled = true;
 				other.animation_timescale = components.find("animation").timescale;
 				components.find("animation").timescale = 0;
-				log("GOTTEM GGS!!                             LESGO")
+				//log("GOTTEM GGS!!                             LESGO")
 			}
 		}
 		
+		//set up palette to match player palette
 		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette); i++){
 			palette.setBaseColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
 		}
 		
+		//set current weapon to player's current weapon
 		self.weapon_selection = self.player.components.get(ComponentWeaponUse).current_weapon[0]
 		
 		var _weaspon = self.player.components.get(ComponentWeaponUse).change_weapon(self.weapon_selection);
@@ -136,9 +150,9 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).add_sprite("weapon_tank", true, 224, 200)
 		
 		//settings bar
-		get(ComponentSpriteRenderer).add_sprite("exit", true, 264, 160)
-		get(ComponentSpriteRenderer).add_sprite("navigator", true, 264, 180)
-		get(ComponentSpriteRenderer).add_sprite("settings", true, 264, 200)
+		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("exit", true, 264, 160))
+		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("navigator", true, 264, 180))
+		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("settings", true, 264, 200))
 	}
 	
 	self.step = function(){
@@ -180,6 +194,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			return;
 		}
 		
+		//player healthbar
 		get(ComponentSpriteRenderer).draw_sprite("healthbar_icon_" + global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].image_folder, 0,241,86)
 		
 		for(var p = 0; p < _damageable.health_max; p++){
@@ -190,6 +205,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		
 		get(ComponentSpriteRenderer).draw_sprite("healthbar_cap", 0,241,82 - _damageable.health_max * 2)
 		
+		//weapon energy bars
 		for(var i = 0; i < array_length(self.weapon_names); i++){
 			//add the notch between the other weapons and the buster
 			if(i = 1)
@@ -218,6 +234,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			}
 		}
 		
+		//weapon descriptions
 		if(array_length(self.weapon_descs) > 0)
 			if(string_length(self.weapon_descs[self.weapon_selection]) > 15){
 				draw_string(string_copy(self.weapon_descs[0], 0,15), 36, 204, "pause menu")
@@ -232,6 +249,21 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		draw_string("W", 216, 176, "orange")
 		draw_string("W", 216, 200, "orange")
 		draw_string("TANKS", 168, 160, "orange")
+		
+		//settings highlighting
+		if(self.settings_selection == 0){
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = c_white;
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = #a0a0a0;
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = #a0a0a0;
+		} else if(self.settings_selection == 1){
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = #a0a0a0;
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = c_white;
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = #a0a0a0;
+		} else {
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = #a0a0a0;
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = #a0a0a0;
+			get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = c_white;
+		}
 		
 		palette.apply();
 		
@@ -248,5 +280,12 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		
 		
 		palette.reset();
+		
+		if (self.fsm.get_current_state() == "weapons")
+			draw_sprite_ext(spr_reticle_armor_select, 0, 34,16,123 / 32,181 / 32,0,c_white, 1);
+		else if (self.fsm.get_current_state() == "tanks")
+			draw_sprite_ext(spr_reticle_armor_select, 0, 163,155,90 / 32,69 / 32,0,c_white, 1);
+		else
+			draw_sprite_ext(spr_reticle_armor_select, 0, 259,155,27 / 32,69 / 32,0,c_white, 1);
 	}
 }

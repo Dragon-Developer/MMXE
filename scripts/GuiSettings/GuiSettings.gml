@@ -16,10 +16,10 @@ function GuiSettings() : GuiContainer() constructor {
         .setJustifyContent("left")
         .setAlignItems("left")
         .setPadding([4,0,4,0])
-		.setGap(4)
+		.setGap(2)
 		.setScrollEnabled(true)
 	
-	buttonBack = new GuiButton(64, 16, "Back")
+	buttonBack = new GuiButton(64, 14, "<<<Back")
 	buttonBack.addEventListener("click", function() {
 		self.setEnabled(false);
 		parent.mainMenuContainer.setEnabled(true);
@@ -40,6 +40,8 @@ function GuiSettings() : GuiContainer() constructor {
 		"dash",
 		"shoot",
 		"shoot2",
+		"shoot3",
+		"shoot4",
 		"switchLeft",
 		"switchRight",
 		"pause"
@@ -59,11 +61,13 @@ function GuiSettings() : GuiContainer() constructor {
 		_bindings[input_index].binding = input_binding_get(_inputs[input_index])
 		_bindings[input_index].input_name = _inputs[input_index]
 		
+		_bindings[input_index].setBorderSprite(spr_gui_panel_slim);
+		
 		with(_bindings[input_index]){
 			addEventListener("click", function() {
 				children = [];
 				setText("Rebinding")
-				setSize(string_get_text_length("Rebinding") + 12,16);
+				setSize(string_get_text_length("Rebinding") + 10,14);
 				log(Rebind(input_name))
 				changing_bind = true;
 				binding = input_binding_get(input_name);
@@ -80,7 +84,7 @@ function GuiSettings() : GuiContainer() constructor {
 				children = [];
 				var _bind_name = input_binding_get(input_name);
 				_bind_name = string(_bind_name)
-				setSize(string_get_text_length(input_name + ": " + _bind_name) + 12,16);
+				setSize(string_get_text_length(input_name + ": " + _bind_name) + 10,14);
 				setText(input_name + ": " + _bind_name)
 				//setText("bitch")
 			});

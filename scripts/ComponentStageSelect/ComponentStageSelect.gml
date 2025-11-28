@@ -8,15 +8,15 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	
 	self.stages = [
 	{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: "undefined", music: "blast_hole_2.0"},//'beat' will be replaced with save data info
-	{room: rm_gate_2, x: 67, y: 18, beat: false, icon: "gate", music: "intro_stage"},
-	{room: rm_headquarters, x: 140, y: 11, beat: false, icon: undefined, music: "HQ"},
-	{room: rm_intro, x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial"},
-	{room: rm_metroid, x: 261, y: 18, beat: false, icon: "undefined", music: "HQ"},
+	{room: rm_gate_2,          x: 67, y: 18, beat: false, icon: "gate", music: "intro_stage"},
+	{room: rm_headquarters,    x: 140, y: 11, beat: false, icon: undefined, music: "HQ"},
+	{room: rm_intro,           x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial"},
+	{room: rm_horizontal_test, x: 261, y: 18, beat: false, icon: "undefined", music: "x2-intro-stage"},
 	
 	{room: rm_training_stage, x: 19, y: 182, beat: false, icon: "undefined", music: "blast_hole"},//'beat' will be replaced with save data info
 	{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: "undefined", music: "fame_stag"},
 	{room: rm_char_select, x: 140, y: 189, beat: false, icon: undefined, music: undefined},
-	{room: rm_desert_bus, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial"},
+	{room: rm_race_lobby, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial"},
 	{room: rm_weapon_get, x: 261, y: 182, beat: false, icon: "undefined", music: "WeaponGet"}
 	];//not much for the moment
 	
@@ -59,8 +59,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 			global.stage_Data = self.stages[selected]
 			//WORLD.stop_music();
 			//WORLD.play_music(global.stage_Data.music)
-			room_goto(self.stages[selected].room)
-			ENTITIES.destroy_instance(self.get_instance())
+			room_transition_to(self.stages[selected].room,"standard", 24)
 		}
 		
 		selected += self.stage_select_height * stage_select_width;

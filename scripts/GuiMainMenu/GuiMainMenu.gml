@@ -12,10 +12,14 @@ function GuiMainMenu() : GuiContainer() constructor {
 		.setFlexDirection("column")
         .setJustifyContent("center")
         .setAlignItems("center")
-        .setPaddingSize(16)
-		.setGap(8)
+        .setPaddingSize(4)
+		.setGap(4)
     
-    buttonStart = new GuiButton(160, 32, "Start Game");
+	titleImage = new GuiSprite(spr_start_menu2)
+	
+    buttonStart = new GuiButton(160, 16, "Start Game");
+	buttonStart.setBorderSprite(undefined);
+	buttonStart.setSprite(undefined);
 	buttonStart.addEventListener("click", function() { 
 		self.setEnabled(false);
 		global.game = new GameOffline();
@@ -38,20 +42,26 @@ function GuiMainMenu() : GuiContainer() constructor {
 			parent.startGame(rm_stage_select);
 	});
 	
-	buttonOnline = new GuiButton(160, 32, "Play Online");
+	buttonOnline = new GuiButton(160, 16, "Play Online");
+	buttonOnline.setBorderSprite(undefined);
+	buttonOnline.setSprite(undefined);
 	buttonOnline.addEventListener("click", function() { 
 		self.setEnabled(false);
 		parent.playOnlineContainer.setEnabled(true);
 	});
 		
-    buttonOptions = new GuiButton(80, 32,"Options");
+    buttonOptions = new GuiButton(80, 16,"Options");
+	buttonOptions.setBorderSprite(undefined);
+	buttonOptions.setSprite(undefined);
 	buttonOptions.addEventListener("click", function() { 
 		self.setEnabled(false);
 		parent.SettingsContainer.setEnabled(true);
 	});
 	
-    buttonExit = new GuiButton(60, 27, "Exit"); 
+    buttonExit = new GuiButton(60, 16, "Exit"); 
+	buttonExit.setBorderSprite(undefined);
+	buttonExit.setSprite(undefined);
     
-    mainContainer.addChild([buttonStart, buttonOnline, buttonOptions, buttonExit]);
+    mainContainer.addChild([titleImage, buttonStart, buttonOnline, buttonOptions, buttonExit]);
     addChild(mainContainer);
 }

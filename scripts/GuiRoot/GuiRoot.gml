@@ -12,7 +12,7 @@ function GuiRoot() : GuiContainer() constructor {
 		//this is for the singleplayer experience. multiplayer isnt a factor here
 		
 		
-		room_goto(_id);
+		room_transition_to(_id, "standard", 24);
 	}
 	
 	startMultiplayerLobby = function(_room) {
@@ -40,6 +40,9 @@ function GuiRoot() : GuiContainer() constructor {
 				room: _room
 			}, global.server.getAllSockets());
 			
+			global.server.players_ready = array_create(array_length(global.server.getAllSockets()) + 1,-1);
+			global.server.player_times = array_create(array_length(global.server.getAllSockets()) + 1,-1);
+			
 			//global.server.playerRpc.send_armors();
 			log("server done")
 		} else {
@@ -49,7 +52,7 @@ function GuiRoot() : GuiContainer() constructor {
 		
 		WaitingContainer.setEnabled(false);
 		
-		room_goto(_room);
+		room_transition_to(_room, "standard", 24);
 	}
 	
 	startEditor = function(){
@@ -104,6 +107,8 @@ function GuiRoot() : GuiContainer() constructor {
 				emitEvent("debug", debug);
 				propagate("debug", debug);
 			}
+			
+			
 
 			rootStep();
 		} catch (err) {

@@ -8,7 +8,13 @@ function GuiSlidingBar(_width, _height, _handle_padding = 4) : GuiProgressBar(_w
 	
 	self.setMaxValue(_width - _height - _handle_padding);
 	
-	//self.progressValue = self.maxProgressValue;
+	setProgressValue = function(_value) {
+        progressValue = clamp(_value, 0, maxProgressValue);
+        emitEvent("progress_update", progressValue);
+		Handle.setMargin([0,handle_offset_y,maxProgressValue - progressValue,-handle_offset_y])
+        refresh();
+		return self;
+    }
 	
 	Handle = new GuiButton(_height + _handle_padding, _height + _handle_padding);
 	Handle.setFlexDirection("column");
@@ -34,12 +40,12 @@ function GuiSlidingBar(_width, _height, _handle_padding = 4) : GuiProgressBar(_w
 	Handle.addEventListener("mouseleave", function(_pos) {
 		self.held_down = false;
 	});
-	Handle.setMargin([0,handle_offset_y / 2,maxProgressValue - progressValue,-handle_offset_y / 2])
+	Handle.setMargin([0,handle_offset_y,maxProgressValue - progressValue,-handle_offset_y])
 	
 	addChild(Handle)
 	
 	drawMe = function(_x, _y) {
-	Handle.setMargin([0,handle_offset_y,maxProgressValue - progressValue,-handle_offset_y])
+		Handle.setMargin([0,handle_offset_y,maxProgressValue - progressValue,-handle_offset_y])
 		
 		
         if (sprite_exists(sprite)) {

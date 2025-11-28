@@ -8,6 +8,8 @@ function GameInput() : NET_InputManager() constructor {
 		"dash",
 		"shoot",
 		"shoot2",
+		"shoot3",
+		"shoot4",
 		"switchLeft",
 		"switchRight",
 		"pause"

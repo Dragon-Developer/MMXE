@@ -5,3 +5,5 @@ try{
 } catch(_err){
 	//do nothing lol
 }
+
+audio_stop_all()

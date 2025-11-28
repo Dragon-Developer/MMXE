@@ -15,7 +15,7 @@ function ComponentBase() constructor {
 	self.draw_end = function() {}
 	self.on_register = function() {}
 	self.on_remove = function() {}
-	self.timescale = 1;
+	self.timescale = 60 / game_get_speed(gamespeed_fps);
 	self.current_step_time = 0;
 	
 	self.get_instance = function() {

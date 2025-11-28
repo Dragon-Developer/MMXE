@@ -7,13 +7,15 @@ function ComponentDialouge() : ComponentBase() constructor{
 	self.chat = [_dia];
 	self.point_in_chat = 0;
 	self.current_text = "dummy";
-	self.right_mugshot = X_Mugshot_Bored1;
-	self.left_mugshot = X_Mugshot_Angy1;//there needs to be a function that auto creates these sprites
+	self.left_mugshot = noone;
+	self.right_mugshot = noone;//there IS a way to auto generate sprites!
 	self.focus = "right";
-	self.dialouge_startup = 30;//half a second of the box popping up
+	self.dialouge_startup = 24;// this number will slowly drop until forte makes it instant
+	self.dialouge_start_time = CURRENT_FRAME + dialouge_startup;
 	self.text_chunks = ["Component Error!"];//i need to split text up so the words dont trail off
 	self.tc_length = [32];//cache these values instead of regenerating them every frame. the text doesnt change mid sentence.
 	self.text_length = [32];
+	self.completed_text = false;
 	self.input = noone;
 	
 	self.animation_index = 0;//a timer for a thing. 
@@ -23,7 +25,19 @@ function ComponentDialouge() : ComponentBase() constructor{
 	self.dialouge_y_top = 16;
 	self.dialouge_y_height = 44;
 	
+	self.options = [];
+	self.option_functions = [];
+	self.selected_option = 0;
+	
 	self.init = function(){
+		get(ComponentSpriteRenderer).character = "dialouge";
+		get(ComponentSpriteRenderer).load_sprites();
+		
+		self.left_mugshot_sprite = get(ComponentSpriteRenderer).add_sprite("x", true, GAME_W / 2 + self.dialouge_box_width / 2 + self.dialouge_margin + 22, dialouge_y_top + 22)
+		self.right_mugshot_sprite  = get(ComponentSpriteRenderer).add_sprite("x", true, GAME_W / 2 - self.dialouge_box_width / 2 - self.dialouge_margin - 22, dialouge_y_top + 22)
+		
+		
+		
 		self.set_dialouge_with_enum(self.chat[0]);
 	}
 	self.on_register = function() {
@@ -37,17 +51,22 @@ function ComponentDialouge() : ComponentBase() constructor{
 	}
 	
 	self.set_dialouge_with_enum = function(_dialouge){
-		log(_dialouge)
+		//log(_dialouge)
 		self.set_dialouge(_dialouge.sentence, _dialouge.mugshot_left, _dialouge.mugshot_right, _dialouge.focus);
 	}
 	
 	self.set_dialouge = function(_text, _mugshot_left = X_Mugshot1, _mugshot_right = X_Mugshot1, _focus = "right"){
 		
+		
 		self.text_chunks = [];
 		self.tc_length = [];
 		self.text_length = [];
 		
-		log(_text);
+		if(is_array(_text)){
+			self.chat = _text;
+			_text = _text[0].sentence
+		}
+		
 		if(_text == -4){
 			log("something done fucked up")
 		}
@@ -77,24 +96,51 @@ function ComponentDialouge() : ComponentBase() constructor{
 		self.current_text = _text;//this may be removed. this is not useful outside of getting what part
 		//of the conversation you are in
 		self.text_max_length = string_get_text_length(_text);
-		self.left_mugshot = _mugshot_left;
-		self.right_mugshot = _mugshot_right;
+		self.right_mugshot = _mugshot_left;
+		self.left_mugshot = _mugshot_right;
 		self.focus = _focus;
 		//return _text;
+		
+		//get sprite names ready
+		var _sprite_name_left = string(_mugshot_left);
+		var _sprite_name_right = string(_mugshot_right);
+		
+		
+		//apply talking if relevant
+		if(string_lower(focus) == "left")
+			_sprite_name_left += "_talking"
+		else 
+			_sprite_name_right += "_talking"
+			
+		log(_sprite_name_right)
+			
+		get(ComponentSpriteRenderer).change_sprite(self.left_mugshot_sprite, _sprite_name_right)
+		get(ComponentSpriteRenderer).change_sprite(self.right_mugshot_sprite, _sprite_name_left)
+		get(ComponentSpriteRenderer).sprites[self.right_mugshot_sprite].animationController.__xscale = -1;
 	};
 	
 	self.step = function(){
-		if(self.input.get_input_pressed_raw("jump")){
+		if(self.input.get_input_pressed_raw("jump") && self.dialouge_start_time < CURRENT_FRAME){
 			if(self.text_length[array_length(self.text_length) - 1] != self.tc_length[array_length(self.text_length) - 1]){
 				self.text_length = self.tc_length;
 			}else{
+				
+				if(variable_struct_exists(self.chat[self.point_in_chat], "option_1")){
+					log(self.option_functions[self.selected_option])
+					
+					if(is_method(self.option_functions[self.selected_option]))
+						script_execute(self.option_functions[self.selected_option])
+				}
+				
 				self.point_in_chat++;
 				if(self.point_in_chat >= array_length(self.chat)){
 					ENTITIES.destroy_instance(self.get_instance());
 				} else	{
-					self.set_dialouge_with_enum(self.chat[self.point_in_chat]);
+					self.set_dialouge_with_enum(self.chat[clamp(self.point_in_chat, 0, 1024)]);
 				}
+				
 			}
+			completed_text = false;
 		}
 	}
 	
@@ -104,68 +150,75 @@ function ComponentDialouge() : ComponentBase() constructor{
 		var _text_right_edge = GAME_W / 2 + self.dialouge_box_width / 2 + self.dialouge_margin;
 		var _text_left_edge = GAME_W / 2 - self.dialouge_box_width / 2 - self.dialouge_margin;
 		
-		draw_rectangle(_text_left_edge,self.dialouge_y_top,_text_right_edge,
-		self.dialouge_y_height + self.dialouge_y_top - 1,false);
-		
-		for(var q = 0; q < array_length(self.text_chunks); q++){
-			if(q != 0){
-				if(self.tc_length[q - 1] != self.text_length[q - 1]){
-					break;
+		//the box
+		if(self.dialouge_start_time < CURRENT_FRAME) { 
+			draw_rectangle(_text_left_edge,self.dialouge_y_top,_text_right_edge,
+			self.dialouge_y_height + self.dialouge_y_top - 1,false); 
+			
+			//the text
+			for(var q = 0; q < array_length(self.text_chunks); q++){
+				if(q != 0){
+					if(self.tc_length[q - 1] != self.text_length[q - 1]){
+						break;
+					}
 				}
+				var _len = self.text_length[q];
+				self.text_length[q] = clamp(self.text_length[q] + 1,0, self.tc_length[q]);
+				
+				if(_len == self.text_length[q] && completed_text == false){
+					completed_text = true;
+					
+					if(variable_struct_exists(self.chat[self.point_in_chat], "option_1")){
+						array_push(self.options, self.chat[self.point_in_chat].option_1);
+						array_push(self.option_functions, self.chat[self.point_in_chat].option_1_function);
+						
+						log(self.option_functions)
+						log(self.chat[self.point_in_chat])
+						var _exists = true;
+						var _index = 2;
+						while(_exists){
+							_exists = variable_struct_exists(self.chat[self.point_in_chat], "option_" + string(_index));
+							
+							log(_index)
+							if(_exists){
+								array_push(self.options, variable_struct_get(self.chat[self.point_in_chat], "option_" + string(_index)));
+								array_push(self.option_functions, variable_struct_get(self.chat[self.point_in_chat], "option_" + string(_index) + "_function"));
+							}
+							
+							_index++;
+						}
+					}
+					
+					//stop the talking animation for whos talking
+					//dont reset the other dude or theyll blink at the same time
+					if(string_lower(focus) == "right")
+						get(ComponentSpriteRenderer).change_sprite(self.left_mugshot_sprite, left_mugshot)
+					else
+						get(ComponentSpriteRenderer).change_sprite(self.right_mugshot_sprite,  right_mugshot)
+				}
+				
+				draw_string_condensed(string_copy(self.text_chunks[q],0,self.text_length[q]),
+				self.dialouge_margin + _text_left_edge, q * (8 + dialouge_margin) + dialouge_margin + dialouge_y_top);
 			}
-			self.text_length[q] = clamp(self.text_length[q] + 1,0, self.tc_length[q]);
-			draw_string_condensed(string_copy(self.text_chunks[q],0,self.text_length[q]),
-			self.dialouge_margin + _text_left_edge, q * (8 + dialouge_margin) + dialouge_margin + dialouge_y_top);
+		} else {
+			var _crunch = (self.dialouge_start_time - CURRENT_FRAME) / dialouge_startup * (dialouge_y_height / 2);
+			draw_rectangle(_text_left_edge + _crunch,self.dialouge_y_top + _crunch,_text_right_edge - _crunch,
+			self.dialouge_y_height + self.dialouge_y_top - 1 - _crunch,false); 
 		}
 		
-		var _left_col = (string_lower(self.focus) == "right" ? c_grey : c_white);// i used string_lower to allow people to use right and Right.
-		var _right_col = (string_lower(self.focus) == "left" ? c_grey : c_white);// its going to happen, someone is going to say they put in right when
-		//they put in Right or RIght. heck, they could do RIGHT.
-		
-		if(string_lower(self.focus) == "right" && array_last(self.text_length) != array_last(self.tc_length)){
-			if(self.animation_index % 20 > 10)
-				draw_sprite_ext(right_mugshot, 3, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
-			else 
-				draw_sprite_ext(right_mugshot, 0, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
-		} else if(self.animation_index % 120 > 105){
-			if(self.animation_index % 120 > 115)
-				draw_sprite_ext(right_mugshot, 1, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
-			else if(self.animation_index % 120 > 110)
-				draw_sprite_ext(right_mugshot, 2, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
-			else
-				draw_sprite_ext(right_mugshot, 1, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
-			
-		} else {
-			draw_sprite_ext(right_mugshot, 0, _text_right_edge + 1 + sprite_get_width(right_mugshot), self.dialouge_y_top,-1,1,0,_right_col,1);
+		for(var r = 0; r < array_length(self.options); r++){
+			draw_rectangle(_text_right_edge, self.dialouge_y_height + self.dialouge_y_top + r * 9 + 1, _text_right_edge - string_get_text_length(self.options[r]) - 1, 
+				self.dialouge_y_height + self.dialouge_y_top + 9 + r * 9, false)
+			draw_string_condensed(self.options[r], _text_right_edge - string_get_text_length(self.options[r]) + 1, self.dialouge_y_height + self.dialouge_y_top + 1 + r * 9);
 		}
-		if(string_lower(self.focus) == "left" && array_last(self.text_length) != array_last(self.tc_length)){
-			if(self.animation_index % 20 > 10)
-				draw_sprite_ext(left_mugshot, 3, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
-			else 
-				draw_sprite_ext(left_mugshot, 0, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
-		} else if(self.animation_index % 120 > 105){
-			if(self.animation_index % 120 > 115)
-				draw_sprite_ext(left_mugshot, 1, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
-			else if(self.animation_index % 120 > 110)
-				draw_sprite_ext(left_mugshot, 2, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
-			else
-				draw_sprite_ext(left_mugshot, 1, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
 			
-		} else {
-			draw_sprite_ext(left_mugshot, 0, _text_left_edge - sprite_get_width(left_mugshot), self.dialouge_y_top, 1, 1, 0, _left_col, 1);
-		}
-		self.animation_index = (self.animation_index + 1) % 120;
+		//get(ComponentSpriteRenderer).draw_sprite(_sprite_name_right, 0,  _text_left_edge - 22, dialouge_y_top + 22, string_lower(focus) == "left" ? c_grey : c_white)
+		//get(ComponentSpriteRenderer).draw_sprite(_sprite_name_left, 0, _text_right_edge + 22, dialouge_y_top + 22, string_lower(focus) != "left" ? c_grey : c_white, 1, -1)
 	}
 	#endregion
-	
-	self.generate_mugshots = function(){
-		//collage shit. animation uses it so go reference that for generating the sprite. 
-		
-		return X_Mugshot1;//this is temporary. it will also not get used for the moment.
-	}
 }
 
-function Dialouge() constructor
+function Dialouge() constructor// idk if this will ever be used. it would help in theory tho
 {
     self.sentence = "Dialouge Error!";
 	self.mugshots = [X_Mugshot_Angy1, X_Mugshot_Bored1];

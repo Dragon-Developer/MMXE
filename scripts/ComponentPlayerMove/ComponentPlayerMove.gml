@@ -303,7 +303,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_move_h", "idle", "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_move_h", "land", "walk", function() { return !self.physics.check_wall(self.hdir) && !self.input.get_input("dash"); })
 		.add_wildcard_transition("t_hurt", "hurt", function() { return self.get_wall_jump_dir() == 0 && self.physics.is_on_floor() && IS_OFFLINE; })
-		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
+		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_wildcard_transition("t_custom", "custom")
 		.add_transition("t_custom_end", "custom", "idle")

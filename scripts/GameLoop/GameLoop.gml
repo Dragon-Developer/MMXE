@@ -34,7 +34,7 @@ function GameLoop() : NET_GameLoopBase() constructor {
 				if(!is_struct(_component)) return;
 				if (!_component.step_enabled) return; 
 				_component.current_step_time += _component.timescale;
-				if(_component.current_step_time >= 1){
+				while(_component.current_step_time >= 1){
 					_component.step(); 
 					_component.current_step_time -= 1;
 				}

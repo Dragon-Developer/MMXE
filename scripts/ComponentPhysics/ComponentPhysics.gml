@@ -225,9 +225,11 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _sprite_width = 16;
 		var _sprite_height = 32;
 		
+		var _mask = self.get_instance().mask_index
+		
 		try{
-			_sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
-			_sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
+			_sprite_width = sprite_get_xoffset(_mask);
+			_sprite_height = sprite_get_height(_mask) - sprite_get_yoffset(_mask);
 		} catch(_err){
 			
 		}

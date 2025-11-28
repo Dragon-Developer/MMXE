@@ -1,0 +1,174 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 22,
+        "y": 22
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          "",
+          "thin"
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "x",
+          "properties": {
+            "action":"x_regular",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "vent",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "x_happy",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "x_happy_talking",
+          "properties": {
+            "action":"x_happy",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "x_talking",
+          "properties": {
+            "action":"x_regular",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "vent_talking",
+          "properties": {
+            "action":"vent",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -98,8 +98,8 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 				start_time: CURRENT_FRAME, 
 				source_folder: _source_folder})
 			//log(_snd - 400000)
-			log(string(_filename) + " is the filename")
-			log(string(_loop_sound) + " is the loop sound")
+			//log(string(_filename) + " is the filename")
+			//log(string(_loop_sound) + " is the loop sound")
 			return _snd;
 		} catch (_exception){
 			log(_exception)

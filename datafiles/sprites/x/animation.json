@@ -1291,6 +1291,46 @@
           }
         },
         {
+          "name": "slide",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 8,
+                "frame": 2
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "slide_end",
+          "properties": {
+            "action": "slide",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "giga_crush",
           "properties": {
             "keyframes": [

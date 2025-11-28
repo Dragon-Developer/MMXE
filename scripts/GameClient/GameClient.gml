@@ -31,6 +31,16 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 		global.gui.startMultiplayerLobby(_params.room);
 		self.started = true;
 	});
+	rpc.registerHandler("game_start", function(_params) {
+		var players = _params.players;
+		var totalPlayers = array_length(players);
+		global.game.add_local_players([global.local_player_index]);
+		global.game.inputs.setTotalPlayers(totalPlayers);
+		//global.game.add_local_players([global.local]);
+		global.gui.lobbyMenuContainer.setEnabled(false);	
+		global.gui.startMultiplayerLobby(_params.room);
+		self.started = true;
+	});
 	
 	self.setEvent("connected", function() {
 		log("this client was connected")
@@ -41,5 +51,8 @@ function GameClient(_ip, _port) : NET_TcpSocket(_ip, _port) constructor {
 	self.setEvent("error", function(_err) {
 		show_debug_message(_err);
 	});
+	self.check_into_race = function(_ready){
+		rpc.sendNotification("check_into_race", { id: global.local_player_index, ready: _ready}, undefined);
+	}
 	self.start();
 }
