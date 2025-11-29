@@ -135,8 +135,6 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 			}
 		}
 		self.sounds = _new_sounds;
-		
-		log("jack shit!")
 		return;
 	}
 	

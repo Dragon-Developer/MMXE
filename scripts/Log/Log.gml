@@ -1,17 +1,18 @@
-function log(_string, _stack = global.stacktracking, _stacklength = 5){
-	var _msg = "";
-	if(_stack){
-		var _a = debug_get_callstack(_stacklength);
-	    for (var i = 0; i < array_length(_a); i++)
-	    {
-	        //show_debug_message(_a[i]);
-			_msg += string(_a[i]);
-	    }
-	}
-	_string = string(_string) + _msg;
-		
+function log(_string, _stack = global.stacktracking, _stacklength = 1){
+	
 	show_debug_message(_string);
 	LOG.print(_string);
+	
+	var _msg = "";
+	if(_stack){
+		var _a = debug_get_callstack(_stacklength + 1);
+	    for (var i = 1; i < array_length(_a); i++)
+	    {
+			_msg += string(_a[i]);
+	    }
+		show_debug_message(_msg);
+		LOG.print(_msg);
+	}
 }
 function LogConsole() constructor {
 	static print = function(_text) {

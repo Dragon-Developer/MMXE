@@ -9,17 +9,51 @@ on_spawn = function(_npc){
 				mugshot_right : PLAYER_SPRITE,
 				focus : "left",
 				
-				option_1: room_get_name(rm_horizontal_test) + "!",
+				option_1: "I'm not ready yet...",
 				option_1_function: function(){
-					if IS_ONLINE
-						global.server.check_into_race(rm_horizontal_test)
+					if IS_ONLINE	
+						global.socket.check_into_race(-1)
+				},
+			
+				option_2: room_get_name(rm_horizontal_test) + "!",
+				option_2_function: function(){
+					if IS_ONLINE	
+						global.socket.check_into_race(rm_horizontal_test)
 					else{
 						instance_create_depth(0,0,-1235,obj_race_handler);
 						room_goto(rm_horizontal_test)
 					}
 				},
-				option_2: "I'm not ready yet...",
-				option_2_function: function(){if variable_global_exists("server") global.server.check_into_race(-1)}
+				option_3: "Gate's Lab!",
+				option_3_function: function(){
+					global.race_laps = 1;
+					if IS_ONLINE	
+						global.socket.check_into_race(rm_gate_race)
+					else{
+						instance_create_depth(0,0,-1235,obj_race_handler);
+						room_goto(rm_gate_race)
+					}
+				},
+				option_4: "Vertal Test!",
+				option_4_function: function(){
+					global.race_laps = 3;
+					if IS_ONLINE	
+						global.socket.check_into_race(rm_minimum_requirements)
+					else{
+						instance_create_depth(0,0,-1235,obj_race_handler);
+						room_goto(rm_minimum_requirements)
+					}
+				},
+				option_5: "Flame Stag's Stage!",
+				option_5_function: function(){
+					global.race_laps = 2;
+					if IS_ONLINE	
+						global.socket.check_into_race(rm_flame_stag_race)
+					else{
+						instance_create_depth(0,0,-1235,obj_race_handler);
+						room_goto(rm_flame_stag_race)
+					}
+				},
 			}
 	}
 	

@@ -1,7 +1,7 @@
 event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
-y -= GAME_H + 9
+y -= GAME_H + 8
 on_spawn = function(_player) {
 	_player.x += current_spawn * 5
 	_player.components.get(ComponentAnimationShadered).set_subdirectories(
@@ -37,16 +37,14 @@ on_spawn = function(_player) {
 		}
 	}
 	
-	log(global.armors[current_spawn])
+	//log(global.armors[current_spawn])
 	
 	_player.components.get(ComponentPlayerMove).apply_full_armor_set(global.armors[current_spawn]);
 	
 	if (current_spawn == global.local_player_index) {
-		log("this is the player!")
+		//log("this is the player!")
 		WORLD = ENTITIES.create_instance(obj_world);
 		var _camera = ENTITIES.create_instance(obj_camera, x - GAME_W / 2, y - GAME_H / 2);
-		
-		log(_camera.x)
 		
 		if(_camera.x < 0) _camera.x = 0
 		

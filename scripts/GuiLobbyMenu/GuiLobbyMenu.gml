@@ -21,7 +21,15 @@ function GuiLobbyMenu() : GuiContainer() constructor {
 		self.setEnabled(false);
 		parent.startMultiplayerLobby(rm_race_lobby);
 	});
+	
+	playercount = new GuiButton(200, 14, "Np other players!");
+	playercount.setBorderSprite(undefined);
+	playercount.setSprite(undefined);
+	playercount.addEventListener("step", function() { 
+		if(IS_ONLINE)
+			playercount.setText("Playercount: " + string( array_length(global.game.__local_players)));
+	});
     
-    mainContainer.addChild(["Awaiting other players", buttonStart]);
+    mainContainer.addChild([playercount, buttonStart]);
     addChild(mainContainer);
 }

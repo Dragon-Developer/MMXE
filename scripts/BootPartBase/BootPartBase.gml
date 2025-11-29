@@ -79,8 +79,10 @@ function BootPartBase() : ArmorBase() constructor{
 					self.set_hor_movement(self.dash_dir);
 				},
 				leave: function() {
-					//if (!self.dash_jump && self.physics.is_on_floor())
-						//self.current_hspd = self.states.walk.speed;	
+					if(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 1, obj_square_16) && 
+						!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_square_16))
+							self.get_instance().y += 16
+					
 					self.physics.set_grav(new Vec2(0,0.25));
 					self.get_instance().mask_index = self.states.slide.old_hitbox;
 				}

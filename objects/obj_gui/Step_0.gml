@@ -1,4 +1,5 @@
 try{
+	if(room == rm_init)
 	global.gui.step();
 } catch(_err){
 	log(_err)

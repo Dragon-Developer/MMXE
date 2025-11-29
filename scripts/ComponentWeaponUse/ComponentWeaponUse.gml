@@ -70,7 +70,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				
 				if(_proj_code.term == "State Based"){
 					_proj_code.init(self.get(ComponentPlayerMove))
-					log("state added!")
+					//log("state added!")
 				}
 			})
 		})

@@ -50,7 +50,10 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.change_sprite = function(_id, _sprite, _char = self.character){
-		self.sprites[_id].animation = _sprite;
+		if(is_array(self.sprites))
+			self.sprites[_id].animation = _sprite;
+		else
+			return;
 		
 		self.reload_animation_controller(_id,collage, _char);
 	}
@@ -151,6 +154,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.draw = function(){
+		if(is_array(self.sprites))
 		array_foreach(self.sprites, function(_sprite){
 			if(_sprite != undefined){
 				if(!_sprite.is_gui){
@@ -161,6 +165,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.draw_gui = function(){
+		if(is_array(self.sprites))
 		array_foreach(self.sprites, function(_sprite){
 			if(_sprite != undefined){
 				if(_sprite.is_gui)

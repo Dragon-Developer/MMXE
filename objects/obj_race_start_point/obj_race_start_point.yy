@@ -32,5 +32,5 @@
     "path":"sprites/spr_player_shield_blue/spr_player_shield_blue.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

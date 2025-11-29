@@ -410,35 +410,42 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				}
 			
 				_arm = _temp;
-			} else {
-			}
+			} 
 			//run any code and load it's directory
 			if(typeof(_arm) == "struct"){
-				//add the currently listed armor to the armor array
-				array_push(self.armor_parts[0], _arm)
-				var _directory_name = "/armor" + string(_arm.sprite_name)
-				_directory_name = string_replace(_directory_name, "_", "/")
-				//log(_directory_name);
-				find("animation").add_subdirectories([_directory_name]);
-				if(variable_struct_exists(_arm, "apply_armor_effects"))
-					_arm.apply_armor_effects(self);
-					
-				if(variable_struct_exists(_arm, "damage_rate"))
-					get(ComponentDamageable).damage_rate = _arm.damage_rate;
-					
-				if(variable_struct_exists(_arm, "buster_weapon")){
-					global.player_character[get(ComponentPlayerInput).get_player_index()].weapons[0] = _arm.buster_weapon;
-					get(ComponentWeaponUse).set_weapons(global.player_character[get(ComponentPlayerInput).get_player_index()].weapons);
+				var _can_cont = true;
+				for(var g = 0; g < array_length(self.armor_parts[0]); g++){
+					if(_arm.armor_name == self.armor_parts[0][g].armor_name)
+						_can_cont = false;
 				}
 				
-				array_push(self.armor_parts[2], _directory_name);
+				if(_can_cont){
+					//add the currently listed armor to the armor array
+					array_push(self.armor_parts[0], _arm)
+					var _directory_name = "/armor" + string(_arm.sprite_name)
+					_directory_name = string_replace(_directory_name, "_", "/")
+					//log(_directory_name);
+					find("animation").add_subdirectories([_directory_name]);
+					if(variable_struct_exists(_arm, "apply_armor_effects"))
+						_arm.apply_armor_effects(self);
+					
+					if(variable_struct_exists(_arm, "damage_rate"))
+						get(ComponentDamageable).damage_rate = _arm.damage_rate;
+					
+					if(variable_struct_exists(_arm, "buster_weapon")){
+						global.player_character[get(ComponentPlayerInput).get_player_index()].weapons[0] = _arm.buster_weapon;
+						get(ComponentWeaponUse).set_weapons(global.player_character[get(ComponentPlayerInput).get_player_index()].weapons);
+					}
 				
-				//add the armor to the _armor_set array so we can set the armors in the animator
-				var _armor_name = string(_arm.sprite_name);
-				_armor_name = string_delete(_armor_name, 0, 1);
-				_armor_name = string_replace(_armor_name, "/", "_");
-				//log(_armor_name)
-				array_push(self.armor_parts[1], _armor_name);
+					array_push(self.armor_parts[2], _directory_name);
+				
+					//add the armor to the _armor_set array so we can set the armors in the animator
+					var _armor_name = string(_arm.sprite_name);
+					_armor_name = string_delete(_armor_name, 0, 1);
+					_armor_name = string_replace(_armor_name, "/", "_");
+					//log(_armor_name)
+					array_push(self.armor_parts[1], _armor_name);
+				}
 			}
 			
 		});
@@ -530,7 +537,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			self.fsm.step();	
 			
 		//if you want the pause menu, we make it here
-		if(self.input.get_input_pressed_raw("pause")){
+		if(self.input.get_input_pressed_raw("pause") && IS_OFFLINE){
 			with(obj_entity){
 				array_foreach(components.__components, function(_comp){
 					_comp.step_enabled = false;
@@ -541,9 +548,22 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			_pause.components.get(ComponentPauseMenu).input = input;
 			_pause.components.get(ComponentPauseMenu).player = self.get_instance();
 		}
+		
+		if(input.get_player_index() != global.local_player_index) return;
+		
+		if(!is_undefined(global.server)){
+			global.server.rpc.sendNotification("set_player_position", {x: get_instance().x, y: get_instance().y, id: 0}, global.server.getAllSockets());
+		} else if IS_ONLINE{
+			global.client.update_position(get_instance().x, get_instance().y)
+		}
 	}
 		
 	self.draw = function(){
+		if(IS_ONLINE && keyboard_check_direct(vk_tab))
+			draw_string_condensed(global.socket.player_names[input.get_player_index()], 
+			floor(self.get_instance().x) - string_get_text_length(global.socket.player_names[input.get_player_index()]) / 2, 
+			floor(self.get_instance().y) - 32)
+		
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
 			
@@ -618,7 +638,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
-		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor() && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 1, obj_square_16); })
 	}
 	
 	self.add_wall_jump = function(){

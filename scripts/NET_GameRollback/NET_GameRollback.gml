@@ -1,4 +1,4 @@
-#macro NET_ROLLBACK_DEBUG true
+#macro NET_ROLLBACK_DEBUG false
 function NET_GameRollback() : NET_GameBase() constructor {
 	enum NET_ROLLBACK_MODE {
 		NORMAL,

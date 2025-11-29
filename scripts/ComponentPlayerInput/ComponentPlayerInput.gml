@@ -74,6 +74,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	}
 
     self.update_inputs = function() {
+		if(is_undefined(self.__input)) return;
+		
 	    array_foreach(self.verbs, function(_verb) {
 	        var _isPressed = self.__input_check(_verb);
 	        self.__inputPressed[$ _verb] = struct_exists(self.__input, _verb) && !self.__input[$ _verb] && _isPressed;
@@ -104,6 +106,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     };
 
     self.get_input_pressed = function(_verb) {
+		if(is_undefined(self.__input)) return;
 		//gonna make a system to 'extend' the press period. its effectively input buffering
 		var _result = false;
         if (struct_exists(self.__inputPressed, _verb)) _result = self.__inputPressed[$ _verb];
@@ -114,6 +117,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     };
 	
 	self.get_input_pressed_raw = function(_verb) {
+		if(is_undefined(self.__input)) return;
 		//gonna make a system to 'extend' the press period. its effectively input buffering
 		var _result = false;
         if (struct_exists(self.__inputPressed, _verb)) _result = self.__inputPressed[$ _verb];

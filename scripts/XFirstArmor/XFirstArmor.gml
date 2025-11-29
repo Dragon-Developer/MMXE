@@ -2,6 +2,7 @@
 function XFirstArmorHead() : HeadPartBase() constructor{
 	//nothing special
 	self.sprite_name = "/x1/helm"//this is more for filepath.
+	self.armor_name = "First Armor Head"
 }
 
 function XFirstArmorBody() : BodyPartBase() constructor{
@@ -14,11 +15,13 @@ function XFirstArmorBody() : BodyPartBase() constructor{
 function XFirstArmorArms() : ArmsPartBase() constructor{
 	//drill buster!
 	self.sprite_name = "/x1/arms"//this is more for filepath.
+	self.armor_name = "First Armor Arms"
 }
 
 function XFirstArmorBoot() : BootPartBase() constructor{
 	//increased dash speed
 	self.sprite_name = "/x1/legs"//this is more for filepath.
+	self.armor_name = "First Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		
 		self.add_slide(_player);

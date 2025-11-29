@@ -145,6 +145,10 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	SoundEffectVolumeSettings = new GuiText("Sound Effect Volume: " + string(floor(SoundEffectVolumeBar.progressValue / SoundEffectVolumeBar.maxProgressValue * 100)) + "%")
 	
+	OnlineUsername = new GuiTextInput()
+	OnlineUsername.setSize(100, 30);
+	OnlineUsername.setValue(global.settings.online_username);
+	
 	SettingsContainer.addChild([MusicVolumeBar, MusicVolumeSettings, SoundEffectVolumeBar, SoundEffectVolumeSettings]);
 	#endregion
 	

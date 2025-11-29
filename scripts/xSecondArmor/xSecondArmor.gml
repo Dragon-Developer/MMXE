@@ -2,6 +2,7 @@
 function XSecondArmorHead() : HeadPartBase() constructor{
 	//nothing special
 	self.sprite_name = "/x2/helm"//this is more for filepath.
+	self.armor_name = "Second Armor Head"
 	self.apply_armor_effects = function(_player){
 		array_push(_player.get(ComponentWeaponUse).weapon_list, SecondArmorRadar)
 	}
@@ -10,18 +11,20 @@ function XSecondArmorHead() : HeadPartBase() constructor{
 function XSecondArmorBody() : BodyPartBase() constructor{
 	//i think this has 2/3 reduction?
 	self.damage_rate = 0.5;
-	self.armor_name = "First Armor Body"
+	self.armor_name = "Second Armor Body"
 	self.sprite_name = "/x2/body"//this is more for filepath.
 }
 
 function XSecondArmorArms() : ArmsPartBase() constructor{
 	//drill buster!
 	self.sprite_name = "/x2/arms"//this is more for filepath.
+	self.armor_name = "Second Armor Arms"
 }
 
 function XSecondArmorBoot() : BootPartBase() constructor{
 	//increased dash speed
 	self.sprite_name = "/x2/legs"//this is more for filepath.
+	self.armor_name = "Second Armor Boots"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		self.add_air_dash(_player);
 		with(_player){

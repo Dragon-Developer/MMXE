@@ -11,6 +11,7 @@
     "last_used_armor":[0,1,0,1,0]
   },
   "settings":{
+    "online_username": "New Maverick Hunter",
     "Has_done_intro_stage":true,
     "Input_Buffer":3.0,
     "Sound_Effect_Volume":0.5,

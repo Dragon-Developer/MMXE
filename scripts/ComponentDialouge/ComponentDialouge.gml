@@ -126,10 +126,10 @@ function ComponentDialouge() : ComponentBase() constructor{
 			}else{
 				
 				if(variable_struct_exists(self.chat[self.point_in_chat], "option_1")){
-					log(self.option_functions[self.selected_option])
 					
 					if(is_method(self.option_functions[self.selected_option]))
 						script_execute(self.option_functions[self.selected_option])
+					self.selected_option = 0;
 				}
 				
 				self.point_in_chat++;
@@ -142,6 +142,10 @@ function ComponentDialouge() : ComponentBase() constructor{
 			}
 			completed_text = false;
 		}
+		
+		
+			
+			
 	}
 	
 	#region gui
@@ -168,18 +172,19 @@ function ComponentDialouge() : ComponentBase() constructor{
 				if(_len == self.text_length[q] && completed_text == false){
 					completed_text = true;
 					
+					//if there are options then get all options for displaying
 					if(variable_struct_exists(self.chat[self.point_in_chat], "option_1")){
+						// if you have any options theres an option 1
 						array_push(self.options, self.chat[self.point_in_chat].option_1);
 						array_push(self.option_functions, self.chat[self.point_in_chat].option_1_function);
 						
-						log(self.option_functions)
-						log(self.chat[self.point_in_chat])
+						//get the rest of the options via while loop. i dont use while loops a lot
 						var _exists = true;
 						var _index = 2;
 						while(_exists){
 							_exists = variable_struct_exists(self.chat[self.point_in_chat], "option_" + string(_index));
 							
-							log(_index)
+							//if theres another option, add it to the options array and check the next one
 							if(_exists){
 								array_push(self.options, variable_struct_get(self.chat[self.point_in_chat], "option_" + string(_index)));
 								array_push(self.option_functions, variable_struct_get(self.chat[self.point_in_chat], "option_" + string(_index) + "_function"));
@@ -197,21 +202,33 @@ function ComponentDialouge() : ComponentBase() constructor{
 						get(ComponentSpriteRenderer).change_sprite(self.right_mugshot_sprite,  right_mugshot)
 				}
 				
+				//draw the actual text
 				draw_string_condensed(string_copy(self.text_chunks[q],0,self.text_length[q]),
 				self.dialouge_margin + _text_left_edge, q * (8 + dialouge_margin) + dialouge_margin + dialouge_y_top);
 			}
 		} else {
+			//make the textbox pop up
 			var _crunch = (self.dialouge_start_time - CURRENT_FRAME) / dialouge_startup * (dialouge_y_height / 2);
 			draw_rectangle(_text_left_edge + _crunch,self.dialouge_y_top + _crunch,_text_right_edge - _crunch,
 			self.dialouge_y_height + self.dialouge_y_top - 1 - _crunch,false); 
 		}
 		
+		//options themselves
 		for(var r = 0; r < array_length(self.options); r++){
-			draw_rectangle(_text_right_edge, self.dialouge_y_height + self.dialouge_y_top + r * 9 + 1, _text_right_edge - string_get_text_length(self.options[r]) - 1, 
-				self.dialouge_y_height + self.dialouge_y_top + 9 + r * 9, false)
-			draw_string_condensed(self.options[r], _text_right_edge - string_get_text_length(self.options[r]) + 1, self.dialouge_y_height + self.dialouge_y_top + 1 + r * 9);
+			draw_rectangle(_text_right_edge, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 1, _text_right_edge - string_get_text_length(self.options[r]) - 1, 
+				self.dialouge_y_height + self.dialouge_y_top + 9 + r * 10, false)
+			draw_string_condensed(self.options[r], _text_right_edge - string_get_text_length(self.options[r]) + 1, self.dialouge_y_height + self.dialouge_y_top + 1 + r * 10);
 		}
 			
+		//option selection
+		if(array_length(self.options) != 0){
+			self.selected_option = ((self.selected_option + array_length(self.options)) + self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up")) mod (array_length(self.options))
+		
+			draw_string("<", _text_right_edge + 5 + sin(CURRENT_FRAME / 12) * 2.5, self.dialouge_y_height + self.dialouge_y_top + 1 + selected_option * 10)
+			draw_string(">", _text_right_edge - 12 + (sin(CURRENT_FRAME / 12 + pi) * 2.5) - string_get_text_length(self.options[self.selected_option]) + 1, 
+				self.dialouge_y_height + self.dialouge_y_top + 1 + selected_option * 10)
+		}
+		
 		//get(ComponentSpriteRenderer).draw_sprite(_sprite_name_right, 0,  _text_left_edge - 22, dialouge_y_top + 22, string_lower(focus) == "left" ? c_grey : c_white)
 		//get(ComponentSpriteRenderer).draw_sprite(_sprite_name_left, 0, _text_right_edge + 22, dialouge_y_top + 22, string_lower(focus) != "left" ? c_grey : c_white, 1, -1)
 	}

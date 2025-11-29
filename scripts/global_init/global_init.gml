@@ -26,12 +26,7 @@ function global_init() {
 	}
 	
 	global.player_character = [new XCharacter(),new XCharacter(),new XCharacter(),new XCharacter()];
-	global.armors = [
-		[noone, noone, noone, noone],
-		[noone, noone, noone, noone],
-		[noone, noone, noone, noone],
-		[noone, noone, noone, noone]
-	]
+	global.armors = [[],[],[],[]]
 	
 	global.debug = false;
 	global.stacktracking = false;

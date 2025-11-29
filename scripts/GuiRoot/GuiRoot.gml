@@ -22,7 +22,10 @@ function GuiRoot() : GuiContainer() constructor {
 		
 		if (!is_undefined(global.server)) {
 		//excuse my cancer, but i also dont give a fuck
-			log("this is the server!")
+			//log("this is the server!")
+			global.server.player_names = array_create(array_length(global.server.getAllSockets()) + 1,-1);
+			global.server.player_names[0] = global.settings.online_username;
+			
 			var _plrs = [0];
 			for(var t = 0; t < array_length(global.server.getAllSockets()); t++){
 				array_push(_plrs, t + 1)
@@ -37,22 +40,31 @@ function GuiRoot() : GuiContainer() constructor {
 			
 			global.server.rpc.sendNotification("game_start", {
 				players: _plrs,
-				room: _room
+				room: _room,
+				names: global.server.player_names
 			}, global.server.getAllSockets());
 			
 			global.server.players_ready = array_create(array_length(global.server.getAllSockets()) + 1,-1);
 			global.server.player_times = array_create(array_length(global.server.getAllSockets()) + 1,-1);
+			global.server.player_money = array_create(array_length(global.server.getAllSockets()) + 1,0);
 			
 			//global.server.playerRpc.send_armors();
-			log("server done")
+			//log("server done")
 		} else {
-			global.client.playerRpc.send_armors();
+			//global.client.playerRpc.send_armors();
 		}
 		global.game.start();
+		
+		global.race_laps = 3;
 		
 		WaitingContainer.setEnabled(false);
 		
 		room_transition_to(_room, "standard", 24);
+		log(string(global.local_player_index) + " is the local id")
+		
+		if (!is_undefined(global.server)) {
+			log("server isnt dead yet bitch")
+		}
 	}
 	
 	startEditor = function(){

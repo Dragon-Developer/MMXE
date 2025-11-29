@@ -71,8 +71,20 @@ if(countdowning){
 	draw_string(_mins + ":" + _secs + "." + _frames, 2,2, "pause_menu")
 	draw_string(_mins + ":" + _secs + "." + _frames, 2,2, "orange")
 	
-	if(CURRENT_FRAME >= start_time + final_time + 120){
-		room_transition_to(rm_race_lobby, "st", 30)
+	var _can_leave = false;
+	
+	if(!is_undefined(global.server)){
+		if(!array_contains(global.server.player_times, -1))
+			_can_leave = true;
+	} else if IS_ONLINE{
+		if(!array_contains(global.client.player_times, -1))
+			_can_leave = true;
+	} else {
+		_can_leave = true;
+	}
+	
+	if(_can_leave){
+		room_transition_to(rm_race_lobby, "st", 50)
 		instance_destroy(self);
 	}
 }

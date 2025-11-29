@@ -197,12 +197,12 @@ function ComponentDamageable() : ComponentBase() constructor{
 			return 0;
 		}
 		
-		if(_zone.contact_damage > 0){
+		//if(_zone.contact_damage > 0){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
-			log("hit by zone")
+			//log("hit by zone")
 			return _zone.contact_damage;
-		}
-		return 0;
+		//}
+		//return 0;
 	}
 }

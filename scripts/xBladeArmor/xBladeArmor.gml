@@ -18,6 +18,7 @@ function XBladeArmorArms() : ArmsPartBase() constructor{
 function XBladeArmorBoot() : BootPartBase() constructor{
 	//increased dash speed
 	self.sprite_name = "/blade/legs"//this is more for filepath.
+	self.armor_name = "Blade Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		_player.states.dash.speed *= 1.1;
 		with(_player){

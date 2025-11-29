@@ -12,7 +12,7 @@ function ComponentNPC() : ComponentInteractibleInteract() constructor{
 	];
 	
 	self.init = function(){
-		var _inst = self.get_instance();
+		//var _inst = self.get_instance();
 	}
 	
 	self.on_register = function() {
@@ -22,13 +22,19 @@ function ComponentNPC() : ComponentInteractibleInteract() constructor{
 	}
 	
 	self.Interacted_Script = function(_plr){
-		if(!_plr.components.get(ComponentPlayerMove).physics.is_on_floor()) {self.interacted = false; return;}
+		if(!_plr.components.get(ComponentPlayerMove).physics.is_on_floor() || _plr.components.get(ComponentPlayerInput).get_player_index() != global.local_player_index) {
+			
+			self.interacted = false; 
+			
+			return;
+		}
 		var _inst = self.get_instance();
 		_plr.components.get(ComponentPlayerMove).locked = true;
 		_plr.components.get(ComponentPlayerMove).fsm.trigger("t_dialouge");
 		var _dialogue = ENTITIES.create_instance(obj_dialouge);
 		_dialogue.x = _inst.x;
 		_dialogue.y = _inst.y;
+		_dialogue.components.get(ComponentPlayerInput).set_player_index(_plr.components.get(ComponentPlayerInput).get_player_index())
 		_dialogue.components.get(ComponentDialouge).set_dialouge(dialouge, dialouge[0].mugshot_left, dialouge[0].mugshot_right);
 		_dialogue.components.publish("change_dialouge",dialouge);
 	}

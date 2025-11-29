@@ -11,8 +11,6 @@ components.init();
 
 #region Sound Stuff
 var _loop_music = global.stage_Data.music + "L";
-log(_loop_music);
-log("EEEEEEEEEEEEEEEPPPPPPPPPPPPPPPPPPPPPPEEEEEEEEEEEEEEEEEEEEEEPPPPPPPPPPPPPPPPP")
 
 self.music = self.components.get(ComponentSoundLoader).play_sound(global.stage_Data.music,0,global.stage_Data.music);
 

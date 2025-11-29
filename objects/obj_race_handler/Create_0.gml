@@ -6,7 +6,7 @@ countdowning = true;
 
 start_time = -1;
 
-laps_left = 2;
+laps_left = global.race_laps - 1;
 timer_paused = false;
 prev_frame = -1;
 
