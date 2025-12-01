@@ -9,11 +9,7 @@
   },
   "data": {
     "layers": [
-      "normal",
-      "legs",
-      "helm",
-      "body",
-      "arms"
+      "normal"
     ],
     "animations": {
       "speed": 1,
@@ -23,20 +19,10 @@
           "shoot"
         ],
         [
-          "",
-          "x1",
-          "x2",
-          "x3",
-          "falcon",
-          "blade",
-          "ult"
+          ""
         ],
         [
-          "",
-          "legs",
-          "body",
-          "arms",
-          "helm"
+          ""
         ]
       ],
       "list": [

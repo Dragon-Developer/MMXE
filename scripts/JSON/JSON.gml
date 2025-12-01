@@ -1,7 +1,7 @@
 function JSON() constructor {
-	static save = function(_struct, _filename) {
+	static save = function(_struct, _filename, _prettify = false) {
 	  // We stringify the struct itself into JSON formatting
-	  var _json = json_stringify(_struct);
+	  var _json = json_stringify(_struct, _prettify);
 	  // We get the size of our stringified struct, in raw bytes
 	  var _size = string_byte_length(_json);
 	  // We create a buffer to store our string

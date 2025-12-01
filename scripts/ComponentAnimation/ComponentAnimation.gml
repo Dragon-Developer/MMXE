@@ -19,8 +19,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	
 	self.on_register = function() {
 		self.subscribe("character_set", function(_character) {
-			self.character = _character;
-			self.reload_animations();
+			self.change_character(_character);
 		});
 		self.subscribe("armor_set", function(_armors){
 			self.armors = _armors;
@@ -49,6 +48,11 @@ function ComponentAnimation() : ComponentBase() constructor {
 		self.subscribe("animation_visible", function(_visible) {
 			self.animation.set_visible(_visible)
 		});
+	}
+	
+	self.change_character = function(_character){
+		self.character = _character;
+		self.reload_animations();
 	}
 	
 	self.set_subdirectories = function(_subdirs) {

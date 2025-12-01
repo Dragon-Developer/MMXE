@@ -23,9 +23,10 @@ on_spawn = function(_npc){
 						instance_create_depth(0,0,-1235,obj_race_handler);
 						room_goto(rm_horizontal_test)
 					}
+					global.stage_Data.music = "r-fo-x2-intro-stage.ogg"
 				},
-				option_3: "Gate's Lab!",
-				option_3_function: function(){
+				option_8: "Gate's Lab!",
+				option_8_function: function(){
 					global.race_laps = 1;
 					if IS_ONLINE	
 						global.socket.check_into_race(rm_gate_race)
@@ -33,16 +34,18 @@ on_spawn = function(_npc){
 						instance_create_depth(0,0,-1235,obj_race_handler);
 						room_goto(rm_gate_race)
 					}
+					global.stage_Data.music = "r-fo-x2-intro-stage.ogg"
 				},
-				option_4: "Vertal Test!",
+				option_4: "Test!",
 				option_4_function: function(){
 					global.race_laps = 3;
 					if IS_ONLINE	
-						global.socket.check_into_race(rm_minimum_requirements)
+						global.socket.check_into_race(rm_minimum_requirements_race)
 					else{
 						instance_create_depth(0,0,-1235,obj_race_handler);
-						room_goto(rm_minimum_requirements)
+						room_goto(rm_minimum_requirements_race)
 					}
+					global.stage_Data.music = "x2-intro-stage.ogg"
 				},
 				option_5: "Flame Stag's Stage!",
 				option_5_function: function(){
@@ -53,6 +56,7 @@ on_spawn = function(_npc){
 						instance_create_depth(0,0,-1235,obj_race_handler);
 						room_goto(rm_flame_stag_race)
 					}
+					global.stage_Data.music = "r-fo-x2-intro-stage.ogg"
 				},
 			}
 	}

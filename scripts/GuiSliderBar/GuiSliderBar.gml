@@ -1,4 +1,4 @@
-function GuiSlidingBar(_width, _height, _handle_padding = 4) : GuiProgressBar(_width, _height) constructor{
+function GuiSlidingBar(_width, _height, _handle_padding = 0) : GuiProgressBar(_width, _height) constructor{
 	setSize(_width, _height);
     setFlexDirection("row");
     setJustifyContent("end");
@@ -38,14 +38,17 @@ function GuiSlidingBar(_width, _height, _handle_padding = 4) : GuiProgressBar(_w
 		self.held_down = true;
 	});
 	Handle.addEventListener("mouseleave", function(_pos) {
-		self.held_down = false;
+		if(abs(_pos.y - Handle.absoluteY) > Handle.height)
+			self.held_down = false;
 	});
 	Handle.setMargin([0,handle_offset_y,maxProgressValue - progressValue,-handle_offset_y])
 	
 	addChild(Handle)
 	
 	drawMe = function(_x, _y) {
-		Handle.setMargin([0,handle_offset_y,maxProgressValue - progressValue,-handle_offset_y])
+		var _handleoffset = maxProgressValue - progressValue;
+		
+		Handle.setMargin([0,handle_offset_y,_handleoffset,-handle_offset_y])
 		
 		
         if (sprite_exists(sprite)) {

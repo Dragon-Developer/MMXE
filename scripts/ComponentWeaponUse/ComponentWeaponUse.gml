@@ -23,7 +23,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	"outro",
 	"leave",
 	"teleport_in",
-	"intro_end"
+	"intro_end",
+	"slide",
+	"slide_end"
 	]
 	
 	self.projectile_count = 0;
@@ -138,6 +140,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.shoot = function(_input, _id){
 		if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input)){
 			
+			//prepare shot data
 			var _shot_index = 0;
 			var _shot_code = {};
 			
@@ -146,6 +149,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			}
 			//log(_shot_code)
 			
+			//find out which charge level you have, if you can charge
 			if(self.input.get_input_released(_input) && self.charge != noone){
 				//nobody said i was a CLEAN coder
 				
@@ -162,12 +166,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					return;
 				}
 			}
-			
+			//get the projectile data
 			var _shot_data = {};
 			with(_shot_data){
 				script_execute(_shot_code.data[_shot_index])
 			}
 			
+			//apply stock shot
 			if(self.stock_shot != noone){
 				_shot_data = {};
 				with(_shot_data){
@@ -175,7 +180,26 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				}
 			}
 			
+			//decrease weapon energy
+			if(self.weapon_ammo[self.current_weapon[_id]] > 0){
+				//check if theres a projectile limit
+				if(variable_struct_exists(_shot_data, "shot_limit")){
+					if (_shot_data.shot_limit > self.projectile_count) {
+						self.weapon_ammo[self.current_weapon[_id]] -= _shot_code.cost;
+					} else {
+						
+					}
+					log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
+				} else 
+					self.weapon_ammo[self.current_weapon[_id]] -= _shot_code.cost;
+			} else {
+				//bail! you dont have weapon energy
+				return;
+			}
+			
+			//get what type of weapon this is [projectile, state based, melee, etc]
 			var _type = _shot_data.term;
+			
 			
 			if(_type == "Projectile" && self.projectile_count < _shot_data.shot_limit){
 				self.create_projectile(_shot_code, _shot_index, _input, _id);
@@ -197,15 +221,15 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		}
 		
 		//turn the shot data into the actual projectile data
-		_shot_code = _shot_code.data[_shot_index];
+		var _shot_data = _shot_code.data[_shot_index];
 		
 		var _code = {};
 		
 		with(_code){
-			script_execute(_shot_code)
+			script_execute(_shot_data)
 		}
 		
-		log(string_copy(_code.animation_append,2,256))
+		//log(string_copy(_code.animation_append,2,256))
 		
 		self.get_instance().components.get(ComponentAnimationShadered).animation.__type = string_copy(_code.animation_append,2,256);
 		
@@ -235,11 +259,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//if we have an animator, add the shot offsets
 		try{
 			if(find("animation") != noone){
-				log("gon add offsets " + string( find("animation").get_shot_offsets()))
+				//log("gon add offsets " + string( find("animation").get_shot_offsets()))
 				var _offsets = find("animation").get_shot_offsets();
 				_x += _offsets[0] * _dir;
 				_y += _offsets[1];
-				log("added offsets")
+				//log("added offsets")
 			} else {
 				//log(find("animation"))
 			}
@@ -262,9 +286,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			}
 		}
 		
-		log(string(_tags) + " are the projectile tagts")
+		//log(string(_tags) + " are the projectile tagts")
 		
-		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_code, self, _tags);
+		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags);
 		
 		self.projectile_count++;
 	}

@@ -1,6 +1,27 @@
-var _save = JSON.load(working_directory + "save.json");
 
-var _server = JSON.load(working_directory + "server.json");
+
+if(!file_exists(game_save_id + "save.json")){
+	JSON.save(JSON.load(working_directory + "save.json"), game_save_id + "save.json", true)
+}
+
+var _save = JSON.load(game_save_id + "save.json");
+
+if(_save == undefined || _save == -1){
+	if(!directory_exists("%localappdata%/MMXE"))
+		directory_create("%localappdata%/MMXE")
+	
+	_save = JSON.load(working_directory + "save.json");
+	
+}
+
+if(!file_exists(game_save_id + "server.json")){
+	JSON.save(JSON.load(working_directory + "server.json"), game_save_id + "server.json", true)
+}
+
+var _server = JSON.load(game_save_id + "server.json");
+
+if(_server == undefined)
+	_server = JSON.load(working_directory + "server.json");
 
 //show_debug_message(_save)
 global.player_data = _save.player_data;

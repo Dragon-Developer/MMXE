@@ -38,6 +38,8 @@ function global_init() {
 }
 
 function global_prepare_application(){	
+	window_set_fullscreen(global.settings.Game_Scale > floor(display_get_height() / GAME_H))
+	
 	window_set_size(global.settings.Game_Scale*GAME_W, global.settings.Game_Scale*GAME_H);
 	window_center();
 }

@@ -80,7 +80,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("intro_end", {
 			enter: function() {
-				self.publish("animation_play", { name: "intro2_end" });
+				self.publish("animation_play", { name: self.states.intro.animation + "_end" });
 			}
 		})
 		.add("idle", {
@@ -551,18 +551,23 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		
 		if(input.get_player_index() != global.local_player_index) return;
 		
-		if(!is_undefined(global.server)){
-			global.server.rpc.sendNotification("set_player_position", {x: get_instance().x, y: get_instance().y, id: 0}, global.server.getAllSockets());
-		} else if IS_ONLINE{
-			global.client.update_position(get_instance().x, get_instance().y)
+		if(CURRENT_FRAME mod global.server_settings.client_data.ping_rate == 0){
+			if(!is_undefined(global.server)){
+				global.server.rpc.sendNotification("set_player_position", {x: get_instance().x, y: get_instance().y, id: 0, rm: room}, global.server.getAllSockets());
+			} else if IS_ONLINE{
+				global.client.update_position(get_instance().x, get_instance().y, room)
+			}
 		}
+		
+		if(!is_undefined(global.server) && input.get_input("up") && input.get_input("down") && input.get_input("shoot2") && input.get_input("shoot") && input.get_input("shoot3") && input.get_input("shoot4"))
+			room_transition_to(rm_race_lobby);
 	}
 		
 	self.draw = function(){
 		if(IS_ONLINE && keyboard_check_direct(vk_tab))
 			draw_string_condensed(global.socket.player_names[input.get_player_index()], 
 			floor(self.get_instance().x) - string_get_text_length(global.socket.player_names[input.get_player_index()]) / 2, 
-			floor(self.get_instance().y) - 32)
+			floor(self.get_instance().y) - 40)
 		
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
@@ -578,6 +583,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.draw_gui = function() {
+		
+		
 		
 		if !self.debug return;
 		var _history = self.fsm.history_get();

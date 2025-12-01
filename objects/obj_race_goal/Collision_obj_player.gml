@@ -39,6 +39,9 @@ if(!_fsm.state_exists("race_warp")){
 				self.get_instance().x = _return_point.x;
 				self.get_instance().y = _return_point.y;
 				self.get_instance().speed = 0;
+				
+				if(get(ComponentPlayerInput).get_player_index() != global.local_player_index) return;
+				
 				with(obj_camera){
 					components.get(ComponentCamera).movement_limit_x /= 1000;
 					components.get(ComponentCamera).movement_limit_y /= 1000;

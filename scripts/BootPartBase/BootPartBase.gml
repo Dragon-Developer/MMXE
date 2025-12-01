@@ -111,15 +111,25 @@ function BootPartBase() : ArmorBase() constructor{
 					_can_bail = false;
 				}
 				
-				return _can_bail && ((self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("down"))); })
+				return _can_bail && 
+				(
+					(self.hdir != self.dash_dir &&
+						(self.hdir != 0 || self.dash_tapped)
+						) || self.timer <= CURRENT_FRAME || 
+							(!self.dash_tapped && 
+								!(self.input.get_input("down") || self.input.get_input("dash") && !self.fsm.state_exists("dash")
+								)
+							)
+					
+				); })
 			.add_transition("t_dash_end", "slide", "fall", function() { return !self.physics.is_on_floor(); })
 			.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(); })
 			self.fsm.add_wildcard_transition("t_slide", "slide", function() { log("checking")
-				return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(); })
-			.add_transition("t_animation_end", "slide_end", "idle")
+				return self.physics.is_on_floor(); })
+			.add_transition("t_animation_end", "slide_end", "crouch")
 		}
 		self.step_armor_effects = function(_player) {
-			if (_player.input.get_input_pressed_raw("jump") && _player.input.get_input("down") && !_player.physics.check_wall(_player.dash_dir) && _player.physics.is_on_floor()) { 
+			if ((_player.input.get_input_pressed_raw("jump") && _player.input.get_input("down") || _player.input.get_input("dash") && !_player.fsm.state_exists("dash")) && _player.physics.is_on_floor()) { 
 				_player.fsm.change("slide"); 
 				log("yoom")
 			}

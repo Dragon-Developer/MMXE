@@ -1,4 +1,6 @@
 function Rebind(_verb){
+	
+	
 	self.verb = _verb
 	input_binding_scan_start(function(_binding) {
 	    // Check collisions with this new binding

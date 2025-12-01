@@ -1,8 +1,11 @@
 function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
 	self.charge_limit = 2;
+	self.cost = 0;
 	self.title = "X BUSTER";
 	self.description = "Mega Buster Mark 17"
+	
+	self.weapon_palette = global.player_character[global.local_player_index].default_palette;
 }
 
 function xBuster11Data() : ProjectileData() constructor{

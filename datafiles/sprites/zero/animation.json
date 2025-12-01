@@ -393,43 +393,75 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 5,
                 "frame": 1
               },
               {
-                "key": 7,
+                "key": 2,
                 "frame": 2
               },
               {
-                "key": 9,
+                "key": 4,
                 "frame": 3
               },
               {
-                "key": 11,
+                "key": 6,
                 "frame": 4
               },
               {
-                "key": 13,
+                "key": 8,
                 "frame": 5
               },
               {
-                "key": 15,
+                "key":10,
                 "frame": 6
               },
               {
-                "key": 18,
+                "key": 12,
                 "frame": 7
               },
               {
-                "key": 21,
+                "key": 14,
                 "frame": 8
               },
               {
-                "key": 60,
-                "frame": 8
+                "key": 16,
+                "frame": 9
+              },
+              {
+                "key": 18,
+                "frame": 10
+              },
+              {
+                "key": 21,
+                "frame": 11
+              },
+              {
+                "key": 33,
+                "frame": 12
+              },
+              {
+                "key": 37,
+                "frame": 13
+              },
+              {
+                "key": 39,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "intro_end",
+          "properties": {
+            "action": "intro",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 12
+              },
+              {
+                "key": 1,
+                "frame": 12
               }
             ]
           }
@@ -807,6 +839,46 @@
               {
                 "key": 30,
                 "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "slide",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 8,
+                "frame": 2
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "slide_end",
+          "properties": {
+            "action": "slide",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 3,
+                "frame": 3
               }
             ]
           }

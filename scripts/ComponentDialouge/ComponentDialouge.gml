@@ -25,6 +25,8 @@ function ComponentDialouge() : ComponentBase() constructor{
 	self.dialouge_y_top = 16;
 	self.dialouge_y_height = 44;
 	
+	self.option_x_offset = 20;
+	
 	self.options = [];
 	self.option_functions = [];
 	self.selected_option = 0;
@@ -135,6 +137,7 @@ function ComponentDialouge() : ComponentBase() constructor{
 				self.point_in_chat++;
 				if(self.point_in_chat >= array_length(self.chat)){
 					ENTITIES.destroy_instance(self.get_instance());
+					instance_destroy(self.get_instance())
 				} else	{
 					self.set_dialouge_with_enum(self.chat[clamp(self.point_in_chat, 0, 1024)]);
 				}
@@ -174,6 +177,9 @@ function ComponentDialouge() : ComponentBase() constructor{
 					
 					//if there are options then get all options for displaying
 					if(variable_struct_exists(self.chat[self.point_in_chat], "option_1")){
+						//clear options before doing anything
+						self.options = [];
+						
 						// if you have any options theres an option 1
 						array_push(self.options, self.chat[self.point_in_chat].option_1);
 						array_push(self.option_functions, self.chat[self.point_in_chat].option_1_function);
@@ -215,17 +221,35 @@ function ComponentDialouge() : ComponentBase() constructor{
 		
 		//options themselves
 		for(var r = 0; r < array_length(self.options); r++){
-			draw_rectangle(_text_right_edge, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 1, _text_right_edge - string_get_text_length(self.options[r]) - 1, 
+			//white outline
+			draw_set_color(c_white)
+			draw_rectangle(_text_right_edge + option_x_offset + 3, self.dialouge_y_height + self.dialouge_y_top + r * 10, option_x_offset + _text_right_edge - string_get_text_length(self.options[r]) - 2, 
+				self.dialouge_y_height + self.dialouge_y_top + 3 + r * 10, false)
+			draw_rectangle(_text_right_edge + option_x_offset + 2, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 4, option_x_offset + _text_right_edge - string_get_text_length(self.options[r]) - 3, 
+				self.dialouge_y_height + self.dialouge_y_top + 6 + r * 10, false)
+			draw_rectangle(_text_right_edge + option_x_offset + 1, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 7, option_x_offset + _text_right_edge - string_get_text_length(self.options[r]) - 4, 
+				self.dialouge_y_height + self.dialouge_y_top + 10 + r * 10, false)
+			
+			//draw the black box
+			draw_set_color(c_black)
+			draw_rectangle(_text_right_edge + option_x_offset, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 1, option_x_offset + _text_right_edge - string_get_text_length(self.options[r]) - 1, 
 				self.dialouge_y_height + self.dialouge_y_top + 9 + r * 10, false)
-			draw_string_condensed(self.options[r], _text_right_edge - string_get_text_length(self.options[r]) + 1, self.dialouge_y_height + self.dialouge_y_top + 1 + r * 10);
+			//left side cutout
+			draw_rectangle(_text_right_edge + option_x_offset, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 1, _text_right_edge + option_x_offset + 1, 
+				self.dialouge_y_height + self.dialouge_y_top + 2 + r * 10, false)
+			draw_rectangle(_text_right_edge + option_x_offset, self.dialouge_y_height + self.dialouge_y_top + r * 10 + 1, _text_right_edge + option_x_offset, 
+				self.dialouge_y_height + self.dialouge_y_top + 5 + r * 10, false)
+			
+			//draw the option text
+			draw_string_condensed(self.options[r], _text_right_edge - string_get_text_length(self.options[r]) + 1 + option_x_offset, self.dialouge_y_height + self.dialouge_y_top + 1 + r * 10);
 		}
 			
 		//option selection
 		if(array_length(self.options) != 0){
 			self.selected_option = ((self.selected_option + array_length(self.options)) + self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up")) mod (array_length(self.options))
 		
-			draw_string("<", _text_right_edge + 5 + sin(CURRENT_FRAME / 12) * 2.5, self.dialouge_y_height + self.dialouge_y_top + 1 + selected_option * 10)
-			draw_string(">", _text_right_edge - 12 + (sin(CURRENT_FRAME / 12 + pi) * 2.5) - string_get_text_length(self.options[self.selected_option]) + 1, 
+			draw_string("<", _text_right_edge + 5 + sin(CURRENT_FRAME / 12) * 2.5 + option_x_offset, self.dialouge_y_height + self.dialouge_y_top + 1 + selected_option * 10)
+			draw_string(">", _text_right_edge - 12 + (sin(CURRENT_FRAME / 12 + pi) * 2.5) - string_get_text_length(self.options[self.selected_option]) + 1 + option_x_offset, 
 				self.dialouge_y_height + self.dialouge_y_top + 1 + selected_option * 10)
 		}
 		

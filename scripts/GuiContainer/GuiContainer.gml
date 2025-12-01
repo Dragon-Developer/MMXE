@@ -201,7 +201,7 @@ function GuiContainer() : GuiBase() constructor {
 			refresh();
 		} else if (hover) {
 			hover = false;
-			emitEvent("mouseleave");
+			emitEvent("mouseleave", _pos);
 			refresh();
 		}
 		

@@ -48,42 +48,51 @@ if(countdowning){
 	draw_string(_mins + ":" + _secs + "." + _frames, 2,2)
 	final_time = CURRENT_FRAME - start_time;
 } else {
+	try{
+		if(is_undefined(final_time))
+			final_time = 1;
 	
-	var _mins =   (final_time) / (60 * 60);
-	var _secs =  ((final_time) / 60) mod 60;
-	var _frames = (final_time) mod 60;
+		var _mins =   (final_time) / (60 * 60);
+		var _secs =  ((final_time) / 60) mod 60;
+		var _frames = (final_time) mod 60;
 	
-	if(_mins < 10)
-		_mins = "0" + string(floor(_mins));
-	else
-		_mins = string(floor(_mins));
+		if(_mins < 10)
+			_mins = "0" + string(floor(_mins));
+		else
+			_mins = string(floor(_mins));
 	
-	if(_secs < 10)
-		_secs = "0" + string(floor(_secs));
-	else
-		_secs = string(floor(_secs));
+		if(_secs < 10)
+			_secs = "0" + string(floor(_secs));
+		else
+			_secs = string(floor(_secs));
 		
-	if(_frames < 10)
-		_frames = "0" + string(_frames)
-	else
-		_frames = string(_frames)
+		if(_frames < 10)
+			_frames = "0" + string(_frames)
+		else
+			_frames = string(_frames)
 	
-	draw_string(_mins + ":" + _secs + "." + _frames, 2,2, "pause_menu")
-	draw_string(_mins + ":" + _secs + "." + _frames, 2,2, "orange")
+		draw_string(_mins + ":" + _secs + "." + _frames, 2,2, "pause_menu")
+		draw_string(_mins + ":" + _secs + "." + _frames, 2,2, "orange")
 	
-	var _can_leave = false;
+		draw_string(global.socket.player_times)
+		
+	} catch (_err){
+		
+	}
 	
-	if(!is_undefined(global.server)){
-		if(!array_contains(global.server.player_times, -1))
-			_can_leave = true;
-	} else if IS_ONLINE{
-		if(!array_contains(global.client.player_times, -1))
+	var _can_leave = true;
+	
+	if IS_ONLINE{
+		if(!array_contains(global.socket.player_times, -1))
 			_can_leave = true;
 	} else {
 		_can_leave = true;
 	}
 	
 	if(_can_leave){
+		with(obj_player){
+			components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(components.get(ComponentWeaponUse).weapon_ammo), 28)
+		}
 		room_transition_to(rm_race_lobby, "st", 50)
 		instance_destroy(self);
 	}

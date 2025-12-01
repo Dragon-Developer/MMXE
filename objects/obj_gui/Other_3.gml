@@ -1,8 +1,5 @@
-
-
 JSON.save({
 	settings: global.settings, 
 	player_data: global.player_data
-}, "%localappdata%/MMXE/" + "save.json")
-
+},game_save_id + "save.json", true)
 LOG.close();

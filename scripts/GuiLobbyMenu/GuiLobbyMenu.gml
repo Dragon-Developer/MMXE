@@ -27,7 +27,7 @@ function GuiLobbyMenu() : GuiContainer() constructor {
 	playercount.setSprite(undefined);
 	playercount.addEventListener("step", function() { 
 		if(IS_ONLINE)
-			playercount.setText("Playercount: " + string( array_length(global.game.__local_players)));
+			playercount.setText("Playercount: " + string( array_length(global.game.__local_players) + 1));
 	});
     
     mainContainer.addChild([playercount, buttonStart]);

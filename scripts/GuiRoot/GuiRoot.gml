@@ -38,15 +38,20 @@ function GuiRoot() : GuiContainer() constructor {
 			global.game.inputs.setTotalPlayers(array_length(global.server.getAllSockets()) + 1);
 			global.game.add_local_players([0]);
 			
-			global.server.rpc.sendNotification("game_start", {
-				players: _plrs,
-				room: _room,
-				names: global.server.player_names
-			}, global.server.getAllSockets());
-			
 			global.server.players_ready = array_create(array_length(global.server.getAllSockets()) + 1,-1);
 			global.server.player_times = array_create(array_length(global.server.getAllSockets()) + 1,-1);
 			global.server.player_money = array_create(array_length(global.server.getAllSockets()) + 1,0);
+			
+			global.server.rpc.sendNotification("game_start", {
+				players: _plrs,
+				room: _room,
+				names: global.server.player_names,
+				ready: global.server.players_ready,
+				times: global.server.player_times,
+				money: global.server.player_money,
+			}, global.server.getAllSockets());
+			
+			
 			
 			//global.server.playerRpc.send_armors();
 			//log("server done")

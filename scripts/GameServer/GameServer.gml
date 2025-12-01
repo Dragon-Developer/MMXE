@@ -37,11 +37,22 @@ function GameServer(_port) : NET_TcpServer(_port) constructor {
 	self.rpc.registerHandler("check_into_race", function(_params) {
 		self.players_ready[_params.id] = _params.ready;
 		self.check_if_race_is_ready();
+		rpc.sendNotification("update_ready", _params, getAllSockets());
 	});
 	
 	rpc.registerHandler("race_time_submitted", function(_params) {
 		self.player_times[_params.id] = _params.time;
-		self.player_money[_params.id] = _params.time;
+		
+		var _temp_times = variable_clone(self.player_times);
+		
+		array_sort(_temp_times, true);
+		
+		for(var g = 0; g < array_length(_temp_times); g++){
+			if(_temp_times[g] == self.player_times[_params.id]){
+				self.player_money[_params.id] += lerp( 250, 750, (g + 1) / array_length(self.player_money))
+			}
+		}
+		
 		log(self.player_money[_params.id])
 		log("money money money")
 	});
@@ -50,6 +61,15 @@ function GameServer(_port) : NET_TcpServer(_port) constructor {
 		if(_params.money <= self.player_money[_params.id]){
 			self.player_money[_params.id] -= _params.money;
 			rpc.sendNotification("run_function_on_player", _params, getAllSockets());
+			
+			with(obj_player){
+				var _args = [];
+				if(variable_struct_exists(_params, "args"))
+					_args = _params.args
+				
+				if(components.get(ComponentPlayerInput).get_player_index() == _params.id)
+					script_execute_ext(_params.func, _args)
+			}
 		}
 	});
 	
@@ -62,6 +82,10 @@ function GameServer(_port) : NET_TcpServer(_port) constructor {
 			if(components.get(ComponentPlayerInput).get_player_index() == _params.id)
 				script_execute_ext(_params.func, _args)
 		}
+	});
+	
+	rpc.registerHandler("request_funds_array", function(_params) {
+		rpc.sendNotification("update_funds_array", {money: self.player_money}, _params.socket);
 	});
 	
 	self.rpc.registerHandler("add_name", function(_params) {
@@ -86,16 +110,29 @@ function GameServer(_port) : NET_TcpServer(_port) constructor {
 			rpc.sendNotification("race_ready", {map: _map}, getAllSockets());
 			log("RACE READY")
 			self.players_ready = array_create(array_length(global.server.getAllSockets()) + 1,-1);
-			room_goto(_map)
+			room_transition_to(_map)
 			instance_create_depth(0,0,-1235,obj_race_handler)
 		} else {
 			
 		}
 	}
 	
+	self.get_money = function(){
+		return variable_clone(self.player_money)//cant be too careful here
+	}
+	
 	self.upload_time = function(_time){
 		self.player_times[0] = _time;
-		self.player_money[0] += _time;
+		
+		var _temp_times = variable_clone(self.player_times);
+		
+		array_sort(_temp_times, true);
+		
+		for(var g = 0; g < array_length(_temp_times); g++){
+				if(_temp_times[g] == self.player_times[0]){
+					self.player_money[0] += lerp( 250, 750, (g + 1) / array_length(self.player_money))
+				}
+		}
 		rpc.sendNotification("race_time_submitted", {time: _time, id: 0}, getAllSockets());
 	}
 	
