@@ -15,63 +15,6 @@ function GuiRoot() : GuiContainer() constructor {
 		room_transition_to(_id, "standard", 24);
 	}
 	
-	startMultiplayerLobby = function(_room) {
-		global.online = true
-		hudContainer.setEnabled(true);
-		refreshChildren();
-		
-		if (!is_undefined(global.server)) {
-		//excuse my cancer, but i also dont give a fuck
-			//log("this is the server!")
-			global.server.player_names = array_create(array_length(global.server.getAllSockets()) + 1,-1);
-			global.server.player_names[0] = global.settings.online_username;
-			
-			var _plrs = [0];
-			for(var t = 0; t < array_length(global.server.getAllSockets()); t++){
-				array_push(_plrs, t + 1)
-				global.server.rpc.sendNotification("set_player_id", {
-					_id: t + 1
-				}, global.server.getAllSockets()[t]);
-				//log(global.server.getAllSockets()[t])
-			}
-			
-			global.game.inputs.setTotalPlayers(array_length(global.server.getAllSockets()) + 1);
-			global.game.add_local_players([0]);
-			
-			global.server.players_ready = array_create(array_length(global.server.getAllSockets()) + 1,-1);
-			global.server.player_times = array_create(array_length(global.server.getAllSockets()) + 1,-1);
-			global.server.player_money = array_create(array_length(global.server.getAllSockets()) + 1,0);
-			
-			global.server.rpc.sendNotification("game_start", {
-				players: _plrs,
-				room: _room,
-				names: global.server.player_names,
-				ready: global.server.players_ready,
-				times: global.server.player_times,
-				money: global.server.player_money,
-			}, global.server.getAllSockets());
-			
-			
-			
-			//global.server.playerRpc.send_armors();
-			//log("server done")
-		} else {
-			//global.client.playerRpc.send_armors();
-		}
-		global.game.start();
-		
-		global.race_laps = 3;
-		
-		WaitingContainer.setEnabled(false);
-		
-		room_transition_to(_room, "standard", 24);
-		log(string(global.local_player_index) + " is the local id")
-		
-		if (!is_undefined(global.server)) {
-			log("server isnt dead yet bitch")
-		}
-	}
-	
 	startEditor = function(){
 		hudContainer.setEnabled(true);
 		refreshChildren();
@@ -81,24 +24,14 @@ function GuiRoot() : GuiContainer() constructor {
 	
 	mainMenuContainer = new GuiMainMenu();
 	hudContainer = new GuiPlayerHUD();
-	playOnlineContainer = new GuiPlayOnlineMenu();
-	serverMenuContainer = new GuiServerMenu();
-	lobbyMenuContainer = new GuiLobbyMenu();
-	clientMenuContainer = new GuiClientMenu();
 	SettingsContainer = new GuiSettings();
-	WaitingContainer = new GuiWaitingMenu();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
-	playOnlineContainer.setEnabled(false);
-	serverMenuContainer.setEnabled(false);
-	lobbyMenuContainer.setEnabled(false);
-	clientMenuContainer.setEnabled(false);
 	SettingsContainer.setEnabled(false);
-	WaitingContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer, SettingsContainer, WaitingContainer]);
+	addChild([mainMenuContainer, hudContainer, SettingsContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;

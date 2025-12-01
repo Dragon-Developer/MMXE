@@ -41,14 +41,6 @@ function GuiMainMenu() : GuiContainer() constructor {
 		} else 
 			parent.startGame(rm_stage_select);
 	});
-	
-	buttonOnline = new GuiButton(160, 16, "Play Online");
-	buttonOnline.setBorderSprite(undefined);
-	buttonOnline.setSprite(undefined);
-	buttonOnline.addEventListener("click", function() { 
-		self.setEnabled(false);
-		parent.playOnlineContainer.setEnabled(true);
-	});
 		
     buttonOptions = new GuiButton(80, 16,"Options");
 	buttonOptions.setBorderSprite(undefined);
@@ -62,6 +54,6 @@ function GuiMainMenu() : GuiContainer() constructor {
 	buttonExit.setBorderSprite(undefined);
 	buttonExit.setSprite(undefined);
     
-    mainContainer.addChild([titleImage, buttonStart, buttonOnline, buttonOptions, buttonExit]);
+    mainContainer.addChild([titleImage, buttonStart, buttonOptions, buttonExit]);
     addChild(mainContainer);
 }

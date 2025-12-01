@@ -1,1 +1,0 @@
-contact_damage = 32;

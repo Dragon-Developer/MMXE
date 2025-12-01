@@ -3,7 +3,7 @@
  */
 function NET_GameBase() constructor {
 	self.inputs = new NET_InputManager();
-	self.game_loop = new NET_GameLoopBase();
+	self.game_loop = new GameLoop();
 	self.__current_frame = 0;
 	self.__started = false;
 	self.__local_players = [];

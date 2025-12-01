@@ -16,7 +16,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	{room: rm_training_stage, x: 19, y: 182, beat: false, icon: "undefined", music: "blast_hole"},//'beat' will be replaced with save data info
 	{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: "undefined", music: "fame_stag"},
 	{room: rm_char_select, x: 140, y: 189, beat: false, icon: undefined, music: undefined},
-	{room: rm_race_lobby, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial"},
+	{room: rm_minimum_requirements, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial"},
 	{room: rm_weapon_get, x: 261, y: 182, beat: false, icon: "undefined", music: "WeaponGet"}
 	];//not much for the moment
 	
