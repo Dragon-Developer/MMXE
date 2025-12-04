@@ -14,6 +14,11 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		enemy: par_enemy
 	};
 	self.does_collisions = true;
+	
+	self.obey_moving_collision = true;//disableable for performance reasons
+	self.last_collided_collision = noone;
+	self.collision_last_known_position = new Vec2(0,0);
+	
 	self.serializer = new NET_Serializer(self);
 	self.serializer
 		.addClone("velocity")
@@ -261,6 +266,8 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		_inst.x = (_nearest_block != noone) 
 			? _nearest_block.bbox_left - _origin
 			: _target_x;
+			
+		return _nearest_block;
 	};
 	/**
 	 * Moves the entity to the left, stopping at the closest collision.
@@ -287,6 +294,8 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		_inst.x = (_nearest_block != noone) 
 			? _nearest_block.bbox_right + _origin + 1
 			: _target_x;
+			
+		return _nearest_block;
 	};
 	
 	/*
@@ -325,6 +334,8 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		_inst.y = (_nearest_block != noone) 
 			? _nearest_block.bbox_top - _origin
 			: _target_y;
+			
+		return _nearest_block;
 	};
 
 	/**
@@ -352,6 +363,8 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		_inst.y = (_nearest_block != noone) 
 			? _nearest_block.bbox_bottom + _origin + 1
 			: _target_y;
+			
+		return _nearest_block;
 	};
 
 

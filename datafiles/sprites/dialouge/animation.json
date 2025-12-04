@@ -176,6 +176,29 @@
           }
         },
         {
+          "name": "axlforte",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "axlforte_talking",
+          "properties": {
+            "action":"axlforte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
           "name": "x_suprise",
           "properties": {
             "keyframes": [

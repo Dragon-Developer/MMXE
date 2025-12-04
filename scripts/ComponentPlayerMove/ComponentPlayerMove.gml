@@ -686,7 +686,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.update_gravity();
 			},
 			step: function() {
-				if (self.timer + 11 < CURRENT_FRAME){
+				if (self.timer + self.states.wall_jump.launch_lock < CURRENT_FRAME){
 					self.input.__useBuffer = true;
 					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
 					self.set_hor_movement();
@@ -694,7 +694,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					//please this looks so much better
 					//self.publish("animation_play_at_loop", { name: "jump", frame: 10});
 				}
-				if (self.timer + 5 == CURRENT_FRAME) {
+				if (self.timer + self.states.wall_jump.wall_stick == CURRENT_FRAME) {
 					self.physics.update_gravity();
 					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
 						self.current_hspd = self.states.dash.speed;	

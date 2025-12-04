@@ -47,6 +47,15 @@ function GameLoop() constructor {
 		};
 		
 		self.do_action_with_all_components(_step)
+		
+		with(obj_conveyor_belt){
+			var _entity = instance_place(x, y - 1, obj_entity)
+	
+			if(_entity != noone){
+				_entity.x += move_speed;
+			}
+		}
+		
 		//Forte:
 		//some way to have all components not defined here still run their step method
 		//would make it easier to test

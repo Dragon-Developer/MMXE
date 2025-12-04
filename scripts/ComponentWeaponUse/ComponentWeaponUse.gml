@@ -51,6 +51,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.set_weapons = function(_weapons){
 		self.weapon_list = _weapons;
 		
+		added_melee_weapon = false;
+		
 		if(!is_array(_weapons)){
 			_weapons = [_weapons];
 		}
@@ -74,8 +76,15 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					_proj_code.init(self.get(ComponentPlayerMove))
 					//log("state added!")
 				}
+				
+				if(_proj_code.term == "Melee" && !added_melee_weapons){
+					added_melee_weapons = true;
+					get(ComponentPlayerMove).add_melee_state();
+				}
 			})
 		})
+		
+		variable_struct_remove(self, "added_melee_weapons")
 	}
 	
 	self.change_weapon = function(_change){

@@ -24,7 +24,9 @@ function BaseCharacter() constructor{
 			animation: "fall"
 		},
 		wall_jump: {
-			strength: 5
+			strength: 5,
+			wall_stick: 5,
+			launch_lock: 11
 		},
 		ladder: {
 			speed: 376/256

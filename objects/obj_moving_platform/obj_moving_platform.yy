@@ -1,19 +1,21 @@
 {
   "$GMObject":"",
-  "%Name":"par_boss",
+  "%Name":"obj_moving_platform",
   "eventList":[
+    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"par_boss",
+  "name":"obj_moving_platform",
   "overriddenProperties":[],
   "parent":{
-    "name":"Boss",
-    "path":"folders/Objects/Level Assets/Boss.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
   },
   "parentObjectId":{
-    "name":"obj_entity",
-    "path":"objects/obj_entity/obj_entity.yy",
+    "name":"obj_square_16",
+    "path":"objects/obj_square_16/obj_square_16.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -32,10 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
-  "spriteMaskId":{
-    "name":"spr_player_mask",
-    "path":"sprites/spr_player_mask/spr_player_mask.yy",
+  "spriteId":{
+    "name":"spr_slope_zone",
+    "path":"sprites/spr_slope_zone/spr_slope_zone.yy",
   },
+  "spriteMaskId":null,
   "visible":true,
 }

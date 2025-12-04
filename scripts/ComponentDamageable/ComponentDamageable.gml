@@ -108,11 +108,14 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		for(var u = 0; u < array_length(_projectiles); u++){
 			var _test = get_projectile_collision(_projectiles[u]);
-			if(_test != -1)
+			if(_test != -1){
 				_proj = _test
+			}
 		}
 		
 		if(_proj == false) return 0;
+		
+		log("proj")
 		
 		var _hits = false;
 		for(var g = 0; g < array_length(self.projectile_tags); g++){
