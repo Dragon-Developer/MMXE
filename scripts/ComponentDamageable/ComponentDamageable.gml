@@ -6,6 +6,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.combo_count = 0;//the amount of comboiness this entity has been hit with
 	self.combo_offset = 0;//some enemies take more or less comboiness from projectiles
 	self.damage_rate = 1;//the amount that damage gets multiplied by
+	self.dead = false;
 	
 	self.invuln_offset = -1;//if its -1 the invuln timer is over
 	self.invuln_time = 60;//the time offset in frames that invulnerability lasts for
@@ -76,7 +77,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.check_for_collision = function(){
 		if(self.damage_rate == undefined || !variable_struct_exists(self, "damage_rate")) self.damage_rate = 1;
 		
-		if(damage_rate <= 0) return;//cant take damage if your damage rate is below or at zero.
+		if(damage_rate <= 0 || dead) return;//cant take damage if your damage rate is below or at zero.
 		//anything times zero is zero
 		
 		var _damage = 0;
@@ -90,6 +91,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(self.health <= 0)
 		{
+			dead = true;
 			self.death_function();
 		}
 	}
@@ -114,8 +116,6 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 		
 		if(_proj == false) return 0;
-		
-		log("proj")
 		
 		var _hits = false;
 		for(var g = 0; g < array_length(self.projectile_tags); g++){
@@ -147,6 +147,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		var _enemy = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.enemy);
 		
 		if(!variable_instance_exists(_enemy, "components")){ 
+			return 0;
+		}
+		
+		if(!variable_instance_exists(_enemy.components, "get")){ 
 			return 0;
 		}
 		

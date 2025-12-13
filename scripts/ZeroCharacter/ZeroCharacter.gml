@@ -1,7 +1,8 @@
 function ZeroCharacter() : BaseCharacter() constructor{
 	self.image_folder = "zero";
-	self.weapons = [xBuster, XenoMissile];
+	self.weapons = [ZeroSaber];
 	
+	self.states.intro.animation = "intro"
 	self.states.wall_jump.wall_stick = 0;
 	self.states.wall_jump.launch_lock = 6;
 	

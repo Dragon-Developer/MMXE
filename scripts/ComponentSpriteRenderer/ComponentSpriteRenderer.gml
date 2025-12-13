@@ -10,7 +10,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	self.sprites = [];//holds every currently used sprite. 
 	
 	//adds a new sprite into the pool
-	self.add_sprite = function(_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _char = self.character){
+	self.add_sprite = function(_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _depth = 0){
 		//prepares a struct
 		var _spr = {};
 		
@@ -21,6 +21,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		struct_set(_spr, "x", _x);
 		struct_set(_spr, "y", _y);
 		struct_set(_spr, "dir", _dir);
+		struct_set(_spr, "depth", _depth);
 		
 		_spr.animationController.play(_spr.animation);
 		_spr.animationController.__animation = _spr.animation;
@@ -42,7 +43,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 			array_set(self.sprites, _spr, _index)
 		}
 		
-		self.reload_animation_controller(_index,collage, _char);
+		self.reload_animation_controller(_index,collage, self.character);
 		
 		//log("Sprite made")
 		
@@ -118,8 +119,6 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.get_interpolated_position = function(_sprite){
-		var _inst = parent.get_instance();
-		
 		var _animator = _sprite.animationController;
 		
 		if(_animator != noone)
@@ -179,14 +178,11 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		if(is_undefined(_pos)) _pos = self.get_interpolated_position(_animator);
 		var _instance_x = floor(_pos[0]);
 		var _instance_y = floor(_pos[1]);
-		var _animation = _pos[2];
 		var _frame = _pos[3];
 		var _action = _pos[4];
-		var _xscale = _pos[5];
 		
 	    _animator.set_xscale(_sprite.dir);
 		_animator.draw_action(_action, undefined, _frame, floor(_instance_x), floor(_instance_y))
-		//log("sprite's on screen")
 	};
 	
 	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1){

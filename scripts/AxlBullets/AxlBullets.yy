@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"psxCharacter",
+  "%Name":"AxlBullets",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"psxCharacter",
+  "name":"AxlBullets",
   "parent":{
-    "name":"X",
-    "path":"folders/Scripts/Game/Player Specific/Characters/X.yy",
+    "name":"Axl",
+    "path":"folders/Scripts/Game/Player Specific/Characters/Axl.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

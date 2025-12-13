@@ -53,6 +53,30 @@
         "x": 24,
         "y": 24
       }
+    },
+    "atk_1": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_2": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_3": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_jump": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
     }
   },
   "data": {
@@ -419,8 +443,216 @@
               }
             ]
           }
+        },
+        {
+          "name": "atk_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 7
+              },
+              {
+                "key": 11,
+                "frame": 8
+              },
+              {
+                "key": 14,
+                "frame": 9
+              },
+              {
+                "key": 17,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 7
+              },
+              {
+                "key": 11,
+                "frame": 8
+              },
+              {
+                "key": 14,
+                "frame": 9
+              },
+              {
+                "key": 17,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 7,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 11,
+                "frame": 9
+              },
+              {
+                "key": 12,
+                "frame": 10
+              },
+              {
+                "key": 16,
+                "frame": 11
+              },
+              {
+                "key": 19,
+                "frame": 11
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_jump",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 6,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 6
+              },
+              {
+                "key": 14,
+                "frame": 7
+              },
+              {
+                "key": 15,
+                "frame": 7
+              }
+            ]
+          }
         }
 
+
+
+
+        //end of file
       ]
     }
   }

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"RockCharacter",
   "parent":{
-    "name":"Characters",
-    "path":"folders/Scripts/Game/Player Specific/Characters.yy",
+    "name":"Rock",
+    "path":"folders/Scripts/Game/Player Specific/Characters/Rock.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

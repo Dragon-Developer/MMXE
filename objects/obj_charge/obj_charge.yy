@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Player",
-    "path":"folders/Objects/Projectile/Player.yy",
+    "path":"folders/Objects/Player.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",

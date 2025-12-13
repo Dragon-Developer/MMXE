@@ -16,7 +16,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	self.timer = 0;
 	
-	self.character = variable_clone(global.player_character[0], 256);
+	self.character = global.player_character[0];
 	
 	self.armor_parts = [];
 	#endregion
@@ -37,7 +37,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		#endregion
 	
 	self.reset_state_variables = function(){
-		self.states = variable_clone(self.character.states);
+		self.states = variable_clone(global.player_character[0].states);
 	}
 	
 	// Finite State Machine initialization
@@ -57,7 +57,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("teleport_in", {
 			enter: function() {
-				self.publish("animation_play", { name: "tp_in" });
+				self.publish("animation_play", { name: "tp_in" , reset: false});
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(new Vec2(0,0));
 				self.physics.does_collisions = false;
@@ -80,7 +80,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("intro_end", {
 			enter: function() {
-				self.publish("animation_play", { name: self.states.intro.animation + "_end" });
+				
+				var _frame = self.find("animation").animation.get_props(self.states.intro.animation + "_end").keyframes[0].frame;
+				self.publish("animation_play", { name: self.states.intro.animation + "_end", frame: _frame});
 			}
 		})
 		.add("idle", {
@@ -114,6 +116,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_vspd(-self.states.jump.strength);
 				if (self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")
 					self.current_hspd = self.states.dash.speed;
+				
+				//extra jargon
+				if(variable_struct_exists(self.states, "melee"))
+					self.states.melee.animation = "undefined"
 			},
 		})
 		.add_child("air", "fall", {
@@ -302,8 +308,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_init", "init", "teleport_in")
 		.add_transition("t_move_h", "idle", "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_move_h", "land", "walk", function() { return !self.physics.check_wall(self.hdir) && !self.input.get_input("dash"); })
-		.add_wildcard_transition("t_hurt", "hurt", function() { return self.get_wall_jump_dir() == 0 && self.physics.is_on_floor() && IS_OFFLINE; })
-		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
+		.add_wildcard_transition("t_hurt", "hurt", function() { return self.get_wall_jump_dir() == 0; })
+		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "melee", "melee_end"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_wildcard_transition("t_custom", "custom")
 		.add_transition("t_custom_end", "custom", "idle")
@@ -611,6 +617,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if(self.dash_dir == 0)
 					self.dash_dir = self.hdir;
 				self.publish("animation_play", { name: self.states.dash.animation });
+				
+				//extra jargon
+				if(variable_struct_exists(self.states, "melee"))
+					self.states.melee.animation = "undefined"
 			},
 			step: function() {
 				self.set_hor_movement(self.dash_dir);
@@ -716,5 +726,72 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "wall_slide", "fall", function() { return self.hdir != self.dir || !self.wall_slide_possible(); })
 		.add_transition("t_jump", "wall_slide", "wall_jump")
 		
+	}
+	
+	self.add_melee_state = function(){
+		var _melee = {animation: "undefined", priority: 0, hitbox_scale: new Vec2(0,0), hitbox_offset: new Vec2(0,0), damage: 1}
+		
+		variable_struct_set(self.states, "melee", variable_clone(_melee));
+		variable_struct_set(global.player_character[0].states, "melee", variable_clone(_melee));
+		
+		self.fsm.add("melee", {
+			enter: function() {
+				self.publish("animation_play", { name: self.states.melee.animation, reset: true});
+				
+				//create the actual saber
+				
+				var _tags = [];
+				
+				var _melee_hitbox = PROJECTILES.create_melee_hitbox(self.get_instance().x, self.get_instance().y, self.dir, MeleeProjectile, get(ComponentWeaponUse), _tags, self.states.melee.animation, 12);
+			
+				_melee_hitbox.code.comboiness = self.states.melee.priority;
+				_melee_hitbox.hitbox = self.states.melee.hitbox_scale;
+				_melee_hitbox.hitbox_offset = self.states.melee.hitbox_offset;
+				_melee_hitbox.damage = self.states.melee.damage;
+				//log(_melee_hitbox)
+				
+				if(self.physics.is_on_floor()){
+					self.physics.set_hspd(0);
+				}
+			},
+			leave: function() {	
+			},
+			step: function() {
+				if(!self.physics.is_on_floor()){
+					self.set_hor_movement();
+				}
+			}
+		})
+		
+		self.fsm.add("melee_end", {
+			enter: function() {
+				var _frame = self.find("animation").animation.get_props(self.states.melee.animation + "_end").keyframes[0].frame;
+				
+				self.publish("animation_play", { name: self.states.melee.animation + "_end", reset: true, frame: _frame});
+				self.states.melee.animation = "undefined"
+			},
+			leave: function() {	
+			},
+			step: function() {
+				//
+			}
+		})
+		.add_transition("t_animation_end", "melee", "melee_end")
+		.add_transition("t_transition", "melee_end", "walk", function(){ return self.hdir != 0;})
+		.add_transition("t_animation_end", "melee_end", "idle", function(){return self.physics.is_on_floor()})
+		.add_transition("t_animation_end", "melee_end", "fall", function(){return !self.physics.is_on_floor()})
+	}
+
+	self.add_aimable_state = function(){
+		self.fsm.add("aim", {
+			enter: function() {
+				self.physics.set_hspd(0);
+			},
+			leave: function() {	
+			},
+			step: function() {
+				
+			}
+		})
 	}
 }

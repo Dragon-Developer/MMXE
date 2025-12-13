@@ -29,6 +29,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	]
 	
 	self.projectile_count = 0;
+	self.added_melee_weapon = false;
+	self.added_aimable_weapon = false;
 	
 	self.serializer
 		.addVariable("shot_end_time")
@@ -72,14 +74,22 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					script_execute(_proj)
 				}
 				
-				if(_proj_code.term == "State Based"){
-					_proj_code.init(self.get(ComponentPlayerMove))
-					//log("state added!")
-				}
-				
-				if(_proj_code.term == "Melee" && !added_melee_weapons){
-					added_melee_weapons = true;
-					get(ComponentPlayerMove).add_melee_state();
+				switch(_proj_code.term){
+					case("State Based"):
+						_proj_code.init(self.get(ComponentPlayerMove))
+					break;
+					case("Melee"):
+						if added_melee_weapon break;
+						
+						added_melee_weapon = true;
+						get(ComponentPlayerMove).add_melee_state();
+					break;
+					case("Aimable"):
+						if added_aimable_weapon break;
+						
+						added_aimable_weapon = true;
+						get(ComponentPlayerMove).add_aimable_state();
+					break;
 				}
 			})
 		})
@@ -102,6 +112,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			find("animation").set_palette_color(i, _wep.weapon_palette[i]);
 		}
 		
+		if(_wep.cost == 0){
+			bar.barCount = 1;
+		} else {
+			bar.barCount = 2;
+		}
+		
 		return _wep.weapon_palette;
 	}
 	
@@ -112,6 +128,18 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		if(_change_direction != 0 && array_length(self.weapon_list) > 1){
 			self.change_weapon(self.current_weapon[0] + _change_direction)
 			self.stock_shot = noone;
+		} else if (_change_direction != 0){
+			var _wep = {};
+			
+			with(_wep){
+				script_execute(other.weapon_list[other.current_weapon[0]]);
+			}
+			
+			if(_wep.cost == 0){
+				bar.barCount = 1;
+			} else {
+				bar.barCount = 2;
+			}
 		}
 		
 		if self.bar != noone {
@@ -177,6 +205,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			}
 			//get the projectile data
 			var _shot_data = {};
+			
 			with(_shot_data){
 				script_execute(_shot_code.data[_shot_index])
 			}
@@ -198,7 +227,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					} else {
 						
 					}
-					log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
+					//log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
 				} else 
 					self.weapon_ammo[self.current_weapon[_id]] -= _shot_code.cost;
 			} else {
@@ -209,15 +238,121 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			//get what type of weapon this is [projectile, state based, melee, etc]
 			var _type = _shot_data.term;
 			
-			
-			if(_type == "Projectile" && self.projectile_count < _shot_data.shot_limit){
-				self.create_projectile(_shot_code, _shot_index, _input, _id);
-			} else if(_type == "State Based"){
-				get(ComponentPlayerMove).fsm.change(_shot_data.state_name)
+			//i love switch statements
+			switch(_type){
+				case("Projectile"):
+					self.create_projectile(_shot_code, _shot_index, _input, _id);
+				break;
+				case("State Based"):
+					get(ComponentPlayerMove).fsm.change(_shot_data.state_name)
+				break;
+				case("Melee"):
+					_shot_data.set_player_state(get(ComponentPlayerMove), _shot_index);
+				break;
+				case("Aimable"):
+					self.create_aimable_projectile(_shot_code, _shot_index, _input, _id);
+					get(ComponentPlayerMove).fsm.change("aim")
+				break;
 			}
 		}
 	}
+		
+	self.create_aimable_projectile = function(_shot_code, _shot_index, _input, _id){
+		//playing with fire here
+		
+		log("REARAINGIUT BGSDBISDGUBSGUIYBYSFDTG USIDTGBISDFBGNTN*&IG")
+		
+		//get the name of the current animation
+		var _anim_name = self.get_instance().components.get(ComponentAnimationShadered).animation.__animation;
+		
+		for(var i = 0; i < array_length(self.state_blacklist); i++){
+			if(_anim_name == self.state_blacklist[i])
+				return;
+		}
+		
+		//turn the shot data into the actual projectile data
+		var _shot_data = _shot_code.data[_shot_index];
+		
+		var _code = {};
+		
+		with(_code){
+			script_execute(_shot_data)
+		}
+		
+		//var _aim_direction = new Vec2()
+		
+		//self.get_instance().components.get(ComponentAnimationShadered).animation.__type = string_copy(_code.animation_append,2,256);
+		
+		var _dir = self.get_instance().components.find("animation").animation.__xscale;
+		var _aim_dir = new Vec2(get(ComponentPlayerInput).get_input("right") - get(ComponentPlayerInput).get_input("left"), get(ComponentPlayerInput).get_input("down") - get(ComponentPlayerInput).get_input("up"))
+		var _anim_name = "aim_shoot";
 			
+		if(_aim_dir.y >= 0.2)
+			_anim_name += "_down"
+		else if(_aim_dir.y <= -0.2)
+			_anim_name += "_up"
+		
+		if(_aim_dir.x * _dir >= 0.2 || abs(_aim_dir.y) <= 0.2)
+			_anim_name += "_forward"
+		
+		if(!get(ComponentPhysics).is_on_floor()){
+			_anim_name += "_air"
+		}
+		
+		log(_anim_name)
+		
+		self.publish("animation_play", {name: _anim_name})
+		
+		//set the time for shooting to end
+		self.shot_end_time = CURRENT_FRAME + 15;
+		
+		var _x = self.get_instance().x;
+		
+		var _y = self.get_instance().y;
+		
+		if(_anim_name == "wall_slide"){
+			_dir *= -1
+		}
+		
+		//if we have an animator, add the shot offsets
+		try{
+			if(find("animation") != noone){
+				//log("gon add offsets " + string( find("animation").get_shot_offsets()))
+				var _offsets = find("animation").get_shot_offsets();
+				_x += _offsets[0] * _dir;
+				_y += _offsets[1];
+				//log("added offsets")
+			} else {
+				//log(find("animation"))
+			}
+		} catch(_exception){
+			
+		}
+			
+		//create the projectile itself
+		var _shot = noone
+		
+		
+		var _tags = ["enemy"];
+		
+		if(global.server_settings.client_data.friendly_fire){
+			for(var t = 0; t < instance_number(obj_player); t++){
+				var _tag = "player" + string(t)
+				
+				if(get(ComponentDamageable).projectile_tags[0] != _tag)
+					array_push(_tags, _tag);
+			}
+		}
+		
+		//log(string(_tags) + " are the projectile tagts")
+		
+		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags);
+		_shot.code.angle = _aim_dir;
+		log("my angle is" + string(_aim_dir.angle()))
+		
+		self.projectile_count++;
+	}
+		
 	self.create_projectile = function(_shot_code, _shot_index, _input, _id){
 		//playing with fire here
 		

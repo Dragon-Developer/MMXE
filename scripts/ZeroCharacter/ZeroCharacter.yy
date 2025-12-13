@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ZeroCharacter",
   "parent":{
-    "name":"Characters",
-    "path":"folders/Scripts/Game/Player Specific/Characters.yy",
+    "name":"Zero",
+    "path":"folders/Scripts/Game/Player Specific/Characters/Zero.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

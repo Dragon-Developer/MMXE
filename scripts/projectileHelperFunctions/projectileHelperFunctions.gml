@@ -1,8 +1,8 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function get_projectile_collision(_proj){
-	var _x = _proj.position.x;
-	var _y = _proj.position.y;
+	var _x = _proj.position.x + (_proj.hitbox_offset.x * _proj.dir);
+	var _y = _proj.position.y + _proj.hitbox_offset.y;
 	var _width = _proj.hitbox.x;
 	var _height = _proj.hitbox.y;
 			

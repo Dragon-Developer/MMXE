@@ -10,7 +10,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.time_physics_multiplier = 1;
 	self.objects = {
 		block: obj_square_16,
-		projectile : par_projectile,
 		enemy: par_enemy
 	};
 	self.does_collisions = true;

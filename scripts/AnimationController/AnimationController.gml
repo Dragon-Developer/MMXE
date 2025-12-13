@@ -508,7 +508,7 @@ function AnimationController(_character = "") constructor {
 	/// @param {bool} reset_if_same
     static play = function(_animation, _reset = true, _frame = 0) {
 		if (_animation == "") return;
-        if (self.__animation != _animation || _reset) {
+        if (self.__animation != _animation || _reset){
             self.__index = _frame;
 			self.__last_keyframe = _frame - 1;
 			self.__last_index = _frame - 1;

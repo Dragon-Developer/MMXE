@@ -3,7 +3,7 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 		new XCharacter(),
 		new ZeroCharacter(),
 		new RockCharacter(),
-		new psxCharacter()
+		new AxlCharacter()
 	]
 	self.character_index = 0;
 	
@@ -42,18 +42,20 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 		if(self.input.get_input_pressed("left")){
 			self.character_index = (self.character_index - 1 + array_length(self.characters)) mod array_length(self.characters)
 			renderer.change_sprite(self.character_art, self.characters[self.character_index].image_folder)
+			global.armors[0] = [noone,noone,noone,noone,noone]
 		}
 		
 		if(self.input.get_input_pressed("right")){
 			self.character_index = (self.character_index + 1 + array_length(self.characters)) mod array_length(self.characters)
 			renderer.change_sprite(self.character_art, self.characters[self.character_index].image_folder)
+			global.armors[0] = [noone,noone,noone,noone,noone]
 		}
 		
-		if(self.input.get_input_pressed("down")){
+		if(self.input.get_input_pressed("jump") || self.input.get_input_pressed("down") || self.input.get_input_pressed("pause")){
 			global.player_character[global.local_player_index] = variable_clone(self.characters[self.character_index]);
 			room_transition_to(rm_stage_select,"default",20);
 			
-			struct_set(global.player_data, "last_used_character", global.player_character[global.local_player_index]);
+			struct_set(global.player_data, "last_used_character", global.player_character[0]);
 		}
 		
 		if(self.input.get_input_pressed("up")){
