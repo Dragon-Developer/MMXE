@@ -362,7 +362,6 @@
     {"$GMIncludedFile":"","%Name":"super_charge_shoot.ogg","CopyToMask":-1,"filePath":"datafiles/sounds","name":"super_charge_shoot.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"text.ogg","CopyToMask":-1,"filePath":"datafiles/sounds","name":"text.ogg","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"animation.json","CopyToMask":-1,"filePath":"datafiles/sprites/axl","name":"animation.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"spr_axl_glow_dash_strip6.png","CopyToMask":-1,"filePath":"datafiles/sprites/axl/armor/glow","name":"spr_axl_glow_dash_strip6.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_axl_aim_shoot_strip5.png","CopyToMask":-1,"filePath":"datafiles/sprites/axl/normal","name":"spr_axl_aim_shoot_strip5.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_axl_complete_pistol_strip9.png","CopyToMask":-1,"filePath":"datafiles/sprites/axl/normal","name":"spr_axl_complete_pistol_strip9.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_axl_complete_ray_strip9.png","CopyToMask":-1,"filePath":"datafiles/sprites/axl/normal","name":"spr_axl_complete_ray_strip9.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

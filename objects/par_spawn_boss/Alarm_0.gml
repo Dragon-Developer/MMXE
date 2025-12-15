@@ -1,7 +1,7 @@
 on_spawn = function(_boss) {
 	_boss.components.publish("character_set", "x");
 	_boss.components.find("animation").set_subdirectories(["/normal"]);
-	_boss.components.find("animation").max_queue_size = 0;
+	//_boss.components.find("animation").max_queue_size = 0;
 	_boss.components.get(ComponentDamageable).projectile_tags = ["enemy"]
 	_boss.components.get(ComponentDamageable).death_function = function(){};
 	

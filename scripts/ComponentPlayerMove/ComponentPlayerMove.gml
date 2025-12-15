@@ -116,10 +116,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_vspd(-self.states.jump.strength);
 				if (self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")
 					self.current_hspd = self.states.dash.speed;
-				
-				//extra jargon
-				if(variable_struct_exists(self.states, "melee"))
-					self.states.melee.animation = "undefined"
 			},
 		})
 		.add_child("air", "fall", {
@@ -309,7 +305,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_move_h", "idle", "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_move_h", "land", "walk", function() { return !self.physics.check_wall(self.hdir) && !self.input.get_input("dash"); })
 		.add_wildcard_transition("t_hurt", "hurt", function() { return self.get_wall_jump_dir() == 0; })
-		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "melee", "melee_end"], "jump", function() { return self.physics.is_on_floor() && !self.physics.is_on_ceil(6); })
+		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end"], "jump", function() { return self.can_jump_check(); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_wildcard_transition("t_custom", "custom")
 		.add_transition("t_custom_end", "custom", "idle")
@@ -352,7 +348,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		if (self.physics.check_wall(-9)) return -1;
 		return 0;
 	}
-		
+	
+	self.can_jump_check = function(){
+		return self.physics.is_on_floor() && !self.physics.is_on_ceil(6);
+	}
+	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
@@ -729,7 +729,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.add_melee_state = function(){
-		var _melee = {animation: "undefined", priority: 0, hitbox_scale: new Vec2(0,0), hitbox_offset: new Vec2(0,0), damage: 1}
+		var _melee = {animation: "undefined", priority: 0, hitbox_scale: new Vec2(0,0), hitbox_offset: new Vec2(0,0), damage: 1, proj: undefined}
 		
 		variable_struct_set(self.states, "melee", variable_clone(_melee));
 		variable_struct_set(global.player_character[0].states, "melee", variable_clone(_melee));
@@ -748,13 +748,16 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				_melee_hitbox.hitbox = self.states.melee.hitbox_scale;
 				_melee_hitbox.hitbox_offset = self.states.melee.hitbox_offset;
 				_melee_hitbox.damage = self.states.melee.damage;
-				//log(_melee_hitbox)
+				
+				self.states.melee.proj = _melee_hitbox;
 				
 				if(self.physics.is_on_floor()){
 					self.physics.set_hspd(0);
 				}
 			},
 			leave: function() {	
+				PROJECTILES.destroy_projectile(self.states.melee.proj.code);
+				self.states.melee.proj = undefined;
 			},
 			step: function() {
 				if(!self.physics.is_on_floor()){
@@ -780,6 +783,14 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "melee_end", "walk", function(){ return self.hdir != 0;})
 		.add_transition("t_animation_end", "melee_end", "idle", function(){return self.physics.is_on_floor()})
 		.add_transition("t_animation_end", "melee_end", "fall", function(){return !self.physics.is_on_floor()})
+		.add_transition("t_jump", ["melee", "melee_end"], "jump", function() {
+			if can_jump_check(){
+			
+				self.states.melee.animation = "undefined"	
+				return true;
+			}
+			return false;
+		})
 	}
 
 	self.add_aimable_state = function(){
@@ -793,5 +804,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				
 			}
 		})
+		.add_transition("t_transition", "aim", "walk", function(){ return self.hdir != 0;})
 	}
 }

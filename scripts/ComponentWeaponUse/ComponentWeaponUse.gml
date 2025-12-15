@@ -286,6 +286,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		var _dir = self.get_instance().components.find("animation").animation.__xscale;
 		var _aim_dir = new Vec2(get(ComponentPlayerInput).get_input("right") - get(ComponentPlayerInput).get_input("left"), get(ComponentPlayerInput).get_input("down") - get(ComponentPlayerInput).get_input("up"))
 		var _anim_name = "aim_shoot";
+		
+		if(abs(_aim_dir.x) < 0.2 && abs(_aim_dir.y) < 0.2)
+			_aim_dir = new Vec2(_dir,0);
 			
 		if(_aim_dir.y >= 0.2)
 			_anim_name += "_down"
@@ -347,8 +350,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//log(string(_tags) + " are the projectile tagts")
 		
 		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags);
+		//_aim_dir = new Vec2(_aim_dir.x * _dir, _aim_dir.y);
 		_shot.code.angle = _aim_dir;
-		log("my angle is" + string(_aim_dir.angle()))
+		//log("my angle is" + string(_aim_dir.angle()))
 		
 		self.projectile_count++;
 	}
