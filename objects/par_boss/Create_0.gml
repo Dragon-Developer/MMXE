@@ -3,11 +3,9 @@ event_inherited();
 components.add([
 	ComponentDamageable,
 	ComponentBoss,
-	ComponentAnimationShadered,
+	ComponentAnimation,
 	ComponentPhysics,
 	ComponentMask
 ]);
 
 components.init();
-
-components.add([ComponentHealthbar]);

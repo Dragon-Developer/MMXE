@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"MagmaDragoonBoss",
+  "%Name":"FlameStagBoss",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"MagmaDragoonBoss",
+  "name":"FlameStagBoss",
   "parent":{
     "name":"Boss",
     "path":"folders/Scripts/Game/Boss.yy",

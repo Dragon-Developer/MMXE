@@ -12,8 +12,8 @@
     "path":"folders/Objects/Level Assets/Boss.yy",
   },
   "parentObjectId":{
-    "name":"obj_entity",
-    "path":"objects/obj_entity/obj_entity.yy",
+    "name":"par_enemy",
+    "path":"objects/par_enemy/par_enemy.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -33,9 +33,6 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":null,
-  "spriteMaskId":{
-    "name":"spr_player_mask",
-    "path":"sprites/spr_player_mask/spr_player_mask.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }
