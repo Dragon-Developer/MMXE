@@ -10,11 +10,14 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.death_time = -1;
 	
 	self.pose_animation_name = "walk";
+	self.intro_animation_name = "fall";
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: "idle" });
 		self.publish("animation_xscale", -1);
+		
+		//self.boss_data.init(self);
 	}
 	
 	self.fsm = new SnowState("enter", true);
@@ -23,6 +26,7 @@ function ComponentBoss() : ComponentBase() constructor{
 			enter: function() {
 				WORLD.stop_sound();
 				WORLD.play_music("BossEncounterL");
+				self.publish("animation_play", { name: self.intro_animation_name });
 			},
 			step: function() {
 				//log("step")
@@ -66,13 +70,42 @@ function ComponentBoss() : ComponentBase() constructor{
 				WORLD.clear_sound();
 				self.publish("animation_play", { name: "death" });
 				self.death_time = CURRENT_FRAME;
+				
+				GAME.game_loop.do_action_with_all_components(function(){step_enabled = false;})
+				step_enabled = true;
+				with(obj_player){
+					components.find("animation").animation.__speed = 0;
+					components.get(ComponentPhysics).set_grav(new Vec2(0,0));
+					components.get(ComponentPhysics).set_speed(0,0)
+				}
 			},
 			step: function() {
 				//im going to presume regular boss deaths. 
 				
+				if(CURRENT_FRAME - death_time == 60){
+					GAME.game_loop.do_action_with_all_components(function(){step_enabled = true;})
+					with(obj_player){
+						components.find("animation").animation.__speed = 1;
+						components.get(ComponentPhysics).set_grav(new Vec2(0,0.25));
+					}
+				}
+				
+				if(CURRENT_FRAME - death_time == 192){
+					var _fade = instance_create_depth(get_instance().x,get_instance().y,0,obj_fade);
+					_fade.transition_white_to_black(120, 41)
+				}
+				
+				if (CURRENT_FRAME - death_time >= 193 && CURRENT_FRAME - death_time <= 253) {
+					find("animation").animation.__alpha = 1 - (CURRENT_FRAME - death_time - 193) / 60;
+				}
+				
+				if(CURRENT_FRAME - death_time == 312){
+					find("animation").animation.__alpha = 0;
+				}
+				
 				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
 					var _inst = self.get_instance();
-					var _spot = new Vec2(_inst.x + (random_range(-64,0)),_inst.y + (random_range(-64,0)))
+					var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
 					
 					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
 					if(CURRENT_FRAME mod 8 == 0)

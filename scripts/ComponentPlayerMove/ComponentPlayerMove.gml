@@ -179,7 +179,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				_inst.y -= 4;
 				
 				if(self.timer < CURRENT_FRAME){
-					room_transition_to(rm_weapon_get);
+					room_transition_to(rm_stage_select);
 				}
 			}
 		})
@@ -747,7 +747,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				_melee_hitbox.code.comboiness = self.states.melee.priority;
 				_melee_hitbox.hitbox = self.states.melee.hitbox_scale;
 				_melee_hitbox.hitbox_offset = self.states.melee.hitbox_offset;
-				_melee_hitbox.damage = self.states.melee.damage;
+				_melee_hitbox.code.damage = self.states.melee.damage;
 				
 				self.states.melee.proj = _melee_hitbox;
 				

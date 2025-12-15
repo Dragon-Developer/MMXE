@@ -209,7 +209,7 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	GuiScaleText = new GuiText("Scale: " + string(global.settings.Game_Scale))
 	
-	SettingsContainer.addChild([PsxDashJumpToggle,DashOnLandingToggle, OnlineUsername,MusicVolumeBar, MusicVolumeSettings, SoundEffectVolumeBar, SoundEffectVolumeSettings, GuiScaleBar, GuiScaleText, "e", "q"]);
+	SettingsContainer.addChild([PsxDashJumpToggle,DashOnLandingToggle,MusicVolumeBar, MusicVolumeSettings, SoundEffectVolumeBar, SoundEffectVolumeSettings, GuiScaleBar, GuiScaleText]);
 	#endregion
 	
     addChild(KeybindContainer);

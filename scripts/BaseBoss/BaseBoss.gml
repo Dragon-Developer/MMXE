@@ -18,7 +18,11 @@ function BaseBoss() : BaseEnemy() constructor{
 			EnemyComponent.fsm.change("pose")
 	}
 	
+	self.intro_animation_name = "flame_stag_idle";
 	self.pose_animation_name = "flame_stag_idle";
+	
+	self.image_folder = "boss";
+	self.subdirectories = ["/blade"];
 	
 	self.add_states = function(_boss){
 		_boss.add("idle", { });

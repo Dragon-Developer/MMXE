@@ -6,7 +6,7 @@
   "name":"MagmaDragoonBoss",
   "parent":{
     "name":"Boss",
-    "path":"folders/Scripts/Game/Boss.yy",
+    "path":"folders/Scripts/Game/stages/Boss.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

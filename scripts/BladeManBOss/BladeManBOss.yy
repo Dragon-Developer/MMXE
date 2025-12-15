@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"FlameStagBoss",
+  "%Name":"BladeManBOss",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"FlameStagBoss",
+  "name":"BladeManBOss",
   "parent":{
     "name":"Boss",
     "path":"folders/Scripts/Game/stages/Boss.yy",

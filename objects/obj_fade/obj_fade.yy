@@ -1,20 +1,18 @@
 {
   "$GMObject":"",
-  "%Name":"par_boss",
+  "%Name":"obj_fade",
   "eventList":[
+    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"par_boss",
+  "name":"obj_fade",
   "overriddenProperties":[],
   "parent":{
-    "name":"Boss",
-    "path":"folders/Objects/Level Assets/Boss.yy",
+    "name":"Generic",
+    "path":"folders/Objects/Level Assets/Generic.yy",
   },
-  "parentObjectId":{
-    "name":"obj_entity",
-    "path":"objects/obj_entity/obj_entity.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -32,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_bright",
+    "path":"sprites/spr_bright/spr_bright.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

@@ -16,6 +16,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
 	
+	self.hit_by_list = [];
+	
 	self.serializer = new NET_Serializer();
 	/*self.serializer
 		.addVariable("health")
@@ -69,6 +71,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 		if(self.invuln_offset > CURRENT_FRAME) {
 			if((self.invuln_offset - CURRENT_FRAME) % 2 == 0)
 				self.get_instance().visible = false;
+		} else if(self.invuln_offset == CURRENT_FRAME){
+			self.hit_by_list = [];
 		}
 		
 		self.check_for_collision();
@@ -127,7 +131,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if !_hits return 0;
 		
-		if(self.invuln_offset > CURRENT_FRAME && _proj.code.comboiness <= self.combo_count){
+		if(self.invuln_offset > CURRENT_FRAME && _proj.code.comboiness >= 0 && _proj.code.comboiness <= self.combo_count) || array_contains(self.hit_by_list, _proj){
 			//if the comboiness is too high and the projectile is not comboy enough
 			return 0;
 		}
@@ -136,6 +140,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.combo_count = _proj.code.comboiness;
+			array_push(self.hit_by_list, _proj)
 			return _proj.code.damage;
 		}
 		return 0;

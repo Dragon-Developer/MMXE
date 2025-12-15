@@ -1,0 +1,1 @@
+self.boss = new BladeManBoss();

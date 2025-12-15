@@ -2,8 +2,14 @@
   "sprites": {
     "default": {
       "origin": {
-        "x": 35,
-        "y": 41
+        "x": 128,
+        "y": 128
+      }
+    },
+    "fsi": {
+      "origin": {
+        "x": 32,
+        "y": 32
       }
     }
   },
@@ -26,7 +32,7 @@
       ],
       "list": [
         {
-          "name": "flame_stag_idle",
+          "name": "fsi",
           "properties": {
             "keyframes": [
               {
@@ -79,7 +85,49 @@
               }
             ]
           }
+        },
+        {
+          "name": "blade_fall",
+          "properties": {
+            "action": "blade",
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "blade_pose",
+          "properties": {
+            "action": "blade",
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "death",
+          "properties": {
+            "action": "blade",
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 34
+              }
+            ]
+          }
         }
+
+
+
+
+
+        //eof
       ]
     }
   }
