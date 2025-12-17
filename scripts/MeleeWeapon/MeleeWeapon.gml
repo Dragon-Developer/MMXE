@@ -45,10 +45,11 @@ function MeleeProjectile(_animation, _length) : ProjectileData() constructor{
 	}
 }
 
-function set_player_melee_info(_plr, _animation, _priority, _offset, _size, _damage){
+function set_player_melee_info(_plr, _animation, _priority, _offset, _size, _damage, _reset_velocity = true){
 	_plr.states.melee.animation = _animation;
 	_plr.states.melee.priority = _priority;
 	_plr.states.melee.hitbox_offset = _offset;
 	_plr.states.melee.hitbox_scale = _size;
 	_plr.states.melee.damage = _damage;
+	_plr.states.melee.reset_velocity = _reset_velocity;
 }

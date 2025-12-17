@@ -1,6 +1,7 @@
 event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
+camera_spawn_offset = new Vec2(-GAME_W / 2,0);
 y -= GAME_H + 8
 on_spawn = function(_player) {
 	_player.x += current_spawn * 5
@@ -8,8 +9,6 @@ on_spawn = function(_player) {
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", global.player_character[current_spawn].image_folder);
-	//log(string(global.player_character.image_folder) + " is the character folder")
-//	log(string(global.player_character) + " is the character")
 	_player.components.publish("armor_set",
 	[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
 	
@@ -27,10 +26,6 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);
 	_player.components.get(ComponentDamageable).invuln_time = 120;
 	
-	if(global.server_settings.client_data.friendly_fire){
-		_player.components.get(ComponentDamageable).projectile_tags = ["player" + string(current_spawn)]
-	}
-	
 	with(_player.components.get(ComponentDamageable)){
 		self.death_function = function(){
 			self.publish("death");
@@ -44,12 +39,12 @@ on_spawn = function(_player) {
 	if (current_spawn == global.local_player_index) {
 		//log("this is the player!")
 		WORLD = ENTITIES.create_instance(obj_world);
-		var _camera = ENTITIES.create_instance(obj_camera, x - GAME_W / 2, y - GAME_H / 2);
+		var _camera = ENTITIES.create_instance(obj_camera, x + camera_spawn_offset.x, y + camera_spawn_offset.y);
 		
 		if(_camera.x < 0) _camera.x = 0
 		
 		_player.components.get(ComponentPlayerMove).camera = _camera;
-		_camera.components.publish("target_set", _player);	
+		//_camera.components.publish("target_set", _player);	
 		_camera.components.get(ComponentHealthbar).compDamageable = _player.components.get(ComponentDamageable);
 		_camera.components.get(ComponentHealthbar).barCount = 2;
 		_camera.components.get(ComponentHealthbar).barOffsets = [new Vec2(12,78), new Vec2(28,78)];
@@ -68,4 +63,5 @@ on_spawn = function(_player) {
 	
 	current_spawn++;
 }
-spawn_times = GAME.inputs.getTotalPlayers();
+spawn_times = 1;
+//spawn_times = GAME.inputs.getTotalPlayers();

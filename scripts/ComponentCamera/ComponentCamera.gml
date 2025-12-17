@@ -189,6 +189,7 @@ function ComponentCamera() : ComponentBase() constructor {
 		self.y = self.get_instance().y;
 		
 		if(self.x < 0) self.x = 0;
+		if(self.y < 0) self.y = 0;
 		camera_set_view_pos(self.camera, self.get_instance().x, self.get_instance().y);
 	}
 	

@@ -220,16 +220,23 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			
 			//decrease weapon energy
 			if(self.weapon_ammo[self.current_weapon[_id]] > 0){
+				var _cost = 0;
+				
+				if is_array(_shot_code.cost)
+					_cost = _shot_code.cost[_shot_index];
+				else
+					_cost = _shot_code.cost;
+				
 				//check if theres a projectile limit
 				if(variable_struct_exists(_shot_data, "shot_limit")){
 					if (_shot_data.shot_limit > self.projectile_count) {
-						self.weapon_ammo[self.current_weapon[_id]] -= _shot_code.cost;
+						self.weapon_ammo[self.current_weapon[_id]] -= _cost;
 					} else {
 						
 					}
 					//log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
 				} else 
-					self.weapon_ammo[self.current_weapon[_id]] -= _shot_code.cost;
+					self.weapon_ammo[self.current_weapon[_id]] -= _cost;
 			} else {
 				//bail! you dont have weapon energy
 				return;
@@ -260,7 +267,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.create_aimable_projectile = function(_shot_code, _shot_index, _input, _id){
 		//playing with fire here
 		
-		log("REARAINGIUT BGSDBISDGUBSGUIYBYSFDTG USIDTGBISDFBGNTN*&IG")
+		//log("REARAINGIUT BGSDBISDGUBSGUIYBYSFDTG USIDTGBISDFBGNTN*&IG")
 		
 		//get the name of the current animation
 		var _anim_name = self.get_instance().components.get(ComponentAnimationShadered).animation.__animation;
@@ -305,6 +312,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		log(_anim_name)
 		
 		self.publish("animation_play", {name: _anim_name})
+		self.publish("animation_xscale", _aim_dir.x == 0 ? _dir : sign(_aim_dir.x))
 		
 		//set the time for shooting to end
 		self.shot_end_time = CURRENT_FRAME + 15;

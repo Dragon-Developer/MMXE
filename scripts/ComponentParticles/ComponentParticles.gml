@@ -8,10 +8,10 @@ function ComponentParticles() : ComponentBase() constructor{
 		try {
 		self.process_particles();
 		} catch(_exception) {
-			show_debug_message(_exception.message);
-			show_debug_message(_exception.longMessage);
-			show_debug_message(_exception.script);
-			show_debug_message(_exception.stacktrace);
+			log(_exception.message);
+			log(_exception.longMessage);
+			log(_exception.script);
+			log(_exception.stacktrace);
 		}
 	}
 	

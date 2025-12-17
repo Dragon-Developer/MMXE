@@ -457,11 +457,11 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 12
+                "frame": 14
               },
               {
                 "key": 1,
-                "frame": 12
+                "frame": 14
               }
             ]
           }
@@ -516,14 +516,39 @@
         {
           "name": "complete",
           "properties": {
+            "action": "outro",
             "keyframes": [
               {
                 "key": 0,
                 "frame": 0
               },
               {
-                "key": 57,
-                "frame": 0
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 17,
+                "frame": 6
+              },
+              {
+                "key": 64,
+                "frame": 6
               }
             ]
           }
@@ -534,21 +559,26 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
+                "frame": 7
               },
               {
-                "key": 3,
-                "frame": 1
+                "key": 2,
+                "frame": 8
+              },
+              {
+                "key": 4,
+                "frame": 9
               },
               {
                 "key": 6,
-                "frame": 2
+                "frame": 10
               },
               {
-                "key": 8,
-                "frame": 3
+                "key": 7,
+                "frame": 10
               }
-            ]
+            ],
+            "loop_begin": 6
           }
         },
         {
@@ -839,46 +869,6 @@
               {
                 "key": 30,
                 "frame": 0
-              }
-            ]
-          }
-        },
-        {
-          "name": "slide",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              },
-              {
-                "key": 6,
-                "frame": 2
-              },
-              {
-                "key": 8,
-                "frame": 2
-              }
-            ],
-            "loop_begin": 3
-          }
-        },
-        {
-          "name": "slide_end",
-          "properties": {
-            "action": "slide",
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 3
-              },
-              {
-                "key": 3,
-                "frame": 3
               }
             ]
           }
@@ -1251,6 +1241,85 @@
               {
                 "key": 1,
                 "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_dash",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 7,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 10,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_dash_end",
+          "properties": {
+            "action": "atk_dash",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 10
+              },
+              {
+                "key": 2,
+                "frame": 11
+              },
+              {
+                "key": 5,
+                "frame": 12
+              },
+              {
+                "key": 9,
+                "frame": 13
+              },
+              {
+                "key": 14,
+                "frame": 14
+              },
+              {
+                "key": 17,
+                "frame": 14
               }
             ]
           }

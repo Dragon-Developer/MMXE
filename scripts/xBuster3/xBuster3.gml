@@ -12,7 +12,7 @@ function xBuster33Data() : ProjectileData() constructor{
 	
 	self.animation = "xShot3X3";
 	self.hitbox_scale = new Vec2(24,24);
-	self.animation_append = "_throw";
+	//self.animation_append = "_throw";
 	
 	self.create = function(_inst){
 		//_inst.components.publish("animation_play", { name: "xShot3X1" });
@@ -34,7 +34,7 @@ function xBuster34Data() : ProjectileData() constructor{
 	self.damage = 32;
 	self.animation = "xShot4X3";
 	self.hitbox_scale = new Vec2(24,24);
-	self.animation_append = "_throw";
+	//self.animation_append = "_throw";
 	
 	self.create = function(_inst){
 		//_inst.components.publish("animation_play", { name: "xShot3X1" });

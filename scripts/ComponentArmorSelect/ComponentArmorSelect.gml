@@ -177,7 +177,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	}
 	
 	self.draw = function(){
-		draw_sprite(Sprite87,0,button_pos[self.selected_part].x - 2,button_pos[self.selected_part].y - 2)
+		draw_sprite(spr_reticle_armor_select,0,button_pos[self.selected_part].x - 2,button_pos[self.selected_part].y - 2)
 	}
 	
 	self.draw_gui = function(){
