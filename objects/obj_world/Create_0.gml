@@ -13,6 +13,8 @@ components.init();
 var _loop_music = global.stage_Data.music + "L";
 
 self.music = self.components.get(ComponentSoundLoader).play_sound(global.stage_Data.music,0,global.stage_Data.music);
+if(self.music != undefined)
+audio_sound_loop(self.music, true);
 
 self.spawn_particle = function(_particle){
 	self.components.get(ComponentParticles).add_particle(_particle);
@@ -57,5 +59,14 @@ PROJECTILES = instance_create_depth(0,0,-14000,projectile_manager);
 
 PROJECTILES.components.get(ComponentSpriteRenderer).character = "weapon";
 PROJECTILES.components.get(ComponentSpriteRenderer).load_sprites();
+
+#endregion
+
+#region making the enemy manager
+
+ENEMIES = instance_create_depth(0,0,-13000,Enemy_manager);
+
+ENEMIES.components.get(ComponentSpriteRenderer).character = "enemy";
+ENEMIES.components.get(ComponentSpriteRenderer).load_sprites();
 
 #endregion

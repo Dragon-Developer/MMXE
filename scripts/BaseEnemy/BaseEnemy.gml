@@ -1,13 +1,17 @@
 function BaseEnemy() constructor{
 	self.health = 1;
 	self.stun_offset = 0;
-	EnemyComponent = noone;
+	self.contact_damage = 2;
+	
+	self.sprite = "skull_bot"
+	
+	self.hitbox_scale = new Vec2(8,8);
+	self.hitbox_offset = new Vec2(0,0);
+	
+	self.dir = 1;
+	
 	self.init = function(_self){
 		
-	}
-	
-	self.init_default = function(_self){
-		_self.health = self.health;
 	}
 	
 	self.step = function(_self){

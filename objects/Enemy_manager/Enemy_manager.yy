@@ -1,16 +1,16 @@
 {
   "$GMObject":"",
-  "%Name":"obj_camera",
+  "%Name":"Enemy_manager",
   "eventList":[
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_camera",
+  "name":"Enemy_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"ECS",
-    "path":"folders/Objects/ECS.yy",
+    "name":"managers",
+    "path":"folders/Objects/managers.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",
@@ -33,13 +33,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_screen_scale_grid",
-    "path":"sprites/spr_screen_scale_grid/spr_screen_scale_grid.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":{
-    "name":"spr_player_mask",
-    "path":"sprites/spr_player_mask/spr_player_mask.yy",
+    "name":"spr_pixel",
+    "path":"sprites/spr_pixel/spr_pixel.yy",
   },
   "visible":true,
 }

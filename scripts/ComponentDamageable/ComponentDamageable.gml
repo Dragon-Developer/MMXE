@@ -110,10 +110,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		var _projectiles = PROJECTILES.components.get(ComponentProjectileManager).projectiles;
 		
-		
-		
 		for(var u = 0; u < array_length(_projectiles); u++){
-			var _test = get_projectile_collision(_projectiles[u]);
+			var _test = get_struct_based_object_position(_projectiles[u]);
 			if(_test != -1){
 				_proj = _test
 			}
@@ -147,29 +145,30 @@ function ComponentDamageable() : ComponentBase() constructor{
 	}
 
 	self.check_for_enemies = function(){
-		if(self.get_instance() == par_enemy) return;
+		//place_meeting takes all masks into account, so I only need the one
+		var _enemy = false;
 		
-		var _enemy = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,self.physics.objects.enemy);
+		var _enemies = ENEMIES.components.get(ComponentEnemyManager).enemies;
 		
-		if(!variable_instance_exists(_enemy, "components")){ 
+		for(var u = 0; u < array_length(_enemies); u++){
+			var _test = get_struct_based_object_position(_enemies[u]);
+			if(_test != -1){
+				_enemy = _test
+			}
+		}
+		
+		if(_enemy == false) return 0;
+		
+		if(self.invuln_offset > CURRENT_FRAME) || array_contains(self.hit_by_list, _enemy){
+			//if the comboiness is too high and the projectile is not comboy enough
 			return 0;
 		}
 		
-		if(!variable_instance_exists(_enemy.components, "get")){ 
-			return 0;
-		}
-		
-		if(self.invuln_offset > CURRENT_FRAME){
-			return 0;
-		}
-		
-		if(_enemy.components.get(ComponentEnemy).contact_damage > 0){
-			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+		if(_enemy.code.contact_damage > 0){
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
-			log("hit by enemy")
-			log(_enemy.components.get(ComponentEnemy).contact_damage)
-			log(object_get_name(_enemy.object_index))
-			return _enemy.components.get(ComponentEnemy).contact_damage;
+			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+			array_push(self.hit_by_list, _enemy)
+			return _enemy.code.contact_damage;
 		}
 		return 0;
 	}

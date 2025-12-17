@@ -9,7 +9,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	self.stages = [
 	{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: "undefined", music: "blast_hole_2.0"},//'beat' will be replaced with save data info
 	{room: rm_gate_2,          x: 67, y: 18, beat: false, icon: "gate", music: "intro_stage"},
-	{room: rm_char_select,    x: 140, y: 11, beat: false, icon: undefined, music: undefined},
+	{room: rm_char_select,    x: 140, y: 11, beat: false, icon: "x", music: undefined},
 	{room: rm_intro,           x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial"},
 	{room: rm_horizontal_test, x: 261, y: 18, beat: false, icon: "undefined", music: "x2-intro-stage"},
 	

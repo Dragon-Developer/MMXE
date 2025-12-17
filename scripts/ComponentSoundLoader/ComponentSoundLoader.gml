@@ -6,6 +6,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	self.music_folder = "music/"
 	self.loops = false;
 	self.volume = global.settings.Sound_Effect_Volume * 0.9;
+	self.tracked_sound = noone;
 
 	self.load_sound = function(_filename, _source_folder = self.source_folder){
 		var _final = noone;
@@ -84,7 +85,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	//volume: the volume the sound plays. usually uses global settings data.
 	self.play_sound = function(_filename, _start_frame = 0, _loop_sound = noone, _volume = volume, _source_folder = self.source_folder){
 		try {
-			var _id = self.load_sound(_filename);
+			var _id = self.load_sound(_filename, _source_folder);
 			if _id == -4 return;
 			var _snd = audio_play_sound(_id, 1, false, _volume, _start_frame / 60)
 		
@@ -153,14 +154,19 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 			if(audio_is_playing(self.sounds[g].sound_id)){
 				array_push(_snds, self.sounds[g])
 			} else if(self.sounds[g].loop_sound != noone){
-				var _id = self.load_sound(self.sounds[g].loop_sound, self.sounds[g].source_folder);
-				if(_id != -4){
-					self.sounds[g].sound_id = audio_play_sound(_id, 1,false,self.sounds[g].volume);
-				}
-				array_push(_snds, self.sounds[g])
+				self.play_sound(self.sounds[g].loop_sound, 0, self.sounds[g].loop_sound, self.sounds[g].volume, self.sounds[g].source_folder)
 			}
 		}
 		self.sounds = _snds
+		
+		if(tracked_sound < 0) return;
+		
+		var _cam_x = instance_nearest(0,0, obj_camera).x - 1
+		var _cam_y = instance_nearest(0,0, obj_camera).y + 1
+		
+		//tracked_sound
+		
+		draw_line(_cam_x, _cam_y, _cam_x + (GAME_W ), _cam_y)
 	}
 	
 	self.draw_gui = function(){

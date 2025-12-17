@@ -1537,6 +1537,86 @@
               }
             ]
           }
+        },
+        {
+          "name": "aim_shoot_forward_air",
+          "properties": {
+            "action": "aim_shoot_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 20,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "aim_shoot_up_forward_air",
+          "properties": {
+            "action": "aim_shoot_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2
+              },
+              {
+                "key": 20,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "aim_shoot_down_forward_air",
+          "properties": {
+            "action": "aim_shoot_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 4
+              },
+              {
+                "key": 20,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "aim_shoot_up_air",
+          "properties": {
+            "action": "aim_shoot_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              },
+              {
+                "key": 20,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "aim_shoot_down_air",
+          "properties": {
+            "action": "aim_shoot_air",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
         }
 
 

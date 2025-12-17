@@ -1,5 +1,6 @@
 #macro ENTITIES global.entities
 #macro PROJECTILES global.projectileManager
+#macro ENEMIES global.EnemyManager
 #macro SOUND global.soundManager
 #macro GAME global.game
 #macro WORLD global.world
@@ -9,6 +10,4 @@
 #macro GAME_W 320
 #macro GAME_H 240
 #macro CURRENT_FRAME global.game.__current_frame
-#macro IS_ONLINE global.online == true
-#macro IS_OFFLINE !IS_ONLINE
 #macro PLAYER_SPRITE global.player_character[global.local_player_index].image_folder

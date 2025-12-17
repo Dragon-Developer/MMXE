@@ -28,7 +28,7 @@ function TestBoss() : BaseBoss() constructor{
 	];
 	
 	self.init = function(_par){
-		log("init?")
+		//log("init?")
 		_par.publish("animation_play", { name: "fall" });
 		
 		for(var i = 0; i < array_length(pal); i++){
@@ -39,7 +39,7 @@ function TestBoss() : BaseBoss() constructor{
 			_par.find("animation").set_base_color(i, self.default_palette[i]);
 		}
 		
-		log("initiate dammit")
+		//log("initiate dammit")
 	}
 	
 	self.add_states = function(_player){

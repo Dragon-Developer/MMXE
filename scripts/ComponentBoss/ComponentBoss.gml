@@ -8,13 +8,14 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.dir = -1;//always presume they start off facing left. that's towards the player, usually
 	
 	self.death_time = -1;
+	self.contact_damage = 2;
 	
 	self.pose_animation_name = "walk";
-	self.intro_animation_name = "fall";
+	self.intro_animation_name = "blade_fall";
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
-		self.publish("animation_play", { name: "idle" });
+		self.publish("animation_play", { name: self.intro_animation_name });
 		self.publish("animation_xscale", -1);
 		
 		//self.boss_data.init(self);
@@ -82,7 +83,9 @@ function ComponentBoss() : ComponentBase() constructor{
 			step: function() {
 				//im going to presume regular boss deaths. 
 				
-				if(CURRENT_FRAME - death_time == 60){
+				var _time = CURRENT_FRAME - death_time;
+				
+				if(_time == 59){
 					GAME.game_loop.do_action_with_all_components(function(){step_enabled = true;})
 					with(obj_player){
 						components.find("animation").animation.__speed = 1;
@@ -90,29 +93,37 @@ function ComponentBoss() : ComponentBase() constructor{
 					}
 				}
 				
-				if(CURRENT_FRAME - death_time == 192){
+				if(_time == 192){
 					var _fade = instance_create_depth(get_instance().x,get_instance().y,0,obj_fade);
-					_fade.transition_white_to_black(120, 41)
+					_fade.transition_fade(120)
+					_fade.transition_data.sprite = spr_bright;
+					_fade.transition_data.wait_time = 161;
 				}
 				
-				if (CURRENT_FRAME - death_time >= 193 && CURRENT_FRAME - death_time <= 253) {
-					find("animation").animation.__alpha = 1 - (CURRENT_FRAME - death_time - 193) / 60;
+				if (_time >= 193 && _time <= 253) {
+					var _ind = 1 - ((_time - 193) / 60 * 255);
+					
+					var _col = make_color_rgb(_ind, _ind, _ind)
+					
+					find("animation").animation.__color = _col;
 				}
 				
-				if(CURRENT_FRAME - death_time == 312){
-					find("animation").animation.__alpha = 0;
+				if(_time >= 345 && _time <= 365){
+					find("animation").animation.__alpha = 1 - (_time - 345) / 20;
 				}
 				
-				if(CURRENT_FRAME mod 4 == 0 && CURRENT_FRAME - death_time < 371 && CURRENT_FRAME - death_time > 62){
+				if(CURRENT_FRAME mod 4 == 0 && _time < 371 && _time > 62){
 					var _inst = self.get_instance();
-					var _spot = new Vec2(_inst.x + (random_range(-32,32)),_inst.y + (random_range(-32,32)))
+					var _range = 30;
+					var _spot = new Vec2(_inst.x + (random_range(-_range,_range)),_inst.y + (random_range(-_range,_range)))
 					
 					WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
+					
 					if(CURRENT_FRAME mod 8 == 0)
-					WORLD.play_sound("Explosion");
+						WORLD.play_sound("Explosion");
 				}
 				
-				if(CURRENT_FRAME - death_time == 507){
+				if(_time == 507){
 					WORLD.clear_sound();
 					with(obj_player){
 						components.publish("complete");

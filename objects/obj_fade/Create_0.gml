@@ -22,6 +22,7 @@ transition_data = {
 	type: "fade",
 	opacity: 0,
 	opacity_2: 0,
+	wait_time: 0,
 	sprite: spr_fade,
 	transitioning: false,
 	visual_rate: 1,

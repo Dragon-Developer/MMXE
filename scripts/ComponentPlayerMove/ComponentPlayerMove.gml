@@ -71,23 +71,28 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(new Vec2(0,0.25));
 				self.physics.does_collisions = true;
+				
+				with(obj_camera){
+					components.publish("target_set", other.get_instance());	
+				}
 			}
 		})
 		.add("intro", {
 			enter: function() {
-				self.publish("animation_play", { name: self.states.intro.animation });
+				var _frame = self.find("animation").animation.get_props(self.states.intro.animation).keyframes[0].frame;
+				self.publish("animation_play", { name: self.states.intro.animation, frame: _frame, reset: false});
 			}
 		})
 		.add("intro_end", {
 			enter: function() {
 				
 				var _frame = self.find("animation").animation.get_props(self.states.intro.animation + "_end").keyframes[0].frame;
-				self.publish("animation_play", { name: self.states.intro.animation + "_end", frame: _frame});
+				self.publish("animation_play", { name: self.states.intro.animation + "_end", frame: _frame, reset: false});
 			}
 		})
 		.add("idle", {
 			enter: function() {
-				self.publish("animation_play", { name: "idle" });
+				self.publish("animation_play", { name: "idle", reset: false, frame: 0 });
 				self.physics.set_speed(0, 0);
 			},
 		})
@@ -167,6 +172,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("leave", {
 			enter: function(){
+				self.publish("animation_play", { name: "tp_in" , reset: false});
 				//self.publish("animation_play", { name: "leave" });
 				self.physics.set_grav(new Vec2(0,0));
 				var _inst = self.get_instance();
@@ -176,7 +182,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			},
 			step: function(){
 				var _inst = self.get_instance();
-				_inst.y -= 4;
+				_inst.y -= self.states.intro.speed;
 				
 				if(self.timer < CURRENT_FRAME){
 					room_transition_to(rm_stage_select);
@@ -543,7 +549,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			self.fsm.step();	
 			
 		//if you want the pause menu, we make it here
-		if(self.input.get_input_pressed_raw("pause") && IS_OFFLINE){
+		if(self.input.get_input_pressed_raw("pause")){
 			with(obj_entity){
 				array_foreach(components.__components, function(_comp){
 					_comp.step_enabled = false;
@@ -554,27 +560,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			_pause.components.get(ComponentPauseMenu).input = input;
 			_pause.components.get(ComponentPauseMenu).player = self.get_instance();
 		}
-		
-		if(input.get_player_index() != global.local_player_index) return;
-		
-		if(CURRENT_FRAME mod global.server_settings.client_data.ping_rate == 0){
-			if(!is_undefined(global.server)){
-				global.server.rpc.sendNotification("set_player_position", {x: get_instance().x, y: get_instance().y, id: 0, rm: room}, global.server.getAllSockets());
-			} else if IS_ONLINE{
-				global.client.update_position(get_instance().x, get_instance().y, room)
-			}
-		}
-		
-		if(!is_undefined(global.server) && input.get_input("up") && input.get_input("down") && input.get_input("shoot2") && input.get_input("shoot") && input.get_input("shoot3") && input.get_input("shoot4"))
-			room_transition_to(rm_race_lobby);
 	}
 		
 	self.draw = function(){
-		if(IS_ONLINE && keyboard_check_direct(vk_tab))
-			draw_string_condensed(global.socket.player_names[input.get_player_index()], 
-			floor(self.get_instance().x) - string_get_text_length(global.socket.player_names[input.get_player_index()]) / 2, 
-			floor(self.get_instance().y) - 40)
-		
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
 			
@@ -729,7 +717,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.add_melee_state = function(){
-		var _melee = {animation: "undefined", priority: 0, hitbox_scale: new Vec2(0,0), hitbox_offset: new Vec2(0,0), damage: 1, proj: undefined}
+		var _melee = {animation: "undefined", priority: 0, hitbox_scale: new Vec2(0,0), hitbox_offset: new Vec2(0,0), damage: 1, proj: undefined, reset_velocity: false}
 		
 		variable_struct_set(self.states, "melee", variable_clone(_melee));
 		variable_struct_set(global.player_character[0].states, "melee", variable_clone(_melee));
@@ -751,7 +739,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				
 				self.states.melee.proj = _melee_hitbox;
 				
-				if(self.physics.is_on_floor()){
+				if(self.physics.is_on_floor() && self.states.melee.reset_velocity){
 					self.physics.set_hspd(0);
 				}
 			},
@@ -772,11 +760,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				
 				self.publish("animation_play", { name: self.states.melee.animation + "_end", reset: true, frame: _frame});
 				self.states.melee.animation = "undefined"
+				
+				if(self.physics.is_on_floor()){
+					self.physics.set_hspd(0);
+				}
 			},
 			leave: function() {	
 			},
 			step: function() {
-				//
+				if(!self.physics.is_on_floor()){
+					self.set_hor_movement();
+				}
 			}
 		})
 		.add_transition("t_animation_end", "melee", "melee_end")
@@ -794,16 +788,28 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 
 	self.add_aimable_state = function(){
+		var _aiming = {return_delay: 20}
+		
+		variable_struct_set(self.states, "aiming", variable_clone(_aiming));
+		variable_struct_set(global.player_character[0].states, "aiming", variable_clone(_aiming));
+		
 		self.fsm.add("aim", {
 			enter: function() {
+				self.timer = CURRENT_FRAME;
 				self.physics.set_hspd(0);
+				self.physics.set_vspd(0);
+				self.physics.set_grav(new Vec2(0,0));
 			},
 			leave: function() {	
+				self.physics.set_grav(new Vec2(0,0.25));
 			},
 			step: function() {
 				
 			}
 		})
-		.add_transition("t_transition", "aim", "walk", function(){ return self.hdir != 0;})
+		.add_transition("t_transition", "aim", "walk", function(){ return self.hdir != 0 && self.timer + self.states.aiming.return_delay < CURRENT_FRAME;})
+		.add_transition("t_jump", "aim", "jump", function() { return can_jump_check(); })
+		.add_transition("t_transition", "aim", "fall", function() { return self.timer + self.states.aiming.return_delay < CURRENT_FRAME && !self.physics.is_on_floor(); })
+		.add_transition("t_transition", "aim", "idle", function() { return self.timer + self.states.aiming.return_delay < CURRENT_FRAME && self.physics.is_on_floor(); })
 	}
 }

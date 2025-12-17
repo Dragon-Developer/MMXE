@@ -1,5 +1,6 @@
 function AimableWeapon() : Weapon() constructor{
 	self.term = "Aimable";
+	self.cost = 0;
 }
 
 function AimableData() constructor{
