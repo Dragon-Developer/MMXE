@@ -1,7 +1,7 @@
 function ComponentEnemyManager() : ComponentBase() constructor{
 	self.enemies = [];
 	self.to_delete = [];
-	self.subdirectories_loaded = ["", "/normal"];
+	self.subdirectories = ["", "/normal"]
 	
 	self.draw_enabled = false;
 	
@@ -11,23 +11,24 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	
 	self.init = function(){
 		get(ComponentSpriteRenderer).character = "enemy";
-		get(ComponentSpriteRenderer).subdirectories = self.subdirectories_loaded;
+		get(ComponentSpriteRenderer).subdirectories = subdirectories;
 		get(ComponentSpriteRenderer).load_sprites();
+		get_instance().depth = -16000;
 	}
 	
-	self.create_enemy = function(_x, _y, _code){
+	self.create_enemy = function(_x, _y,_dir,  _code){
 		var _enemy = {};
 		
-		struct_set(_enemy, "struct_reference", _code);
 		struct_set(_enemy, "position", new Vec2(_x,_y));
 		struct_set(_enemy, "code", {});
 		
 		with(_enemy.code){script_execute(_code)}
 		
-		struct_set(_enemy, "sprite", get(ComponentSpriteRenderer).add_sprite(_enemy.code.sprite,false,  _x, _y, 1));
+		_enemy.code.dir = _dir;
+		_enemy.dir = _dir;
+		
+		struct_set(_enemy, "sprite", get(ComponentSpriteRenderer).add_sprite(_enemy.code.sprite,false,  _x, _y, _dir));
 		//log(_enemy.sprite)
-		struct_set(_enemy, "dir", _enemy.code.dir);
-		struct_set(_enemy, "contact_damage", _enemy.code.contact_damage);
 		struct_set(_enemy, "hitbox", _enemy.code.hitbox_scale);
 		struct_set(_enemy, "hitbox_offset", _enemy.code.hitbox_offset);
 		
@@ -72,11 +73,10 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 					_enemy.shooter.projectile_count--;
 					
 					get(ComponentSpriteRenderer).clear_sprite(_enemy.sprite);
-					//array_delete(self.enemies, p,1);
+					array_delete(self.enemies, p,1);
 				}
 			}
 		})
-		self.to_delete = [];
 		
 		if (keyboard_check_pressed(ord("3"))) {draw_enabled = !draw_enabled;}
 	}
@@ -93,9 +93,12 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		})
 	}
 	
-	self.detect_collisions = function(){
-		
+	self.draw_gui = function(){
 	}
 	
-	//eof
+	self.get_collision = function(_object){
+		//dep
+		//the code didnt work the way i thought it did
+		return false;
+	}
 }
