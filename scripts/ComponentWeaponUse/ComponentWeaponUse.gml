@@ -31,6 +31,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.projectile_count = 0;
 	self.added_melee_weapon = false;
 	self.added_aimable_weapon = false;
+	self.refire_time = 0;
 	
 	self.serializer
 		.addVariable("shot_end_time")
@@ -170,45 +171,74 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		}
 		
 		for(var g = 0; g < array_length(self.shoot_inputs);g++){
-			self.shoot(self.shoot_inputs[g], g);
+			self.check_shooting(self.shoot_inputs[g], g);
 		}
 	}
 	
-	self.shoot = function(_input, _id){
-		if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input)){
+	self.check_shooting = function(_input, _id){
+		var _shot_index = 0;
+		var _shot_code = {};
 			
-			//prepare shot data
-			var _shot_index = 0;
-			var _shot_code = {};
+		with(_shot_code){
+			script_execute(other.weapon_list[other.current_weapon[_id]]);
+		}
+		//log(_shot_code)
 			
-			with(_shot_code){
-				script_execute(other.weapon_list[other.current_weapon[_id]]);
-			}
-			//log(_shot_code)
-			
-			//find out which charge level you have, if you can charge
-			if(self.input.get_input_released(_input) && self.charge != noone){
-				//nobody said i was a CLEAN coder
+		//find out which charge level you have, if you can charge
+		if(self.input.get_input_released(_input) && self.charge != noone){
+			//nobody said i was a CLEAN coder
 				
-				if(self.charge.charging){
-					for(var p = 0; p < array_length(charge_time); p++){
+			if(self.charge.charging){
+				for(var p = 0; p < array_length(charge_time); p++){
 						
-						if(self.charge.start_time + charge_time[p] < CURRENT_FRAME
-						&& _shot_code.charge_limit >= p + 1){
-							_shot_index = p + 1;
-						}
+					if(self.charge.start_time + charge_time[p] < CURRENT_FRAME
+					&& _shot_code.charge_limit >= p + 1){
+						_shot_index = p + 1;
 					}
 				}
-				if(_shot_index == 0){
-					return;
-				}
 			}
-			//get the projectile data
-			var _shot_data = {};
+			if(_shot_index == 0){
+				return;
+			}
+		}
+		
+		var _shot_data = {};
 			
-			with(_shot_data){
-				script_execute(_shot_code.data[_shot_index])
-			}
+		with(_shot_data){
+			script_execute(_shot_code.data[_shot_index])
+		}
+			
+		//get what type of weapon this is [projectile, state based, melee, etc]
+		var _type = _shot_data.term;
+			
+		//i love switch statements
+		switch(_type){
+			case("Projectile"):
+				if self.shoot(_input, _id,_shot_data ,_shot_code)
+					self.create_projectile(_shot_code, _shot_index, _input, _id);
+			break;
+			case("State Based"):
+				if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input))
+					get(ComponentPlayerMove).fsm.change(_shot_data.state_name)
+			break;
+			case("Melee"):
+				if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input))
+					_shot_data.set_player_state(get(ComponentPlayerMove), _shot_index);
+			break;
+			case("Aimable"):
+				if(self.input.get_input(_input) && CURRENT_FRAME > self.refire_time){
+					self.create_aimable_projectile(_shot_code, _shot_index, _input, _id);
+					get(ComponentPlayerMove).fsm.change("aim")
+				}
+			break;
+			case("Flamethrower"):
+				//unimplemented. will not be implemented until post release as there is literally no reason to!
+			break;
+		}
+	}
+		
+	self.shoot = function(_input, _id, _shot_data, _shot_code){
+		if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input)){
 			
 			//apply stock shot
 			if(self.stock_shot != noone){
@@ -239,29 +269,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					self.weapon_ammo[self.current_weapon[_id]] -= _cost;
 			} else {
 				//bail! you dont have weapon energy
-				return;
+				return false;
 			}
-			
-			//get what type of weapon this is [projectile, state based, melee, etc]
-			var _type = _shot_data.term;
-			
-			//i love switch statements
-			switch(_type){
-				case("Projectile"):
-					self.create_projectile(_shot_code, _shot_index, _input, _id);
-				break;
-				case("State Based"):
-					get(ComponentPlayerMove).fsm.change(_shot_data.state_name)
-				break;
-				case("Melee"):
-					_shot_data.set_player_state(get(ComponentPlayerMove), _shot_index);
-				break;
-				case("Aimable"):
-					self.create_aimable_projectile(_shot_code, _shot_index, _input, _id);
-					get(ComponentPlayerMove).fsm.change("aim")
-				break;
-			}
+			return true;
 		}
+		return false;
 	}
 		
 	self.create_aimable_projectile = function(_shot_code, _shot_index, _input, _id){
@@ -361,6 +373,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//_aim_dir = new Vec2(_aim_dir.x * _dir, _aim_dir.y);
 		_shot.code.angle = _aim_dir;
 		//log("my angle is" + string(_aim_dir.angle()))
+		
+		refire_time = CURRENT_FRAME + _shot.code.shot_delay;
 		
 		self.projectile_count++;
 	}

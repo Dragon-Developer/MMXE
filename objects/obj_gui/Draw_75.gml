@@ -60,5 +60,3 @@ if(keyboard_check_pressed(ord("6"))){
 	screen_save(_screenshot)
 	log("image saved as " + _screenshot)
 }
-
-draw_string(string(room), 2, 2)

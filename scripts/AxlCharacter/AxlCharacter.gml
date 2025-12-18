@@ -8,7 +8,7 @@ function AxlCharacter() : BaseCharacter() constructor{
 	self.init = function(_player){
 		self.init_default(_player);
 		with(_player){
-			apply_armor_part(AxlGun);
+			//apply_armor_part(AxlGun);
 			add_dash();
 			add_wall_jump();
 		}

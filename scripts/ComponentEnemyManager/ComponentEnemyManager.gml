@@ -21,6 +21,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		
 		struct_set(_enemy, "position", new Vec2(_x,_y));
 		struct_set(_enemy, "code", {});
+		struct_set(_enemy, "hit_by_list", []);
 		
 		with(_enemy.code){script_execute(_code)}
 		

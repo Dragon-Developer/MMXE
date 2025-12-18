@@ -2,7 +2,6 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 	self.characters = [
 		new XCharacter(),
 		new ZeroCharacter(),
-		new RockCharacter(),
 		new AxlCharacter()
 	]
 	self.character_index = 0;
@@ -63,5 +62,9 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 			room_transition_to(rm_armor_select,"default",25);
 			//ENTITIES.destroy_instance(self.get_instance());
 		}
+	}
+	
+	self.draw_gui = function(){
+		draw_string(string_upper(self.characters[self.character_index].image_folder), 238, 16)
 	}
 }

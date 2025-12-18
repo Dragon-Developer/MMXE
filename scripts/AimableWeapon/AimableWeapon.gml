@@ -12,6 +12,7 @@ function AimableData() constructor{
 	self.dir = 1;
 	self.damage = 1;
 	self.shot_limit = 1;
+	self.shot_delay = 5;
 	self.comboiness = 1;//gonna follow z3's system
 	self.init_time = CURRENT_FRAME;
 	self.animation = "xShot1";

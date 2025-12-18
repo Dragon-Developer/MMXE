@@ -1,8 +1,6 @@
 function room_transition_to(_room, _type = "fade", _speed = 60){
 	//dont ask why this is shit. i dont know why
 	
-	log("pptiny")
-	
 	switch(_type){
 		default:
 		with(obj_gui){

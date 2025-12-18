@@ -129,6 +129,7 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentMinimap, _draw_gui);
 		ENTITIES.for_each_component(ComponentSpriteRenderer, _draw_gui);
 		ENTITIES.for_each_component(ComponentArmorSelect, _draw_gui);
+		ENTITIES.for_each_component(ComponentCharacterSelect, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);

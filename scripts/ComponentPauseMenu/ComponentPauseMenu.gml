@@ -174,9 +174,10 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		
 		if(self.input.get_input_pressed_raw("pause")){
 			with(obj_entity){
-				array_foreach(components.__components, function(_comp){
-					_comp.step_enabled = true;
-				})
+				if(variable_struct_exists(components, "__components"))
+					array_foreach(components.__components, function(_comp){
+						_comp.step_enabled = true;
+					})
 			}
 			
 			player.components.find("animation").timescale = self.animation_timescale;

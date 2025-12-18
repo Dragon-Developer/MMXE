@@ -1,6 +1,6 @@
 function XCharacter() : BaseCharacter() constructor{
 	
-	self.weapons = [xBuster, PopDash, CursePinch];
+	self.weapons = [xBuster];
 	
 	self.possible_armors = [
 		[noone, XFirstArmorHead, XSecondArmorHead],//heads
