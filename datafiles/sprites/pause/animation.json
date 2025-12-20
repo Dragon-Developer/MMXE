@@ -37,50 +37,6 @@
           }
         },
         {
-          "name": "x",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
-          }
-        },
-        {
-          "name": "zero",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
-          }
-        },
-        {
-          "name": "axl",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
-          }
-        },
-        {
-          "name": "megaman",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
-          }
-        },
-        {
           "name": "bar_start_cap",
           "properties": {
             "keyframes": [
@@ -226,11 +182,10 @@
         {//i doubt this works
           "name": "healthbar_icon_zero",
           "properties": {
-            "action": "healthbar_icon",
             "keyframes": [
               {
                 "key": 0,
-                "frame": 1
+                "frame": 0
               }
             ]
           }

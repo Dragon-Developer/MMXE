@@ -1,24 +1,24 @@
 on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
-		{   sentence : "Press the jump or dash buttons to continue through text.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+		{   sentence : "Press " + string(input_binding_get("jump")) + " to continue through text.",
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "Welcome to the Maverick Hunter Standard Performance Measurement Test!",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
-		{   sentence : "While you may be a high-ranking maverick hunter, it is still important to check on tbe basics.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+		{   sentence : "While you may be a high-ranking maverick hunter, it is still important to check on the basics.",
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "Use the left and right inputs to move left and right",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 	]

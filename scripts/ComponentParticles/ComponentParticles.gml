@@ -55,7 +55,7 @@ function ComponentParticles() : ComponentBase() constructor{
 				if(is_string(_particle.sprite))
 					_particle.sprite = real(_particle.sprite);
 				else
-					draw_sprite_ext(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
+					get(ComponentSpriteRenderer).draw_sprite(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
 			}
 		});
 	}

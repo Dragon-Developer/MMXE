@@ -70,3 +70,12 @@ ENEMIES.components.get(ComponentSpriteRenderer).character = "enemy";
 ENEMIES.components.get(ComponentSpriteRenderer).load_sprites();
 
 #endregion
+
+#region making the particle manager
+
+PARTICLES = instance_create_depth(0,0,-13500,Particle_manager);
+
+PARTICLES.components.get(ComponentSpriteRenderer).character = "particles";
+PARTICLES.components.get(ComponentSpriteRenderer).load_sprites();
+
+#endregion

@@ -2,23 +2,23 @@ on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
 		{   sentence : "I fell.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "right"
 		},
 		{   sentence : "I can tell. You should probably get out of this hole.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "How do i get out?",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "right"
 		},
-		{   sentence : "By scaling the wall to your left.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+		{   sentence : "Well, you can't scale the wall to the right, so scale the left wall and try again.",
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		}
 	]

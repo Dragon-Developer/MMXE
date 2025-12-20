@@ -10,8 +10,28 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	barValueMax = [];
 	
 	compDamageable = noone;
+	animation = new AnimationController("pause");
+	static collage = new Collage();
 	
 	self.serializer = new NET_Serializer();
+	
+	self.init = function(){
+		SpriteLoader.reload_collage(self.collage,"sprites/pause", ["/healthbar", "/normal"]);
+		var _animation = JSON.load("sprites/pause/animation.json");
+		if(_animation == -1) return;
+		var _current_animation = undefined;
+		if (!is_undefined(self.animation)) {
+			_current_animation = self.animation.__animation;
+		}
+		self.animation
+			.clear()
+			.set_character("pause")
+			.use_collage(collage)
+			.add_type("hitbox") 
+			.add_type("hurtbox") 
+			.parse_data(_animation.data.animations)
+			.init();
+	}
 	
 	self.on_register = function(){
 		self.subscribe("components_update", function() {
@@ -33,15 +53,15 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	}
 	
 	self.draw_bar = function(_val, _maxVal, _offset){
-		draw_sprite(spr_bar1_icon, 0, _offset.x, _offset.y);
+		animation.draw_action("healthbar_icon_" + PLAYER_SPRITE, undefined, 0, _offset.x, _offset.y);//icon
 		for(var i = 0; i <= _maxVal; i++)
 		{			
-			draw_sprite(spr_bar1_area, 0, _offset.x, _offset.y - 2 - i*2);
+			animation.draw_action("healthbar_tick", undefined, 0, _offset.x, _offset.y - 2 - i*2);//backing
 			if(_val > i)
 			{
-				draw_sprite(spr_bar1_hp_unit, 0, _offset.x + 4, _offset.y - 2 - i*2);
+				animation.draw_action("healthbar_fill", undefined, 0, _offset.x + 4, _offset.y - 2 - i*2);//tick
 			}
 		}
-		draw_sprite(spr_bar1_limit, 0, _offset.x, _offset.y - 2 - i*2);
+		animation.draw_action("healthbar_cap", undefined, 0, _offset.x, _offset.y - 2 - i*2);//top
 	}
 }

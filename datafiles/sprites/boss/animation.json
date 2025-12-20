@@ -2,14 +2,26 @@
   "sprites": {
     "default": {
       "origin": {
-        "x": 128,
-        "y": 128
+        "x": 35,
+        "y": 41
       }
     },
     "fsi": {
       "origin": {
         "x": 32,
         "y": 32
+      }
+    },
+    "blade_fall": {
+      "origin": {
+        "x": 128,
+        "y": 128
+      }
+    },
+    "blade_pose": {
+      "origin": {
+        "x": 128,
+        "y": 128
       }
     }
   },
@@ -98,18 +110,18 @@
             ]
           }
         },
-        {
-          "name": "blade_pose",
-          "properties": {
-            "action": "blade",
-            "keyframes":[
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
-          }
-        },
+        //{
+         // "name": "blade_pose",
+          //"properties": {
+          //  "action": "blade",
+            //"keyframes":[
+            //  {
+            //    "key": 0,
+               // "frame": 0
+             // }
+           // ]
+         // }
+       // },
         {
           "name": "death",
           "properties": {
@@ -121,8 +133,402 @@
               }
             ]
           }
+        },
+         {
+          "name": "idle",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0,
+                "shot_offset_x": 12,
+                "shot_offset_y":  -3
+              },
+              {
+                "key": 80,
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 84,
+                "frame": 2,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 92,
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 96,
+                "frame": 0,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 144,
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 148,
+                "frame": 2,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 152,
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 156,
+                "frame": 0,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 160,
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 164,
+                "frame": 2,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 168,
+                "frame": 1,
+                "shot_offset_x": 12,
+                "shot_offset_y": -3
+              }
+            ]
+          }
+        },
+        {
+          "name": "walk",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0,
+                "shot_offset_x": 19,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 5,
+                "frame": 1,
+                "shot_offset_x": 22,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 6,
+                "frame": 2,
+                "shot_offset_x": 22,
+                "shot_offset_y": -6
+              },
+              {
+                "key": 8,
+                "frame": 3,
+                "shot_offset_x": 22,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 11,
+                "frame": 4,
+                "shot_offset_x": 22,
+                "shot_offset_y": -4
+              },
+              {
+                "key": 14,
+                "frame": 5,
+                "shot_offset_x": 22,
+                "shot_offset_y": -4
+              },
+              {
+                "key": 17,
+                "frame": 6,
+                "shot_offset_x": 22,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 19,
+                "frame": 7,
+                "shot_offset_x": 22,
+                "shot_offset_y": -6
+              },
+              {
+                "key": 21,
+                "frame": 8,
+                "shot_offset_x": 22,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 24,
+                "frame": 9,
+                "shot_offset_x": 22,
+                "shot_offset_y": -4
+              },
+              {
+                "key": 27,
+                "frame": 10,
+                "shot_offset_x": 22,
+                "shot_offset_y": -4
+              },
+              {
+                "key": 30,
+                "frame": 1,
+                "shot_offset_x": 22,
+                "shot_offset_y": -5
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "jump",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0,
+                "shot_offset_x": 20,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 3,
+                "frame": 1,
+                "shot_offset_x": 21,
+                "shot_offset_y": -4
+              },
+              {
+                "key": 7,
+                "frame": 2,
+                "shot_offset_x": 20,
+                "shot_offset_y": -5
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "fall",
+          "properties": {
+            "action": "jump",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2,
+                "shot_offset_x": 20,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 3,
+                "frame": 3,
+                "shot_offset_x": 21,
+                "shot_offset_y": -4
+              },
+              {
+                "key": 7,
+                "frame": 4,
+                "shot_offset_x": 21,
+                "shot_offset_y": -4
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "dash",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0,
+                "shot_offset_x": 26,
+                "shot_offset_y": -1
+              },
+              {
+                "key": 3,
+                "frame": 1,
+                "shot_offset_x": 32,
+                "shot_offset_y": 4
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "dash_end",
+          "properties": {
+            "action": "dash",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0,
+                "shot_offset_x": 26,
+                "shot_offset_y": -1
+              },
+              {
+                "key": 8,
+                "frame": 0,
+                "shot_offset_x": 26,
+                "shot_offset_y": -1
+              }
+            ]
+          }
+        },
+        {
+          "name": "wall_slide",
+          "properties": {
+            "action": "wall",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0,
+                "shot_offset_x": 21,
+                "shot_offset_y": -5
+              },
+              {
+                "key": 3,
+                "frame": 1,
+                "shot_offset_x": 16,
+                "shot_offset_y": -3
+              },
+              {
+                "key": 6,
+                "frame": 2,
+                "shot_offset_x": 15,
+                "shot_offset_y": -2
+              }
+            ],
+            "loop_begin": 6
+          }
+        },
+        {
+          "name": "wall_jump",
+          "properties": {
+            "action": "wall",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3,
+                "shot_offset_x": 18,
+                "shot_offset_y": -8
+              },
+              {
+                "key": 3,
+                "frame": 4,
+                "shot_offset_x": 21,
+                "shot_offset_y": -9
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
+          "name": "death",
+          "properties": {
+            "action": "hurt",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "mach_hold",
+          "properties": {
+            "action": "mach_dash",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "quick_giga",
+          "properties": {
+            "action": "giga_crush",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 40,
+                "frame": 1
+              },
+              {
+                "key": 55,
+                "frame": 2
+              },
+              {
+                "key": 70,
+                "frame": 3
+              },
+              {
+                "key": 76,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "flame_dash",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 3,
+                "frame": 2
+              },
+              {
+                "key": 5,
+                "frame": 3
+              },
+              {
+                "key": 6,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 9,
+                "frame": 5
+              }
+            ]
+          }
         }
 
+
+        
 
 
 

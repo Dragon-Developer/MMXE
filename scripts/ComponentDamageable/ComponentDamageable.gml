@@ -64,13 +64,11 @@ function ComponentDamageable() : ComponentBase() constructor{
 				self.get_instance().mask_index = spr_player_mask;	
 			}
 		}
-		self.get_instance().visible = true;
 		
 		//log(self.invuln_offset < CURRENT_FRAME)
 		
 		if(self.invuln_offset > CURRENT_FRAME) {
-			if((self.invuln_offset - CURRENT_FRAME) % 2 == 0)
-				self.get_instance().visible = false;
+				self.find("animation").animation.__alpha = (self.invuln_offset - CURRENT_FRAME) % 2;
 		} else if(self.invuln_offset == CURRENT_FRAME){
 			self.hit_by_list = [];
 		}

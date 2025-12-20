@@ -11,6 +11,12 @@
         "x": 12,
         "y": 23
       }
+    },
+    "holo_dude": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
     }
   },
   "data": {
@@ -65,6 +71,7 @@
         {
           "name": "dr_cain_ghost",
           "properties": {
+            "action": "holo_dude",
             "keyframes": [
               {
                 "key": 0,

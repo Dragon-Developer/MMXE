@@ -1,1 +1,1 @@
-self.boss = new BladeManBoss();
+self.boss = new TestBoss();

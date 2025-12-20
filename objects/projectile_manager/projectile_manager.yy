@@ -9,8 +9,8 @@
   "name":"projectile_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"Projectile",
-    "path":"folders/Objects/Projectile.yy",
+    "name":"managers",
+    "path":"folders/Objects/managers.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",

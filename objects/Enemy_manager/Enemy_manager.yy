@@ -9,8 +9,8 @@
   "name":"Enemy_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"Projectile",
-    "path":"folders/Objects/Projectile.yy",
+    "name":"managers",
+    "path":"folders/Objects/managers.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",
@@ -33,10 +33,13 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
-  "spriteMaskId":{
+  "spriteId":{
     "name":"spr_pixel",
     "path":"sprites/spr_pixel/spr_pixel.yy",
+  },
+  "spriteMaskId":{
+    "name":"spr_player_mask",
+    "path":"sprites/spr_player_mask/spr_player_mask.yy",
   },
   "visible":true,
 }

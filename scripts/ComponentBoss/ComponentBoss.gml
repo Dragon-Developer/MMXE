@@ -9,6 +9,8 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 	self.death_time = -1;
 	self.contact_damage = 2;
+	self.desperate = false;
+	self.desperate_rate = 1/3;
 	
 	self.pose_animation_name = "walk";
 	self.intro_animation_name = "blade_fall";
@@ -149,6 +151,9 @@ function ComponentBoss() : ComponentBase() constructor{
 			self.fsm.step();
 			
 		}
+		
+		if(get(ComponentDamageable).health <= get(ComponentDamageable).health_max * self.desperate_rate && self.desperate == false && self.fsm.get_current_state() != "intro" && self.fsm.get_current_state() != "pose")
+			self.desperate = true;
 	}
 	
 	self.on_register = function() {

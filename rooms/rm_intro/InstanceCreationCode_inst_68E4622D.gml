@@ -2,18 +2,18 @@ on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
 		{   sentence : "Some enemies can be placed in very hard-to-reach spots!",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "Staying safe is key! Use larger projectiles to deal damage safely.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "You can also shoot while sliding down the opposite wall to stay even safer!",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		}
 	]

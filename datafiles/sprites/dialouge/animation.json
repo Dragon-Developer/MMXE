@@ -228,7 +228,54 @@
         {
           "name": "x_suprise_talking",
           "properties": {
-            "action":"x_happy",
+            "action":"x_suprise",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "x_angry",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "x_angry_talking",
+          "properties": {
+            "action":"x_angry",
             "keyframes": [
               {
                 "key": 0,

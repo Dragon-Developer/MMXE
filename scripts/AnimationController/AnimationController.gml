@@ -327,7 +327,12 @@ function AnimationController(_character = "") constructor {
 		
 		// Key-frames mode
 	    if (self.__current_animation.mode == ANIMATION_MODE.KEYFRAMES) {
-			var _max_key = _props[$ "max_key"];
+			var _max_key = undefined;
+			try{
+				var _max_key = _props[$ "max_key"];
+			} catch (_err){
+				log(self.__animation + " was missing properties")
+			}
 	        var _result = self.__process_keyframes(self.__index, self.__speed, _loop_begin, _props.keyframes, _max_key);
 	        self.__index = _result.new_index;
 	        self.__frame = _result.chosen_frame;

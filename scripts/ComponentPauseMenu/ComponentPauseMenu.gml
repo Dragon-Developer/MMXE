@@ -111,6 +111,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		
 		//spriteloader setup	
 		get(ComponentSpriteRenderer).character = "pause";
+		get(ComponentSpriteRenderer).subdirectories = ["/normal", "/healthbar"];
 		get(ComponentSpriteRenderer).load_sprites();
 		get(ComponentSpriteRenderer).add_sprite("menu", true)
 		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].weapons); i++){

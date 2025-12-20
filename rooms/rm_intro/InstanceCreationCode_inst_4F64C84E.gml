@@ -2,18 +2,18 @@ on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
 		{   sentence : "Sometimes, it's quite difficult to see your surroundings!",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "Going forward may provide a risk if done quickly, so use your abilities to your advantage!",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "Holding left or right to move towards a wall lets you fall much slower, and can help you see things coming up.",
-			mugshot_left : cainshot,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : undefined,
+			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		}
 	]
