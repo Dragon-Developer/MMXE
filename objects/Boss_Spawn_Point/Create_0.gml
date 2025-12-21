@@ -16,9 +16,14 @@ self.spawn_boss = function(){
 	//log("boss physics set")
 	_boss.components.get(ComponentDamageable).projectile_tags = ["enemy"]
 	_boss.components.get(ComponentDamageable).death_function = function(){};
+	_boss.components.get(ComponentBoss).start_state_machine();
+	
 	
 	//this might be shitty code but i dont care. 
 	self.boss.add_states(_boss.components.get(ComponentBoss));
+	
+	
+	self.publish("animation_play", { name: boss.intro_animation_name });
 	//log("boss states loaded")
 }
 

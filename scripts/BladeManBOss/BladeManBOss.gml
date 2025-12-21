@@ -11,6 +11,9 @@ function BladeManBoss() : BaseBoss() constructor{
 	self.image_folder = "boss";
 	self.subdirectories = ["/normal","/blade"];
 	
+	self.pose_animation_name = "blade_fall";
+	self.intro_animation_name = "blade_fall";
+	
 	self.add_states = function(_player){
 		
 		with(_player){

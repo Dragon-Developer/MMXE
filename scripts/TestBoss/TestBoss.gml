@@ -45,12 +45,16 @@ function TestBoss() : BaseBoss() constructor{
 		//log("initiate dammit")
 	}
 	
+	
+	self.pose_animation_name = "mach_hold";
+	self.intro_animation_name = "mach_hold";
+	
 	self.add_states = function(_player){
 		
 		with(_player){
 			self.get(ComponentPhysics).set_grav(new Vec2(0,0.25));
-			self.pose_animation_name = "mach_hold";
-			self.intro_animation_name = "mach_hold";
+			self.pose_animation_name = other.pose_animation_name;
+			self.intro_animation_name = other.intro_animation_name;
 			self.attack_states = ["dash", "walkdown"]
 			self.timer = -1;
 			fsm.add("idle", { 
