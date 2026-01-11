@@ -71,6 +71,7 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentBoss, _func);
 		ENTITIES.for_each_component(ComponentWeaponUse, _func);
 		ENTITIES.for_each_component(ComponentProjectileManager, _func);
+		ENTITIES.for_each_component(ComponentEnemyManager, _func);
 		ENTITIES.for_each_component(ComponentGravityChanger, _func);
 		ENTITIES.for_each_component(ComponentStageSelector, _func);
 		ENTITIES.for_each_component(ComponentCharacterSelect, _func);

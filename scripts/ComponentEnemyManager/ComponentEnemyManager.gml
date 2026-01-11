@@ -47,29 +47,27 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
-		array_foreach(self.enemies, function(_enemy){
+		array_foreach(self.enemies, function(_enemy, _index){
 			_enemy.code.step(_enemy.position);
+			self.get_collision(_enemy);
 		})
-		
-		for(var u = 0; u < array_length(enemies); u++){
-			self.get_collision(enemies[u]);
-			log("checkin")
-		}
 		
 		if (keyboard_check_pressed(ord("3"))) {draw_enabled = !draw_enabled;}
 	}
 	self.draw = function(){
 		array_foreach(self.enemies, function(_enemy){
+			//log("pp")
 			if(!_enemy.code.dead)
-			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
+				get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
 			
 			draw_string(_enemy.code.health, _enemy.position.x, _enemy.position.y - 32)
 			
-			if draw_enabled
-			draw_rectangle( (_enemy.hitbox.x / 2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
-				(_enemy.hitbox.y / 2) + _enemy.position.y + _enemy.hitbox_offset.y,
-				(_enemy.hitbox.x / -2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
-				(_enemy.hitbox.y / -2) + _enemy.position.y + _enemy.hitbox_offset.y, false)
+			if (draw_enabled){
+				draw_rectangle( (_enemy.hitbox.x / 2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
+					(_enemy.hitbox.y / 2) + _enemy.position.y + _enemy.hitbox_offset.y,
+					(_enemy.hitbox.x / -2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
+					(_enemy.hitbox.y / -2) + _enemy.position.y + _enemy.hitbox_offset.y, false)
+			}
 			
 		})
 	}
@@ -77,32 +75,64 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	self.draw_gui = function(){
 	}
 	
-	self.get_collision = function(_object){
-		//check every hitbox 
-		var _inst = self.get_instance();
-		_inst.x = _object.position.x + _object.hitbox_offset.x;
-		_inst.y = _object.position.y + _object.hitbox_offset.y;
+	self.get_collision = function(_enemy){
 		
-		_inst.image_xscale = _object.hitbox_scale.x
-		_inst.image_yscale = _object.hitbox_scale.y
-		
-		var _proj = false;
+		var _proj = noone;
 		var _projectiles = PROJECTILES.components.get(ComponentProjectileManager).projectiles;
 		
 		for(var u = 0; u < array_length(_projectiles); u++){
-			var _test = get_struct_based_object_position(_projectiles[u]);
-			if(_test != -1){
-				_proj = _test
+			
+			var _x = _projectiles[u].position.x + (_projectiles[u].hitbox_offset.x * _projectiles[u].dir);
+			var _y = _projectiles[u].position.y + _projectiles[u].hitbox_offset.y;
+			var _width = _projectiles[u].hitbox.x;
+			var _height = _projectiles[u].hitbox.y;	
+			
+			var _projectile_left_point =   _x - _width / 2;
+			var _projectile_right_point =  _x + _width / 2;
+			var _projectile_top_point =    _y - _height / 2;
+			var _projectile_bottom_point = _y + _height / 2;
+			
+			var _enemy_left_point =   (_enemy.hitbox.x / -2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir;
+			var _enemy_right_point =  (_enemy.hitbox.x / 2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir;
+			var _enemy_top_point =    (_enemy.hitbox.y / 2) + _enemy.position.y + _enemy.hitbox_offset.y;
+			var _enemy_bottom_point = (_enemy.hitbox.y / -2) + _enemy.position.y + _enemy.hitbox_offset.y;
+			
+			if(_enemy_left_point < _projectile_left_point && _enemy_right_point > _projectile_left_point){
+				if(_enemy_top_point > _projectile_top_point && _enemy_bottom_point < _projectile_top_point){
+					_proj = _projectiles[u];
+				}
+			}
+			
+			if(_enemy_left_point < _projectile_right_point && _enemy_right_point > _projectile_right_point){
+				if(_enemy_top_point > _projectile_top_point && _enemy_bottom_point < _projectile_top_point){
+					_proj = _projectiles[u];
+				}
+			}
+			
+			if(_enemy_left_point < _projectile_left_point && _enemy_right_point > _projectile_left_point){
+				if(_enemy_top_point > _projectile_bottom_point && _enemy_bottom_point < _projectile_bottom_point){
+					_proj = _projectiles[u];
+				}
+			}
+			
+			if(_enemy_left_point < _projectile_right_point && _enemy_right_point > _projectile_right_point){
+				if(_enemy_top_point > _projectile_bottom_point && _enemy_bottom_point < _projectile_bottom_point){
+					_proj = _projectiles[u];
+				}
 			}
 		}
 		
-		if(_proj){
-			log("e")
-			_object.code.health -= _proj.code.damage;
+		if(_proj != noone && !array_contains(_enemy.hit_by_list, _proj)){
+			array_push(_enemy.hit_by_list, _proj)
+			_enemy.code.health -= _proj.code.damage;
 		}
 		
-		if(_object.code.health <= 0){
-			_object.position.add(new Vec2(0, -100000))
+		if(_enemy.code.health <= 0 && !_enemy.code.dead){
+			_enemy.code.dead = true;
+			WORLD.play_sound("Explosion");
+			//PARTICLES.add_particle(_enemy.position.x, _enemy.position.y, 1,ExplosionParticle(_enemy.position.x, _enemy.position.y, 1));
+			_enemy.position = new Vec2(-128, -128);
+			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
 		}
 	}
 }
