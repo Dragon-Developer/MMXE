@@ -418,7 +418,7 @@
     {"$GMIncludedFile":"","%Name":"spr_boss_blade_strip40.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/blade","name":"spr_boss_blade_strip40.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_boss_bar_icon_strip1.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/normal","name":"spr_boss_bar_icon_strip1.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_boss_flame_stag_idle_strip1.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/normal","name":"spr_boss_flame_stag_idle_strip1.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"spr_boss_flame_stag_idle.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/normal","name":"spr_boss_flame_stag_idle.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"spr_boss_death_strip1.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/normal","name":"spr_boss_death_strip1.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_boss_intro_x2_strip2.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/normal","name":"spr_boss_intro_x2_strip2.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_boss_dash_strip2.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/x","name":"spr_boss_dash_strip2.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"spr_boss_flame_dash_strip6.png","CopyToMask":-1,"filePath":"datafiles/sprites/boss/x","name":"spr_boss_flame_dash_strip6.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

@@ -18,7 +18,7 @@
         "y": 128
       }
     },
-    "blade_pose": {
+    "blade": {
       "origin": {
         "x": 128,
         "y": 128
@@ -437,7 +437,6 @@
         {
           "name": "death",
           "properties": {
-            "action": "hurt",
             "keyframes": [
               {
                 "key": 0,

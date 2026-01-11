@@ -1,5 +1,5 @@
 function ComponentStageSelector() : ComponentBase() constructor{
-	self.selected = 0;
+	self.selected = 2;
 	
 	self.reticle_sprite = undefined;
 	

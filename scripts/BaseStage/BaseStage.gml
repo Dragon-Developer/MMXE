@@ -12,7 +12,7 @@ function BaseStage() constructor{
 	
 	static get_stage_beaten = function(_stage){
 		if(!struct_exists(global.player_data, "beaten_stages")) return false;
-		if(!struct_exists(global.player_data.beaten_stages, string(rm_explose_horneck))) return false;
+		if(!struct_exists(global.player_data.beaten_stages, string(stage))) return false;
 		
 		return struct_get(global.player_data.beaten_stages, string(_stage))
 	}
