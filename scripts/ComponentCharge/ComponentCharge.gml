@@ -7,9 +7,61 @@ function ComponentCharge() : ComponentBase() constructor{
 	self.shoot_inputs = ["shoot"]
 	self.charging = false;
 	self.charge_time = [30, 105, 180, 255]
+	//theres no way to get hex from other sources and everything expects hex
+	self.charge_colors = [
+		[
+			#216bf7,//Blue Armor Bits
+			#0094f7,
+			#00bdff,
+			#1884e7,//Under Armor Teal Bits
+			#52def7,
+			#a5f7f7,
+			#1852e7,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#989898,//glove
+			#e0e0e0,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		],
+		[
+			#8c73ef,//Blue Armor Bits
+			#b58cff,
+			#b5adff,
+			#9c8cf7,//Under Armor Teal Bits
+			#ceb5ff,
+			#e7e7ff,
+			#9400de,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#989898,//glove
+			#e0e0e0,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		],
+		[
+			#e74a21,//Blue Armor Bits
+			#e78c29,
+			#ffad29,
+			#e78c29,//Under Armor Teal Bits
+			#f7a57b,
+			#ffd69c,
+			#8c0000,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#f7a57b,//glove
+			#ffd69c,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		]
+	]
 	self.charge_limit = 2;
 	
 	self.charge_sound = undefined;
+	self.outline_color = undefined;
 	
 	self.init = function(){
 		self.publish("animation_play", { 
@@ -57,6 +109,10 @@ function ComponentCharge() : ComponentBase() constructor{
 			WORLD.stop_sound(self.charge_sound);
 			charging = false;
 			self.publish("animation_visible", false);
+			var _weap_pal = node_parent.get(ComponentWeaponUse).weapon_palette;
+			for(var i = 0; i < array_length(_weap_pal); i++){
+				node_parent.find("animation").set_palette_color(i, _weap_pal[i]);
+			}
 		} else if(_pressed && !charging){//prevent charge shot delay rapidly increasing
 			self.start_time = CURRENT_FRAME;
 			self.charge_sound = WORLD.play_sound("charge");
@@ -82,6 +138,28 @@ function ComponentCharge() : ComponentBase() constructor{
 			return;
 		} else {
 			self.get_instance().visible = true;
+			//charge effect
+			
+			if(node_parent == -4) return;
+			
+			if((self.start_time - CURRENT_FRAME) % 2 == 0){
+				var _charge_amount = 0;
+				
+				if(self.start_time + self.charge_time[1] <= CURRENT_FRAME)
+					_charge_amount = 1;
+				
+				if(self.start_time + self.charge_time[2] <= CURRENT_FRAME)
+					_charge_amount = 2;
+				
+				for(var i = 0; i < array_length(self.charge_colors[_charge_amount]); i++){
+					node_parent.find("animation").set_palette_color(i, self.charge_colors[_charge_amount][i]);
+				}
+			} else {
+				var _weap_pal = node_parent.get(ComponentWeaponUse).weapon_palette;
+				for(var i = 0; i < array_length(_weap_pal); i++){
+					node_parent.find("animation").set_palette_color(i, _weap_pal[i]);
+				}
+			}
 		}
 		
 		if(self.start_time + self.charge_time[2] == CURRENT_FRAME){

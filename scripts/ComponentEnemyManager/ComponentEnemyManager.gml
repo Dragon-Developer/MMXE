@@ -120,6 +120,30 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 					_proj = _projectiles[u];
 				}
 			}
+			
+			if(_projectile_left_point < _enemy_left_point && _projectile_right_point > _enemy_left_point){
+				if(_projectile_top_point > _enemy_top_point && _projectile_bottom_point < _enemy_top_point){
+					_proj = _projectiles[u];
+				}
+			}
+			
+			if(_projectile_left_point < _enemy_right_point && _projectile_right_point > _enemy_right_point){
+				if(_projectile_top_point > _enemy_top_point && _projectile_bottom_point < _enemy_top_point){
+					_proj = _projectiles[u];
+				}
+			}
+			
+			if(_projectile_left_point < _enemy_left_point && _projectile_right_point > _enemy_left_point){
+				if(_projectile_top_point > _enemy_bottom_point && _projectile_bottom_point < _enemy_bottom_point){
+					_proj = _projectiles[u];
+				}
+			}
+			
+			if(_projectile_left_point < _enemy_right_point && _projectile_right_point > _enemy_right_point){
+				if(_projectile_top_point > _enemy_bottom_point && _projectile_bottom_point < _enemy_bottom_point){
+					_proj = _projectiles[u];
+				}
+			}
 		}
 		
 		if(_proj != noone && !array_contains(_enemy.hit_by_list, _proj)){

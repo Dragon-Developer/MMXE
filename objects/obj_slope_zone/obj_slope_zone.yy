@@ -1,11 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_slope",
-  "eventList":[
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_slope_zone",
+  "eventList":[],
   "managed":true,
-  "name":"obj_slope",
+  "name":"obj_slope_zone",
   "overriddenProperties":[],
   "parent":{
     "name":"Collision",
@@ -30,9 +28,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Sprite20_1",
-    "path":"sprites/Sprite20_1/Sprite20_1.yy",
+    "name":"spr_pixel",
+    "path":"sprites/spr_pixel/spr_pixel.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

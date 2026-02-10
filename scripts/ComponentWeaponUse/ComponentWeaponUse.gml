@@ -8,6 +8,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.stock_shot = noone;
 	self.weapon_ammo = [28];
 	self.weapon_max_ammo = 28;
+	self.weapon_palette = undefined;
 	self.charge = noone;
 	self.charge_time = [30, 105, 180, 255];
 	self.shoot_inputs = ["shoot","shoot2","shoot3", "shoot4"]
@@ -39,7 +40,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		.addVariable("weapon_list")
 		
 	self.init = function(){
-		
+		self.weapon_palette = global.player_character[0].default_palette;
 	}
 		
 	self.on_register = function(){
@@ -108,6 +109,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			script_execute(other.weapon_list[other.current_weapon[0]]);
 		}
 		if(_wep == undefined) return;
+		self.weapon_palette = _wep.weapon_palette;
 		//log(_wep)
 		for(var i = 0; i < array_length(_wep.weapon_palette); i++){
 			find("animation").set_palette_color(i, _wep.weapon_palette[i]);

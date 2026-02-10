@@ -184,8 +184,44 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * @param {Vec2} v - Movement vector.
 	 */
 	move_step = function(_v,_block = self.objects.block) {
-	    if (_v.x >= 0) self.move_right(_v.x, _block);
-	    if (_v.x < 0) self.move_left(_v.x, _block);
+		var _inst = self.get_instance();
+		var _orig_x = _inst.x;
+	    if (_v.x >= 0){ 
+			var _res = self.move_right(_v.x, _block);
+			if(_res != noone){
+				log("peepee")
+				_inst.x = _orig_x;
+				_inst.y -= 1;
+				_res = self.move_right(_v.x, _block);
+				if(_res != noone){
+					_inst.x = _orig_x;
+					_inst.y += 2;
+					self.move_right(_v.x, _block);
+					_inst.y -= 1;
+				}
+			}
+		} else { 
+			var _res = self.move_left(_v.x, _block);
+			if(_res != noone){
+				log("peepee")
+				_inst.x = _orig_x;
+				_inst.y -= 1;
+				_res = self.move_left(_v.x, _block);
+				if(_res != noone){
+					_inst.x = _orig_x;
+					_inst.y += 2;
+					self.move_left(_v.x, _block);
+					_inst.y -= 1;
+				}
+			}
+		}
+		
+		
+		var _orig_y = _inst.y;
+		if(self.move_down(3) == noone){
+			_inst.y = _orig_y;
+		}
+		
 	    if (_v.y >= 0) self.move_down(_v.y, _block);
 	    if (_v.y < 0) self.move_up(_v.y, _block);
 	};

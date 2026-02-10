@@ -7,17 +7,17 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	self.stage_select_height = 4;
 	
 	self.stages = [
-	{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: "undefined", music: "blast_hole_2.0"},//'beat' will be replaced with save data info
-	{room: rm_gate_2,          x: 67, y: 18, beat: false, icon: "gate", music: "intro_stage"},
-	{room: rm_char_select,    x: 140, y: 11, beat: false, icon: "x", music: undefined},
-	{room: rm_intro,           x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial"},
-	{room: rm_horizontal_test, x: 261, y: 18, beat: false, icon: "undefined", music: "x2-intro-stage"},
+		{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: "undefined", music: "blast_hole_2.0"},//'beat' will be replaced with save data info
+		{room: rm_gate_2,          x: 67, y: 18, beat: false, icon: "gate", music: "intro_stage"},
+		{room: rm_char_select,    x: 140, y: 11, beat: false, icon: "x", music: undefined},
+		{room: rm_intro,           x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial"},
+		{room: rm_horizontal_test, x: 261, y: 18, beat: false, icon: "undefined", music: "x2-intro-stage"},
 	
-	{room: rm_training_stage, x: 19, y: 182, beat: false, icon: "undefined", music: "blast_hole"},//'beat' will be replaced with save data info
-	{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: "undefined", music: "fame_stag"},
-	{room: rm_headquarters, x: 140, y: 189, beat: false, icon: undefined, music: "HQ"},
-	{room: rm_minimum_requirements, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial"},
-	{room: rm_weapon_get, x: 261, y: 182, beat: false, icon: "undefined", music: "WeaponGet"}
+		{room: rm_training_stage, x: 19, y: 182, beat: false, icon: "undefined", music: "blast_hole"},//'beat' will be replaced with save data info
+		{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: "undefined", music: "fame_stag"},
+		{room: rm_headquarters, x: 140, y: 189, beat: false, icon: undefined, music: "HQ"},
+		{room: rm_minimum_requirements, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial"},
+		{room: rm_test, x: 261, y: 182, beat: false, icon: "undefined", music: "WeaponGet"}
 	];//not much for the moment
 	
 	self.on_register = function() {

@@ -41,6 +41,10 @@ function Palette() constructor {
 		self.colorsArray = _pal;
 	}
 	
+	static getPalette = function(){
+		return self.swapArray;
+	}
+	
 	static apply = function() {
 		shader_set(shdr_palette_swap);
 		
@@ -98,6 +102,12 @@ function Palette() constructor {
 			color_get_green(_hex),
 			color_get_blue(_hex)
 		);
+	}
+	
+	static setPaletteColorManually = function(_index, _red, _green, _blue){
+		array_set(self.swapArray[0],_index, _red / 255)
+		array_set(self.swapArray[1],_index, _green / 255)
+		array_set(self.swapArray[2],_index, _blue / 255)
 	}
 	
 	self.setSprite();
