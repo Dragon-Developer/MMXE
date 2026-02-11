@@ -13,6 +13,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.can_wall_jump = true;
 	self.initial_y = -1;
 	self.states = {};
+	self.ground_distance = 3;
 	
 	self.timer = 0;
 	
@@ -330,7 +331,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "teleport_in", "intro", function() {return self.timer <= CURRENT_FRAME })
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
-		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil(); })
+		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil() || self.physics.get_vspd() >= 0; })
 		.add_transition("t_transition", ["fall", "idle", "walk", "dash", "walljump"], "ladder_enter", function() { return self.vdir != 0 && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
 		.add_transition("t_transition", "ladder", "ladder_move", function() { return self.vdir != 0})
 		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
@@ -338,9 +339,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { 
 			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder) || self.physics.is_on_floor()
 		})
-		.add_transition("t_transition", "jump", "fall", function() { return self.physics.get_vspd() >= 0; })
 		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(); })
-		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
 		.add_wildcard_transition("t_complete", "complete")
 	}
 	
@@ -356,7 +356,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.can_jump_check = function(){
-		return self.physics.is_on_floor() && !self.physics.is_on_ceil(6);
+		return self.physics.is_on_floor(self.ground_distance) && !self.physics.is_on_ceil(6);
 	}
 	
 	self.on_register = function() {
@@ -642,9 +642,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "dash", "dash_end", function() 
 		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
-		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(); })
-		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(); })
-		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor() && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 1, obj_square_16); })
+		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
+		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(self.ground_distance); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 2, obj_square_16); })
 	}
 	
 	self.add_wall_jump = function(){
@@ -776,8 +776,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add_transition("t_animation_end", "melee", "melee_end")
 		.add_transition("t_transition", "melee_end", "walk", function(){ return self.hdir != 0;})
-		.add_transition("t_animation_end", "melee_end", "idle", function(){return self.physics.is_on_floor()})
-		.add_transition("t_animation_end", "melee_end", "fall", function(){return !self.physics.is_on_floor()})
+		.add_transition("t_animation_end", "melee_end", "idle", function(){return self.physics.is_on_floor(self.ground_distance)})
+		.add_transition("t_animation_end", "melee_end", "fall", function(){return !self.physics.is_on_floor(self.ground_distance)})
 		.add_transition("t_jump", ["melee", "melee_end"], "jump", function() {
 			if can_jump_check(){
 			

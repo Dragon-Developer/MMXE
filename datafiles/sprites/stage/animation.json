@@ -53,6 +53,21 @@
           }
         },
         {
+          "name": "capsule",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
           "name": "gravity_button_idle",
           "properties": {
             "action": "gravity_button",

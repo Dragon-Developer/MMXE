@@ -189,7 +189,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	    if (_v.x >= 0){ 
 			var _res = self.move_right(_v.x, _block);
 			if(_res != noone){
-				log("peepee")
 				_inst.x = _orig_x;
 				_inst.y -= 1;
 				_res = self.move_right(_v.x, _block);
@@ -203,7 +202,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		} else { 
 			var _res = self.move_left(_v.x, _block);
 			if(_res != noone){
-				log("peepee")
 				_inst.x = _orig_x;
 				_inst.y -= 1;
 				_res = self.move_left(_v.x, _block);

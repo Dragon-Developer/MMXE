@@ -149,6 +149,8 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		if(_proj != noone && !array_contains(_enemy.hit_by_list, _proj)){
 			array_push(_enemy.hit_by_list, _proj)
 			_enemy.code.health -= _proj.code.damage;
+			if(!_proj.code.piercing)
+			PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 		}
 		
 		if(_enemy.code.health <= 0 && !_enemy.code.dead){

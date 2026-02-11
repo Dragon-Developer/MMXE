@@ -25,16 +25,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 			self.armors = _armors;
 		});
 		self.subscribe("animation_play", function(_animation) {
-			//log(_animation.name);
-			_animation[$ "reset"] ??= false;
-			_animation[$ "keep_index"] ??= false;
-			_animation[$ "frame"] ??= 0;
-			var _index = self.animation.get_index();
-			self.animation.play(_animation.name, _animation.reset, _animation.frame);
-			if (_animation.keep_index) {
-				self.animation.set_index(_index);	
-			}
-			self.animation.__frame = _animation.frame;
+			self.play_animation(_animation);
 		});
 		self.subscribe("animation_xscale", function(_xscale) {
 			self.animation.set_xscale(_xscale)
@@ -48,6 +39,18 @@ function ComponentAnimation() : ComponentBase() constructor {
 		self.subscribe("animation_visible", function(_visible) {
 			self.animation.set_visible(_visible)
 		});
+	}
+	
+	self.play_animation = function(_animation){
+		_animation[$ "reset"] ??= false;
+		_animation[$ "keep_index"] ??= false;
+		_animation[$ "frame"] ??= 0;
+		var _index = self.animation.get_index();
+		self.animation.play(_animation.name, _animation.reset, _animation.frame);
+		if (_animation.keep_index) {
+			self.animation.set_index(_index);	
+		}
+		self.animation.__frame = _animation.frame;
 	}
 	
 	self.change_character = function(_character){

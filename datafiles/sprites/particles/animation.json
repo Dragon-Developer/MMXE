@@ -45,7 +45,23 @@
               }
             ]
           }
+        },
+        {
+          "name": "explosion",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
         }
+        //eof
       ]
     }
   }

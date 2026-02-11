@@ -17,3 +17,5 @@ components.add([
 ]);
 
 components.init();
+
+alarm[0] = 2;

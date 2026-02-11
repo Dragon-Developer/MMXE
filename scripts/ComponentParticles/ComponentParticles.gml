@@ -24,7 +24,7 @@ function ComponentParticles() : ComponentBase() constructor{
 				switch(_particle.death_mode){
 					case "duration_lifetime":
 						_particle.time++;
-						_particle.frame = (_particle.time / _particle.time_max) *  array_length(sprite_get_info(_particle.sprite).frames)
+						_particle.frame = (_particle.time / _particle.time_max) *  _particle.frame_max
 						if(_particle.time > _particle.time_max){
 							//array_delete(self.particles, array_get_index(particles, _particle),1)
 							_particle.dead = true;
@@ -33,7 +33,7 @@ function ComponentParticles() : ComponentBase() constructor{
 					case "duration_frame":
 						_particle.time++;
 						if(_particle.time >= _particle.time_max && 
-						_particle.frame > array_length(sprite_get_info(_particle.sprite).frames) - 3){
+						_particle.frame > _particle.frame_max - 3){
 							_particle.dead = true;
 							//array_delete(self.particles, array_get_index(particles, _particle),1)
 						}
@@ -52,10 +52,7 @@ function ComponentParticles() : ComponentBase() constructor{
 		array_foreach(particles,function(_particle){
 			if (is_struct(_particle)) {
 				self.get_instance().depth = _particle.depth;
-				if(is_string(_particle.sprite))
-					_particle.sprite = real(_particle.sprite);
-				else
-					get(ComponentSpriteRenderer).draw_sprite(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
+				get(ComponentSpriteRenderer).draw_sprite(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
 			}
 		});
 	}
@@ -93,6 +90,7 @@ function ParticleBase() constructor{
 	self.time = 0;
 	self.time_max = 3;
 	self.frame = 0;
+	self.frame_max = 0;
 	self.dead = false;
 	self.dir = 1;
 	self.vdir = 1;

@@ -17,7 +17,7 @@ if(self.music != undefined)
 audio_sound_loop(self.music, true);
 
 self.spawn_particle = function(_particle){
-	self.components.get(ComponentParticles).add_particle(_particle);
+	PARTICLES.components.get(ComponentParticles).add_particle(_particle);
 };
 
 self.play_sound = function(_sound, _start_frame = 0, _loop_sound = noone){
