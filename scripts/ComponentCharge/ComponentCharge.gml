@@ -26,6 +26,22 @@ function ComponentCharge() : ComponentBase() constructor{
 			#f76bc6//red
 		],
 		[
+			#216bf7,//Blue Armor Bits
+			#0094f7,
+			#00bdff,
+			#1884e7,//Under Armor Teal Bits
+			#52def7,
+			#a5f7f7,
+			#1852e7,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#989898,//glove
+			#e0e0e0,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		],
+		[
 			#8c73ef,//Blue Armor Bits
 			#b58cff,
 			#b5adff,
@@ -151,8 +167,11 @@ function ComponentCharge() : ComponentBase() constructor{
 				if(self.start_time + self.charge_time[2] <= CURRENT_FRAME)
 					_charge_amount = 2;
 				
+				if(self.start_time + self.charge_time[3] <= CURRENT_FRAME)
+					_charge_amount = 3;
+				
 				for(var i = 0; i < array_length(self.charge_colors[_charge_amount]); i++){
-					node_parent.find("animation").set_palette_color(i, self.charge_colors[_charge_amount][i]);
+					node_parent.find("animation").set_palette_color(i, self.charge_colors[clamp(_charge_amount, 0, charge_limit - 1)][i]);
 				}
 			} else {
 				var _weap_pal = node_parent.get(ComponentWeaponUse).weapon_palette;
@@ -162,10 +181,10 @@ function ComponentCharge() : ComponentBase() constructor{
 			}
 		}
 		
-		if(self.start_time + self.charge_time[2] == CURRENT_FRAME){
+		if(self.start_time + self.charge_time[self.charge_limit - 1] == CURRENT_FRAME){
 			WORLD.play_sound("full_charge");
 			var _inst = self.get_instance();
-			WORLD.spawn_particle(new FullChargeParticle(_inst.x, _inst.y, 1))
+			WORLD.spawn_particle(new LimeDieParticle(_inst.x, _inst.y, 1))
 		}
 		
 		var _shot_code = noone;

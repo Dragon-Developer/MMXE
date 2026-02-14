@@ -10,4 +10,4 @@
 #macro GAME_W 320
 #macro GAME_H 240
 #macro CURRENT_FRAME global.game.__current_frame
-#macro PLAYER_SPRITE global.player_character[global.local_player_index].image_folder
+#macro PLAYER_SPRITE global.availible_characters[global.character_index].image_folder

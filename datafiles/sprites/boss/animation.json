@@ -134,6 +134,17 @@
             ]
           }
         },
+        {
+          "name": "hurt",
+          "properties": {
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
          {
           "name": "idle",
           "properties": {

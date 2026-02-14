@@ -14,9 +14,10 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	static collage = new Collage();
 	
 	self.serializer = new NET_Serializer();
+	self.sprites = new SpriteLoader();
 	
 	self.init = function(){
-		SpriteLoader.reload_collage(self.collage,"sprites/pause", ["/healthbar", "/normal"]);
+		sprites.reload_collage(self.collage,"sprites/healthbar", ["/normal"]);
 		var _animation = JSON.load("sprites/pause/animation.json");
 		if(_animation == -1) return;
 		var _current_animation = undefined;

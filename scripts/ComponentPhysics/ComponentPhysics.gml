@@ -101,7 +101,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			self.set_vspd(self.terminal_velocity * (self.time_physics_multiplier));
 		}
 		
-		if (self.is_on_floor()) self.set_vspd(0);
+		if (self.is_on_floor(2)) self.set_vspd(0);
     }
 	
 	draw_gui = function(){
@@ -186,7 +186,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	move_step = function(_v,_block = self.objects.block) {
 		var _inst = self.get_instance();
 		var _orig_x = _inst.x;
-	    if (_v.x >= 0){ 
+	    if (_v.x > 0){ 
 			var _res = self.move_right(_v.x, _block);
 			if(_res != noone){
 				_inst.x = _orig_x;
@@ -199,7 +199,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 					_inst.y -= 1;
 				}
 			}
-		} else { 
+		} else if(_v.x < 0) { 
 			var _res = self.move_left(_v.x, _block);
 			if(_res != noone){
 				_inst.x = _orig_x;
@@ -216,7 +216,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		
 		
 		var _orig_y = _inst.y;
-		if(self.move_down(3) == noone){
+		if(self.move_down(2) == noone || _v.y < 0){
 			_inst.y = _orig_y;
 		}
 		

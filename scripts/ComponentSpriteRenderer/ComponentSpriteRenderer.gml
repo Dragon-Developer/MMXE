@@ -2,7 +2,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	static collage = new Collage();
 	self.add_tags("sprite renderer");
 	self.character = "weapon";
-	self.subdirectories = [ "/normal"];
+	self.subdirectories = ["",  "/normal"];
 	
 	self.serializer
 		.addVariable("sprites")
@@ -10,7 +10,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	self.sprites = [];//holds every currently used sprite. 
 	
 	//adds a new sprite into the pool
-	self.add_sprite = function(_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _depth = 0){
+	self.add_sprite = function(_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _depth = 0, _color = c_white){
 		//prepares a struct
 		var _spr = {};
 		
@@ -22,9 +22,11 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		struct_set(_spr, "y", _y);
 		struct_set(_spr, "dir", _dir);
 		struct_set(_spr, "depth", _depth);
+		struct_set(_spr, "color", _color);
 		
 		_spr.animationController.play(_spr.animation);
 		_spr.animationController.__animation = _spr.animation;
+		_spr.animationController.__color = _spr.color;
 		
 		//adds the struct to the sprites array
 		var _index = -1;
@@ -105,6 +107,8 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		
 		if (!is_undefined(_current_animation)) {
 			self.sprites[_index].animationController.play(_current_animation);	
+		} else {
+			log("this done fucked up")
 		}
 	}
 	
@@ -185,8 +189,9 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		_animator.draw_action(_action, undefined, _frame, floor(_instance_x), floor(_instance_y))
 	};
 	
-	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1){
+	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1, _yscale = 1){
 		self.sprites[0].animationController.__xscale = _xscale;
+		self.sprites[0].animationController.__yscale = _yscale;
 		self.sprites[0].animationController.__alpha = _alpha;
 		self.sprites[0].animationController.__color = _color;
 		self.sprites[0].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))

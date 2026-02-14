@@ -1,18 +1,18 @@
 function ComponentArmorSelect() : ComponentBase() constructor{
-	self.possible_armors = global.armors[0];
+	self.possible_armors = global.player_character[0].possible_armors
 	
 	self.selected_part = 0;
 	
 	array_copy(
 	possible_armors,0,
 	global.player_character[0].possible_armors,0,5)
-	self.selected_armor = array_create(5,0)
+	self.selected_armor = global.armors[0];
 	
 	//nested for loop so i can check what the armors actual id is
 	for(var e = 0; e < array_length(self.selected_armor);e++){
 		for(var q = 0; q < array_length(self.possible_armors[e]);q++){
 			if(self.possible_armors[e][q] == self.selected_armor[e]){
-				self.selected_armor[e] = q;
+				//self.selected_armor[e] = q;
 				continue;
 			}
 		}
@@ -67,6 +67,17 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		array_foreach(self.possible_armors, function(){
 			array_push(self.armor_sprites, get(ComponentSpriteRenderer).add_sprite("noone", true))
 		})
+		
+		self.change_armor(0, true);
+		self.selected_part++;
+		self.change_armor(0, true);
+		self.selected_part++;
+		self.change_armor(0, true);
+		self.selected_part++;
+		self.change_armor(0, true);
+		self.selected_part++;
+		
+		self.selected_part = 0;
 	}
 	
 	self.on_register = function() {
@@ -96,7 +107,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		if(_change != 0){
 			//if the selected part is less than 5, then we are selecting one of the armor segments or the 
 			if(self.selected_part <= 5){
-			self.selected_part += _change;
+			self.selected_part = clamp(self.selected_part + _change,0, 256);
 			
 			self.selected_part = (self.selected_part + array_length(self.selected_armor) + 1) mod (array_length(self.selected_armor) + 1);
 			} else if(self.selected_part == 6){
@@ -109,8 +120,6 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		
 		if(self.input.get_input_pressed("jump") && self.selected_part == 7){
 			room_transition_to(rm_char_select,"default",20);
-			
-			log("mission failed")
 		}
 		if(self.input.get_input_pressed_raw("jump") && self.selected_part == 6){
 			room_transition_to(rm_char_select,"default",20);
@@ -118,22 +127,20 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 			var _ret = array_create(array_length(self.selected_armor))
 			
 			for(var p = 0; p < array_length(self.selected_armor); p++){
-				_ret[p] = self.possible_armors[p][self.selected_armor[p]]
+				_ret[p] = self.selected_armor[p]
 			}
 			
-			global.armors[self.input.get_player_index()] = _ret;
+			global.armors[global.character_index] = _ret;
 			
-			log("success!")
-			log(global.armors[self.input.get_player_index()])
-			
-			struct_set(global.player_data, "last_used_armor", global.armors[self.input.get_player_index()]);
+			struct_set(global.player_data, "last_used_armor", global.armors);
 			self.step = function(){};
 		}
 	}
 	
-	self.change_armor = function(_change){
-		if(_change != 0){
+	self.change_armor = function(_change, _force = false){
+		if(_change != 0 || _force){
 			//increment the armor part by 1
+			log(self.selected_armor)
 			self.selected_armor[self.selected_part]+= _change;
 			
 			
@@ -161,12 +168,10 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 				}
 			
 				var _sprite_name = _armor.sprite_name;
-				log(_sprite_name)
 				_sprite_name = string_delete(_sprite_name, 0, 1);
 				_sprite_name = string_replace(_sprite_name, "/", "_");
 				
 				_sprite_name = global.player_character[0].image_folder + "_" + _sprite_name;
-				log(_sprite_name)
 			
 				get(ComponentSpriteRenderer).change_sprite(self.armor_sprites[self.selected_part], _sprite_name)
 			} else {

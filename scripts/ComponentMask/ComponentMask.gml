@@ -35,6 +35,9 @@ function ComponentMask() : ComponentBase() constructor {
 		with (obj_ladder) {
 			visible = other.draw_enabled;	
 		}
+		with (obj_camera_changer) {
+			visible = other.draw_enabled;	
+		}
 	}
 	self.draw = function() {
 		var _inst = parent.get_instance();

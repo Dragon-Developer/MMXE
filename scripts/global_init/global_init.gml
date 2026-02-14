@@ -21,12 +21,21 @@ function global_init() {
 		x: 19, 
 		y: 18, 
 		beat: false, 
-		icon: X_Mugshot_Angy1, 
+		icon: "gate", 
 		music: "HQ"
 	}
 	
-	global.player_character = [new XCharacter(),new XCharacter(),new XCharacter(),new XCharacter()];
-	global.armors = [[],[],[],[]]
+	global.availible_characters = [
+		new XCharacter(),
+		new ZeroCharacter(),
+		//new AxlCharacter(),
+		new CustomCharacter()
+	]
+	global.character_index = global.player_data.last_used_character;
+	
+	global.player_character = [global.availible_characters[global.character_index]];
+	global.armors = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+	global.checkpoint_id = undefined;
 	
 	global.debug = false;
 	global.stacktracking = false;

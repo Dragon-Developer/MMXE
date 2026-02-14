@@ -129,6 +129,53 @@
           }
         },
         {
+          "name": "zero_happy",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "zero_happy_talking",
+          "properties": {
+            "action":"zero_happy",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
           "name": "zero",
           "properties": {
             "keyframes": [
@@ -159,6 +206,53 @@
           "name": "zero_talking",
           "properties": {
             "action":"zero",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "zero_angry",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "zero_angry_talking",
+          "properties": {
+            "action":"zero_angry",
             "keyframes": [
               {
                 "key": 0,
@@ -229,6 +323,53 @@
           "name": "x_suprise_talking",
           "properties": {
             "action":"x_suprise",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "zero_suprise",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "zero_suprise_talking",
+          "properties": {
+            "action":"zero_suprise",
             "keyframes": [
               {
                 "key": 0,

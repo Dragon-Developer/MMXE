@@ -1,5 +1,5 @@
 function FullChargeParticle(_x, _y, _dir) : ParticleBase() constructor{
-	self.sprite = spr_player_shield_blue;
+	self.sprite = "lime_die";
 	self.death_mode = "duration_frame";
 	self.velocity = new Vec2(0,0);
 	self.position = new Vec2(_x,_y);

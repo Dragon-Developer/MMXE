@@ -172,6 +172,11 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		
 		if (self.fsm.event_exists("step"))
 			self.fsm.step();	
+			
+		with(obj_charge){
+			if(components.get(ComponentCharge).start_time > 0)
+				components.get(ComponentCharge).start_time++
+		}
 		
 		if(self.input.get_input_pressed_raw("pause")){
 			with(obj_entity){
@@ -253,19 +258,26 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		draw_string("TANKS", 168, 160, "orange")
 		
 		//settings highlighting
+		
+		var _icon_1_color = 0;
+		var _icon_2_color = 0;
+		var _icon_3_color = 0;
 		if(self.settings_selection == 0){
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = c_white;
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = #a0a0a0;
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = #a0a0a0;
+			_icon_1_color = c_white;
+			_icon_2_color = #a0a0a0;
+			_icon_3_color = #a0a0a0;
 		} else if(self.settings_selection == 1){
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = #a0a0a0;
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = c_white;
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = #a0a0a0;
+			_icon_1_color = #a0a0a0;
+			_icon_2_color = c_white;
+			_icon_3_color = #a0a0a0;
 		} else {
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = #a0a0a0;
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = #a0a0a0;
-			get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = c_white;
+			_icon_1_color = #a0a0a0;
+			_icon_2_color = #a0a0a0;
+			_icon_3_color = c_white;
 		}
+		get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = _icon_1_color;
+		get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = _icon_2_color;
+		get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = _icon_3_color;
 		
 		palette.apply();
 		
@@ -287,7 +299,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			draw_sprite_ext(spr_reticle_armor_select, 0, 34,16,123 / 32,181 / 32,0,c_white, 1);
 		else if (self.fsm.get_current_state() == "tanks")
 			draw_sprite_ext(spr_reticle_armor_select, 0, 163,155,90 / 32,69 / 32,0,c_white, 1);
-		else
+		else {
 			draw_sprite_ext(spr_reticle_armor_select, 0, 259,155,27 / 32,69 / 32,0,c_white, 1);
+		}
 	}
 }

@@ -6,10 +6,22 @@
         "y": 8
       }
     },
-    "dr_cain_ghost": {
+    "dash_spark": {
       "origin": {
-        "x": 12,
-        "y": 23
+        "x": 24,
+        "y": 42
+      }
+    },
+    "lime_die": {
+      "origin": {
+        "x": 34,
+        "y": 16
+      }
+    },
+    "complete": {
+      "origin": {
+        "x": 36,
+        "y": 24
       }
     }
   },
@@ -48,6 +60,111 @@
         },
         {
           "name": "explosion",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_spark",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_up_spark",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "death",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_dust",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "lemon_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "lime_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "complete",
           "properties": {
             "keyframes": [
               {

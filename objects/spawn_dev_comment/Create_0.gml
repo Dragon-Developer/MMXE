@@ -7,8 +7,15 @@ on_spawn = function(_player) {
 
 spawn = function() {
 	
-	if(!global.settings.dev_commentary)
+	if(!variable_struct_exists(global.settings, "dev_commentary")){
+		global.settings.dev_commentary = false;
 		instance_destroy(self);
+		return;
+	}
+	if(!global.settings.dev_commentary){
+		instance_destroy(self);
+		return;
+	}
 	var _inst = ENTITIES.create_instance(entity_object);
 	_inst.x = x;
 	_inst.y = y;

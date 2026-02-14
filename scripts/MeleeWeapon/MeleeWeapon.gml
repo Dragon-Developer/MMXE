@@ -24,6 +24,7 @@ function MeleeProjectile(_animation, _length) : ProjectileData() constructor{
 	self.hitbox_scale = new Vec2(64,64);
 	self.hitbox_offset = new Vec2(32,0);
 	self.term = "melee";
+	self.piercing = true;
 	self.animation = "xShot2";
 	self.life_length = CURRENT_FRAME + _length;
 	self.create = function(_inst){

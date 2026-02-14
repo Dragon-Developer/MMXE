@@ -25,6 +25,9 @@ function ProjectileData() constructor{
 	self.draw = function(){
 		//add your shit here
 	}
+	self.destroy = function(){
+		
+	}
 }
 
 /*

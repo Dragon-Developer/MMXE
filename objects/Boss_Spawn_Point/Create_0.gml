@@ -23,7 +23,7 @@ self.spawn_boss = function(){
 	self.boss.add_states(_boss.components.get(ComponentBoss));
 	
 	
-	self.publish("animation_play", { name: boss.intro_animation_name });
+	_boss.components.publish("animation_play", { name: boss.intro_animation_name });
 	//log("boss states loaded")
 }
 

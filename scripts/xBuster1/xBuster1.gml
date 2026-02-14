@@ -29,11 +29,14 @@ function xBuster11Data() : ProjectileData() constructor{
 		if(!is_undefined(_inst))
 			_inst.x += _hspd * self.dir;
 	}
+	self.destroy = function(_inst){
+		WORLD.spawn_particle(new SparkParticle(_inst.x + 16, _inst.y, 1))
+	}
 }
 
 function xBuster12Data() : ProjectileData() constructor{
 	self.comboiness = 1;//same combo damage as lemons, so it could be a good combo ender?
-	self.damage = 222;
+	self.damage = 2;
 	self.shot_limit = 3;
 	
 	self.hitbox_scale = new Vec2(16,16);
@@ -52,6 +55,9 @@ function xBuster12Data() : ProjectileData() constructor{
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 10, self.init_time + 12)) _hspd = 6;
 		else _hspd = 6.25;
 		_inst.x += _hspd * self.dir;
+	}
+	self.destroy = function(_inst){
+		WORLD.spawn_particle(new LimeDieParticle(_inst.x, _inst.y, 1))
 	}
 }
 

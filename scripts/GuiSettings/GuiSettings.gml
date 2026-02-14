@@ -4,6 +4,8 @@ function GuiSettings() : GuiContainer() constructor {
     setFlexDirection("column");
     setUsingCache(true);
     setBorderSprite(-1);
+    setPadding([0,0,0,0])
+	setGap(0)
 	self.verb = -1;
 	self.input_index = 0;
     
@@ -21,6 +23,7 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	buttonBack = new GuiButton(64, 14, "<<<Back")
 	buttonBack.addEventListener("click", function() {
+		global.settings.input = input_player_export(,false, true);
 		JSON.save({
 			settings: global.settings, 
 			player_data: global.player_data
@@ -73,15 +76,15 @@ function GuiSettings() : GuiContainer() constructor {
 				children = [];
 				setText("Rebinding")
 				setSize(string_get_text_length("Rebinding") + 10,14);
-				log(Rebind(input_name))
+				Rebind(input_name)
 				changing_bind = true;
-				binding = input_binding_get(input_name);
+				binding = "Rebinding";
 			});
 	
 			addEventListener("step", function() {
 				//check if the current binding is different from the saved binding
 				
-				if(binding != input_binding_get(input_name))
+				if !input_value_is_binding(input_name)
 					changing_bind = false;
 					
 				if changing_bind return;
@@ -92,7 +95,8 @@ function GuiSettings() : GuiContainer() constructor {
 				setSize(string_get_text_length(input_name + ": " + _bind_name) + 10,14);
 				setText(input_name + ": " + _bind_name)
 				children[0].setFontOffset(3)
-				//setText("bitch")
+				
+				changing_bind = false;
 			});
 		}
 		
@@ -141,75 +145,153 @@ function GuiSettings() : GuiContainer() constructor {
 		DashOnLandingToggle.children[0].setText("Hold Dash While Landing: " + (global.settings.Dash_On_Land ? "true" : "false"))
 	});
 	
-	SettingsContainer = new GuiContainer();
-    SettingsContainer
-        .setAutoWidth(true)
-        .setAutoHeight(true)
+	if(!variable_struct_exists(global.settings, "dev_commentary")){
+		global.settings.dev_commentary = false;
+	}
+	
+	DevCommentToggle = new GuiButton(190, 12, "Developer Commentary: " + (global.settings.dev_commentary ? "true" : "false"))
+	DevCommentToggle
 		.setFlexDirection("column")
         .setJustifyContent("left")
         .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	DevCommentToggle.addEventListener("click", function(_val){
+		global.settings.dev_commentary = !global.settings.dev_commentary;
+		DevCommentToggle.children[0].setText("Developer Commentary: " + (global.settings.dev_commentary ? "true" : "false"))
+	});
+	
+	SettingsContainer = new GuiContainer();
+    SettingsContainer
+        .setAutoWidth(false)
+        .setAutoHeight(true)
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("left")
+        .setPadding([32,0,4,0])
+		.setGap(2)
+		.setScrollEnabled(true)
+		.width = 128;
+		SettingsContainer.scrollX = -128;
+		SettingsContainer.scrolly = 128;
+	
+	MusicContainer = new GuiContainer();
+    MusicContainer
+        .setAutoWidth(true)
+        .setAutoHeight(true)
+		.setFlexDirection("row")
+        .setJustifyContent("start")
+        .setAlignItems("left")
         .setPadding([4,0,4,0])
 		.setGap(4)
 		.setScrollEnabled(true)
 		
-	MusicVolumeBar = new GuiSlidingBar(160, 12);
-	MusicVolumeBar.setProgressValue(global.settings.Music_Volume * 160)
-	MusicVolumeBar.addEventListener("slide", function(_val){
-		global.settings.Music_Volume = _val / MusicVolumeBar.maxProgressValue
-		
-		MusicVolumeSettings.setText("Music Volume: " + string(floor(_val / MusicVolumeBar.maxProgressValue * 100)) + "%")
+	MusicIncreaseVolume = new GuiButton(12,12, ">")
+	MusicIncreaseVolume.addEventListener("click", function(_val){
+		if(keyboard_check_direct(vk_shift))
+		global.settings.Music_Volume += 0.05;
+		else
+		global.settings.Music_Volume += 0.01;
+		global.settings.Music_Volume = clamp(global.settings.Music_Volume, 0, 1);
+		MusicVolumeSettings.setText("Music Volume: " + string(floor(global.settings.Music_Volume * 100)))
+		audio_sound_gain(global.intro_music, global.settings.Music_Volume * 1.1, 0);
 	});
 	
-	MusicVolumeSettings = new GuiText("Music Volume: " + string(floor(MusicVolumeBar.progressValue / MusicVolumeBar.maxProgressValue * 100)) + "%")
-	
-	SoundEffectVolumeBar = new GuiSlidingBar(160, 12);
-	SoundEffectVolumeBar.setProgressValue(global.settings.Sound_Effect_Volume * 160)
-	SoundEffectVolumeBar.addEventListener("slide", function(_val){
-		global.settings.Sound_Effect_Volume = _val / SoundEffectVolumeBar.maxProgressValue
-		
-		SoundEffectVolumeSettings.setText("Sound Effect Volume: " + string(floor(_val / SoundEffectVolumeBar.maxProgressValue * 100)) + "%")
+	MusicDecreaseVolume = new GuiButton(12,12, "<")
+	MusicDecreaseVolume.addEventListener("click", function(_val){
+		if(keyboard_check_direct(vk_shift))
+		global.settings.Music_Volume -= 0.05;
+		else
+		global.settings.Music_Volume -= 0.01;
+		global.settings.Music_Volume = clamp(global.settings.Music_Volume, 0, 1);
+		MusicVolumeSettings.setText("Music Volume: " + string(floor(global.settings.Music_Volume * 100)))
+		audio_sound_gain(global.intro_music, global.settings.Music_Volume * 1.1, 0);
 	});
 	
-	SoundEffectVolumeSettings = new GuiText("Sound Effect Volume: " + string(floor(SoundEffectVolumeBar.progressValue / SoundEffectVolumeBar.maxProgressValue * 100)) + "%")
+	MusicVolumeSettings = new GuiText("Music Volume: " + string(floor(global.settings.Music_Volume * 100)))
+		
+	MusicContainer.addChild([MusicDecreaseVolume, MusicVolumeSettings, MusicIncreaseVolume]);
 	
-	OnlineUsername = new GuiTextInput()
-	OnlineUsername.setBorderSprite(spr_gui_panel_slim);
-	OnlineUsername.setSprite(undefined);
-	OnlineUsername.setSize(180, 20);
-	OnlineUsername.setValue(global.settings.online_username);
-	
-	OnlineUsername.addEventListener("change", function() {
-		global.settings.online_username = OnlineUsername.getValue();
-		log("updated username")
+	SoundEffectsContainer = new GuiContainer();
+    SoundEffectsContainer
+        .setAutoWidth(true)
+        .setAutoHeight(true)
+		.setFlexDirection("row")
+        .setJustifyContent("start")
+        .setAlignItems("left")
+        .setPadding([4,0,4,0])
+		.setGap(4)
+		.setScrollEnabled(true)
+		
+	SoundEffectsIncreaseVolume = new GuiButton(12,12, ">")
+	SoundEffectsIncreaseVolume.addEventListener("click", function(_val){
+		if(keyboard_check_direct(vk_shift))
+		global.settings.Sound_Effect_Volume += 0.05;
+		else
+		global.settings.Sound_Effect_Volume += 0.01;
+		global.settings.Sound_Effect_Volume = clamp(global.settings.Sound_Effect_Volume, 0, 1);
+		SoundEffectsVolumeSettings.setText("Sound Effect Volume: " + string(floor(global.settings.Sound_Effect_Volume * 100)))
+		
+		audio_play_sound(audio_create_stream(working_directory + "sounds/hurt.ogg"),1, false, global.settings.Sound_Effect_Volume * 0.9);
 	});
 	
-	var _gui_bar_length = 160;
+	SoundEffectsDecreaseVolume = new GuiButton(12,12, "<")
+	SoundEffectsDecreaseVolume.addEventListener("click", function(_val){
+		if(keyboard_check_direct(vk_shift))
+		global.settings.Sound_Effect_Volume -= 0.05;
+		else
+		global.settings.Sound_Effect_Volume -= 0.01;
+		global.settings.Sound_Effect_Volume = clamp(global.settings.Sound_Effect_Volume, 0, 1);
+		SoundEffectsVolumeSettings.setText("Sound Effect Volume: " + string(floor(global.settings.Sound_Effect_Volume * 100)))
+		
+		audio_play_sound(audio_create_stream(working_directory + "sounds/hurt.ogg"),1, false, global.settings.Sound_Effect_Volume * 0.9);
+	});
 	
-	GuiScaleBar = new GuiSlidingBar(_gui_bar_length, 12);
-	GuiScaleBar.setProgressValue(global.settings.Game_Scale * ( GuiScaleBar.width / floor(display_get_height() / GAME_H)))
-	//GuiScaleBar.setMaxValue()
-	//_val / floor(GAME_H / display_get_height())
-	GuiScaleBar.addEventListener("slide", function(_val){
+	SoundEffectsVolumeSettings = new GuiText("Sound Effect Volume: " + string(floor(global.settings.Sound_Effect_Volume * 100)))
 		
-		_val = floor( lerp(1,floor(display_get_height() / GAME_H) + 2,_val / GuiScaleBar.width))
-		global.settings.Game_Scale = _val;
+	SoundEffectsContainer.addChild([SoundEffectsDecreaseVolume, SoundEffectsVolumeSettings, SoundEffectsIncreaseVolume]);
+
+	GuiScaleContainer = new GuiContainer();
+    GuiScaleContainer
+        .setAutoWidth(true)
+        .setAutoHeight(true)
+		.setFlexDirection("row")
+        .setJustifyContent("start")
+        .setAlignItems("left")
+        .setPadding([4,0,4,0])
+		.setGap(4)
+		.setScrollEnabled(true)
 		
-		var _text = "Scale: " + string(_val)
+	GuiScaleIncreaseVolume = new GuiButton(12,12, ">")
+	GuiScaleIncreaseVolume.addEventListener("click", function(_val){
+		global.settings.Game_Scale += 1;
 		
-		if(_val == floor(display_get_height() / GAME_H) + 1)
+		var _text = "Scale: " + string(global.settings.Game_Scale)
+		
+		if(global.settings.Game_Scale == floor(display_get_height() / GAME_H) + 1)
 			_text = "Fullscreen"
 		
-		GuiScaleText.setText(_text)
-	});
-	
-	GuiScaleBar.Handle.addEventListener("mouseleave", function(_val){
-		GuiScaleBar.setProgressValue(floor( lerp(1,floor(display_get_height() / GAME_H) + 2,GuiScaleBar.progressValue / GuiScaleBar.width)) * GuiScaleBar.width / (floor(display_get_height() / GAME_H) + 2))
+		GuiScaleVolumeSettings.setText(_text)
 		global_prepare_application();
 	});
 	
-	GuiScaleText = new GuiText("Scale: " + string(global.settings.Game_Scale))
+	GuiScaleDecreaseVolume = new GuiButton(12,12, "<")
+	GuiScaleDecreaseVolume.addEventListener("click", function(_val){
+		global.settings.Game_Scale -= 1;
+		
+		var _text = "Scale: " + string(global.settings.Game_Scale)
+		
+		if(global.settings.Game_Scale == floor(display_get_height() / GAME_H) + 1)
+			_text = "Fullscreen"
+		
+		GuiScaleVolumeSettings.setText(_text)
+		global_prepare_application();
+	});
 	
-	SettingsContainer.addChild([PsxDashJumpToggle,DashOnLandingToggle,MusicVolumeBar, MusicVolumeSettings, SoundEffectVolumeBar, SoundEffectVolumeSettings, GuiScaleBar, GuiScaleText]);
+	GuiScaleVolumeSettings = new GuiText("Scale: " + string(global.settings.Game_Scale))
+	
+	GuiScaleContainer.addChild([GuiScaleDecreaseVolume, GuiScaleVolumeSettings, GuiScaleIncreaseVolume]);
+	
+	SettingsContainer.addChild([DevCommentToggle,PsxDashJumpToggle,DashOnLandingToggle,MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
 	#endregion
 	
     addChild(KeybindContainer);

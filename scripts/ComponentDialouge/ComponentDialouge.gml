@@ -1,7 +1,7 @@
 function ComponentDialouge() : ComponentBase() constructor{
 	var _dia = {   sentence : "NOP this no work",
-		mugshot_left : X_Mugshot_Angy1,
-		mugshot_right : X_Mugshot1,
+		mugshot_left : "x",
+		mugshot_right : "x",
 		focus : "right"
 	}
 	self.chat = [_dia];
@@ -35,7 +35,8 @@ function ComponentDialouge() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).character = "dialouge";
 		get(ComponentSpriteRenderer).load_sprites();
 		
-		self.left_mugshot_sprite = get(ComponentSpriteRenderer).add_sprite("x", true, GAME_W / 2 + self.dialouge_box_width / 2 + self.dialouge_margin + 22, dialouge_y_top + 22)
+		self.left_mugshot_sprite = get(ComponentSpriteRenderer).add_sprite("x", true, GAME_W / 2 + self.dialouge_box_width / 2 + self.dialouge_margin + 22, dialouge_y_top + 22, -1)
+		//                                                              (_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _depth = 0, _color = c_white)
 		self.right_mugshot_sprite  = get(ComponentSpriteRenderer).add_sprite("x", true, GAME_W / 2 - self.dialouge_box_width / 2 - self.dialouge_margin - 22, dialouge_y_top + 22)
 		
 		
@@ -57,7 +58,7 @@ function ComponentDialouge() : ComponentBase() constructor{
 		self.set_dialouge(_dialouge.sentence, _dialouge.mugshot_left, _dialouge.mugshot_right, _dialouge.focus);
 	}
 	
-	self.set_dialouge = function(_text, _mugshot_left = X_Mugshot1, _mugshot_right = X_Mugshot1, _focus = "right"){
+	self.set_dialouge = function(_text, _mugshot_left = "x", _mugshot_right = "x", _focus = "right"){
 		
 		
 		self.text_chunks = [];

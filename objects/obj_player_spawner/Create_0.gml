@@ -2,13 +2,21 @@ event_inherited();
 entity_object = obj_player;
 current_spawn = 0;
 camera_spawn_offset = new Vec2(-GAME_W / 2,0);
+
+//shouldnt be zero because it tracks checkpoint objects not checkpoint numbers
+if(instance_exists(global.checkpoint_id)){
+	x = global.checkpoint_id.x;
+	y = global.checkpoint_id.y - 32;
+}
+
+
 y -= GAME_H + 8
 on_spawn = function(_player) {
 	_player.x += current_spawn * 5
 	_player.components.get(ComponentAnimationShadered).set_subdirectories(
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
-	_player.components.publish("character_set", global.player_character[current_spawn].image_folder);
+	_player.components.publish("character_set", global.availible_characters[global.character_index].image_folder);
 	_player.components.publish("armor_set",
 	[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
 	
@@ -18,9 +26,9 @@ on_spawn = function(_player) {
 	_charge.depth = _player.depth - 1;
 	_charge.components.publish("character_set", "player");
 	_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
-	_player.components.get(ComponentWeaponUse).set_weapons(global.player_character[current_spawn].weapons);
-	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_character[current_spawn].weapon_ammo_max;
-	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.player_character[current_spawn].weapons), global.player_character[current_spawn].weapon_ammo_max);
+	_player.components.get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
+	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.availible_characters[global.character_index].weapon_ammo_max;
+	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.availible_characters[global.character_index].weapons), global.availible_characters[global.character_index].weapon_ammo_max);
 	//
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);

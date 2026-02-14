@@ -9,7 +9,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.dead = false;
 	
 	self.invuln_offset = -1;//if its -1 the invuln timer is over
-	self.invuln_time = 60;//the time offset in frames that invulnerability lasts for
+	self.invuln_time = 150;//the time offset in frames that invulnerability lasts for
 	
 	self.physics = noone;//physics is used to detect collisions with projectiles.
 	
@@ -68,7 +68,21 @@ function ComponentDamageable() : ComponentBase() constructor{
 		//log(self.invuln_offset < CURRENT_FRAME)
 		
 		if(self.invuln_offset > CURRENT_FRAME) {
-				self.find("animation").animation.__alpha = (self.invuln_offset - CURRENT_FRAME) % 2;
+			self.find("animation").animation.__alpha = (self.invuln_offset - CURRENT_FRAME) % 2;
+			
+			if(get(ComponentPlayerMove) != undefined){
+				if((self.invuln_offset - CURRENT_FRAME) % 2 == 0){
+					for(var i = 0; i < array_length(global.player_character[0].default_palette); i++){
+						find("animation").set_palette_color(i, #ffffff);
+					};	
+				} else {
+					var _weap_pal = get(ComponentWeaponUse).weapon_palette;
+					for(var i = 0; i < array_length(_weap_pal); i++){
+						find("animation").set_palette_color(i, _weap_pal[i]);
+					}
+				}
+			}
+			
 		} else if(self.invuln_offset == CURRENT_FRAME){
 			self.hit_by_list = [];
 		}
@@ -137,6 +151,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.combo_count = _proj.code.comboiness;
 			array_push(self.hit_by_list, _proj)
+			if(!_proj.code.piercing)
+				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			return _proj.code.damage;
 		}
 		return 0;

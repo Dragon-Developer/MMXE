@@ -15,6 +15,12 @@ function ComponentParticles() : ComponentBase() constructor{
 		}
 	}
 	
+	self.init = function(){
+		get(ComponentSpriteRenderer).character = "particles";
+		get(ComponentSpriteRenderer).subdirectories = ["/normal"]
+		get(ComponentSpriteRenderer).load_sprites();
+	}
+	
 	self.process_particles = function(){
 		self.clean_particles();
 		array_foreach(particles,function(_particle){
@@ -24,7 +30,7 @@ function ComponentParticles() : ComponentBase() constructor{
 				switch(_particle.death_mode){
 					case "duration_lifetime":
 						_particle.time++;
-						_particle.frame = (_particle.time / _particle.time_max) *  _particle.frame_max
+						_particle.frame = (_particle.time / _particle.time_max) *  _particle.frame_max;
 						if(_particle.time > _particle.time_max){
 							//array_delete(self.particles, array_get_index(particles, _particle),1)
 							_particle.dead = true;
@@ -43,6 +49,9 @@ function ComponentParticles() : ComponentBase() constructor{
 						}
 					break;
 				}
+				
+				_particle.position.x += _particle.velocity.x;
+				_particle.position.y += _particle.velocity.y;
 			}
 		});
 		//self.clean_particles();
@@ -51,8 +60,7 @@ function ComponentParticles() : ComponentBase() constructor{
 	self.draw = function(){
 		array_foreach(particles,function(_particle){
 			if (is_struct(_particle)) {
-				self.get_instance().depth = _particle.depth;
-				get(ComponentSpriteRenderer).draw_sprite(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, _particle.dir, _particle.vdir, 0, c_white, 1);
+				get(ComponentSpriteRenderer).draw_sprite(_particle.sprite, _particle.frame, _particle.position.x, _particle.position.y, c_white, 1, _particle.dir, _particle.vdir);
 			}
 		});
 	}
@@ -61,8 +69,9 @@ function ComponentParticles() : ComponentBase() constructor{
 		var _new_particles = [];
 		//log(particles)
 		for(var g = 0; g < array_length(self.particles); g++){
-			if(!self.particles[g].dead && self.particles[g] != 0.00)
+			if(!self.particles[g].dead && self.particles[g] != 0.00){
 				array_push(_new_particles, self.particles[g])
+			}
 		}
 		self.particles = _new_particles;
 	}
@@ -83,7 +92,7 @@ script handles particles.
 */
 
 function ParticleBase() constructor{
-	self.sprite = spr_player_dash_spark;
+	self.sprite = "dash_dust";
 	self.death_mode = "animation_end";
 	self.velocity = new Vec2(0,0);
 	self.position = new Vec2(0,0);

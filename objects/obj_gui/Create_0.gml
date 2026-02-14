@@ -1,7 +1,7 @@
 
 
 if(!file_exists(game_save_id + "save.json")){
-	JSON.save(JSON.load(working_directory + "save.json"), game_save_id + "save.json", true)
+	JSON.save(JSON.load(working_directory + "reference.json"), game_save_id + "save.json", true)
 }
 
 var _save = JSON.load(game_save_id + "save.json");
@@ -10,7 +10,7 @@ if(_save == undefined || _save == -1){
 	if(!directory_exists("%localappdata%/MMXE"))
 		directory_create("%localappdata%/MMXE")
 	
-	_save = JSON.load(working_directory + "save.json");
+	_save = JSON.load(working_directory + "reference.json");
 	
 }
 
@@ -27,6 +27,10 @@ if(_server == undefined)
 global.player_data = _save.player_data;
 global.settings = _save.settings;
 global.server_settings = _server;
+
+input_player_import(global.settings.input);
+
+global.intro_music = audio_play_sound(audio_create_stream(working_directory + "music/TitleTheme.ogg"),1, true, global.settings.Music_Volume * 1.1, 0);
 
 global.gui = new GuiRoot();
 last_input = 0;

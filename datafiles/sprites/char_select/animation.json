@@ -167,7 +167,7 @@
           }
         }, 
         {
-          "name": "psx",
+          "name": "custom",
           "properties": {
             "speed":  1
           }

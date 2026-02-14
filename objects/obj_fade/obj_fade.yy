@@ -9,8 +9,8 @@
   "name":"obj_fade",
   "overriddenProperties":[],
   "parent":{
-    "name":"Generic",
-    "path":"folders/Objects/Level Assets/Generic.yy",
+    "name":"Specific",
+    "path":"folders/Objects/Level Assets/Specific.yy",
   },
   "parentObjectId":null,
   "persistent":false,

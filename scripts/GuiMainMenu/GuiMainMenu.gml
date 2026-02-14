@@ -24,17 +24,10 @@ function GuiMainMenu() : GuiContainer() constructor {
 		self.setEnabled(false);
 		global.game = new GameOffline();
 		global.player_character[0] = StringToCharacter(global.player_data.last_used_character)
-		
-		var _possible_armors = global.player_character[0].possible_armors;
-		var _selected_armors = global.player_data.last_used_armor;
-		
-		var _ret = array_create(array_length(_selected_armors))
-		
-		for(var p = 0; p < array_length(_selected_armors); p++){
-			_ret[p] = _possible_armors[p][_selected_armors[p]]
-		}
+
+		var _selected_armors = global.player_data.last_used_armor[global.character_index];
 			
-		global.armors[0] = _ret;
+		global.armors[0] = _selected_armors;
 		if(!global.settings.Has_done_intro_stage){
 			global.stage_Data.music = "tutorial"
 			parent.startGame(rm_intro);

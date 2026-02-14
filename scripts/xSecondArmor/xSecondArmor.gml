@@ -4,7 +4,7 @@ function XSecondArmorHead() : HeadPartBase() constructor{
 	self.sprite_name = "/x2/helm"//this is more for filepath.
 	self.armor_name = "Second Armor Head"
 	self.apply_armor_effects = function(_player){
-		array_push(_player.get(ComponentWeaponUse).weapon_list, SecondArmorRadar)
+		//array_push(_player.get(ComponentWeaponUse).weapon_list, SecondArmorRadar)
 	}
 }
 

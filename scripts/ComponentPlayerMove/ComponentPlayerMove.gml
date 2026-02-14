@@ -17,7 +17,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	self.timer = 0;
 	
-	self.character = global.player_character[0];
+	log(global.character_index)
+	
+	self.character = global.availible_characters[global.character_index]
 	
 	self.armor_parts = [];
 	#endregion
@@ -38,7 +40,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		#endregion
 	
 	self.reset_state_variables = function(){
-		self.states = variable_clone(global.player_character[0].states);
+		self.states = variable_clone(global.availible_characters[global.character_index].states);
 	}
 	
 	// Finite State Machine initialization
@@ -120,8 +122,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				//self.publish("animation_play", { name: "jump" });
 				self.publish("animation_play", { name: self.states.jump.animation });
 				self.physics.set_vspd(-self.states.jump.strength);
-				if (self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")
+				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
+					var _inst = self.get_instance();
 					self.current_hspd = self.states.dash.speed;
+					WORLD.spawn_particle(new SparkParticle(_inst.x, _inst.y + 16, self.dir))
+				}
 			},
 		})
 		.add_child("air", "fall", {
@@ -161,6 +166,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("animation_play", { name: "complete" });
 				self.physics.set_speed(0, 0);
 				WORLD.play_sound("full_charge");
+				var _inst = self.get_instance();
+				WORLD.spawn_particle(new CompleteParticle(_inst.x, _inst.y - 24, self.dir))
 			}
 		})
 		.add("outro", {
@@ -185,8 +192,15 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				var _inst = self.get_instance();
 				_inst.y -= self.states.intro.speed;
 				
+				
 				if(self.timer < CURRENT_FRAME){
-					room_transition_to(rm_stage_select);
+				if(room == rm_intro)
+					global.settings.Has_done_intro_stage = true;
+					JSON.save({
+						settings: global.settings, 
+						player_data: global.player_data
+					},game_save_id + "save.json", true)
+					room_transition_to(rm_stage_select, 0, 24);
 				}
 			}
 		})
@@ -211,7 +225,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("ladder", {
 			enter: function() {
 				self.physics.set_speed(0, 0);
-				self.physics.set_grav(0);
+				self.physics.set_grav(new Vec2(0,0));
 				self.find("animation").animation.__speed = 0;
 				//self.publish("animation_play", { name: "ladder" });
 			},
@@ -270,42 +284,54 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.timer = CURRENT_FRAME;
 			},
 			step: function(){
+				var _inst = self.get_instance();
 					
-					switch (CURRENT_FRAME - self.timer) {
-						// Light Palette
-						case 30:
-							//light = true;
-							break;
-						// Orbs
-						case 31:
-						case 64:
-						case 98:
-						case 141:
-						case 184:
-							//player_create_orbs(8);
-							break;
-						case 32:
-							//player_create_orbs(8, 360 / 16);
-							break;
-						// Sound
-						case 34:
-							WORLD.play_sound("die");
-							break;
-						// Stop Sound
-						case 199:
-							WORLD.stop_music();
-							break;
+				if((CURRENT_FRAME - self.timer) > 40 && (CURRENT_FRAME - self.timer) < 184){
+					WORLD.spawn_particle(new DeathBubbleParticle(_inst.x + 8 * self.dir, _inst.y, self.dir))
+					for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+						var _col = global.availible_characters[global.character_index].default_palette[i]
+						var _div = (1 + (CURRENT_FRAME - self.timer) / 184 * 2);
+						log(_div)
 						
-						//screen fades to white, THEN black!
-						//will add transition mode for that
+						var _final_col = make_color_rgb(clamp(color_get_red(_col) * _div, 0, 255), clamp(color_get_green(_col) * _div, 0, 255), clamp(color_get_blue(_col) * _div, 0, 255))
 						
-						case 92:
-							if(is_undefined(global.server))
-								room_transition_to(rm_stage_select, "white to black");
-							else
-								room_restart();
-							break;
-					}
+						find("animation").set_palette_color(i, _final_col);
+					};
+				}
+				
+				switch (CURRENT_FRAME - self.timer) {
+					// Light Palette
+					case 30:
+							for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+								find("animation").set_palette_color(i, #ffffff);
+							};
+							PARTICLES.depth = _inst.depth + 1;
+						break;
+					// Orbs
+					case 31:
+						for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+							find("animation").set_palette_color(i, global.availible_characters[global.character_index].default_palette[i]);
+						};
+						break;
+					case 32:
+						//player_create_orbs(8, 360 / 16);
+						break;
+					// Sound
+					case 34:
+						WORLD.play_sound("die");
+						break;
+					// Stop Sound
+					case 199:
+						WORLD.stop_music();
+						break;
+						
+					//screen fades to white, THEN black!
+					//will add transition mode for that
+						
+					case 92:
+						room_transition_to(room, "white to black");
+					break;
+				}
 			}
 		})
 		.add_transition("t_init", "init", "teleport_in")
@@ -400,20 +426,21 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
-		self.character = variable_clone(global.player_character[self.input.get_player_index()], 256);
-		self.armor_parts = variable_clone(global.armors[self.input.get_player_index()],256);
+		self.character = variable_clone(global.availible_characters[global.character_index], 256);
+		self.armor_parts = variable_clone(global.armors[global.character_index],256);
 		//self.apply_full_armor_set(self.armor_parts);
 		self.add_base_state_machine();
 		self.character.init(self);
 		self.fsm.trigger("t_init");
-		global.settings.input = input_player_export(,false);
 	}
 	
 	self.apply_full_armor_set = function(_armors){
 		self.reset_state_variables();
 		self.armor_parts = [[],[],["/normal"]];
 		//var _armors_to_load = [];
-		array_foreach(_armors, function(_arm){
+		array_foreach(_armors, function(_arm, _index){
+			_arm = global.availible_characters[global.character_index].possible_armors[_index][_arm]
+			
 			if(typeof(_arm) != "struct" && _arm != noone){
 				var _temp = {};
 			
@@ -445,8 +472,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 						get(ComponentDamageable).damage_rate = _arm.damage_rate;
 					
 					if(variable_struct_exists(_arm, "buster_weapon")){
-						global.player_character[get(ComponentPlayerInput).get_player_index()].weapons[0] = _arm.buster_weapon;
-						get(ComponentWeaponUse).set_weapons(global.player_character[get(ComponentPlayerInput).get_player_index()].weapons);
+						global.availible_characters[global.character_index].weapons[0] = _arm.buster_weapon;
+						get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
 					}
 				
 					array_push(self.armor_parts[2], _directory_name);
@@ -680,6 +707,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if (self.dir != 0) self.publish("animation_xscale", self.dir)
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(new Vec2(0,0));
+				var _inst = self.get_instance();
 			},
 			leave: function() {	
 				self.physics.update_gravity();
@@ -695,6 +723,15 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				}
 				if (self.timer + self.states.wall_jump.wall_stick == CURRENT_FRAME) {
 					self.physics.update_gravity();
+					
+					var _inst = self.get_instance();
+					
+					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
+						WORLD.spawn_particle(new LimeDieParticle(_inst.x + 16 * self.dir, _inst.y + 16, self.dir))
+					} else {
+						WORLD.spawn_particle(new SparkParticle(_inst.x + 24 * self.dir, _inst.y + 16, self.dir))
+					}
+					
 					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
 						self.current_hspd = self.states.dash.speed;	
 						if (!self.physics.is_on_ceil() || self.dir != self.hdir)
@@ -718,10 +755,19 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.add_melee_state = function(){
-		var _melee = {animation: "undefined", priority: 0, hitbox_scale: new Vec2(0,0), hitbox_offset: new Vec2(0,0), damage: 1, proj: undefined, reset_velocity: false}
+		var _melee = {
+			animation: "undefined", 
+			priority: 0, 
+			hitbox_scale: new Vec2(0,0), 
+			hitbox_offset: new Vec2(0,0), 
+			damage: 1, 
+			proj: undefined, 
+			reset_velocity: false,
+			grounded: false
+		}
 		
 		variable_struct_set(self.states, "melee", variable_clone(_melee));
-		variable_struct_set(global.player_character[0].states, "melee", variable_clone(_melee));
+		variable_struct_set(global.availible_characters[global.character_index].states, "melee", variable_clone(_melee));
 		
 		self.fsm.add("melee", {
 			enter: function() {
@@ -739,6 +785,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				_melee_hitbox.code.damage = self.states.melee.damage;
 				
 				self.states.melee.proj = _melee_hitbox;
+				
+				self.states.melee.grounded = self.physics.is_on_floor();
 				
 				if(self.physics.is_on_floor() && self.states.melee.reset_velocity){
 					self.physics.set_hspd(0);
@@ -766,8 +814,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					self.physics.set_hspd(0);
 				}
 			},
-			leave: function() {	
-			},
+			leave: function(){
+				
+				log(self.current_hspd);
+			}, 
 			step: function() {
 				if(!self.physics.is_on_floor()){
 					self.set_hor_movement();
@@ -775,7 +825,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			}
 		})
 		.add_transition("t_animation_end", "melee", "melee_end")
-		.add_transition("t_transition", "melee_end", "walk", function(){ return self.hdir != 0;})
+		.add_transition("t_transition", "melee", "fall", function(){ return self.physics.is_on_floor() != self.states.melee.grounded;})
+		.add_transition("t_transition", "melee_end", "walk", function(){ return self.hdir != 0 && self.physics.is_on_floor(self.ground_distance);})
 		.add_transition("t_animation_end", "melee_end", "idle", function(){return self.physics.is_on_floor(self.ground_distance)})
 		.add_transition("t_animation_end", "melee_end", "fall", function(){return !self.physics.is_on_floor(self.ground_distance)})
 		.add_transition("t_jump", ["melee", "melee_end"], "jump", function() {
@@ -792,7 +843,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		var _aiming = {return_delay: 20}
 		
 		variable_struct_set(self.states, "aiming", variable_clone(_aiming));
-		variable_struct_set(global.player_character[0].states, "aiming", variable_clone(_aiming));
+		variable_struct_set(global.availible_characters[global.character_index].states, "aiming", variable_clone(_aiming));
 		
 		self.fsm.add("aim", {
 			enter: function() {

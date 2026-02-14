@@ -1,0 +1,1 @@
+visual_effects = false;

@@ -15,6 +15,8 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).subdirectories = subdirectories;
 		get(ComponentSpriteRenderer).load_sprites();
 		get_instance().depth = -16000;
+		
+		log(string(is_in_range(2,1,3)) + " RANGE TEST");
 	}
 	
 	self.create_enemy = function(_x, _y,_dir,  _code){
@@ -97,66 +99,36 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 			var _enemy_top_point =    (_enemy.hitbox.y / 2) + _enemy.position.y + _enemy.hitbox_offset.y;
 			var _enemy_bottom_point = (_enemy.hitbox.y / -2) + _enemy.position.y + _enemy.hitbox_offset.y;
 			
-			if(_enemy_left_point < _projectile_left_point && _enemy_right_point > _projectile_left_point){
-				if(_enemy_top_point > _projectile_top_point && _enemy_bottom_point < _projectile_top_point){
+			//detect projectiles within the enemy
+			if(is_in_range(floor(_enemy_left_point), _projectile_left_point, _projectile_right_point) || is_in_range(floor(_enemy_right_point), _projectile_left_point, _projectile_right_point)){
+				if(is_in_range(floor(_enemy_top_point), _projectile_top_point, _projectile_bottom_point) || is_in_range(floor(_enemy_bottom_point), _projectile_top_point, _projectile_bottom_point)){
 					_proj = _projectiles[u];
 				}
 			}
 			
-			if(_enemy_left_point < _projectile_right_point && _enemy_right_point > _projectile_right_point){
-				if(_enemy_top_point > _projectile_top_point && _enemy_bottom_point < _projectile_top_point){
-					_proj = _projectiles[u];
-				}
-			}
-			
-			if(_enemy_left_point < _projectile_left_point && _enemy_right_point > _projectile_left_point){
-				if(_enemy_top_point > _projectile_bottom_point && _enemy_bottom_point < _projectile_bottom_point){
-					_proj = _projectiles[u];
-				}
-			}
-			
-			if(_enemy_left_point < _projectile_right_point && _enemy_right_point > _projectile_right_point){
-				if(_enemy_top_point > _projectile_bottom_point && _enemy_bottom_point < _projectile_bottom_point){
-					_proj = _projectiles[u];
-				}
-			}
-			
-			if(_projectile_left_point < _enemy_left_point && _projectile_right_point > _enemy_left_point){
-				if(_projectile_top_point > _enemy_top_point && _projectile_bottom_point < _enemy_top_point){
-					_proj = _projectiles[u];
-				}
-			}
-			
-			if(_projectile_left_point < _enemy_right_point && _projectile_right_point > _enemy_right_point){
-				if(_projectile_top_point > _enemy_top_point && _projectile_bottom_point < _enemy_top_point){
-					_proj = _projectiles[u];
-				}
-			}
-			
-			if(_projectile_left_point < _enemy_left_point && _projectile_right_point > _enemy_left_point){
-				if(_projectile_top_point > _enemy_bottom_point && _projectile_bottom_point < _enemy_bottom_point){
-					_proj = _projectiles[u];
-				}
-			}
-			
-			if(_projectile_left_point < _enemy_right_point && _projectile_right_point > _enemy_right_point){
-				if(_projectile_top_point > _enemy_bottom_point && _projectile_bottom_point < _enemy_bottom_point){
+			//detect enemies within the projectile
+			if(is_in_range(floor(_projectile_left_point), _enemy_left_point, _enemy_right_point) || is_in_range(floor(_projectile_right_point), _enemy_left_point, _enemy_right_point)){
+
+				if(is_in_range(floor(_projectile_top_point), _enemy_bottom_point, _enemy_top_point) || is_in_range(floor(_projectile_bottom_point), _enemy_bottom_point, _enemy_top_point)){
 					_proj = _projectiles[u];
 				}
 			}
 		}
 		
-		if(_proj != noone && !array_contains(_enemy.hit_by_list, _proj)){
-			array_push(_enemy.hit_by_list, _proj)
-			_enemy.code.health -= _proj.code.damage;
-			if(!_proj.code.piercing)
-			PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
+		if(_proj != noone){
+			log(_proj.code)
+			if(!array_contains(_enemy.hit_by_list, _proj)){
+				array_push(_enemy.hit_by_list, _proj)
+				_enemy.code.health -= _proj.code.damage;
+				if(!_proj.code.piercing)
+					PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
+			}
 		}
 		
 		if(_enemy.code.health <= 0 && !_enemy.code.dead){
 			_enemy.code.dead = true;
 			WORLD.play_sound("Explosion");
-			//PARTICLES.add_particle(_enemy.position.x, _enemy.position.y, 1,ExplosionParticle(_enemy.position.x, _enemy.position.y, 1));
+			WORLD.spawn_particle(new ExplosionParticle(_enemy.position.x, _enemy.position.y - 16, 1));
 			_enemy.position = new Vec2(-128, -128);
 			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
 		}

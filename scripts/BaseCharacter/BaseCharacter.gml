@@ -37,11 +37,11 @@ function BaseCharacter() constructor{
 		}
 	}
 	self.possible_armors = [
-		[],//heads
-		[],//arms
-		[],//bodies
-		[],//boots
-		[]//full sets
+		[noone],//heads
+		[noone],//arms
+		[noone],//bodies
+		[noone],//boots
+		[noone]//full set
 	];
 	self.armor_use_requirements = [];
 	

@@ -5,8 +5,8 @@ function ComponentNPC() : ComponentInteractibleInteract() constructor{
 	
 	self.dialouge = [
 		{   sentence : "NPC ERROR!",
-			mugshot_left : X_Mugshot_Happy1,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : "x",
+			mugshot_right : "x",
 			focus : "left"
 		}
 	];

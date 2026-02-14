@@ -1,8 +1,9 @@
 function xBusterX3() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster33Data,xBuster34Data,xBuster34Data];
 	self.charge_limit = 3;
+	self.cost = 0;
 	self.title = "X BUSTER";
-	self.description = "Mega Buster Mark 17"
+	self.description = "Upgraded Mega Buster"
 }
 
 function xBuster33Data() : ProjectileData() constructor{
@@ -31,7 +32,7 @@ function xBuster33Data() : ProjectileData() constructor{
 
 function xBuster34Data() : ProjectileData() constructor{
 	self.comboiness = 15;//all the drill bits should connect
-	self.damage = 32;
+	self.damage = 5;
 	self.animation = "xShot4X3";
 	self.hitbox_scale = new Vec2(24,24);
 	//self.animation_append = "_throw";

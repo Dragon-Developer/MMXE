@@ -1,8 +1,8 @@
 function TestBoss() : BaseBoss() constructor{
 	self.dialouge = [
 		{   sentence : "Youre a mean one Mr. Grinch",
-			mugshot_left : X_Mugshot_Happy1,
-			mugshot_right : X_Mugshot1,
+			mugshot_left : "x",
+			mugshot_right : "x",
 			focus : "left"
 		}
 	];
@@ -48,6 +48,7 @@ function TestBoss() : BaseBoss() constructor{
 	
 	self.pose_animation_name = "mach_hold";
 	self.intro_animation_name = "mach_hold";
+	self.death_animation_name = "hurt";
 	
 	self.add_states = function(_player){
 		
@@ -55,6 +56,7 @@ function TestBoss() : BaseBoss() constructor{
 			self.get(ComponentPhysics).set_grav(new Vec2(0,0.25));
 			self.pose_animation_name = other.pose_animation_name;
 			self.intro_animation_name = other.intro_animation_name;
+			self.death_animation_name = other.death_animation_name;
 			self.attack_states = ["dash", "walkdown"]
 			self.timer = -1;
 			fsm.add("idle", { 
@@ -150,7 +152,7 @@ function TestBoss() : BaseBoss() constructor{
 			.add("desperate_dash", {
 				enter: function(){
 					self.publish("animation_play", { name: "flame_dash" });
-					self.get(ComponentPhysics).set_hspd(8 * self.dir)
+					self.get(ComponentPhysics).set_hspd(9 * self.dir)
 					self.get(ComponentPhysics).set_vspd(-2);
 					self.get(ComponentPhysics).set_grav(new Vec2(0,0));
 				}, 
@@ -166,9 +168,6 @@ function TestBoss() : BaseBoss() constructor{
 			.add("desperate_jump",{
 				enter: function(){
 					self.publish("animation_play", { name: "quick_giga" });
-				}, 
-				step: function(){
-					get(ComponentDamageable).invuln_offset = CURRENT_FRAME + 1;
 				}
 			})
 			.add_transition("t_transition", ["dash", "walkdown", "desperate_dash"], "idle", function()

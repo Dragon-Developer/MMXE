@@ -14,6 +14,7 @@ function ComponentBoss() : ComponentBase() constructor{
 	
 	self.pose_animation_name = "walk";
 	self.intro_animation_name = "blade_fall";
+	self.death_animation_name = "death";
 	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
@@ -73,7 +74,7 @@ function ComponentBoss() : ComponentBase() constructor{
 						components.get(ComponentPlayerInput).__locked = true;
 					}
 					WORLD.clear_sound();
-					self.publish("animation_play", { name: "death" });
+					self.publish("animation_play", { name: self.death_animation_name });
 					self.death_time = CURRENT_FRAME;
 				
 					GAME.game_loop.do_action_with_all_components(function(){step_enabled = false;})
@@ -120,7 +121,7 @@ function ComponentBoss() : ComponentBase() constructor{
 					if(CURRENT_FRAME mod 4 == 0 && _time < 371 && _time > 62){
 						var _inst = self.get_instance();
 						var _range = 30;
-						var _spot = new Vec2(_inst.x + (random_range(-_range,_range)),_inst.y + (random_range(-_range,_range)))
+						var _spot = new Vec2(_inst.x + (random_range(-_range,_range)),_inst.y + (random_range(-_range,_range) - 16))
 					
 						WORLD.spawn_particle(new ExplosionParticle(_spot.x, _spot.y,1))
 					

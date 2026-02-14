@@ -54,8 +54,6 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		struct_set(_shot, "position", new Vec2(_x,_y));
 		struct_set(_shot, "code", {});
 		
-		log(_animation)
-		
 		with(_shot.code){script_execute(_code, _animation, _length)}
 		
 		_shot.code.dir = _dir;
@@ -77,8 +75,10 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	
 	self.destroy_projectile = function(_proj){
 		for(var p = 0; p < array_length(self.projectiles); p++){
-			if(self.projectiles[p].code == _proj)
+			if(self.projectiles[p].code == _proj){
+				self.projectiles[p].code.destroy(self.projectiles[p].position);
 				array_push(self.to_delete, self.projectiles[p])
+			}
 		}
 	}
 	

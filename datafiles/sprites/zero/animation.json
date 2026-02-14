@@ -1335,6 +1335,17 @@
               }
             ]
           }
+        },
+        {
+          "name": "chill",
+          "properties": {
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
         }
 
 

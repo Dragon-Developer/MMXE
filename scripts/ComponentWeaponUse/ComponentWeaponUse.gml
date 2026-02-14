@@ -20,6 +20,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	"mach_hold",
 	"hurt",
 	"intro",
+	"intro_end",
+	"teleport_in",
 	"complete",
 	"outro",
 	"leave",
@@ -171,6 +173,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				});
 			}
 		}
+		
+		if(array_contains(state_blacklist, get(ComponentPlayerMove).fsm.get_current_state())) return;
 		
 		for(var g = 0; g < array_length(self.shoot_inputs);g++){
 			self.check_shooting(self.shoot_inputs[g], g);

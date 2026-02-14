@@ -1,0 +1,342 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "menu",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_start_cap",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_end_cap",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_full_tick",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bar_empty_tick",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "settings",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "navigator",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "exit",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "sub_tank",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "weapon_tank",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_tick",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_cap",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_fill",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_icon_x",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {//i doubt this works
+          "name": "healthbar_icon_zero",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "healthbar_icon_axl",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        //example icon
+        {
+          "name": "X_BUSTER",
+          "properties": {
+            "action": "icons",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "S_ICE",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "B_CUTTER",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "E_SPARK",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "STORM_T",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "FIRE_WAVE",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "R_SHIELD",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "C_STING",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "HOMING_T",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "S_WHEEL",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 13
+              }
+            ]
+          }
+        },
+        {
+          "name": "RADAR_FUNC",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 19
+              }
+            ]
+          }
+        },
+        {
+          "name": "XENO_M",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        }
+        //eof
+      ]
+    }
+  }
+}
