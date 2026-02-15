@@ -163,7 +163,7 @@ function GuiSettings() : GuiContainer() constructor {
 	SettingsContainer = new GuiContainer();
     SettingsContainer
         .setAutoWidth(false)
-        .setAutoHeight(true)
+        .setAutoHeight(false)
 		.setFlexDirection("column")
         .setJustifyContent("left")
         .setAlignItems("left")

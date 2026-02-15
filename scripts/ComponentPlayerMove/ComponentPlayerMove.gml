@@ -727,7 +727,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					var _inst = self.get_instance();
 					
 					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
-						WORLD.spawn_particle(new LimeDieParticle(_inst.x + 16 * self.dir, _inst.y + 16, self.dir))
+						WORLD.spawn_particle(new DashUpParticle(_inst.x, _inst.y + 16, self.dir))
 					} else {
 						WORLD.spawn_particle(new SparkParticle(_inst.x + 24 * self.dir, _inst.y + 16, self.dir))
 					}

@@ -4,7 +4,7 @@ function XCharacter() : BaseCharacter() constructor{
 	
 	self.possible_armors = [
 		[noone, XFirstArmorHead, XSecondArmorHead],//heads
-		[noone, XFirstArmorArms, XSecondArmorArms],//arms
+		[noone, XFirstArmorArms, XSecondArmorArms, XHermesArmorArms],//arms
 		[noone, XFirstArmorBody, XSecondArmorBody],//bodies
 		[noone, XFirstArmorBoot, XSecondArmorBoot, XBladeArmorBoot],//boots
 		[noone]//no full sets yet but ult armor would be good here

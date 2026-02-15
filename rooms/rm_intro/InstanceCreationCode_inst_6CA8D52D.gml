@@ -5,7 +5,7 @@ on_spawn = function(_npc){
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
-		{   sentence : "It's invincible the entire time it charges its desperation. This has proved to be annoying!",
+		{   sentence : "It used to be invincible the entire time it charges its desperation. This proved to be annoying!",
 			mugshot_left : "axlforte",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"

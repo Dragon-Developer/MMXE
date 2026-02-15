@@ -10,8 +10,8 @@
     "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
   },
   "parentObjectId":{
-    "name":"obj_block_parent",
-    "path":"objects/obj_block_parent/obj_block_parent.yy",
+    "name":"obj_square_16",
+    "path":"objects/obj_square_16/obj_square_16.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

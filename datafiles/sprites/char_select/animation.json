@@ -153,6 +153,12 @@
           "properties": {
             "speed":  1
           }
+        },  
+        {
+          "name": "x_hermes_arms",
+          "properties": {
+            "speed":  1
+          }
         }, 
         {
           "name": "zero",

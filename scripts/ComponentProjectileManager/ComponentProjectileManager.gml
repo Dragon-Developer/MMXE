@@ -108,7 +108,8 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		array_foreach(self.to_delete, function(_shot){
 			for(var p = 0; p < array_length(self.projectiles); p++){
 				if(self.projectiles[p] == _shot){
-					_shot.shooter.projectile_count--;
+					if(variable_struct_exists(_shot.shooter, "projectile_count"))
+						_shot.shooter.projectile_count--;
 					
 					get(ComponentSpriteRenderer).clear_sprite(_shot.sprite);
 					array_delete(self.projectiles, p,1);

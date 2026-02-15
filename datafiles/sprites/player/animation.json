@@ -44,6 +44,11 @@
           "properties": {
             "speed": 1
           }
+        },{
+          "name": "charge_4",
+          "properties": {
+            "speed": 1
+          }
         }
       ]
     }

@@ -36,7 +36,7 @@ function BootPartBase() : ArmorBase() constructor{
 			enter: function() {
 				self.timer = 0;
 				self.dash_dir = self.dir;
-				self.publish("animation_play", { name: self.states.dash.animation + "_end" });
+				self.publish("animation_play", { name: self.states.dash_air.animation + "_end" });
 				self.dash_tapped = false;
 			},
 			step: function() {

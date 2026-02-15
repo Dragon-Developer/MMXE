@@ -18,6 +18,36 @@
         "y": 16
       }
     },
+    "hermes_shot_1": {
+      "origin": {
+        "x": 18,
+        "y": 16
+      }
+    },
+    "hermes_shot_2": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "hermes_shot_2_up": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "hermes_shot_2_down": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "hermes_shot_3": {
+      "origin": {
+        "x": 56,
+        "y": 50
+      }
+    },
     "xShot3X1": {
       "origin": {
         "x": 30,
@@ -105,6 +135,17 @@
       "list": [
         {
           "name": "xShot1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_0",
           "properties": {
             "keyframes": [
               {
@@ -446,6 +487,121 @@
               {
                 "key": 4,
                 "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_2_up",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_2_down",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
               }
             ]
           }
