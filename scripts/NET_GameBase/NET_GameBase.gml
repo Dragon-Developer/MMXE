@@ -118,7 +118,7 @@ function NET_GameBase() constructor {
      * Advances the game by processing inputs and executing the game loop for the current frame.
      */
 	static step = function() {
-		if (!self.__started) return;
+		if (!self.__started || (self.game_loop.frame_advancing && !keyboard_check_pressed(ord("0")))) return;
 		self.add_local_inputs(self.__current_frame);
 		self.run_current_frame();
 		self.__current_frame++;

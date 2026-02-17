@@ -25,12 +25,12 @@ function xBuster11Data() : ProjectileData() constructor{
 		if (is_in_range(CURRENT_FRAME, self.init_time, self.init_time + 2)) _hspd = 4;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 2, self.init_time + 5)) _hspd = 5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6;
-		else _hspd = 6.25;
+		else if (CURRENT_FRAME - self.init_time > 24)_hspd = 6.25;
 		if(!is_undefined(_inst))
 			_inst.x += _hspd * self.dir;
 	}
 	self.destroy = function(_inst){
-		WORLD.spawn_particle(new SparkParticle(_inst.x + 16, _inst.y, 1))
+		WORLD.spawn_particle(new LemonDieParticle(_inst.x + 16, _inst.y, 1))
 	}
 }
 
@@ -40,6 +40,7 @@ function xBuster12Data() : ProjectileData() constructor{
 	self.shot_limit = 3;
 	
 	self.hitbox_scale = new Vec2(16,16);
+	self.hitbox_offset = new Vec2(16,0);
 	self.animation = "xShot2";
 
 	self.create = function(_inst){
@@ -53,11 +54,11 @@ function xBuster12Data() : ProjectileData() constructor{
 		if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 8)) _hspd = 4;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 8, self.init_time + 10)) _hspd = 5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 10, self.init_time + 12)) _hspd = 6;
-		else _hspd = 6.25;
+		else if (CURRENT_FRAME - self.init_time > 12)_hspd = 6.25;
 		_inst.x += _hspd * self.dir;
 	}
 	self.destroy = function(_inst){
-		WORLD.spawn_particle(new LimeDieParticle(_inst.x, _inst.y, 1))
+		WORLD.spawn_particle(new LimeDieParticle(_inst.x + 16 * dir, _inst.y, self.dir))
 	}
 }
 
@@ -69,6 +70,7 @@ function xBuster13Data() : ProjectileData() constructor{
 	
 	self.animation = "xShot3X1";
 	self.hitbox_scale = new Vec2(24,24);
+	self.hitbox_offset = new Vec2(8,0);
 	
 	self.create = function(_inst){
 		//_inst.components.publish("animation_play", { name: "xShot3X1" });
@@ -80,8 +82,11 @@ function xBuster13Data() : ProjectileData() constructor{
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 8)) _hspd = 6;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 8, self.init_time + 10)) _hspd = 6.5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 10, self.init_time + 12)) _hspd = 7;
-		else _hspd = 7.5;
+		else if (CURRENT_FRAME - self.init_time > 12) _hspd = 7.5;
 		_inst.x += _hspd * self.dir;
+	}
+	self.destroy = function(_inst){
+		WORLD.spawn_particle(new FullShotDieParticle(_inst.x - 8 * dir, _inst.y, self.dir))
 	}
 }
 
@@ -97,7 +102,7 @@ function xBuster14Data() : ProjectileData() constructor{
 		if (is_in_range(CURRENT_FRAME, self.init_time, self.init_time + 2)) _hspd = 4;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 2, self.init_time + 5)) _hspd = 5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6;
-		else _hspd = 6.25;
+		else if (CURRENT_FRAME - self.init_time > 24) _hspd = 6.25;
 		_inst.x += _hspd * self.dir;
 	}
 }

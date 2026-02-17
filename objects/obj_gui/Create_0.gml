@@ -23,6 +23,8 @@ var _server = JSON.load(game_save_id + "server.json");
 if(_server == undefined)
 	_server = JSON.load(working_directory + "server.json");
 
+depth = -15000
+
 //log(_save)
 global.player_data = _save.player_data;
 global.settings = _save.settings;

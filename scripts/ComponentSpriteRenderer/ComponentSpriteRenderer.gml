@@ -23,6 +23,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		struct_set(_spr, "dir", _dir);
 		struct_set(_spr, "depth", _depth);
 		struct_set(_spr, "color", _color);
+		struct_set(_spr, "shader", undefined);
 		
 		_spr.animationController.play(_spr.animation);
 		_spr.animationController.__animation = _spr.animation;
@@ -161,7 +162,13 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		array_foreach(self.sprites, function(_sprite){
 			if(_sprite != undefined){
 				if(!_sprite.is_gui){
+					if(_sprite.shader != undefined)
+						shader_set(_sprite.shader);
+						
 					draw_regular(get_interpolated_position(_sprite), _sprite, c_white, false)
+					
+					if(_sprite.shader != undefined)
+						shader_reset();
 				}
 			}
 		})
@@ -189,11 +196,16 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		_animator.draw_action(_action, undefined, _frame, floor(_instance_x), floor(_instance_y))
 	};
 	
-	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1, _yscale = 1){
-		self.sprites[0].animationController.__xscale = _xscale;
-		self.sprites[0].animationController.__yscale = _yscale;
-		self.sprites[0].animationController.__alpha = _alpha;
-		self.sprites[0].animationController.__color = _color;
+	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		swap_sprite(0, _color, _alpha, _xscale, _yscale, _shader)
 		self.sprites[0].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+	}
+	
+	self.swap_sprite = function(_sprite = 0,_color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		self.sprites[_sprite].animationController.__xscale = _xscale;
+		self.sprites[_sprite].animationController.__yscale = _yscale;
+		self.sprites[_sprite].animationController.__alpha = _alpha;
+		self.sprites[_sprite].animationController.__color = _color;
+		self.sprites[_sprite].shader = _shader;
 	}
 }

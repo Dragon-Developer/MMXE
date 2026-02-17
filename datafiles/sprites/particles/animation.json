@@ -14,8 +14,14 @@
     },
     "lime_die": {
       "origin": {
-        "x": 34,
+        "x": 24,
         "y": 16
+      }
+    },
+    "full_shot_die": {
+      "origin": {
+        "x": 30,
+        "y": 24
       }
     },
     "complete": {
@@ -135,6 +141,36 @@
         },
         {
           "name": "lemon_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "full_shot_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "wall_spark",
           "properties": {
             "keyframes": [
               {

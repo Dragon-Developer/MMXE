@@ -1,11 +1,11 @@
 function ComponentArmorSelect() : ComponentBase() constructor{
-	self.possible_armors = global.player_character[0].possible_armors
+	self.possible_armors = global.availible_characters[global.character_index].possible_armors
 	
 	self.selected_part = 0;
 	
 	array_copy(
 	possible_armors,0,
-	global.player_character[0].possible_armors,0,5)
+	global.availible_characters[global.character_index].possible_armors,0,5)
 	self.selected_armor = global.armors[0];
 	
 	//nested for loop so i can check what the armors actual id is
@@ -53,7 +53,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).character = "char_select";
 		get(ComponentSpriteRenderer).subdirectories = [ "/normal", "/armor_select"];
 		get(ComponentSpriteRenderer).load_sprites();
-		self.character_art = get(ComponentSpriteRenderer).add_sprite(global.player_character[0].image_folder, true)
+		self.character_art = get(ComponentSpriteRenderer).add_sprite(global.availible_characters[global.character_index].image_folder, true)
 		
 		get(ComponentSpriteRenderer).add_sprite("head_part", true,button_pos[0].x,button_pos[0].y)
 		get(ComponentSpriteRenderer).add_sprite("arms_part", true,button_pos[1].x,button_pos[1].y)
@@ -171,12 +171,16 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 				_sprite_name = string_delete(_sprite_name, 0, 1);
 				_sprite_name = string_replace(_sprite_name, "/", "_");
 				
-				_sprite_name = global.player_character[0].image_folder + "_" + _sprite_name;
-			
-				get(ComponentSpriteRenderer).change_sprite(self.armor_sprites[self.selected_part], _sprite_name)
+				_sprite_name = global.availible_characters[global.character_index].image_folder + "_" + _sprite_name;
+				log(_sprite_name)
+				
+				
+				get(ComponentSpriteRenderer).clear_sprite(self.armor_sprites[self.selected_part])
+				self.armor_sprites[self.selected_part] = get(ComponentSpriteRenderer).add_sprite( _sprite_name, true)
 			} else {
 				//otherwise just load nothing
-				get(ComponentSpriteRenderer).change_sprite(self.armor_sprites[self.selected_part], "nothing")
+				get(ComponentSpriteRenderer).clear_sprite(self.armor_sprites[self.selected_part])
+				self.armor_sprites[self.selected_part] = get(ComponentSpriteRenderer).add_sprite( "nothing")
 			}
 		}
 	}

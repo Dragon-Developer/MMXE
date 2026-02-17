@@ -58,9 +58,19 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 				self.settings_selection += self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up");
 				self.settings_selection = clamp(self.settings_selection, 0, 2)
 				
-				if(self.input.get_input_pressed_raw("shoot") || self.input.get_input_pressed_raw("jump")) && self.settings_selection == 0{
-					room_transition_to(rm_stage_select);
-					ENTITIES.destroy_instance(self.get_instance())
+				if(self.input.get_input_pressed_raw("shoot") || self.input.get_input_pressed_raw("jump")){
+					switch(self.settings_selection){
+						case(0):
+							room_transition_to(rm_stage_select, 0, 24);
+							ENTITIES.destroy_instance(self.get_instance())
+							global.gui.SettingsContainer.setEnabled(false);
+						break;
+						
+						case(2):
+							global.gui.SettingsContainer.setEnabled(true);
+							log("SETTINGS?")
+						break;
+					}
 				}
 			},
 			draw:{
@@ -157,6 +167,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
+		if(global.gui.SettingsContainer.enabled) return;
+		
 		if(self.opacity < 1){
 			self.opacity += self.opacity_rate;
 			if(array_length(get(ComponentSpriteRenderer).sprites) > 0)
@@ -178,6 +190,16 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 				components.get(ComponentCharge).start_time++
 		}
 		
+		with(par_boss){
+			if(components.get(ComponentDamageable).invuln_offset > 0)
+				components.get(ComponentDamageable).invuln_offset++
+		}
+		
+		with(obj_player){
+			if(components.get(ComponentDamageable).invuln_offset > 0)
+				components.get(ComponentDamageable).invuln_offset++
+		}
+		
 		if(self.input.get_input_pressed_raw("pause")){
 			with(obj_entity){
 				if(variable_struct_exists(components, "__components"))
@@ -187,6 +209,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			}
 			
 			player.components.find("animation").timescale = self.animation_timescale;
+			global.gui.SettingsContainer.setEnabled(false);
 			
 			ENTITIES.destroy_instance(self.get_instance());
 		}

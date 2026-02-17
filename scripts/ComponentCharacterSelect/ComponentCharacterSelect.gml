@@ -47,6 +47,7 @@ function ComponentCharacterSelect() : ComponentBase() constructor{
 				_sprite_name = string_replace(_sprite_name, "/", "_");
 				
 				_sprite_name = global.player_character[0].image_folder + "_" + _sprite_name;
+				log(_sprite_name)
 				array_push(self.character_armors, get(ComponentSpriteRenderer).add_sprite(_sprite_name, true));
 			}
 		}

@@ -157,6 +157,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_speed(0, 0);
 				self.publish("on_crouch", false);	
 			},
+			step: function(){
+				self.set_hor_movement();	
+				
+			},
 			leave: function() {
 				self.publish("on_crouch", false);		
 			}
@@ -426,6 +430,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
+		array_foreach(global.availible_characters, function(_char, _index){
+			global.availible_characters[_index] = {};
+			with(global.availible_characters[_index]){
+				script_execute(global.character_ref[_index]);
+			}
+		})
+		
 		self.character = variable_clone(global.availible_characters[global.character_index], 256);
 		self.armor_parts = variable_clone(global.armors[global.character_index],256);
 		//self.apply_full_armor_set(self.armor_parts);
@@ -684,6 +695,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.physics.set_grav(new Vec2(0,0));
 				self.dash_jump = false;
 				self.current_hspd = self.states.walk.speed;	
+				WORLD.play_sound("land");
 			},
 			leave: function() {	
 				self.physics.update_gravity();

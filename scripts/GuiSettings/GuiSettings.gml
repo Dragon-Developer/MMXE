@@ -29,7 +29,8 @@ function GuiSettings() : GuiContainer() constructor {
 			player_data: global.player_data
 		}, game_save_id + "save.json", true)
 		self.setEnabled(false);
-		parent.mainMenuContainer.setEnabled(true);
+		if(room == rm_init)
+			parent.mainMenuContainer.setEnabled(true);
 	});
 		
 		buttonBack.setAlignItems("left");
@@ -171,19 +172,21 @@ function GuiSettings() : GuiContainer() constructor {
 		.setGap(2)
 		.setScrollEnabled(true)
 		.width = 128;
+		SettingsContainer.height = 128;
 		SettingsContainer.scrollX = -128;
-		SettingsContainer.scrolly = 128;
+		SettingsContainer.scrolly = 0;
 	
 	MusicContainer = new GuiContainer();
     MusicContainer
         .setAutoWidth(true)
-        .setAutoHeight(true)
 		.setFlexDirection("row")
         .setJustifyContent("start")
         .setAlignItems("left")
         .setPadding([4,0,4,0])
 		.setGap(4)
 		.setScrollEnabled(true)
+        .setAutoHeight(false)
+		.height = 16;
 		
 	MusicIncreaseVolume = new GuiButton(12,12, ">")
 	MusicIncreaseVolume.addEventListener("click", function(_val){
@@ -221,6 +224,8 @@ function GuiSettings() : GuiContainer() constructor {
         .setPadding([4,0,4,0])
 		.setGap(4)
 		.setScrollEnabled(true)
+        .setAutoHeight(false)
+		.height = 16;
 		
 	SoundEffectsIncreaseVolume = new GuiButton(12,12, ">")
 	SoundEffectsIncreaseVolume.addEventListener("click", function(_val){
@@ -230,6 +235,10 @@ function GuiSettings() : GuiContainer() constructor {
 		global.settings.Sound_Effect_Volume += 0.01;
 		global.settings.Sound_Effect_Volume = clamp(global.settings.Sound_Effect_Volume, 0, 1);
 		SoundEffectsVolumeSettings.setText("Sound Effect Volume: " + string(floor(global.settings.Sound_Effect_Volume * 100)))
+		
+		with(obj_world){
+			components.get(ComponentSoundLoader).volume = global.settings.Sound_Effect_Volume
+		}
 		
 		audio_play_sound(audio_create_stream(working_directory + "sounds/hurt.ogg"),1, false, global.settings.Sound_Effect_Volume * 0.9);
 	});
@@ -242,6 +251,10 @@ function GuiSettings() : GuiContainer() constructor {
 		global.settings.Sound_Effect_Volume -= 0.01;
 		global.settings.Sound_Effect_Volume = clamp(global.settings.Sound_Effect_Volume, 0, 1);
 		SoundEffectsVolumeSettings.setText("Sound Effect Volume: " + string(floor(global.settings.Sound_Effect_Volume * 100)))
+		
+		with(obj_world){
+			components.get(ComponentSoundLoader).volume = global.settings.Sound_Effect_Volume
+		}
 		
 		audio_play_sound(audio_create_stream(working_directory + "sounds/hurt.ogg"),1, false, global.settings.Sound_Effect_Volume * 0.9);
 	});
@@ -260,6 +273,8 @@ function GuiSettings() : GuiContainer() constructor {
         .setPadding([4,0,4,0])
 		.setGap(4)
 		.setScrollEnabled(true)
+        .setAutoHeight(false)
+		.height = 16;
 		
 	GuiScaleIncreaseVolume = new GuiButton(12,12, ">")
 	GuiScaleIncreaseVolume.addEventListener("click", function(_val){

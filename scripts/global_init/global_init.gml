@@ -31,6 +31,12 @@ function global_init() {
 		//new AxlCharacter(),
 		new CustomCharacter()
 	]
+	
+	global.character_ref = [
+		XCharacter,
+		ZeroCharacter,
+		CustomCharacter
+	]
 	global.character_index = global.player_data.last_used_character;
 	
 	global.player_character = [global.availible_characters[global.character_index]];

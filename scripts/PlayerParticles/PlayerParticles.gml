@@ -60,7 +60,7 @@ function ExplosionParticle(_x, _y, _dir) : ParticleBase() constructor{
 }
 
 function SparkParticle(_x, _y, _dir) : ParticleBase() constructor{
-	self.sprite = "lemon_die";
+	self.sprite = "wall_spark";
 	self.death_mode = "duration_frame";
 	self.velocity = new Vec2(0,0);
 	self.position = new Vec2(_x,_y);
@@ -92,9 +92,33 @@ function LimeDieParticle(_x, _y, _dir) : ParticleBase() constructor{
 	self.velocity = new Vec2(0,0);
 	self.position = new Vec2(_x,_y);
 	self.time = 0;
-	self.time_max = 2;
+	self.time_max = 3;
 	self.frame = 0;
 	self.frame_max = 5;
+	self.dir = _dir;
+}
+
+function FullShotDieParticle(_x, _y, _dir) : ParticleBase() constructor{
+	self.sprite = "full_shot_die";
+	self.death_mode = "duration_frame";
+	self.velocity = new Vec2(0,0);
+	self.position = new Vec2(_x,_y);
+	self.time = 0;
+	self.time_max = 3;
+	self.frame = 0;
+	self.frame_max = 4;
+	self.dir = _dir;
+}
+
+function LemonDieParticle(_x, _y, _dir) : ParticleBase() constructor{
+	self.sprite = "lemon_die";
+	self.death_mode = "duration_frame";
+	self.velocity = new Vec2(0,0);
+	self.position = new Vec2(_x,_y);
+	self.time = 0;
+	self.time_max = 2;
+	self.frame = 0;
+	self.frame_max = 4;
 	self.dir = _dir;
 }
 

@@ -105,8 +105,8 @@ function ComponentDialouge() : ComponentBase() constructor{
 		//return _text;
 		
 		//get sprite names ready
-		var _sprite_name_left = string(_mugshot_left);
-		var _sprite_name_right = string(_mugshot_right);
+		var _sprite_name_left = _mugshot_left == undefined ? "x" : _mugshot_left;
+		var _sprite_name_right = _mugshot_right == undefined ? "x" : _mugshot_right;
 		
 		
 		//apply talking if relevant

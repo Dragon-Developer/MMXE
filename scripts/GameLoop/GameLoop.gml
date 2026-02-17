@@ -2,6 +2,7 @@ function GameLoop() constructor {
 	self.game_speed = 1;
 	self.game_timer = 0;
 	self.debug = global.debug;// i aint gonna replace every instance when i can just do this
+	self.frame_advancing = false;
 	
 	self.blur = false;
 	
@@ -33,6 +34,12 @@ function GameLoop() constructor {
 				if(is_undefined(_component)) return;
 				if(!is_struct(_component)) return;
 				if (!_component.step_enabled) return; 
+				
+				if(_component.get_instance() == undefined || is_undefined(_component.get_instance())){
+					ENTITIES.remove_component(_component);
+					return;
+				}
+				
 				_component.current_step_time += _component.timescale;
 				while(_component.current_step_time >= 1){
 					_component.step(); 
@@ -105,7 +112,8 @@ function GameLoop() constructor {
 			self.game_timer += self.game_speed;
 			while (self.game_timer >= 1) {
 				self.game_timer -= 1;
-				self.entities_step();
+				if(!frame_advancing || (frame_advancing && keyboard_check_pressed(ord("0"))))
+					self.entities_step();
 			}
 		}catch(_exception) {
 			show_debug_message(_exception.message);
@@ -122,6 +130,12 @@ function GameLoop() constructor {
 	}
 	
 	self.draw_gui = function() {
+		if(frame_advancing){
+			draw_set_color(#ff00ff)
+			draw_rectangle(0, 0, 6, 16, false);
+			draw_rectangle(10, 0, 16, 16, false);
+		}
+		
 		var _draw_gui = function(_component) { _component.draw_gui(); };
 		surface_set_target(application_surface)
 		
@@ -171,6 +185,9 @@ function GameLoop() constructor {
 		
 		if(keyboard_check_pressed(ord("5")))
 			self.blur = !self.blur;
+			
+		if(keyboard_check_pressed(ord("9")))
+			self.frame_advancing = !self.frame_advancing;
 			
 		if(keyboard_check_pressed(ord("4")))
 			global.debug = !global.debug

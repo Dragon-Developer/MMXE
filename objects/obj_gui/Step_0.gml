@@ -1,5 +1,5 @@
 try{
-	if(room == rm_init)
+	if(room == rm_init || global.gui.SettingsContainer.enabled)
 	global.gui.step();
 } catch(_err){
 	log(_err)

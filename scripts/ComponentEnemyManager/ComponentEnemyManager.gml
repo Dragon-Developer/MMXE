@@ -14,7 +14,6 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).character = "enemy";
 		get(ComponentSpriteRenderer).subdirectories = subdirectories;
 		get(ComponentSpriteRenderer).load_sprites();
-		get_instance().depth = -16000;
 		
 		log(string(is_in_range(2,1,3)) + " RANGE TEST");
 	}
@@ -30,6 +29,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		
 		_enemy.code.dir = _dir;
 		_enemy.dir = _dir;
+		_enemy.flash = false;
 		
 		struct_set(_enemy, "sprite", get(ComponentSpriteRenderer).add_sprite(_enemy.code.sprite,false,  _x, _y, _dir));
 		//log(_enemy.sprite)
@@ -50,6 +50,16 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	
 	self.step = function(){
 		array_foreach(self.enemies, function(_enemy, _index){
+			if(_enemy.flash == 1) {
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, 1, 1, shader_palette_light);
+				_enemy.flash = 2;
+			} else if(_enemy.flash == 2) {
+				_enemy.flash = 3;
+			} else if(_enemy.flash == 3) {
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, 1, 1, undefined);
+				_enemy.flash = 0;
+			} 
+			
 			_enemy.code.step(_enemy.position);
 			self.get_collision(_enemy);
 		})
@@ -58,11 +68,11 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	}
 	self.draw = function(){
 		array_foreach(self.enemies, function(_enemy){
-			//log("pp")
-			if(!_enemy.code.dead)
+			if(!_enemy.code.dead){
 				get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
+			}
 			
-			draw_string(_enemy.code.health, _enemy.position.x, _enemy.position.y - 32)
+			//draw_string(_enemy.code.health, _enemy.position.x, _enemy.position.y - 32)
 			
 			if (draw_enabled){
 				draw_rectangle( (_enemy.hitbox.x / 2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
@@ -120,7 +130,9 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 			if(!array_contains(_enemy.hit_by_list, _proj)){
 				array_push(_enemy.hit_by_list, _proj)
 				_enemy.code.health -= _proj.code.damage;
-				if(!_proj.code.piercing)
+				_enemy.flash = 1;
+				WORLD.play_sound("small_damage");
+				if(!_proj.code.piercing || _enemy.code.health > 0)
 					PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			}
 		}
