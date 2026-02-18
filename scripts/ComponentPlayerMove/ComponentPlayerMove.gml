@@ -158,7 +158,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("on_crouch", false);	
 			},
 			step: function(){
-				self.set_hor_movement();	
+				if(self.hdir != 0){
+					self.dir = self.hdir;
+					self.publish("animation_xscale", self.hdir)
+				}
 				
 			},
 			leave: function() {
@@ -450,7 +453,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.armor_parts = [[],[],["/normal"]];
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm, _index){
-			_arm = global.availible_characters[global.character_index].possible_armors[_index][_arm]
+			_arm = global.availible_characters[global.character_index].possible_armors[_index][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
 			
 			if(typeof(_arm) != "struct" && _arm != noone){
 				var _temp = {};
@@ -653,7 +656,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.set_hor_movement(self.dash_dir);
 				if(CURRENT_FRAME >= self.timer - self.states.dash.interval + 2)
 					self.current_hspd = self.states.dash.speed;	
-				if(CURRENT_FRAME mod 8 == 0){
+				if(CURRENT_FRAME mod 6 == 0){
 					var _inst = self.get_instance();
 					WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
 				}
@@ -682,7 +685,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(self.ground_distance); })
-		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 2, obj_square_16); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16); })
 	}
 	
 	self.add_wall_jump = function(){

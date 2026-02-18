@@ -112,3 +112,12 @@ function Palette() constructor {
 	
 	self.setSprite();
 }
+
+function BrightShader() constructor {
+	static apply = function() {
+		shader_set(shader_palette_light);
+	}
+	static reset = function() {
+		shader_reset();	
+	}
+}

@@ -8,8 +8,8 @@ self.spawn_boss = function(){
 	//_boss.components.get(ComponentBoss).boss_data = self.boss;
 	_boss.components.publish("character_set", boss.image_folder);
 	//log("boss sprites loaded")
-	_boss.components.get(ComponentAnimation).set_subdirectories(boss.subdirectories);
-	_boss.components.get(ComponentAnimation).reload_animations();
+	_boss.components.find("animation").set_subdirectories(boss.subdirectories);
+	_boss.components.find("animation").reload_animations();
 	//log("boss directories loaded")
 	//_boss.components.get(ComponentAnimation).max_queue_size = 0;
 	//_boss.components.get(ComponentPhysics).grav = new Vec2(0, 0);

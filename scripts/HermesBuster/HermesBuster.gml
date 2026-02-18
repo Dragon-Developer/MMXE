@@ -98,13 +98,14 @@ function HermesBuster5Data() : ProjectileData() constructor{
 }
 
 function HermesBuster5UpData() : HermesBuster5Data() constructor{
+	self.comboiness++;
 	self.create = function(_inst){}
 	self.vertical_speed = -1;
 	self.animation = "hermes_shot_2_up";
 }
 
 function HermesBuster5DownData() : HermesBuster5UpData() constructor{
-	self.create = function(_inst){}
+	self.comboiness++;
 	self.vertical_speed = 1;
 	self.animation = "hermes_shot_2_down";
 }

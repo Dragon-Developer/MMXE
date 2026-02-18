@@ -213,6 +213,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		with(_shot_data){
 			script_execute(_shot_code.data[_shot_index])
 		}
+		
+		if (_shot_data.shot_limit <= self.projectile_count) return;
 			
 		//get what type of weapon this is [projectile, state based, melee, etc]
 		var _type = _shot_data.term;
@@ -265,11 +267,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				
 				//check if theres a projectile limit
 				if(variable_struct_exists(_shot_data, "shot_limit")){
-					if (_shot_data.shot_limit > self.projectile_count) {
-						self.weapon_ammo[self.current_weapon[_id]] -= _cost;
-					} else {
-						
-					}
+					self.weapon_ammo[self.current_weapon[_id]] -= _cost;
 					//log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
 				} else 
 					self.weapon_ammo[self.current_weapon[_id]] -= _cost;

@@ -1,6 +1,6 @@
 on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).dialouge = [
-		{   sentence : "We used to have a race course to the left of Headquarters. It was called Dash Dash Midtown, and Peeps made it.",
+		{   sentence : "We used to have a race course to the left of Headquarters. It was called Dash Dash Midtown, and Fncil made it.",
 			mugshot_left : "axlforte",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"

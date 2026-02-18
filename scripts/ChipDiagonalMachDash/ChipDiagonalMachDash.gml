@@ -55,3 +55,10 @@ function ChipJumper(): ArmorBase() constructor{
 		}
 	}
 }
+
+function ChipSlider(): BootPartBase() constructor{
+		self.armor_name = "slider";
+	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
+		self.add_slide(_player)
+	}
+}

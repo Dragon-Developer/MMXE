@@ -3,7 +3,7 @@ event_inherited();
 components.add([
 	ComponentDamageable,
 	ComponentBoss,
-	ComponentAnimation,
+	ComponentAnimationShadered,
 	ComponentPhysics,
 	ComponentMask
 ]);

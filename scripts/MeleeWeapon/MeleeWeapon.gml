@@ -7,6 +7,7 @@ function MeleeWeapon() : Weapon() constructor{
 function MeleeData() constructor{
 	self.term = "Melee"
 	
+	self.shot_limit = 5;
 	self.damage = 1;
 	self.comboiness = 2;
 	self.animation = "atk1";

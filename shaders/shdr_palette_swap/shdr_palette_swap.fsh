@@ -200,6 +200,8 @@ void main(){
 		NewColor = ref;
 	}
 	
+	NewColor = vec4(NewColor.rgb, ref.a);
+	
 	gl_FragColor = NewColor;
 }
 

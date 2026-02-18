@@ -58,7 +58,7 @@ function BootPartBase() : ArmorBase() constructor{
 	self.add_slide = function(_player){
 		with(_player){
 			struct_set(states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
-			log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
+			//log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
 			self.fsm.add("slide", {
 				enter: function() {//
 					self.states.slide.old_hitbox = self.get_instance().mask_index;
@@ -77,6 +77,10 @@ function BootPartBase() : ArmorBase() constructor{
 				},
 				step: function() {
 					self.set_hor_movement(self.dash_dir);
+					if(CURRENT_FRAME mod 6 == 0){
+						var _inst = self.get_instance();
+						WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
+					}
 				},
 				leave: function() {
 					if(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 1, obj_square_16) && 
@@ -124,14 +128,14 @@ function BootPartBase() : ArmorBase() constructor{
 				); })
 			.add_transition("t_dash_end", "slide", "fall", function() { return !self.physics.is_on_floor(); })
 			.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(); })
-			self.fsm.add_wildcard_transition("t_slide", "slide", function() { log("checking")
+			self.fsm.add_wildcard_transition("t_slide", "slide", function() { //log("checking")
 				return self.physics.is_on_floor(); })
 			.add_transition("t_animation_end", "slide_end", "crouch")
 		}
 		self.step_armor_effects = function(_player) {
 			if ((_player.input.get_input_pressed_raw("jump") && _player.input.get_input("down") || _player.input.get_input("dash") && !_player.fsm.state_exists("dash")) && _player.physics.is_on_floor()) { 
 				_player.fsm.change("slide"); 
-				log("yoom")
+				//log("yoom")
 			}
 		};
 	}

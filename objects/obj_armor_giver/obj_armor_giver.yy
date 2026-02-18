@@ -31,8 +31,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Sprite72",
-    "path":"sprites/Sprite72/Sprite72.yy",
+    "name":"spr_classic_helmet",
+    "path":"sprites/spr_classic_helmet/spr_classic_helmet.yy",
   },
   "spriteMaskId":null,
   "visible":true,

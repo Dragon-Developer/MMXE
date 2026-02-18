@@ -184,7 +184,7 @@ function ComponentCharge() : ComponentBase() constructor{
 		if(self.start_time + self.charge_time[self.charge_limit - 1] == CURRENT_FRAME){
 			WORLD.play_sound("full_charge");
 			var _inst = self.get_instance();
-			WORLD.spawn_particle(new LimeDieParticle(_inst.x, _inst.y, 1))
+			WORLD.spawn_particle(new CompleteParticle(_inst.x, _inst.y, 1))
 		}
 		
 		var _shot_code = noone;

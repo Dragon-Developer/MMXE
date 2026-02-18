@@ -34,6 +34,9 @@ self.play_music = function(_sound){
 	self.music = self.components.get(ComponentSoundLoader).play_sound(_sound,0,_sound + "L", global.settings.Music_Volume * 1.1, "music/");
 	self.components.get(ComponentSoundLoader).source_folder = self.components.get(ComponentSoundLoader).sounds_folder;
 	self.components.get(ComponentSoundLoader).volume = global.settings.Sound_Effect_Volume * 0.9;
+	
+	global.intro_music = self.music;
+	
 	return self.music;
 }
 

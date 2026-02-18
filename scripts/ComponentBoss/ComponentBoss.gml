@@ -118,6 +118,8 @@ function ComponentBoss() : ComponentBase() constructor{
 						find("animation").animation.__alpha = 1 - (_time - 345) / 20;
 					}
 				
+					if _time == 366 self.publish("animation_play", { name: "undefined" });
+				
 					if(CURRENT_FRAME mod 4 == 0 && _time < 371 && _time > 62){
 						var _inst = self.get_instance();
 						var _range = 30;

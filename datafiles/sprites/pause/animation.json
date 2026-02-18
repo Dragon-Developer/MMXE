@@ -48,6 +48,17 @@
           }
         },
         {
+          "name": "healthbar_icon_custom",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "bar_start_cap",
           "properties": {
             "keyframes": [

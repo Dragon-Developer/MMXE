@@ -25,7 +25,7 @@ function XFirstArmorBoot() : BootPartBase() constructor{
 	self.armor_name = "First Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		
-		self.add_slide(_player);
+		//self.add_slide(_player);
 		_player.states.dash.speed *= 1.25;
 	}
 }
