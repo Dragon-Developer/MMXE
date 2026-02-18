@@ -1,0 +1,211 @@
+function ComponentSpriteRenderer() : ComponentBase() constructor {
+	static collage = new Collage();
+	self.add_tags("sprite renderer");
+	self.character = "weapon";
+	self.subdirectories = ["",  "/normal"];
+	
+	self.serializer
+		.addVariable("sprites")
+		
+	self.sprites = [];//holds every currently used sprite. 
+	
+	//adds a new sprite into the pool
+	self.add_sprite = function(_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _depth = 0, _color = c_white){
+		//prepares a struct
+		var _spr = {};
+		
+		//adds an animation controller and a known animation
+		struct_set(_spr, "animationController",new AnimationController());
+		struct_set(_spr, "animation", _animation);
+		struct_set(_spr, "is_gui", _on_gui_layer);
+		struct_set(_spr, "x", _x);
+		struct_set(_spr, "y", _y);
+		struct_set(_spr, "dir", _dir);
+		struct_set(_spr, "depth", _depth);
+		struct_set(_spr, "color", _color);
+		struct_set(_spr, "shader", undefined);
+		
+		_spr.animationController.play(_spr.animation);
+		_spr.animationController.__animation = _spr.animation;
+		_spr.animationController.__color = _spr.color;
+		
+		//adds the struct to the sprites array
+		var _index = -1;
+		
+		for(var p = 0; p < array_length(self.sprites); p++){
+			if(self.sprites[p] == undefined){
+				_index = p;
+				break;
+			}
+		}
+		
+		if(1 == 1){
+			array_push(self.sprites, _spr);
+			_index = array_length(self.sprites) - 1
+		} else {
+			array_set(self.sprites, _spr, _index)
+		}
+		
+		self.reload_animation_controller(_index,collage, self.character);
+		
+		//log("Sprite made")
+		
+		return _index
+	}
+	
+	self.change_sprite = function(_id, _sprite, _char = self.character){
+		if(is_array(self.sprites))
+			self.sprites[_id].animation = _sprite;
+		else
+			return;
+		
+		self.reload_animation_controller(_id,collage, _char);
+	}
+	
+	//deletes unused sprites. 
+	self.clear_sprite = function(_id = 0){
+		if(_id == 0) return;//the first sprite can be used for drawing so it needs to exist
+		
+		self.sprites[_id] = undefined;
+	}
+	
+	self.init = function(){
+		//character = "x";
+		//self.sprites = [];
+		load_sprites();
+		add_sprite("shot", true, -32, -32);
+	}
+	
+	self.set_position = function(_id = 0, _x = 0, _y = 0){
+		self.sprites[_id].x = _x;
+		self.sprites[_id].y = _y;
+	}
+	
+	self.get_position = function(_id = 0){
+		return new Vec2(self.sprites[_id].x,self.sprites[_id].y);
+	}
+	
+	self.load_sprites = function() {
+		//log(working_directory + "sprites/" + self.character)
+		SpriteLoader.reload_collage(self.collage,"sprites/" + self.character, self.subdirectories);
+	}
+	
+	self.reload_animation_controller = function(_index, _collage = collage, _char = self.character) {
+		//self.load_sprites();
+		var _animation = JSON.load("sprites/" + _char + "/animation.json");
+		if(_animation == -1) return;
+		var _current_animation = undefined;
+		if (!is_undefined(self.sprites[_index].animation)) {
+			_current_animation = self.sprites[_index].animation;
+			//log("what in the goddamn fuck did you do")
+		}
+		self.sprites[_index].animationController
+			.clear()
+			.set_character(_char)
+			.use_collage(_collage)
+			.parse_data(_animation.data.animations)
+			.init();
+		
+		if (!is_undefined(_current_animation)) {
+			self.sprites[_index].animationController.play(_current_animation);	
+		} else {
+			log("this done fucked up")
+		}
+	}
+	
+	self.step = function(){
+		array_foreach(self.sprites, function(_spr){
+			if(_spr != undefined){
+				if(struct_exists(_spr, "step"))
+					_spr.step();
+				_spr.animationController.step();
+			}
+		})
+	}
+	
+	self.get_interpolated_position = function(_sprite){
+		var _animator = _sprite.animationController;
+		
+		if(_animator != noone)
+			if(_animator.__animation != noone ){
+				var _action = "missing";
+				var _props = _animator.get_props(_sprite.animation);// THIS LINE IS IMPORTANT IT WILL GET SHOT OFFSETS
+				//log(_props)
+				if(_props != undefined){
+					if(variable_struct_exists(_props,"action")){
+						_action = _props.action;
+					}
+				} else {
+					//this is DOGSHIT and i hope that you NEVER do this
+					_action = _sprite.animation;
+				}
+				
+				var _animation = _sprite.animation;
+				
+				//if _animation == "undefined"
+					
+				var ret = [
+					_sprite.x, _sprite.y,
+					_animation, 
+					_animator.__frame,
+					_action,
+					_animator.__xscale,
+				];
+				//log(ret)
+				return ret;
+			}
+		//log("shitted my pants")
+	}
+	
+	self.draw = function(){
+		if(is_array(self.sprites))
+		array_foreach(self.sprites, function(_sprite){
+			if(_sprite != undefined){
+				if(!_sprite.is_gui){
+					if(_sprite.shader != undefined)
+						shader_set(_sprite.shader);
+						
+					draw_regular(get_interpolated_position(_sprite), _sprite, c_white, false)
+					
+					if(_sprite.shader != undefined)
+						shader_reset();
+				}
+			}
+		})
+	}
+	
+	self.draw_gui = function(){
+		if(is_array(self.sprites))
+		array_foreach(self.sprites, function(_sprite){
+			if(_sprite != undefined){
+				if(_sprite.is_gui)
+					draw_regular(get_interpolated_position(_sprite), _sprite, c_white, true)
+			}
+		})
+	}
+	
+	self.draw_regular = function(_pos, _sprite, _col = c_white, _on_gui = false) {
+		var _animator = _sprite.animationController;
+		if(is_undefined(_pos)) _pos = self.get_interpolated_position(_animator);
+		var _instance_x = floor(_pos[0]);
+		var _instance_y = floor(_pos[1]);
+		var _frame = _pos[3];
+		var _action = _pos[4];
+		
+	    _animator.set_xscale(_sprite.dir);
+		_animator.draw_action(_action, undefined, _frame, floor(_instance_x), floor(_instance_y))
+	};
+	
+	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		swap_sprite(0, _color, _alpha, _xscale, _yscale, _shader)
+		self.sprites[0].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+	}
+	
+	self.swap_sprite = function(_sprite = 0,_color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		self.sprites[_sprite].animationController.__xscale = _xscale;
+		self.sprites[_sprite].animationController.__yscale = _yscale;
+		self.sprites[_sprite].animationController.__alpha = _alpha;
+		self.sprites[_sprite].animationController.__color = _color;
+		self.sprites[_sprite].shader = _shader;
+	}
+}

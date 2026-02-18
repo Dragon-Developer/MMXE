@@ -6,7 +6,7 @@
   "name":"input_join_params_get",
   "parent":{
     "name":"17  Source Modes",
-    "path":"folders/Input/17  Source Modes.yy",
+    "path":"folders/Scripts/LIbraries/Input/17  Source Modes.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

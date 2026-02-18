@@ -6,8 +6,8 @@
   "name":"obj_slope_zone",
   "overriddenProperties":[],
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Parents",
+    "path":"folders/Objects/Level Assets/Blocks/Parents.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -28,9 +28,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_slope_zone",
-    "path":"sprites/spr_slope_zone/spr_slope_zone.yy",
+    "name":"spr_pixel",
+    "path":"sprites/spr_pixel/spr_pixel.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

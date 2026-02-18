@@ -6,7 +6,7 @@
   "name":"MultiClientGetClientID",
   "parent":{
     "name":"MultiClient",
-    "path":"folders/MultiClient.yy",
+    "path":"folders/Scripts/LIbraries/MultiClient.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

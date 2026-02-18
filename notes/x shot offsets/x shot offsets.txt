@@ -1,0 +1,42 @@
+function player_x_weapon_offsets() {
+	format is animation, frame, x offset, y offset
+	player_weapon_offset("shoot", 0, 12, -3);
+
+	player_weapon_offset("walk", 0, 19, -5);
+	player_weapon_offset("walk", 1, 22, -5);
+	player_weapon_offset("walk", 2, 22, -6);
+	player_weapon_offset("walk", 3, 22, -5);
+	player_weapon_offset("walk", 4, 22, -4);
+	player_weapon_offset("walk", 5, 22, -4);
+	player_weapon_offset("walk", 6, 22, -5);
+	player_weapon_offset("walk", 7, 22, -6);
+	player_weapon_offset("walk", 8, 22, -5);
+	player_weapon_offset("walk", 9, 22, -4);
+	player_weapon_offset("walk", 10, 22, -4);
+
+
+	player_weapon_offset("shooting", 0, 12, -3);
+	player_weapon_offset("shooting", 1, 12, -3);
+
+	player_weapon_offset("jump", 0, 20, -3);
+	player_weapon_offset("jump", 1, 21, -4);
+	player_weapon_offset("jump", 2, 20, -5);
+	player_weapon_offset("jump", 3, 21, -4);
+	player_weapon_offset("jump", 4, 21, -4);
+	player_weapon_offset("jump", 5, 21, -4);
+	player_weapon_offset("jump", 6, 20, -2);
+
+	player_weapon_offset("dash", 0, 26, -1);
+	player_weapon_offset("dash", 1, 32, 4);
+
+	player_weapon_offset("crouch", 0, 20, -2);
+	player_weapon_offset("crouch", 1, 21, 2);
+
+	player_weapon_offset("wall", 0, 21, -5);
+	player_weapon_offset("wall", 1, 16, -3);
+	player_weapon_offset("wall", 2, 15, -2);
+	player_weapon_offset("wall", 3, 18, -8);
+	player_weapon_offset("wall", 4, 21, -9);
+
+
+}

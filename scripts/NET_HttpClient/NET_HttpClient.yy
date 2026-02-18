@@ -6,7 +6,7 @@
   "name":"NET_HttpClient",
   "parent":{
     "name":"RPC",
-    "path":"folders/Netcode/RPC.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/RPC.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

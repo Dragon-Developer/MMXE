@@ -67,7 +67,7 @@
 
 // Whether Collage should clear the VRAM before making another texture page (as in The texture page gets full, surface is freed but contents is saved)
 // This is mostly to keep the VRAM usage low during building while having multiple sprites packed into VRAM at once.
-#macro __COLLAGE_BUILDER_VRAM_CLEAR false
+#macro __COLLAGE_BUILDER_VRAM_CLEAR true
 
 // Enables verbose console output to aid with debugging.
 #macro __COLLAGE_VERBOSE false

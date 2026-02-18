@@ -192,7 +192,7 @@
   "name":"fnt_default",
   "parent":{
     "name":"Fonts",
-    "path":"folders/HazyGUI/Fonts.yy",
+    "path":"folders/Scripts/LIbraries/HazyGUI/Fonts.yy",
   },
   "pointRounding":0,
   "ranges":[

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"BladeManBOss",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"BladeManBOss",
+  "parent":{
+    "name":"Boss",
+    "path":"folders/Scripts/Game/stages/Boss.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"LoadSoundFromFile",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LoadSoundFromFile",
+  "parent":{
+    "name":"Sound",
+    "path":"folders/Scripts/Utils/Sound.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

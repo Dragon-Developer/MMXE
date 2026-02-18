@@ -1,0 +1,221 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 16,
+        "y": 8
+      }
+    },
+    "dash_spark": {
+      "origin": {
+        "x": 24,
+        "y": 42
+      }
+    },
+    "lime_die": {
+      "origin": {
+        "x": 24,
+        "y": 16
+      }
+    },
+    "full_shot_die": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
+    "complete": {
+      "origin": {
+        "x": 36,
+        "y": 24
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "xSuperParticles",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "explosion",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_spark",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_up_spark",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "death",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_dust",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "lemon_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "full_shot_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "wall_spark",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "lime_die",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "complete",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        }
+        //eof
+      ]
+    }
+  }
+}

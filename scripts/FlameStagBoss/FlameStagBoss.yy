@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"FlameStagBoss",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"FlameStagBoss",
+  "parent":{
+    "name":"Boss",
+    "path":"folders/Scripts/Game/stages/Boss.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

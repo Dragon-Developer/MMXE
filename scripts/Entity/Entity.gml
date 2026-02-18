@@ -70,6 +70,11 @@ function Entity() constructor {
 		}
 		return false;
 	}
+	static reset = function(_constructor){
+		self.remove(_constructor);
+		self.add(_constructor);
+		self.get(_constructor).init();
+	}
 	static pause = function(_value) {
 		array_foreach(self.__components, method({ value: _value }, function(_component) {
 			_component.step_enabled = !value;
@@ -105,5 +110,10 @@ function Entity() constructor {
 	}
 	static subscribe = function(_event, _callback) {
 		self.__event_bus.subscribe(_event, _callback);	
+	}
+	static change_timescale = function(_scale){
+		array_foreach(self.__components, method({ scale: _scale }, function(_component) {
+			_component.timescale = scale;
+		}));
 	}
 }

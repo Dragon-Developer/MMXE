@@ -1,0 +1,154 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 16,
+        "y": 8
+      }
+    },
+    "dr_cain_ghost": {
+      "origin": {
+        "x": 12,
+        "y": 23
+      }
+    },
+    "holo_dude": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "gravity_button",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "capsule",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "gravity_button_idle",
+          "properties": {
+            "action": "gravity_button",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "dr_cain_ghost",
+          "properties": {
+            "action": "holo_dude",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 5,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "gravity_button_pressed",
+          "properties": {
+            "action": "gravity_button",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 3
+              }
+            ],
+            "loop_begin": 10
+          }
+        }
+      ]
+    }
+  }
+}

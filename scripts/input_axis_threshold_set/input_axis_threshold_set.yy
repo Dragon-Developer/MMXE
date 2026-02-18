@@ -6,7 +6,7 @@
   "name":"input_axis_threshold_set",
   "parent":{
     "name":"12  Accessibility",
-    "path":"folders/Input/12  Accessibility.yy",
+    "path":"folders/Scripts/LIbraries/Input/12  Accessibility.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

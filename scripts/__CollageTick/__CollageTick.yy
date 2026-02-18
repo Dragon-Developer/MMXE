@@ -6,7 +6,7 @@
   "name":"__CollageTick",
   "parent":{
     "name":"System",
-    "path":"folders/Collage/System.yy",
+    "path":"folders/Scripts/LIbraries/Collage/System.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

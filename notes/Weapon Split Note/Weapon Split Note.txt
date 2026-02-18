@@ -1,0 +1,8 @@
+weapons were split into melee and projectiles because forte thought it would make it more distinctive
+
+while both weapons are (should) be interchangeible, they also do very different things when you look at it
+a good example is zero's 3 slash combo when compared to the charge shot
+one happens in a sequence and the other happens after a charging sequence
+
+some special weapons, like rising fire charged shot, may use the melee type instead of the projectile type
+this is because charged rising fire is a melee attack, and it would benefit from using that code instead

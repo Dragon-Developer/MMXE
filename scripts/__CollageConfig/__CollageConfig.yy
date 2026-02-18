@@ -6,7 +6,7 @@
   "name":"__CollageConfig",
   "parent":{
     "name":"Collage",
-    "path":"folders/Collage.yy",
+    "path":"folders/Scripts/LIbraries/Collage.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

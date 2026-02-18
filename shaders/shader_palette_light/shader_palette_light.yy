@@ -4,7 +4,7 @@
   "name":"shader_palette_light",
   "parent":{
     "name":"Shaders",
-    "path":"folders/Shaders.yy",
+    "path":"folders/Scripts/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

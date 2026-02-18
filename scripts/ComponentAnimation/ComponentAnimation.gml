@@ -5,11 +5,13 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.rotation_angle = 0;
 	self.rotation_debug = false;
 	self.subdirectories = [""];
-	self.armors = [""];
+	self.armors = [""];//which format was this?
 	self.animation = new AnimationController();
 	self.position_queue = []; 
 	self.max_queue_size = 5;
 	self.last_game_frame = 0;
+	self.do_drawing = true;
+	self.draw_base_sprite = true;
 	
 	self.serializer
 		.addVariable("armors")
@@ -17,51 +19,64 @@ function ComponentAnimation() : ComponentBase() constructor {
 	
 	self.on_register = function() {
 		self.subscribe("character_set", function(_character) {
-			self.character = _character;
-			self.reload_animations();
+			self.change_character(_character);
 		});
 		self.subscribe("armor_set", function(_armors){
 			self.armors = _armors;
 		});
 		self.subscribe("animation_play", function(_animation) {
-			_animation[$ "reset"] ??= false;
-			_animation[$ "keep_index"] ??= false;
-			var _index = self.animation.get_index();
-			self.animation.play(_animation.name, _animation.reset);
-			if (_animation.keep_index) {
-				self.animation.set_index(_index);	
-			}
-		});
-		
-		self.subscribe("animation_play_at_loop", function(_animation, _frame) {
-			_animation[$ "reset"] ??= false;
-			_animation[$ "keep_index"] ??= false;
-			var _index = self.animation.get_index();
-			self.animation.play_at_loop(_animation.name, _animation.reset);
-			self.animation.__frame = _frame;
-			if (_animation.keep_index) {
-				self.animation.set_index(_index);	
-			}
+			self.play_animation(_animation);
 		});
 		self.subscribe("animation_xscale", function(_xscale) {
 			self.animation.set_xscale(_xscale)
+		});
+		self.subscribe("animation_yscale", function(_yscale) {
+			self.animation.set_yscale(_yscale)
+		});
+		self.subscribe("animation_angle", function(_angle) {
+			self.rotation_angle = _angle;
 		});
 		self.subscribe("animation_visible", function(_visible) {
 			self.animation.set_visible(_visible)
 		});
 	}
 	
+	self.play_animation = function(_animation){
+		_animation[$ "reset"] ??= false;
+		_animation[$ "keep_index"] ??= false;
+		_animation[$ "frame"] ??= 0;
+		var _index = self.animation.get_index();
+		self.animation.play(_animation.name, _animation.reset, _animation.frame);
+		if (_animation.keep_index) {
+			self.animation.set_index(_index);	
+		}
+		self.animation.__frame = _animation.frame;
+	}
+	
+	self.change_character = function(_character){
+		self.character = _character;
+		self.reload_animations();
+	}
+	
 	self.set_subdirectories = function(_subdirs) {
 		self.subdirectories = _subdirs;	
 	}
 	
+	self.add_subdirectories = function(_subdirs) {
+		array_foreach(_subdirs, function(_dir){
+			array_push(self.subdirectories, _dir);	
+		})
+	}
+	
 	self.load_sprites = function() {
-		SpriteLoader.reload_collage(self.collage, "sprites/" + self.character, self.subdirectories);
+		//log(working_directory + "sprites/" + self.character)
+		SpriteLoader.reload_collage(self.collage,"sprites/" + self.character, self.subdirectories);
 	}
 	
 	self.reload_animations = function() {
 		self.load_sprites();
 		var _animation = JSON.load("sprites/" + self.character + "/animation.json");
+		if(_animation == -1) return;
 		var _current_animation = undefined;
 		if (!is_undefined(self.animation)) {
 			_current_animation = self.animation.__animation;
@@ -74,7 +89,9 @@ function ComponentAnimation() : ComponentBase() constructor {
 			.add_type("hurtbox") 
 			.parse_data(_animation.data.animations)
 			.init();
-			
+		
+		//log(self.animation.parse_data(_animation.data.animations), false);
+		
 		if (!is_undefined(_current_animation)) {
 			self.animation.play(_current_animation);	
 		}
@@ -85,18 +102,15 @@ function ComponentAnimation() : ComponentBase() constructor {
 		if (self.animation.on_end()) {
 			self.publish("animation_end");	
 		}
-		var _mouse = mouse_wheel_down() - mouse_wheel_up();
-		if (_mouse != 0) self.rotation_angle += _mouse * 15;
-		
-		if (mouse_check_button_pressed(mb_right)) {
-		    var _instance_x = floor(parent.get_instance().x);
-		    var _instance_y = floor(parent.get_instance().y);
-			self.rotation_point.x = mouse_x - _instance_x;
-			self.rotation_point.y = mouse_y - _instance_y;
-		}
+		//rotates thing with scroll wheel
+		//var _mouse = mouse_wheel_down() - mouse_wheel_up();
+		//if (_mouse != 0) self.rotation_angle += _mouse * 15;
 		
 		if (GAME.on_normal()) {
 			if (GAME.__current_frame <= self.last_game_frame) return;
+			if (animation.get_props() == undefined) {
+				return;
+			}
 			if (self.max_queue_size == 0) return;
 			self.last_game_frame++;
 			var _inst = parent.get_instance();
@@ -128,24 +142,54 @@ function ComponentAnimation() : ComponentBase() constructor {
 
 		if (array_length(self.position_queue) == 0) {
 			var _inst = parent.get_instance();
-			return [
-				_inst.x, _inst.y,
-				self.animation.__animation, 
-				self.animation.__frame,
-				self.animation.get_props().action,
-				self.animation.__xscale,
-			];
+			if(self.animation != noone)
+				if(self.animation.__animation != noone){
+					var _action = "missing";
+					var _props = self.animation.get_props();// THIS LINE IS IMPORTANT IT WILL GET SHOT OFFSETS
+					//log(_props)
+					if(_props != undefined){
+						if(variable_struct_exists(_props,"action")){
+							_action = _props.action;
+						}
+					}
+					
+					var ret = [
+						_inst.x, _inst.y,
+						self.animation.__animation, 
+						self.animation.__frame,
+						_action,
+						self.animation.__xscale,
+					];
+					return ret;
+				}
 		}
 
 		var _first = self.position_queue[0];
 		return _first;
 	};
 
+	self.draw = function(){
+		if(!self.do_drawing) return;
+		self.draw_regular(self.get_interpolated_position());
+	}
 
-
+	self.get_shot_offsets = function(){
+		var _frame = self.animation.__frame;
+		
+		return [self.animation.get_props().keyframes[_frame].shot_offset_x, 
+		self.animation.get_props().keyframes[_frame].shot_offset_y];
+	}
 	
-	self.draw = function() {
-		var _pos = self.get_interpolated_position();
+	//returns the listed variable
+	//_variable must be a string!
+	self.get_variable_from_frame_data = function(_variable){
+		var _frame = self.animation.__frame;
+		
+		return struct_get(self.animation.get_props().keyframes[_frame], _variable);
+	}
+	
+	self.draw_regular = function(_pos, _col = c_white) {
+		if(is_undefined(_pos)) _pos = self.get_interpolated_position();
 		var _instance_x = floor(_pos[0]);
 		var _instance_y = floor(_pos[1]);
 		var _animation = _pos[2];
@@ -166,13 +210,16 @@ function ComponentAnimation() : ComponentBase() constructor {
 		
 		var _previous_xscale = self.animation.get_xscale();
 		
-	    self.animation
-			.set_xscale(_xscale)
-			.set_angle(-self.rotation_angle)
-			.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
-			
+		if(self.draw_base_sprite){
+		    self.animation
+				.set_xscale(_xscale)
+				.set_angle(-self.rotation_angle)
+				.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+		}
+		var _modifier = self.animation.__types[$ self.animation.__type][0];
+		if(_modifier != "") _modifier += "_"
 		for (var _q = 0; _q < array_length(self.armors); _q++){
-			self.animation.draw_action(_action, self.armors[_q], _frame, floor(_x), floor(_y));
+			self.animation.draw_action(_action,_modifier + self.armors[_q], _frame, floor(_x), floor(_y));
 		}
 		self.animation.set_xscale(_previous_xscale);
 

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"PlayerRpc",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PlayerRpc",
+  "parent":{
+    "name":"RPC",
+    "path":"folders/Scripts/LIbraries/Netcode/RPC.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

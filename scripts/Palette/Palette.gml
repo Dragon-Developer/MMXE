@@ -1,25 +1,123 @@
-function Palette(_plt_sprite) constructor {
-	static setSprite = function(_plt_sprite) {
-	    self.index = 0;
-		self.sprite = _plt_sprite;
-	    self.indexUniform = shader_get_uniform(shdr_palette, "u_paletteIndex");
-	    self.textureSampler = shader_get_sampler_index(shdr_palette, "u_paletteTexture");
-	    self.height = sprite_get_height(_plt_sprite);
-	    self.texture = sprite_get_texture(_plt_sprite, 0);
+function Palette() constructor {
+	static setSprite = function() {
+		
+		self.colorsArray = [
+			[32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[128,240,240,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+		];
+		
+		self.swapArray = [
+			[32,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+			[128,240,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+		];
+		
+		for(var p = 0; p < 3; p++){
+			for(var q = 0; q < 32; q++){
+				self.colorsArray[p][q] = self.colorsArray[p][q]/ 255;
+			}
+		}
+		
+		for(var p = 0; p < 3; p++){
+			for(var q = 0; q < 32; q++){
+				self.swapArray[p][q] = self.swapArray[p][q] / 255;
+			}
+		}
+		
+	    self.RedColorsBase = shader_get_uniform(shdr_palette_swap, "RedColorsBase");
+	    self.GreenColorsBase = shader_get_uniform(shdr_palette_swap, "GreenColorsBase");
+	    self.BlueColorsBase = shader_get_uniform(shdr_palette_swap, "BlueColorsBase");
+		
+	    self.RedColorsSwap = shader_get_uniform(shdr_palette_swap, "RedColorsSwap");
+	    self.GreenColorsSwap = shader_get_uniform(shdr_palette_swap, "GreenColorsSwap");
+	    self.BlueColorsSwap = shader_get_uniform(shdr_palette_swap, "BlueColorsSwap");
 	}
-	static setIndex = function(_index) {
-		self.index = _index;
+	
+	static setPalette = function(_pal){
+		self.swapArray = _pal;
 	}
-	static getIndex = function() {
-		return self.index;		
-	};
+	static setBasePalette = function(_pal){
+		self.colorsArray = _pal;
+	}
+	
+	static getPalette = function(){
+		return self.swapArray;
+	}
+	
 	static apply = function() {
-		shader_set(shdr_palette);
-		shader_set_uniform_f(self.indexUniform, self.index / self.height);
-		texture_set_stage(self.textureSampler, self.texture);
+		shader_set(shdr_palette_swap);
+		
+		shader_set_uniform_f_array(self.RedColorsBase,   self.colorsArray[0])
+		shader_set_uniform_f_array(self.GreenColorsBase, self.colorsArray[1])
+		shader_set_uniform_f_array(self.BlueColorsBase,  self.colorsArray[2])
+		
+		shader_set_uniform_f_array(self.RedColorsSwap,   self.swapArray[0])
+		shader_set_uniform_f_array(self.GreenColorsSwap, self.swapArray[1])
+		shader_set_uniform_f_array(self.BlueColorsSwap,  self.swapArray[2])
 	}
 	static reset = function() {
 		shader_reset();	
 	}
-	self.setSprite(_plt_sprite);
+	
+	static setBaseColorAt = function(_index, _base_red, _base_green, _base_blue){
+		/*if(!variable_struct_exists(self, "colorsArray")) {
+			self.colorsArray = [
+				[32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[128,240,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+			];
+		}*/
+		array_set(self.colorsArray[0],_index, _base_red / 255)
+		array_set(self.colorsArray[1],_index, _base_green / 255)
+		array_set(self.colorsArray[2],_index, _base_blue / 255)
+	}
+	
+	static setPaletteColorAt = function(_index, _new_red, _new_green, _new_blue){
+		/*if(!variable_struct_exists(self, "swapArray")){ 
+			self.swapArray = [
+				[32,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[48,64,128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				[128,240,248,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+			];
+		}*/
+		array_set(self.swapArray[0],_index, _new_red / 255)
+		array_set(self.swapArray[1],_index, _new_green / 255)
+		array_set(self.swapArray[2],_index, _new_blue / 255)
+	}
+	
+	static setBaseColorByHex = function(_index, _hex){
+		self.setBaseColorAt(
+			_index, 
+			color_get_red(_hex),
+			color_get_green(_hex),
+			color_get_blue(_hex)
+		);
+	}
+	
+	static setPaletteColorByHex = function(_index, _hex){
+		self.setPaletteColorAt(
+			_index, 
+			color_get_red(_hex),
+			color_get_green(_hex),
+			color_get_blue(_hex)
+		);
+	}
+	
+	static setPaletteColorManually = function(_index, _red, _green, _blue){
+		array_set(self.swapArray[0],_index, _red / 255)
+		array_set(self.swapArray[1],_index, _green / 255)
+		array_set(self.swapArray[2],_index, _blue / 255)
+	}
+	
+	self.setSprite();
+}
+
+function BrightShader() constructor {
+	static apply = function() {
+		shader_set(shader_palette_light);
+	}
+	static reset = function() {
+		shader_reset();	
+	}
 }

@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Parent",
-    "path":"folders/Objects/Rides/Parent.yy",
+    "path":"folders/Objects/Level Assets/Generic/Rides/Parent.yy",
   },
   "parentObjectId":{
     "name":"par_spawner",

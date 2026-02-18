@@ -1,0 +1,140 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 28,
+        "y": 32
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          "",
+          "thin"
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "forte_look_mc",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_mu",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_md",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 7
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_rc",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_ru",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_rd",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 6
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_lc",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_lu",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "forte_look_ld",
+          "properties": {
+            "action":"forte",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 8
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

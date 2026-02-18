@@ -6,7 +6,7 @@
   "name":"NET_InstanceManager",
   "parent":{
     "name":"Managers",
-    "path":"folders/Netcode/Game/Managers.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Game/Managers.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

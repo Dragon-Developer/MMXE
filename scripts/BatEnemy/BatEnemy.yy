@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"BatEnemy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"BatEnemy",
+  "parent":{
+    "name":"Normal",
+    "path":"folders/Scripts/Game/stages/Enemy/Normal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

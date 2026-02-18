@@ -5,6 +5,9 @@ spawn = function() {
 	_inst.x = x;
 	_inst.y = y;
 	on_spawn(_inst);
+	on_creation_spawn(_inst);
 }
 
 on_spawn = function(_inst) {}
+
+on_creation_spawn = function(_inst) {}

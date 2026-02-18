@@ -9,9 +9,9 @@ function GuiLayoutManager(_container) constructor {
     alignItems = "start";
     alignContent = "start";
 
-    layout = function() {
+    static layout = function() {
         var _children = array_filter(container.children, function(_child) { return _child.enabled; });
-        var _count = array_length(_children);
+        //var _count = array_length(_children);
     
 		var _content_width = container.width - padding.left - padding.right;
 		var _content_height = container.height - padding.top - padding.bottom;
@@ -25,7 +25,7 @@ function GuiLayoutManager(_container) constructor {
         }
     };
 
-    layoutNoWrap = function(_children, _size, _other_size, _parent_x = 0, _parent_y = 0) {
+    static layoutNoWrap = function(_children, _size, _other_size, _parent_x = 0, _parent_y = 0) {
 	    var _count = array_length(_children);
 	    var _gap = gap;
 	    var _total_fixed_size = 0;
@@ -54,7 +54,7 @@ function GuiLayoutManager(_container) constructor {
 
 	    var _start = flexDirection == "row" ? padding.left : padding.top;
 		var _end = flexDirection == "row" ? padding.right : padding.bottom;
-		var _parent_offset = flexDirection == "row" ? _parent_x : _parent_y;
+		//var _parent_offset = flexDirection == "row" ? _parent_x : _parent_y;
 		
 		var _pos = _start;
 		
@@ -111,8 +111,7 @@ function GuiLayoutManager(_container) constructor {
 	    }
 	};
 
-
-	layoutWrap = function(_children, _size, _other_size) {
+	static layoutWrap = function(_children, _size, _other_size) {
 	    var _count = array_length(_children);
 	    var _line_pos = 0;
 		var _pos = 0;
@@ -151,38 +150,42 @@ function GuiLayoutManager(_container) constructor {
 	    applyAlignmentsToLines(_lines, _size, _other_size);
 	};
 
-	handleAlignment = function(_child, _align, _other_size, _line_pos) {
-	    if (_align == "center") {
-	        if (flexDirection == "row") {
-	            _child.y = _line_pos + (_other_size - _child.height) / 2;
-	        } else {
-	            _child.x = _line_pos + _other_size / 2 - _child.width / 2;
-	        }
-	    } else if (_align == "end") {
-	        if (flexDirection == "row") {
-	            _child.y = _line_pos + (_other_size - _child.height);
-	        } else {
-	            _child.x = _line_pos + _other_size - _child.width;
-	        }
-	    } else if (_align == "stretch") {
-	        if (flexDirection == "row") {
-	            _child.height = _other_size;
-	            _child.y = _line_pos;
-	        } else {
-	            _child.width = _other_size;
-	            _child.x = _line_pos;
-	        }
-	    } else if (_align == "start") {
-	        if (flexDirection == "row") {
-	            _child.y = _line_pos;
-	        } else {
-	            _child.x = _line_pos;
-	        }
-	    }
+	static handleAlignment = function(_child, _align, _other_size, _line_pos) {
+		switch(_align){
+			case("center"):
+				if (flexDirection == "row") {
+		            _child.y = _line_pos + (_other_size - _child.height) / 2;
+		        } else {
+		            _child.x = _line_pos + _other_size / 2 - _child.width / 2;
+		        }
+			break;
+			case("end"):
+				if (flexDirection == "row") {
+		            _child.y = _line_pos + (_other_size - _child.height);
+		        } else {
+		            _child.x = _line_pos + _other_size - _child.width;
+		        }
+			break;
+			case("stretch"):
+				if (flexDirection == "row") {
+		            _child.height = _other_size;
+		            _child.y = _line_pos;
+		        } else {
+		            _child.width = _other_size;
+		            _child.x = _line_pos;
+		        }
+			break;
+			case("start"):
+				if (flexDirection == "row") {
+		            _child.y = _line_pos;
+		        } else {
+		            _child.x = _line_pos;
+		        }
+			break;
+		}
 	};
 
-	
-	applyAlignmentsToLines = function(_lines, _size, _other_size) {
+	static applyAlignmentsToLines = function(_lines, _size, _other_size) {
 	    var _total_size = 0;
 		var _gap = gap;
 		var _len = array_length(_lines);
@@ -208,8 +211,8 @@ function GuiLayoutManager(_container) constructor {
 	    }
 	};
 
-	applyAlignmentsToLine = function(_line_items, _size, _line_size, _py) {
-	    var _total_children_size = 0;
+	static applyAlignmentsToLine = function(_line_items, _size, _line_size, _py) {
+	    //var _total_children_size = 0;
 	    var _count = array_length(_line_items);
 
 	    var _gap = gap;

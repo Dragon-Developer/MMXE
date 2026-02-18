@@ -6,7 +6,7 @@
   "name":"NET_NetworkWindow",
   "parent":{
     "name":"Network",
-    "path":"folders/Netcode/Classes/Network.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Classes/Network.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Parents",
+    "path":"folders/Objects/Level Assets/Blocks/Parents.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"draw_line_percentage",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"draw_line_percentage",
+  "parent":{
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -2,6 +2,7 @@ function GuiText(_text) : GuiBase() constructor {
     font = fnt_default;
 	__cursorPosition = 0;
 	__cursorVisible = false;
+	font_y_offset = 0;
 	
 	setCursorPosition = function(_position) {
 		self.__cursorPosition = _position;
@@ -25,6 +26,10 @@ function GuiText(_text) : GuiBase() constructor {
 	getText = function(){
 		return text;
 	}
+	
+	setFontOffset = function(_offset){
+		font_y_offset = _offset;
+	}
 
     setFont = function(_font) {
         font = _font;
@@ -34,13 +39,17 @@ function GuiText(_text) : GuiBase() constructor {
 	}
 
 	getContentWidth = function() {
-		draw_set_font(font);
-		return string_width(text) ;
+		//draw_set_font(font);
+		
+		return string_get_text_length(text) + 6;
+		
+		//return string_width(text) ;
 	}
 	
 	getContentHeight = function() {
-		draw_set_font(font);
-		return string_height(text + " ");
+		return 7;
+		//draw_set_font(font);
+		//return string_height(text + " ");
 	}
 
     drawMe = function() {
@@ -51,12 +60,11 @@ function GuiText(_text) : GuiBase() constructor {
 		//draw_set_halign(fa_left);
 		//draw_set_valign(fa_top);
         //draw_text_color(floor(_pos.x), floor(_pos.y), text, color, color, color, color, alpha);
-		draw_string_condensed(text, floor(_pos.x), floor(_pos.y) + 4)
+		draw_string_condensed(text, floor(_pos.x), floor(_pos.y) + font_y_offset)
 		var _copy = string_copy(text, 1, __cursorPosition);
-		var _pos_offset = string_width(_copy);
+		var _pos_offset = string_get_text_length(_copy);
 		if (__cursorVisible) {
-			draw_text_color(floor(_pos.x + _pos_offset), floor(_pos.y), 
-				"|", color, color, color, color, alpha)
+			draw_string_condensed("|", floor(_pos.x + _pos_offset), floor(_pos.y) + font_y_offset)
 		}
     };
 

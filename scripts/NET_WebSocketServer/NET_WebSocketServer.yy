@@ -6,7 +6,7 @@
   "name":"NET_WebSocketServer",
   "parent":{
     "name":"WebSocket",
-    "path":"folders/Netcode/Protocol/WebSocket.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/Protocol/WebSocket.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

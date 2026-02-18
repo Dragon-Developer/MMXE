@@ -1,8 +1,9 @@
 function NET_InputManager() constructor {
 	self.frameInput = {};
-	self.totalPlayers = 2;
+	self.totalPlayers = 3;
 	self.lastInput = {};
 	self.keys = [];
+	
 	static getFormattedInputs = function(_frame) {
 		var _raw_inputs = self.getAll(_frame);
 		var _formatted_inputs = array_create(self.totalPlayers);

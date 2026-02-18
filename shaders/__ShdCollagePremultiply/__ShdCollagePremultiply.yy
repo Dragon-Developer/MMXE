@@ -4,7 +4,7 @@
   "name":"__ShdCollagePremultiply",
   "parent":{
     "name":"Shaders",
-    "path":"folders/Collage/System/Shaders.yy",
+    "path":"folders/Scripts/LIbraries/Collage/System/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

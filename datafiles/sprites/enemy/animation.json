@@ -1,0 +1,95 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 35,
+        "y": 41
+      }
+    },
+    "skull_bot": {
+      "origin": {
+        "x": 19,
+        "y": 28
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "holo_wait",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 5,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "skull_bot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "skull_bot_shield",
+          "properties": {
+            "action": "skull_bot",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

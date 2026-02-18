@@ -15,6 +15,8 @@ function ComponentBase() constructor {
 	self.draw_end = function() {}
 	self.on_register = function() {}
 	self.on_remove = function() {}
+	self.timescale = 60 / game_get_speed(gamespeed_fps);
+	self.current_step_time = 0;
 	
 	self.get_instance = function() {
 		return self.parent.get_instance();	
@@ -62,5 +64,14 @@ function ComponentBase() constructor {
 	}
 	self.load = function() {
 		self.serializer.deserialize();
+	}
+	
+	//forte fuckery. gonna add a helper function for getting other components in the same object
+	self.get = function(_component){
+		return self.get_instance().components.get(_component);
+	}
+	//same thing as above, but for find. find is needed for animation type stuff.
+	self.find = function(_component){
+		return self.get_instance().components.find(_component)
 	}
 }

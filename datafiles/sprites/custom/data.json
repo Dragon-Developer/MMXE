@@ -1,0 +1,12 @@
+{
+
+	"can_dash": true,
+	"can_wall_slide": true,
+	"walk_speed": 1.46875,
+	"dash_speed": 3.45703125,
+	"dash_interval": 32,
+	"jump_strength": 5.32421875,
+	"wall_jump_strength": 5,
+	"wall_jump_stick": 5,
+	"wall_jump_launch_lock": 11
+}

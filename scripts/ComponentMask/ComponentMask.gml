@@ -21,16 +21,21 @@ function ComponentMask() : ComponentBase() constructor {
 		self.angle += _angle;
 	}
 	self.step = function() {
-		var _inst = parent.get_instance();
-		_inst.image_angle = self.angle;
+		var _inst = self.get_instance();
+		_inst.image_angle  = self.angle;
 		_inst.image_xscale = self.xscale;
 		_inst.image_yscale = self.yscale;
 		// Needs better ways to trigger draw debug mode
-		if (keyboard_check_pressed(ord("3"))) draw_enabled = !draw_enabled;
+		
+		if (keyboard_check_pressed(ord("3"))) {draw_enabled = !draw_enabled;}
+		
 		with (obj_block_parent) {
 			visible = other.draw_enabled;	
 		}
-		with (obj_slope_zone) {
+		with (obj_ladder) {
+			visible = other.draw_enabled;	
+		}
+		with (obj_camera_changer) {
 			visible = other.draw_enabled;	
 		}
 	}

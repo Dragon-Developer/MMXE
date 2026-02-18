@@ -6,7 +6,7 @@
   "name":"__input_load_blacklist_csv",
   "parent":{
     "name":"Initialization",
-    "path":"folders/Input/(System)/Initialization.yy",
+    "path":"folders/Scripts/LIbraries/Input/(System)/Initialization.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

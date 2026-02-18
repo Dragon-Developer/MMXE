@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"Folder_Copy",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Folder_Copy",
+  "parent":{
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

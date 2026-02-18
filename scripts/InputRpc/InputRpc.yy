@@ -6,7 +6,7 @@
   "name":"InputRpc",
   "parent":{
     "name":"RPC",
-    "path":"folders/Scripts/Netcode/RPC.yy",
+    "path":"folders/Scripts/LIbraries/Netcode/RPC.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

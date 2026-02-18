@@ -1,13 +1,15 @@
 {
   "$GMObject":"",
   "%Name":"obj_square_16",
-  "eventList":[],
+  "eventList":[
+    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
   "name":"obj_square_16",
   "overriddenProperties":[],
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
   },
   "parentObjectId":{
     "name":"obj_square_parent",

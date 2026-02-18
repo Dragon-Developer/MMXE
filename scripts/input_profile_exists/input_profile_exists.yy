@@ -6,7 +6,7 @@
   "name":"input_profile_exists",
   "parent":{
     "name":"16  Profiles",
-    "path":"folders/Input/16  Profiles.yy",
+    "path":"folders/Scripts/LIbraries/Input/16  Profiles.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

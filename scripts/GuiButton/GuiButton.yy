@@ -6,7 +6,7 @@
   "name":"GuiButton",
   "parent":{
     "name":"Components",
-    "path":"folders/HazyGUI/Components.yy",
+    "path":"folders/Scripts/LIbraries/HazyGUI/Components.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

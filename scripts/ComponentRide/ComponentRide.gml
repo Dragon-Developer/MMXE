@@ -21,19 +21,19 @@ function ComponentRide() : ComponentPlayerMove() constructor{
 		var _inst = self.get_instance();
 		
 		if(self.physics.check_place_meeting(_inst.x,_inst.y,all) && self.ride_cooldown <= 0){
-			log("e?")
+			//log("e?")
 			self.pilot = self.physics.get_place_meeting(_inst.x,_inst.y,all);
 			self.input = self.pilot.components.find("input");
-			self.pilot.components.publish("enter_ride", self.get_instance());
+			self.pilot.components.publish("trigger_state_change", "t_ride");
 		}
 		
 		if(self.pilot != noone){
 			self.pilot.x = self.get_instance().x;
 			self.pilot.y = self.get_instance().y - 21;
 			if(self.input.get_input_pressed("jump") && self.input.get_input("up")){
-				self.pilot.components.publish("exit_ride", true);
 				self.input = new ComponentPlayerInput();
 				self.pilot = noone;
+				self.pilot.components.find("player").fsm.change("fall");
 				self.ride_cooldown = 15;
 			}
 		}

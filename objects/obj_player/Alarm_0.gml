@@ -1,0 +1,1 @@
+components.get(ComponentWeaponUse).change_weapon(0);

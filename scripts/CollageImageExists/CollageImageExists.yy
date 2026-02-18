@@ -6,7 +6,7 @@
   "name":"CollageImageExists",
   "parent":{
     "name":"Image",
-    "path":"folders/Collage/Image.yy",
+    "path":"folders/Scripts/LIbraries/Collage/Image.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

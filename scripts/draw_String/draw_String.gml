@@ -1,5 +1,5 @@
 // I wanted the utility of draw_string but i had no idea how it was made off the top of my head
-function draw_string(_string, _x, _y){
+function draw_string(_string, _x, _y, _font = "normal"){
 	
 	for(var q = 0; q < string_length(_string); q++){
 		//log(string_char_at(_string, q + 1) + ", " +string(ord(string_char_at(_string, q + 1)) - 1))
@@ -8,7 +8,24 @@ function draw_string(_string, _x, _y){
 		if _char == " " _char_ord = 3;
 		if _char == "/" _char_ord = 14;
 		if _char == "\\" _char_ord = 14;
-		draw_sprite(spr_text_font_normal, _char_ord, _x + q * 8 - 4, _y);
+		
+		var _sprite = noone;
+		
+		switch(_font){
+			default:
+				_sprite = spr_text_font_normal;
+			break;
+			
+			case("pause menu"):
+				_sprite = spr_text_font_pause
+			break;
+			
+			case("orange"):
+				_sprite = spr_text_font_orange
+			break;
+		}
+		
+		draw_sprite(_sprite, _char_ord, floor(_x + q * 8), floor(_y));
 	}
 	
 	/* fuck it we do a regular for loop
@@ -37,10 +54,10 @@ function draw_string_condensed(_string, _x, _y){
 
 function string_get_text_length(_string){
 	var _char = "";
-	var _extreme_minors = ["."];// 5 px
-	var _ultra_minors = [":",";","i","l"];// 4 px
-	var _minors = ["1", "I","r"," "];// minor characters. get your head out of the gutter.
-	var _mediums = ["b","c","d","e","f","g","h","j","n","o","p","q","s","t","u","z"];// minors are 3px. mediums are 2. megas are 1.
+	var _extreme_minors = [];// 5 px
+	var _ultra_minors = [":",";","i","l","."];// 4 px
+	var _minors = ["1", "r"," "];// minor characters. get your head out of the gutter.
+	var _mediums = ["b","c","I","d","e","f","g","h","j","n","o","p","q","s","t","u","z"];// minors are 3px. mediums are 2. megas are 1.
 	var _megas = ["E", "F","N","a","k","m","w","x","y","L"];
 	var _xx = 0;
 	for(var q = 0; q < string_length(_string); q++){
@@ -58,5 +75,6 @@ function string_get_text_length(_string){
 		else
 			_xx += 8;
 	}
+	//log("The string is " + string(_xx) + " pixels wide")
 	return _xx;
 }

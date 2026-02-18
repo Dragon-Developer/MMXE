@@ -6,7 +6,7 @@
   "name":"draw_image_stretched",
   "parent":{
     "name":"GM-Collage Compatibility",
-    "path":"folders/Collage/GM-Collage Compatibility.yy",
+    "path":"folders/Scripts/LIbraries/Collage/GM-Collage Compatibility.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

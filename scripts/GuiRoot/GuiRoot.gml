@@ -9,14 +9,11 @@ function GuiRoot() : GuiContainer() constructor {
 		hudContainer.setEnabled(true);
 		refreshChildren();
 		global.game.start();
-		if (!is_undefined(global.server)) 
-			global.server.rpc.sendNotification("game_start", {
-				players: [0, 1]
-			}, global.server.getAllSockets());
+		//this is for the singleplayer experience. multiplayer isnt a factor here
 		
 		
-		room_goto(1);//this is bad. while rooms are stored as integer pointers, this
-	}// goes to whatever level is loaded as #1
+		room_transition_to(_id, "standard", 24);
+	}
 	
 	startEditor = function(){
 		hudContainer.setEnabled(true);
@@ -27,22 +24,14 @@ function GuiRoot() : GuiContainer() constructor {
 	
 	mainMenuContainer = new GuiMainMenu();
 	hudContainer = new GuiPlayerHUD();
-	playOnlineContainer = new GuiPlayOnlineMenu();
-	serverMenuContainer = new GuiServerMenu();
-	lobbyMenuContainer = new GuiLobbyMenu();
-	clientMenuContainer = new GuiClientMenu();
-	StageSelectContainer = new GuiStageSelect();
+	SettingsContainer = new GuiSettings();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
-	playOnlineContainer.setEnabled(false);
-	serverMenuContainer.setEnabled(false);
-	lobbyMenuContainer.setEnabled(false);
-	clientMenuContainer.setEnabled(false);
-	StageSelectContainer.setEnabled(false);
+	SettingsContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, StageSelectContainer, hudContainer, playOnlineContainer, serverMenuContainer, lobbyMenuContainer, clientMenuContainer]);
+	addChild([mainMenuContainer, hudContainer, SettingsContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;
@@ -68,6 +57,8 @@ function GuiRoot() : GuiContainer() constructor {
 				emitEvent("debug", debug);
 				propagate("debug", debug);
 			}
+			
+			
 
 			rootStep();
 		} catch (err) {

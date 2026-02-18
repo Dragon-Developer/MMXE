@@ -8,13 +8,10 @@
   "name":"obj_slope",
   "overriddenProperties":[],
   "parent":{
-    "name":"Blocks",
-    "path":"folders/Objects/Blocks.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Level Assets/Blocks/Collision.yy",
   },
-  "parentObjectId":{
-    "name":"obj_square_16",
-    "path":"objects/obj_square_16/obj_square_16.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -33,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Sprite20",
-    "path":"sprites/Sprite20/Sprite20.yy",
+    "name":"Sprite20_1",
+    "path":"sprites/Sprite20_1/Sprite20_1.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -1,4 +1,5 @@
 #macro ANIMATION_SPRITE_PREFIX "spr"
+//why do we need to have a macro for the animation sprite seperator? it just adds characters
 #macro ANIMATION_SPRITE_SEPARATOR "_"
 
 /// @param {string} character	Character name used in animation
@@ -20,7 +21,7 @@ function AnimationController(_character = "") constructor {
     self.__color = c_white;
     self.__alpha = 1;
     self.__character = _character;
-    self.__types = {
+    self.__types = {//probably didnt need to hardcode this, but we need better doccumentation anyways. 
         "normal": [""]
     };
     self.__actions = [];
@@ -92,6 +93,16 @@ function AnimationController(_character = "") constructor {
 	static set_yscale = function(_yscale) {
 		self.__yscale = _yscale;
 		return self;
+	}
+	/// @param {real} xscale
+	/// @returns {AnimationController} self
+	static set_color = function(_color) {
+		self.__color = _color;
+		return self;
+	}
+	/// @returns {real}	
+	static get_color = function() {
+		return self.__color;
 	}
 	/// @param {real} angle
 	/// @returns {AnimationController} self
@@ -252,17 +263,16 @@ function AnimationController(_character = "") constructor {
 					}
 					// [character, action, suffix]
 					var _sprite_name = string_join_ext(ANIMATION_SPRITE_SEPARATOR, _array);
-					var _sprite = undefined;
-					if (!is_undefined(this.__collage) && this.__collage.Exists(_sprite_name)) {
-			            _sprite = this.__collage.GetImageInfo(_sprite_name);
-					} else {
-						var _index = asset_get_index(_sprite_name);
-						if (_index != -1) {
-							_sprite = _index;	
-						}
-					}
+					// if dark asks, i made this function something generic so other systems could use it
+					// it does what it used to do, but i moved it to spriteloader so spriteloader 
+					// could also load sprite assets
+					var _sprite = SpriteLoader.load_sprite(this.__collage, _sprite_name);
+					
 					if (!is_undefined(_sprite)) {
 						currentAnimation[$ "sprites"][$ _action] = _sprite;
+					} else {
+						//if(!__input_string_contains(_sprite_name, "x"))
+							//log("something fucked up during sprite loading. |" + _sprite_name + "| was unable to be found")
 					}
 				}
 	        }));
@@ -300,6 +310,7 @@ function AnimationController(_character = "") constructor {
 	/// @returns {AnimationController} self
     static advance_frame = function() {
 		if (self.__animation == "") return;
+		if (self.__current_animation == "" || self.__current_animation == undefined) return;
 	    var _loop_begin = 0;
 	    if (struct_exists(self.__props, self.__animation)) {
 	        var _props = self.__props[$ self.__animation];
@@ -309,9 +320,19 @@ function AnimationController(_character = "") constructor {
 	    }
     
 	    var _props = self.__props[$ self.__animation];
+		
+		if(!variable_struct_exists(__current_animation,"mode")){
+			variable_struct_set(__current_animation,"mode", ANIMATION_MODE.KEYFRAMES)
+		}
+		
 		// Key-frames mode
 	    if (self.__current_animation.mode == ANIMATION_MODE.KEYFRAMES) {
-			var _max_key = _props[$ "max_key"];
+			var _max_key = undefined;
+			try{
+				var _max_key = _props[$ "max_key"];
+			} catch (_err){
+				log(self.__animation + " was missing properties")
+			}
 	        var _result = self.__process_keyframes(self.__index, self.__speed, _loop_begin, _props.keyframes, _max_key);
 	        self.__index = _result.new_index;
 	        self.__frame = _result.chosen_frame;
@@ -350,6 +371,7 @@ function AnimationController(_character = "") constructor {
 	    if (_frame == self.__last_keyframe) return;
 
 	    var _props = self.get_props();
+		if(_props == undefined) return;
 	    if (struct_exists(_props, "key_events")) {
 	        var _key_events = _props.key_events;
 
@@ -377,6 +399,9 @@ function AnimationController(_character = "") constructor {
 	    if (_index == self.__last_index) return;
 
 	    var _props = self.get_props();
+		
+		if(_props == undefined) return;
+		
 	    if (struct_exists(_props, "index_events")) {
 	        var _index_events = _props.index_events;
 
@@ -486,13 +511,13 @@ function AnimationController(_character = "") constructor {
 	}
 	/// @param {string} animation
 	/// @param {bool} reset_if_same
-    static play = function(_animation, _reset = true) {
+    static play = function(_animation, _reset = true, _frame = 0) {
 		if (_animation == "") return;
-        if (self.__animation != _animation || _reset) {
-            self.__index = 0;
-			self.__last_keyframe = -1;
-			self.__last_index = -1;
-			self.__wait_frames = 1;
+        if (self.__animation != _animation || _reset){
+            self.__index = _frame;
+			self.__last_keyframe = _frame - 1;
+			self.__last_index = _frame - 1;
+			self.__wait_frames = _frame + 1;
         }
         self.__animation = _animation;
         self.__sprite = self.get_sprite();
@@ -505,29 +530,6 @@ function AnimationController(_character = "") constructor {
 			max_key: struct_exists(_props, "max_key") ? _props.max_key : undefined,
 			loop_begin: struct_exists(_props, "loop_begin") ? _props.loop_begin : 0
 		}
-		return self;
-    }
-	
-	static play_at_loop = function(_animation, _reset = true) {
-		if (_animation == "") return;
-        self.__sprite = self.get_sprite(_animation);
-		var _props = self.get_props(_animation);
-		if (is_undefined(_props)) return;
-		var _keyframe_mode = struct_exists(_props, "keyframes") && is_array(_props.keyframes) && array_length(_props.keyframes) > 0;
-		self.__current_animation = {
-			mode: _keyframe_mode ? ANIMATION_MODE.KEYFRAMES : ANIMATION_MODE.SPEED,
-			speed: struct_exists(_props, "speed") ? _props.speed : 1,
-			max_key: struct_exists(_props, "max_key") ? _props.max_key : undefined,
-			loop_begin: struct_exists(_props, "loop_begin") ? _props.loop_begin : 0
-		}
-		if (self.__animation != _animation || _reset) {
-            self.__index = 0;
-			self.__last_keyframe = -1;
-			self.__last_index = -1;
-			self.__wait_frames = 1;
-        }
-        self.__animation = _animation;
-		self.__index = self.__current_animation.loop_begin;
 		return self;
     }
 	/// @param {string} type
@@ -574,11 +576,13 @@ function AnimationController(_character = "") constructor {
 		var _alpha = self.__alpha;
 		if (is_undefined(_sprite)) return self;
 		if (!CollageIsImage(_sprite) && !sprite_exists(_sprite)) return self;
-        draw_image_ext(_sprite, _index, _x, _y, _xscale, _yscale, _angle, _color, _alpha);    
+        draw_image_ext(_sprite, _index, _x, _y, _xscale, _yscale, _angle, _color, _alpha); 
+		//log(string(_sprite))
 		return self;
 	}
 	/// @returns {bool}
     static on_end = function() {
+		if(self.__current_animation == undefined) return false;
 		var _next_index = self.__index + self.__current_animation.speed * self.__speed;
 		var _length = self.get_length();
         return (_next_index >= _length);
@@ -600,8 +604,8 @@ function AnimationController(_character = "") constructor {
     }
 	/// @param {struct} data
 	/// @returns {AnimationController} self
-	static parse_data = function(_data) {
-        if (!is_struct(_data)) return;
+	static parse_data = function(_data, _return_self = true) {
+        if (!is_struct(_data)) {log("crap");return;}
     
         if (struct_exists(_data, "type_combinations")) {
             self.add_type_combinations(_data.type_combinations);
@@ -652,18 +656,35 @@ function AnimationController(_character = "") constructor {
                     _key_events = _anim_data.key_events;
                 }
 				
+				var _shot_offset_x = 0;
 				
+				if (struct_exists(_anim_data, "shot_offset_x")) {
+                    _shot_offset_x = _anim_data.shot_offset_x;
+                }
 				
-                self.add_animation(_name, {
+				var _shot_offset_y = 0;
+				
+				if (struct_exists(_anim_data, "shot_offset_y")) {
+                    _shot_offset_y = _anim_data.shot_offset_y;
+                }
+				
+				//shot offsets. i know i can get the active animation here. 
+				var _anim_data = {
                     action: _action,
                     keyframes: _keyframes,
                     loop_begin: _loop_begin,
 					index_events: _index_events,
+					shot_offset_x: _shot_offset_x,
+					shot_offset_y: _shot_offset_y,
                     speed: _speed
-                });
+                }
+                self.add_animation(_name, _anim_data);
             }
         }
-        return self;
+		if(_return_self)
+			return self;
+		else
+			return _anim_data;
     }
 	static clear = function() {
 	    self.__collection = {};

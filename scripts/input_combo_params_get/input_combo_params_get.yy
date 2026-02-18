@@ -6,7 +6,7 @@
   "name":"input_combo_params_get",
   "parent":{
     "name":"27  Combos",
-    "path":"folders/Input/27  Combos.yy",
+    "path":"folders/Scripts/LIbraries/Input/27  Combos.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

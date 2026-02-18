@@ -1,9 +1,11 @@
 event_inherited();
 
 components.add([
-	ECEnemy,
-	EntityComponentPhysics,
-	EntityComponentAnimation
+	ComponentDamageable,
+	ComponentEnemy,
+	ComponentAnimationShadered,
+	ComponentPhysics,
+	ComponentMask
 ]);
 
 components.init();

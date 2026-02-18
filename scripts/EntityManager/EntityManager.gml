@@ -3,6 +3,7 @@ function EntityManager() constructor {
 	self.__instance_map = {};
 	self.__next_id = 0;
 	self.__component_map = {};
+	self.__destroy_list = [];
 	/**
 	 * Caches the given component to be reused later.
 	 * Ensures the component is stored in the corresponding constructor-based map.
@@ -35,8 +36,8 @@ function EntityManager() constructor {
 	 * @param {Asset.GMObject} _object - The object containing components.
 	 * @returns {Instance} The created instance.
 	 */
-	static create_instance = function(_object) {
-		var _inst = instance_create_depth(0, 0, 0, _object);
+	static create_instance = function(_object, _x = 0, _y = 0) {
+		var _inst = instance_create_depth(_x, _y, 0, _object);
 		_inst.components.__id = self.__next_id++;
 
 		array_push(self.__instances, _inst);
@@ -52,18 +53,28 @@ function EntityManager() constructor {
 	 * @param {Instance} _inst - The instance to be destroyed.
 	 */
 	static destroy_instance = function(_inst) {
-		var _index = array_get_index(self.__instances, _inst);
-		if (_index == -1) return false;
-
-		var _id = _inst.components.__id;
-		
-		_inst.components.publish("entity_destroyed", _inst);
-		remove_all_components(_inst);
-		instance_destroy(_inst);
-		array_delete(self.__instances, _index, 1);
-		struct_remove(self.__instance_map, _id);
-
-		return true;
+		try{
+			var _index = array_get_index(self.__instances, _inst);
+			if (_index <= -1) return false;
+			var _id = _inst.components.__id;
+			
+			
+			_inst.components.publish("entity_destroyed", _inst);
+			remove_all_components(_inst);
+			array_delete(self.__instances, _index, 1);
+			struct_remove(self.__instance_map, _id);
+			_inst.components = {};
+			
+			//instance_destroy(_inst);
+			
+			return true;
+		} catch(_err){
+			log(_inst)
+			show_debug_message(_err.message);
+			show_debug_message(_err.longMessage);
+			show_debug_message(_err.script);
+			show_debug_message(_err.stacktrace);
+		}
 	};
 
 	/**
@@ -71,12 +82,21 @@ function EntityManager() constructor {
 	 * @param {Instance} _inst - The instance from which to remove all components.
 	 */
 	static remove_all_components = function(_inst) {
-		// Iterate over all components of the entity
-		array_foreach(_inst.components.__components, method({ this: other, inst: _inst }, function(_component) {
-			if (!instance_exists(inst)) return;
-		    this.remove_component(_component);
-		}));
-		_inst.components.__components = [];
+		try{
+			if(!instance_exists(_inst)) return;
+			// Iterate over all components of the entity
+			array_foreach(_inst.components.__components, method({ this: other, inst: _inst }, function(_component) {
+				if (!instance_exists(inst)) return;
+			    this.remove_component(_component);
+			}));
+			_inst.components.__components = [];
+		} catch(_err){
+			log(_inst)
+			show_debug_message(_err.message);
+			show_debug_message(_err.longMessage);
+		    show_debug_message(_err.script);
+		    show_debug_message(_err.stacktrace);
+		}
 	};
 
 	/**

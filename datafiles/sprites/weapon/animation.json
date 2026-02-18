@@ -1,0 +1,868 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 8,
+        "y": 8
+      }
+    },
+    "xShot2": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "charged_curse_pinch": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "hermes_shot_1": {
+      "origin": {
+        "x": 18,
+        "y": 16
+      }
+    },
+    "hermes_shot_2": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "hermes_shot_2_up": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "hermes_shot_2_down": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "hermes_shot_3": {
+      "origin": {
+        "x": 56,
+        "y": 50
+      }
+    },
+    "xShot3X1": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
+    "xShot3X3": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
+    "xShot4X3": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
+    "missile": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "wheel": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "radar": {
+      "origin": {
+        "x": 24,
+        "y": 24
+      }
+    },
+    "atk_1": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_2": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_3": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_jump": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_dash": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "xShot1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_0",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "shot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "curse_pinch",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "undefined",
+          "properties": {
+            "action": "shot",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "xShot2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 7,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 9,
+                "frame": 6
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 7
+          }
+        },
+        {
+          "name": "xShot4X3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "charged_curse_pinch",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 5
+              }
+            ],
+            "loop_begin": 12
+          }
+        },
+        {
+          "name": "xShot3X1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+
+        {
+          "name": "xShot3X3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "radar",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 12,
+                "frame": 5
+              },
+              {
+                "key": 16,
+                "frame": 6
+              },
+              {
+                "key": 20,
+                "frame": 7
+              },
+              {
+                "key": 24,
+                "frame": 8
+              },
+              {
+                "key": 28,
+                "frame": 9
+              },
+              {
+                "key": 32,
+                "frame": 9
+              }
+            ],
+            "loop_begin": 8
+          }
+        },
+        {
+          "name": "wheel",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 5
+              },
+              {
+                "key": 13,
+                "frame": 6
+              },
+              {
+                "key": 16,
+                "frame": 7
+              },
+              {
+                "key": 19,
+                "frame": 8
+              },
+              {
+                "key": 22,
+                "frame": 8
+              }
+            ],
+            "loop_begin": 13
+          }
+        },
+        {
+          "name": "missile",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "xShot1_die",
+          "properties": {
+            "action": "xShot1",
+            "keyframes": [
+              {
+                "key": 1,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 3,
+                "frame": 2
+              },
+              {
+                "key": 4,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_2_up",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_2_down",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "hermes_shot_3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 7
+              },
+              {
+                "key": 11,
+                "frame": 8
+              },
+              {
+                "key": 14,
+                "frame": 9
+              },
+              {
+                "key": 17,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 7
+              },
+              {
+                "key": 11,
+                "frame": 8
+              },
+              {
+                "key": 14,
+                "frame": 9
+              },
+              {
+                "key": 17,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 7,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 11,
+                "frame": 9
+              },
+              {
+                "key": 12,
+                "frame": 10
+              },
+              {
+                "key": 16,
+                "frame": 11
+              },
+              {
+                "key": 19,
+                "frame": 11
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_jump",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 6,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 6
+              },
+              {
+                "key": 14,
+                "frame": 7
+              },
+              {
+                "key": 15,
+                "frame": 7
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_dash",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 7,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 10,
+                "frame": 9
+              }
+            ]
+          }
+        }
+
+
+
+
+        //end of file
+      ]
+    }
+  }
+}

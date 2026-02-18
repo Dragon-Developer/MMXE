@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiSliderBar",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiSliderBar",
+  "parent":{
+    "name":"Components",
+    "path":"folders/Scripts/LIbraries/HazyGUI/Components.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

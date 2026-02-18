@@ -1,0 +1,61 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "gate",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "menu",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "undefined",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
+          "name": "x",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "reticle",
+          "properties": {
+            "speed": 0.2
+          }
+        }
+      ]
+    }
+  }
+}

@@ -6,7 +6,7 @@
   "name":"GuiParser",
   "parent":{
     "name":"Parser",
-    "path":"folders/HazyGUI/Parser.yy",
+    "path":"folders/Scripts/LIbraries/HazyGUI/Parser.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
