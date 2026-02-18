@@ -59,13 +59,13 @@ Currently notable features include:
 - state based special weapons
 - weapon get screen
 - armor select
+- melee special weapons
+- stage select 
+- Bosses 
+- Pause menu 
 
 In progress features:
 - Ladders (Animation is unfinished and the shoot animation has yet to be handled)
-- Bosses (Death state is unclean. )
-- stage select (Needs boss tease, fortress stages, transitions in/out, boss preview)
-- Pause menu (sub tanks dont work, settings dont work, settings section doesnt show which icon is selected)
-- melee special weapons (Projectile to enemy collision needs a few extra things to be consistent. small projectiles still work as expected.)
 - aimed special weapons (Code assumes you're axl. does not support moving while jumping, EG metal blade from mm2)
 
 Features not added:
