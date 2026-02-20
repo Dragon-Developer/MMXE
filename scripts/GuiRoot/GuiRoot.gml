@@ -35,17 +35,48 @@ function GuiRoot() : GuiContainer() constructor {
 	
 	mouseX = -1;
 	mouseY = -1;
+	usingMouse = true;
+	OMX = -1;
+	OMY = -1;
+	connected_controller = -1;
 	
     step = function() 
 	{
 		try {
 	        var _scroll = mouse_wheel_up() || mouse_wheel_down();
-	        var _mx = device_mouse_x_to_gui(0);
-	        var _my = device_mouse_y_to_gui(0);
+	        var _mx = mouseX;
+	        var _my = mouseY;
+			
+			if(usingMouse){
+				var _mx = device_mouse_x_to_gui(0);
+		        var _my = device_mouse_y_to_gui(0);	
+				
+				OMX = device_mouse_x_to_gui(0);
+				OMY = device_mouse_y_to_gui(0);
+				
+				for(var p = 0; p < gamepad_get_device_count(); p++){
+					show_debug_message(string(gamepad_is_connected(p)) + " " + string(p))
+					
+					if gamepad_is_connected(p) == 1 connected_controller = p
+				}
+				
+				if(gamepad_axis_value(connected_controller, gp_axislh) != 0 || gamepad_axis_value(connected_controller, gp_axislv) != 0){
+					usingMouse = false;
+				}
+			} else {
+				
+				_mx += gamepad_axis_value(connected_controller, gp_axislh) * 3
+				_my += gamepad_axis_value(connected_controller, gp_axislv) * 3
+				
+				if(OMX != device_mouse_x_to_gui(0) || OMY != device_mouse_y_to_gui(0)){
+					usingMouse = true;
+				}
+			}
+			
 			if (_mx != mouseX || _my != mouseY || _scroll) {
 				onHover({ x: _mx, y: _my })	
 			}
-			if (mouse_check_button_pressed(mb_left)) {
+			if (mouse_check_button_pressed(mb_left) || gamepad_button_check_pressed(connected_controller, gp_face1)) {
 				onClick({ x: _mx, y: _my });
 			}
 			mouseX = _mx;

@@ -125,7 +125,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
 					var _inst = self.get_instance();
 					self.current_hspd = self.states.dash.speed;
-					WORLD.spawn_particle(new SparkParticle(_inst.x, _inst.y + 16, self.dir))
+					if(global.settings.extra_particles)
+						WORLD.spawn_particle(new SparkParticle(_inst.x, _inst.y + 16, self.dir))
 				}
 			},
 		})
@@ -741,7 +742,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					
 					var _inst = self.get_instance();
 					
-					if (self.input.get_input("dash") && self.fsm.state_exists("dash")) {
+					if (self.input.get_input("dash") && self.fsm.state_exists("dash") && global.settings.extra_particles) {
 						WORLD.spawn_particle(new DashUpParticle(_inst.x, _inst.y + 16, self.dir))
 					} else {
 						WORLD.spawn_particle(new SparkParticle(_inst.x + 24 * self.dir, _inst.y + 16, self.dir))

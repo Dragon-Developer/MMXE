@@ -4,7 +4,7 @@ function GuiSettings() : GuiContainer() constructor {
     setFlexDirection("column");
     setUsingCache(true);
     setBorderSprite(-1);
-    setPadding([0,0,0,0])
+    setPadding([2,0,2,0])
 	setGap(0)
 	self.verb = -1;
 	self.input_index = 0;
@@ -13,7 +13,7 @@ function GuiSettings() : GuiContainer() constructor {
     KeybindContainer = new GuiContainer();
     KeybindContainer
         .setAutoWidth(true)
-        .setAutoHeight(true)
+        .setHeight(0)
 		.setFlexDirection("column")
         .setJustifyContent("left")
         .setAlignItems("left")
@@ -74,6 +74,8 @@ function GuiSettings() : GuiContainer() constructor {
 		
 		with(_bindings[input_index]){
 			addEventListener("click", function() {
+				if(input_value_is_binding(input_name)) return;
+				
 				children = [];
 				setText("Rebinding")
 				setSize(string_get_text_length("Rebinding") + 10,14);
@@ -93,6 +95,9 @@ function GuiSettings() : GuiContainer() constructor {
 				children = [];
 				var _bind_name = input_binding_get(input_name);
 				_bind_name = string(_bind_name)
+				
+				_bind_name = string_replace(_bind_name, "gamepad ", "")
+				_bind_name = string_replace(_bind_name, "thumb", "")
 				setSize(string_get_text_length(input_name + ": " + _bind_name) + 10,14);
 				setText(input_name + ": " + _bind_name)
 				children[0].setFontOffset(3)
@@ -116,14 +121,13 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	#region other settings
 	
-	/*
+	if(!variable_struct_exists(global.settings, "charge_flash")){
+		global.settings.charge_flash = false;
+	}
+	if(!variable_struct_exists(global.settings, "extra_particles")){
+		global.settings.extra_particles = false;
+	}
 	
-	input buffer range
-	hold dash to dash on land
-	psx style dash jumping
-	game scale
-	
-	*/
 	PsxDashJumpToggle = new GuiButton(190, 12, "PSX Style Dash Jumping: " + (global.settings.PSX_Style_Dash_Jumping ? "true" : "false"))
 	PsxDashJumpToggle
 		.setFlexDirection("column")
@@ -133,6 +137,28 @@ function GuiSettings() : GuiContainer() constructor {
 	PsxDashJumpToggle.addEventListener("click", function(_val){
 		global.settings.PSX_Style_Dash_Jumping = !global.settings.PSX_Style_Dash_Jumping;
 		PsxDashJumpToggle.children[0].setText("PSX Style Dash Jumping: " + (global.settings.PSX_Style_Dash_Jumping ? "true" : "false"))
+	});
+	
+	ChargeFlashToggle = new GuiButton(190, 12, "Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
+	ChargeFlashToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	ChargeFlashToggle.addEventListener("click", function(_val){
+		global.settings.charge_flash = !global.settings.charge_flash;
+		ChargeFlashToggle.children[0].setText("Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
+	});
+	
+	ExtraParticlesToggle = new GuiButton(190, 12, "Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
+	ExtraParticlesToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	ExtraParticlesToggle.addEventListener("click", function(_val){
+		global.settings.extra_particles = !global.settings.extra_particles;
+		ExtraParticlesToggle.children[0].setText("Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
 	});
 	
 	DashOnLandingToggle = new GuiButton(190, 12, "Hold Dash While Landing: " + (global.settings.Dash_On_Land ? "true" : "false"))
@@ -306,7 +332,7 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	GuiScaleContainer.addChild([GuiScaleDecreaseVolume, GuiScaleVolumeSettings, GuiScaleIncreaseVolume]);
 	
-	SettingsContainer.addChild([DevCommentToggle,PsxDashJumpToggle,DashOnLandingToggle,MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
+	SettingsContainer.addChild([DevCommentToggle,PsxDashJumpToggle, ChargeFlashToggle, ExtraParticlesToggle,DashOnLandingToggle,MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
 	#endregion
 	
     addChild(KeybindContainer);
