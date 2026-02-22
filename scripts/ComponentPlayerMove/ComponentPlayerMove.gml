@@ -116,6 +116,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add_child("air", "jump", {
 			enter: function() {
+				if(self.input.get_input("down") && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_collision_semisolid)){
+					self.fsm.change("fall");
+					var _inst = self.get_instance();
+					_inst.y += 2;
+					return;
+				}
+				
 				WORLD.play_sound("jump");
 				self.input.__useBuffer = false;
 				self.fsm.inherit();
@@ -346,7 +353,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_move_h", "idle", "walk", function() { return !self.physics.check_wall(self.hdir); })
 		.add_transition("t_move_h", "land", "walk", function() { return !self.physics.check_wall(self.hdir) && !self.input.get_input("dash"); })
 		.add_wildcard_transition("t_hurt", "hurt", function() { return self.get_wall_jump_dir() == 0; })
-		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end"], "jump", function() { return self.can_jump_check(); })
+		.add_transition("t_jump", ["idle", "walk", "dash", "land", "dash_end", "crouch"], "jump", function() { return self.can_jump_check(); })
 		.add_transition("t_crouch", "idle", "crouch")
 		.add_wildcard_transition("t_custom", "custom")
 		.add_transition("t_custom_end", "custom", "idle")
@@ -454,7 +461,12 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		self.armor_parts = [[],[],["/normal"]];
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm, _index){
-			_arm = global.availible_characters[global.character_index].possible_armors[_index][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
+			try{
+				_arm = global.availible_characters[global.character_index].possible_armors[clamp(_index, 0, array_length( global.availible_characters[global.character_index].possible_armors))][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
+			} catch(_exception){
+				log(_exception)
+				return;
+			}
 			
 			if(typeof(_arm) != "struct" && _arm != noone){
 				var _temp = {};

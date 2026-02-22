@@ -36,6 +36,7 @@ global.intro_music = audio_play_sound(audio_create_stream(working_directory + "m
 
 global.gui = new GuiRoot();
 last_input = 0;
+frame = 0;
 
 transition_fade = function(_room, _rate = 60){
 	if(transition_data.transitioning) return;

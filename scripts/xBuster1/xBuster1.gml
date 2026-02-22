@@ -92,9 +92,21 @@ function xBuster13Data() : ProjectileData() constructor{
 
 function xBuster14Data() : ProjectileData() constructor{
 	self.comboiness = 15;//all the drill bits should connect
-	self.damage = 32;
+	self.damage = 4;
+	self.comboiness = 2;
+	self.damage = 3;
+	self.shot_limit = 3;
+	self.piercing = true;
+	
+	self.animation = "xShot3X1";
+	self.hitbox_scale = new Vec2(24,24);
+	self.hitbox_offset = new Vec2(8,0);
+	
 	self.create = function(_inst){
-		_inst.components.publish("animation_play", { name: "xShot3X2" });
+		WORLD.play_sound("shoot_3");
+	}
+	self.destroy = function(_inst){
+		WORLD.spawn_particle(new FullShotDieParticle(_inst.x - 8 * dir, _inst.y, self.dir))
 	}
 	self.step = function(_inst){
 		
@@ -104,9 +116,25 @@ function xBuster14Data() : ProjectileData() constructor{
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6;
 		else if (CURRENT_FRAME - self.init_time > 24) _hspd = 6.25;
 		_inst.x += _hspd * self.dir;
+		
+		WORLD.spawn_particle(new DrillBusterParticle(_inst.x, _in))
 	}
 }
 
+function DrillBusterParticle() : ParticleBase() constructor{
+	self.sprite = "drill_shot";
+	self.death_mode = "animation_end";
+	self.velocity = new Vec2(0,0);
+	self.position = new Vec2(0,0);
+	self.time = 0;
+	self.time_max = 3;
+	self.frame = 0;
+	self.frame_max = 0;
+	self.dead = false;
+	self.dir = 1;
+	self.vdir = 1;
+	self.depth = 0;
+}
 
 /*
 if (dash) {

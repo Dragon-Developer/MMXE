@@ -118,7 +118,9 @@ function ComponentDialouge() : ComponentBase() constructor{
 		log(_sprite_name_right)
 			
 		get(ComponentSpriteRenderer).change_sprite(self.left_mugshot_sprite, _sprite_name_right)
+		get(ComponentSpriteRenderer).swap_sprite(self.left_mugshot_sprite, focus == "right" ? c_white : c_grey)
 		get(ComponentSpriteRenderer).change_sprite(self.right_mugshot_sprite, _sprite_name_left)
+		get(ComponentSpriteRenderer).swap_sprite(self.right_mugshot_sprite, focus != "right" ? c_white : c_grey)
 		get(ComponentSpriteRenderer).sprites[self.right_mugshot_sprite].animationController.__xscale = -1;
 	};
 	

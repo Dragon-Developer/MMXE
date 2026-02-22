@@ -8,7 +8,9 @@ function ZeroSaberData() : MeleeData() constructor{
 	//i dont think i did it in the best way possible
 	//notably moves that also change the player's position would also have to be state based
 	//but you dont switch weapons to get to them so do i add them as special weapons and add the checks here?
-	
+	self.create = function(_inst){
+		WORLD.play_sound("saber_swing");
+	}
 	
 	self.set_player_state = function(_plr, _charge){
 		var _current_swing = _plr.states.melee.animation;

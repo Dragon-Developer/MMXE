@@ -6,6 +6,7 @@ function XSecondArmorHead() : HeadPartBase() constructor{
 	self.apply_armor_effects = function(_player){
 		//array_push(_player.get(ComponentWeaponUse).weapon_list, SecondArmorRadar)
 	}
+	self.description = "Gives the user a radar to locate collectibles"
 }
 
 function XSecondArmorBody() : BodyPartBase() constructor{
@@ -13,12 +14,14 @@ function XSecondArmorBody() : BodyPartBase() constructor{
 	self.damage_rate = 0.5;
 	self.armor_name = "Second Armor Body"
 	self.sprite_name = "/x2/body"//this is more for filepath.
+	self.description = "Halves incoming damage. Taken damage is turned into giga energy."
 }
 
 function XSecondArmorArms() : ArmsPartBase() constructor{
 	//drill buster!
 	self.sprite_name = "/x2/arms"//this is more for filepath.
 	self.armor_name = "Second Armor Arms"
+	self.description = "Gives the user a double buster."
 }
 
 function XSecondArmorBoot() : BootPartBase() constructor{
@@ -31,4 +34,5 @@ function XSecondArmorBoot() : BootPartBase() constructor{
 			struct_set(states.dash_air, "interval", states.dash.interval)
 		}
 	}
+	self.description = "Gives the user an air dash. This air dash is unusally long."
 }

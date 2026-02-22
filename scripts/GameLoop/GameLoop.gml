@@ -175,6 +175,11 @@ function GameLoop() constructor {
 		}
 		surface_reset_target();
 		
+		var _orig_width = surface_get_width(application_surface);
+		var _orig_height = surface_get_height(application_surface);
+		
+		surface_resize(application_surface, GAME_W * 3, GAME_H * 3)
+		
 		shader_set(shdr_snes_palette);
 			var scale = floor(fullSpace / colorSpace);
 			var deviation = floor(colorSpace / (fullSpace mod colorSpace));
@@ -205,5 +210,7 @@ function GameLoop() constructor {
 			draw_surface(application_surface, 0, 0);
 			shader_reset();
 		}
+		
+		surface_resize(application_surface, _orig_width, _orig_height)
 	}
 }

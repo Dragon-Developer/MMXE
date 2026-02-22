@@ -8,4 +8,5 @@ function XHermesArmorArms() : ArmsPartBase() constructor{
 		_player.get(ComponentWeaponUse).charge.charge_limit += self.extra_charge_limit;
 		_player.get(ComponentWeaponUse).charge_time = [30, 105, 180, 255];
 	}
+	self.description = "Gives the user the triple buster."
 }

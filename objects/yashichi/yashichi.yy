@@ -30,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_gamepad_reticle",
+    "path":"sprites/spr_gamepad_reticle/spr_gamepad_reticle.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

@@ -174,7 +174,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 					draw_arrow(_inst.x + (_dir.x * 30), _inst.y + (_dir.y * 30), _inst.x + (_dir.x * 38), _inst.y + (_dir.y * 38), 8)
 				}
 			})
-			.add_wildcard_transition("t_dash", "dash_hold", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.mach_dash.curr_dashes < self.states.mach_dash.max_dashes; })
+			.add_wildcard_transition("t_dash", "dash_hold", function() { return !self.physics.is_on_floor() && self.states.mach_dash.curr_dashes < self.states.mach_dash.max_dashes; })
 			.add_transition("t_transition", "mach_dash", "fall", function() 
 				{ return self.timer <= CURRENT_FRAME; })
 			.add_wildcard_transition("t_transition", "dash_hold", function() {return self.input.get_input_pressed_raw("shoot4") && self.states.mach_dash.curr_dashes < self.states.mach_dash.max_dashes;});
@@ -185,4 +185,6 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				_player.states.mach_dash.curr_dashes = 0;
 		};
 	}
+	
+	self.description = "Gives the user the mach dash. The mach dash can be aimed."
 }

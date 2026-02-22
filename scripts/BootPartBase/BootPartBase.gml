@@ -93,6 +93,7 @@ function BootPartBase() : ArmorBase() constructor{
 			})
 			.add("slide_end", {
 				enter: function() {
+					self.current_hspd = self.states.walk.speed;
 					self.timer = 0;
 					self.dash_dir = self.dir;
 					self.publish("animation_play", { name: self.states.slide.animation + "_end" });

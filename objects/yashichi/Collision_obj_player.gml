@@ -1,3 +1,2 @@
-with(obj_gui){
-	transition_fade(rm_stage_select);
-}
+other.components.get(ComponentPlayerMove).fsm.change("complete")
+instance_destroy(self);

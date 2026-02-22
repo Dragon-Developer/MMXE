@@ -54,6 +54,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		self.health_max = _maxHealth;
 	}
 	
+	self.set_damage_rate = function(_rate){
+		self.damage_rate = _rate;
+	}
+	
 	self.step = function(){
 		
 		if(self.get_instance() == noone || self.get_instance() == undefined) return;
@@ -95,7 +99,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		_damage += self.check_for_bosses();
 		_damage += self.check_for_damage_zones();
 		
-		self.health -= _damage
+		self.health -= _damage == 0 ? 0 : max(_damage * damage_rate, 1)
 		
 		if(_damage != 0 && plays_sound_on_hit){
 			WORLD.play_sound("big_damage");

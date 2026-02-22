@@ -28,13 +28,14 @@ function global_init() {
 	global.availible_characters = [
 		new XCharacter(),
 		new ZeroCharacter(),
-		//new AxlCharacter(),
+		new RockCharacter(),
 		new CustomCharacter()
 	]
 	
 	global.character_ref = [
 		XCharacter,
 		ZeroCharacter,
+		RockCharacter,
 		CustomCharacter
 	]
 	global.character_index = global.player_data.last_used_character;

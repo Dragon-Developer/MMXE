@@ -54,15 +54,18 @@ function ComponentHealthbar() : ComponentBase() constructor{
 	}
 	
 	self.draw_bar = function(_val, _maxVal, _offset){
-		animation.draw_action("healthbar_icon_" + PLAYER_SPRITE, undefined, 0, _offset.x, _offset.y);//icon
+		
+		var _vertoffset = clamp(_maxVal - 32, 0, 12000) * 2;
+		
+		animation.draw_action("healthbar_icon_" + PLAYER_SPRITE, undefined, 0, _offset.x, _offset.y + _vertoffset);//icon
 		for(var i = 0; i <= _maxVal; i++)
 		{			
-			animation.draw_action("healthbar_tick", undefined, 0, _offset.x, _offset.y - 2 - i*2);//backing
+			animation.draw_action("healthbar_tick", undefined, 0, _offset.x, _offset.y - 2 - i*2 + _vertoffset);//backing
 			if(_val > i)
 			{
-				animation.draw_action("healthbar_fill", undefined, 0, _offset.x + 4, _offset.y - 2 - i*2);//tick
+				animation.draw_action("healthbar_fill", undefined, 0, _offset.x + 4, _offset.y - 2 - i*2 + _vertoffset);//tick
 			}
 		}
-		animation.draw_action("healthbar_cap", undefined, 0, _offset.x, _offset.y - 2 - i*2);//top
+		animation.draw_action("healthbar_cap", undefined, 0, _offset.x, _offset.y - 2 - i*2 + _vertoffset);//top
 	}
 }

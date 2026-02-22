@@ -20,6 +20,8 @@ function ComponentBoss() : ComponentBase() constructor{
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: self.intro_animation_name });
 		self.publish("animation_xscale", -1);
+					WORLD.stop_sound();
+					WORLD.play_music("new_boss_encounter");
 		
 		//self.boss_data.init(self);
 	}
@@ -29,8 +31,6 @@ function ComponentBoss() : ComponentBase() constructor{
 		self.fsm
 			.add("enter", {
 				enter: function() {
-					WORLD.stop_sound();
-					WORLD.play_music("BossEncounterL");
 					self.publish("animation_play", { name: self.intro_animation_name });
 					log(intro_animation_name)
 				},
@@ -93,10 +93,21 @@ function ComponentBoss() : ComponentBase() constructor{
 				
 					if(_time == 59){
 						GAME.game_loop.do_action_with_all_components(function(){step_enabled = true;})
+						
+						find("animation").shaders = [];
+						
 						with(obj_player){
 							components.find("animation").animation.__speed = 1;
 							components.get(ComponentPhysics).set_grav(new Vec2(0,0.25));
 						}
+					}
+					
+					if(_time == 60){
+						array_push(find("animation").shaders, new BrightShader());
+					}
+					
+					if(_time >= 62){
+						find("animation").shaders = [];
 					}
 				
 					if(_time == 192){
@@ -114,11 +125,11 @@ function ComponentBoss() : ComponentBase() constructor{
 						find("animation").animation.__color = _col;
 					}
 				
-					if(_time >= 345 && _time <= 365){
-						find("animation").animation.__alpha = 1 - (_time - 345) / 20;
+					if(_time >= 345 && _time <= 395){
+						find("animation").animation.__alpha = 1 - (_time - 345) / 50;
 					}
 				
-					if _time == 366 self.publish("animation_play", { name: "undefined" });
+					if _time == 396 self.publish("animation_play", { name: "undefined" });
 				
 					if(CURRENT_FRAME mod 4 == 0 && _time < 371 && _time > 62){
 						var _inst = self.get_instance();
@@ -133,6 +144,10 @@ function ComponentBoss() : ComponentBase() constructor{
 				
 					if(_time == 507){
 						WORLD.clear_sound();
+						WORLD.play_music("BossDefeated");
+					}
+					
+					if(_time == 940){
 						with(obj_player){
 							components.publish("complete");
 						}
@@ -154,8 +169,12 @@ function ComponentBoss() : ComponentBase() constructor{
 				if (self.fsm.event_exists("step")){
 					self.fsm.step();
 			
-				if(get(ComponentDamageable).health <= get(ComponentDamageable).health_max * self.desperate_rate && self.desperate == false && self.fsm.get_current_state() != "intro" && self.fsm.get_current_state() != "pose")
+				if(get(ComponentDamageable).health <= get(ComponentDamageable).health_max * self.desperate_rate && self.desperate == false && self.fsm.get_current_state() != "intro" && self.fsm.get_current_state() != "pose"){
 					self.desperate = true;
+					
+					WORLD.stop_sound();
+					WORLD.play_music("desperate_move");
+				}
 			}
 		}
 		} catch(_err){

@@ -52,6 +52,14 @@ function draw_string_condensed(_string, _x, _y){
 	}
 }
 
+function string_seperate(_string, _start_index, _end_index){
+	var _ret = "";
+	for(var e = 0; e < _end_index - _start_index; e++){
+		_ret += string_char_at(_string, _start_index + e);
+	}
+	return _ret;
+}
+
 function string_get_text_length(_string){
 	var _char = "";
 	var _extreme_minors = [];// 5 px

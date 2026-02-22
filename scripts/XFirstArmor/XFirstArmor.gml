@@ -3,6 +3,8 @@ function XFirstArmorHead() : HeadPartBase() constructor{
 	//nothing special
 	self.sprite_name = "/x1/helm"//this is more for filepath.
 	self.armor_name = "First Armor Head"
+	
+	self.description = "Allows breaking of weak blocks above the user."
 }
 
 function XFirstArmorBody() : BodyPartBase() constructor{
@@ -10,6 +12,7 @@ function XFirstArmorBody() : BodyPartBase() constructor{
 	self.damage_rate = 0.4;
 	self.armor_name = "First Armor Body"
 	self.sprite_name = "/x1/body"//this is more for filepath.
+	self.description = "Lowers damage by 60 percent."
 }
 
 function XFirstArmorArms() : ArmsPartBase() constructor{
@@ -17,6 +20,7 @@ function XFirstArmorArms() : ArmsPartBase() constructor{
 	self.buster_weapon = xBusterX3;//the weapon data that xBuster will be swapped out for.
 	self.sprite_name = "/x1/arms"//this is more for filepath.
 	self.armor_name = "First Armor Arms"
+	self.description = "Gives the user the drill buster."
 }
 
 function XFirstArmorBoot() : BootPartBase() constructor{
@@ -28,4 +32,5 @@ function XFirstArmorBoot() : BootPartBase() constructor{
 		//self.add_slide(_player);
 		_player.states.dash.speed *= 1.25;
 	}
+	self.description = "Increases dash speed by 25 percent."
 }

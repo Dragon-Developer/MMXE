@@ -29,7 +29,7 @@ function MeleeProjectile(_animation, _length) : ProjectileData() constructor{
 	self.animation = "xShot2";
 	self.life_length = CURRENT_FRAME + _length;
 	self.create = function(_inst){
-		WORLD.play_sound("shoot_1");
+		WORLD.play_sound("saber_swing");
 	}
 	self.step = function(_inst){
 		

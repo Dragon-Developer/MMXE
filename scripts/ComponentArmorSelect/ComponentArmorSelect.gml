@@ -187,6 +187,43 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	
 	self.draw = function(){
 		draw_sprite(spr_reticle_armor_select,0,button_pos[self.selected_part].x - 2,button_pos[self.selected_part].y - 2)
+		
+		draw_set_color(c_white)
+		draw_rectangle(231, 31, 313, 145, false);
+		draw_set_color(c_black)
+		draw_rectangle(232, 32, 312, 144, false);
+		
+		var _armor = {};
+			
+		var _code = self.possible_armors[self.selected_part][self.selected_armor[self.selected_part]]
+		
+		if(_code != noone)
+			with(_armor){
+				script_execute(_code)
+			}
+			
+		var _string = _armor.description;
+		//draw_string_condensed(_string, 240, 33);
+		
+		var _seperated = string_split(_string, " ")
+		var _new_sep = [];
+		
+		for(var e = 0; e < array_length(_seperated); e++){
+			if(e < array_length(_seperated) - 1){
+				if(string_get_text_length(_seperated[e] + _seperated[e+1]) < 64){
+					_new_sep[array_length(_new_sep)] = _seperated[e] + " " + _seperated[e+1];
+					e++;
+				}	else {
+					_new_sep[array_length(_new_sep)] = _seperated[e]
+				}
+			} else {
+				_new_sep[array_length(_new_sep)] = _seperated[e]
+			}
+		}
+		
+		for(var e = 0; e < array_length(_new_sep); e++){
+			draw_string_condensed(_new_sep[e], 240, 40 + e * 9);
+		}
 	}
 	
 	self.draw_gui = function(){

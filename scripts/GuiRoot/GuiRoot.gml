@@ -76,7 +76,7 @@ function GuiRoot() : GuiContainer() constructor {
 			if (_mx != mouseX || _my != mouseY || _scroll) {
 				onHover({ x: _mx, y: _my })	
 			}
-			if (mouse_check_button_pressed(mb_left) || gamepad_button_check_pressed(connected_controller, gp_face1)) {
+			if (mouse_check_button_pressed(mb_left) || gamepad_button_check_pressed(connected_controller, gp_stickl)) {
 				onClick({ x: _mx, y: _my });
 			}
 			mouseX = _mx;
