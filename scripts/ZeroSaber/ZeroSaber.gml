@@ -18,15 +18,15 @@ function ZeroSaberData() : MeleeData() constructor{
 		if(_current_swing == "atk_3"){
 			return;//bail!
 		} else if(_plr.fsm.get_current_state() == "dash"){
-			set_player_melee_info(_plr, "atk_dash", 3, new Vec2(32,-8), new Vec2(64,40), 2, false)
+			set_player_melee_info(_plr, "atk_dash", 3, new Vec2(32,-8), new Vec2(64,40), 4, false)
 		} else if(!_plr.physics.is_on_floor()){
-			set_player_melee_info(_plr, "atk_jump", 0, new Vec2(24,-8), new Vec2(64,56), 2)
+			set_player_melee_info(_plr, "atk_jump", 0, new Vec2(24,-8), new Vec2(64,56), 4)
 		} else if(_current_swing == "atk_2"){
-			set_player_melee_info(_plr, "atk_3", 2, new Vec2(32,-8), new Vec2(64,64), 2)
+			set_player_melee_info(_plr, "atk_3", 2, new Vec2(32,-8), new Vec2(64,64), 4)
 		} else if(_current_swing == "atk_1"){
-			set_player_melee_info(_plr, "atk_2", 1, new Vec2(32,0), new Vec2(48,32), 1)
+			set_player_melee_info(_plr, "atk_2", 1, new Vec2(32,0), new Vec2(48,32), 2)
 		} else {
-			set_player_melee_info(_plr, "atk_1", -1, new Vec2(32,-8), new Vec2(40,48), 1)
+			set_player_melee_info(_plr, "atk_1", -1, new Vec2(32,-8), new Vec2(40,48), 2)
 		}
 		
 		//_plr.fsm.change("air");

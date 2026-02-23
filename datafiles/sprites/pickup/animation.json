@@ -2,7 +2,19 @@
   "sprites": {
     "default": {
       "origin": {
-        "x": 0,
+        "x": 8,
+        "y": 8
+      }
+    },
+    "life_1": {
+      "origin": {
+        "x": 5,
+        "y": 0
+      }
+    },
+    "wp_1": {
+      "origin": {
+        "x": 5,
         "y": 0
       }
     }
@@ -32,74 +44,65 @@
               {
                 "key": 0,
                 "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 2
+              },
+              {
+                "key": 15,
+                "frame": 2
               }
-            ]
+            ],
+            "loop_begin": 3
           }
         },
         {
           "name": "life_2",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 0.333
           }
         },
         {
           "name": "life_3",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 0.333
           }
         },
         {
           "name": "wp_1",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 0.333
           }
         },
         {
           "name": "wp_2",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 0.333
           }
         },
         {
           "name": "wp_3",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 0.333
           }
         },
         {
           "name": "heart",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 1
-              }
-            ]
+            "speed": 0.1
           }
         }
 

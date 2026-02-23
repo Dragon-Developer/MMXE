@@ -14,26 +14,35 @@ function BaseCharacter() constructor{
 		dash: {
 			speed: 885/256,	
 			interval: 32,
-			animation: "dash"
+			animation: "dash",
+			sound: "dash"
 		},
 		jump: {
 			strength: 1363/256,
-			animation: "jump"
+			animation: "jump",
+			double_jump_animation: "jump",
+			count: 1,
+			sound: "jump"
 		},
 		fall:{
 			animation: "fall"
 		},
+		land:{
+			sound: "land"
+		},
 		wall_jump: {
 			strength: 5,
 			wall_stick: 5,
-			launch_lock: 11
+			launch_lock: 11,
+			sound: "jump"
 		},
 		ladder: {
 			speed: 376/256
 			//496/256 if its with arm parts
 		},
 		hurt: {
-			speed: -138 / 256
+			speed: -138 / 256,
+			sound: "hurt"
 		}
 	}
 	self.possible_armors = [

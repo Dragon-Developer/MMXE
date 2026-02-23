@@ -1,6 +1,6 @@
 function xBuster() : ProjectileWeapon() constructor{
 	self.data = [xBuster11Data,xBuster12Data,xBuster13Data,xBuster14Data,xBuster14Data];
-	self.charge_limit = 2;
+	self.charge_limit = 4;
 	self.cost = 0;
 	self.title = "X BUSTER";
 	self.description = "Mega Buster Mark 17"
@@ -91,19 +91,21 @@ function xBuster13Data() : ProjectileData() constructor{
 }
 
 function xBuster14Data() : ProjectileData() constructor{
-	self.comboiness = 15;//all the drill bits should connect
+	self.comboiness = 15;
 	self.damage = 4;
-	self.comboiness = 2;
-	self.damage = 3;
 	self.shot_limit = 3;
 	self.piercing = true;
+	self.particle_radius = 4;
+	self.rotation_strength = 1.5;
 	
-	self.animation = "xShot3X1";
+	self.animation = "undefined";
 	self.hitbox_scale = new Vec2(24,24);
 	self.hitbox_offset = new Vec2(8,0);
 	
 	self.create = function(_inst){
 		WORLD.play_sound("shoot_3");
+		
+		PROJECTILES.create_projectile(_inst.x, _inst.y, dir, DrillBusterShieldData, PROJECTILES, tag);
 	}
 	self.destroy = function(_inst){
 		WORLD.spawn_particle(new FullShotDieParticle(_inst.x - 8 * dir, _inst.y, self.dir))
@@ -117,23 +119,44 @@ function xBuster14Data() : ProjectileData() constructor{
 		else if (CURRENT_FRAME - self.init_time > 24) _hspd = 6.25;
 		_inst.x += _hspd * self.dir;
 		
-		WORLD.spawn_particle(new DrillBusterParticle(_inst.x, _in))
+		if(CURRENT_FRAME mod 2 == 0){
+			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin((CURRENT_FRAME / 5) + (pi / 3) * 4) * particle_radius,self.dir, sin((CURRENT_FRAME / 5) + (pi / 3) * 4) * rotation_strength))
+			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin((CURRENT_FRAME / 5) + (pi / 3) * 2) * particle_radius,self.dir, sin((CURRENT_FRAME / 5) + (pi / 3) * 2) * rotation_strength))
+			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin(CURRENT_FRAME / 5) * particle_radius,                 self.dir, sin(CURRENT_FRAME / 5) * rotation_strength))
+		}
 	}
 }
 
-function DrillBusterParticle() : ParticleBase() constructor{
+function DrillBusterShieldData() : ProjectileData() constructor{
+	self.comboiness = 16;
+	self.damage = 4;
+	self.shot_limit = 3;
+	self.piercing = true;
+	self.time = 10;
+	
+	self.animation = "drill_effect";
+	self.hitbox_scale = new Vec2(32,64);
+	self.hitbox_offset = new Vec2(0,0);
+	
+	self.create = function(_inst){
+	}
+	self.step = function(_inst){
+		_inst.x -= self.dir * 4;
+		time--;
+		if(time < 0) PROJECTILES.destroy_projectile(self)
+	}
+	self.destroy = function(_inst){
+	}
+}
+
+function DrillBusterParticle(_x, _y, _dir, _vy) : ParticleBase() constructor{
 	self.sprite = "drill_shot";
-	self.death_mode = "animation_end";
-	self.velocity = new Vec2(0,0);
-	self.position = new Vec2(0,0);
-	self.time = 0;
-	self.time_max = 3;
-	self.frame = 0;
-	self.frame_max = 0;
-	self.dead = false;
-	self.dir = 1;
-	self.vdir = 1;
-	self.depth = 0;
+	self.death_mode = "duration_frame";
+	self.velocity = new Vec2(0,_vy);
+	self.position = new Vec2(_x,_y);
+	self.time_max = 4;
+	self.frame_max = 4;
+	self.dir = _dir;
 }
 
 /*

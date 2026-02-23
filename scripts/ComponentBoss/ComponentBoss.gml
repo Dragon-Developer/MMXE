@@ -10,7 +10,7 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.death_time = -1;
 	self.contact_damage = 2;
 	self.desperate = false;
-	self.desperate_rate = 1/3;
+	self.desperate_rate = 1/2;
 	
 	self.pose_animation_name = "walk";
 	self.intro_animation_name = "blade_fall";

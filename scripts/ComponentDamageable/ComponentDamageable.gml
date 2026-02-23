@@ -9,7 +9,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.dead = false;
 	
 	self.invuln_offset = -1;//if its -1 the invuln timer is over
-	self.invuln_time = 150;//the time offset in frames that invulnerability lasts for
+	self.invuln_time = 5//150;//the time offset in frames that invulnerability lasts for
 	
 	self.physics = noone;//physics is used to detect collisions with projectiles.
 	self.plays_sound_on_hit = false;//so players dont activate the on hit effect
@@ -99,11 +99,20 @@ function ComponentDamageable() : ComponentBase() constructor{
 		_damage += self.check_for_bosses();
 		_damage += self.check_for_damage_zones();
 		
-		self.health -= _damage == 0 ? 0 : max(_damage * damage_rate, 1)
+		self.health -= _damage == 0 ? 0 : max(ceil(_damage * damage_rate), 1)
 		
-		if(_damage != 0 && plays_sound_on_hit){
-			WORLD.play_sound("big_damage");
+		if(_damage != 0){
+			if(plays_sound_on_hit)
+				WORLD.play_sound("big_damage");
+				
+			if(1 == 1){//no damage number setting
+				var _inst = self.get_instance()
+				var _num = instance_create_depth(_inst.x, _inst.y - 32, -15000, obj_damage_number);
+				_num.number = ceil(_damage * damage_rate);
+			}
 		}
+		
+		
 		
 		if(self.health <= 0)
 		{

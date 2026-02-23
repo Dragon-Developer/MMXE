@@ -29,6 +29,18 @@
         "x": 36,
         "y": 24
       }
+    },
+    "drill_shot": {
+      "origin": {
+        "x": 8,
+        "y": 8
+      }
+    },
+    "rock_break": {
+      "origin": {
+        "x": 4,
+        "y": 4
+      }
     }
   },
   "data": {
@@ -37,181 +49,84 @@
     ],
     "animations": {
       "speed": 1,
-      "type_combinations": [
-        [
-          ""
-        ],
-        [
-          ""
-        ],
-        [
-          ""
-        ]
-      ],
+      "type_combinations": [[""],[""],[""]],
       "list": [
         {
           "name": "xSuperParticles",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "explosion",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "dash_spark",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "dash_up_spark",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "death",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "dash_dust",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "lemon_die",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "full_shot_die",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "wall_spark",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "lime_die",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
           }
         },
         {
           "name": "complete",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 3,
-                "frame": 1
-              }
-            ]
+            "speed":1
+          }
+        },
+        {
+          "name": "drill_shot",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "rock_break",
+          "properties": {
+            "speed":1
           }
         }
         //eof

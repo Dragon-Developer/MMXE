@@ -48,10 +48,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.on_register = function(){
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
-			//need input to see if youre shooting
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
-			//idk physics would be good for speed burner/charge kick
 		});
+	}
+	
+	self.heal_ammo = function(_amount){
+		if(weapon_ammo[current_weapon[0]] < weapon_max_ammo)
+			weapon_ammo[current_weapon[0]] += _amount;
 	}
 	
 	self.set_weapons = function(_weapons){
@@ -434,9 +437,23 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		try{
 			if(find("animation") != noone){
 				//log("gon add offsets " + string( find("animation").get_shot_offsets()))
-				var _offsets = find("animation").get_shot_offsets();
-				_x += _offsets[0] * _dir;
-				_y += _offsets[1];
+				var _offsets = JSON.load(working_directory + "sprites/" + global.availible_characters[global.character_index].image_folder + "/offset.json")
+				
+				var _offset = new Vec2(0,0);
+				
+				log(find("animation").animation.__animation)
+				
+				for(var e = 0; e < array_length(_offsets); e++){
+					if(_offsets[e].name == find("animation").animation.__animation)	{
+						_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].x)
+					}
+				}
+				
+				
+				log(_offset)
+				
+				_x += _offset.x * _dir;
+				_y += _offset.y;
 				//log("added offsets")
 			} else {
 				//log(find("animation"))

@@ -13,12 +13,11 @@ function ZeroCharacter() : BaseCharacter() constructor{
 	self.states.intro.animation = "intro"
 	self.states.wall_jump.wall_stick = 0;
 	self.states.wall_jump.launch_lock = 6;
+	self.states.jump.count = 2;
 	
 	self.init = function(_player){
 		self.init_default(_player);
-		with(_player){
-			add_dash();
-			add_wall_jump();
-		}
+		add_dash(_player);
+		add_wall_jump(_player);
 	}
 }

@@ -61,9 +61,22 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 				if(self.input.get_input_pressed_raw("shoot") || self.input.get_input_pressed_raw("jump")){
 					switch(self.settings_selection){
 						case(0):
-							room_transition_to(rm_stage_select, 0, 24);
-							ENTITIES.destroy_instance(self.get_instance())
 							global.gui.SettingsContainer.setEnabled(false);
+							
+							with(obj_player){
+								components.get(ComponentPlayerMove).fsm.change("outro")
+							}
+							with(obj_entity){
+								if(variable_struct_exists(components, "__components"))
+									array_foreach(components.__components, function(_comp){
+										_comp.step_enabled = true;
+									})
+							}
+			
+							player.components.find("animation").timescale = self.animation_timescale;
+							global.gui.SettingsContainer.setEnabled(false);
+			
+							ENTITIES.destroy_instance(self.get_instance());
 						break;
 						
 						case(2):

@@ -31,7 +31,7 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.availible_characters[global.character_index].weapons), global.availible_characters[global.character_index].weapon_ammo_max);
 	//
 	//set health to not 1
-	_player.components.get(ComponentDamageable).set_health(global.player_data.health,global.player_data.max_health);
+	_player.components.get(ComponentDamageable).set_health(global.player_data.max_health,global.player_data.max_health);
 	_player.components.get(ComponentDamageable).invuln_time = 120;
 	
 	with(_player.components.get(ComponentDamageable)){
@@ -42,7 +42,7 @@ on_spawn = function(_player) {
 	
 	//log(global.armors[current_spawn])
 	
-	_player.components.get(ComponentPlayerMove).apply_full_armor_set(global.armors[current_spawn]);
+	_player.components.get(ComponentArmorHandler).apply_full_armor_set(global.armors[current_spawn]);
 	
 	if (current_spawn == global.local_player_index) {
 		//log("this is the player!")

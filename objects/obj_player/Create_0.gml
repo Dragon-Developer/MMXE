@@ -10,6 +10,7 @@ components.add([
 	ComponentAnimationShadered,
 	ComponentMask,
 	ComponentWeaponUse,
+	ComponentArmorHandler,
 	ComponentNode,
 	ComponentDamageable,
 	ComponentHealable

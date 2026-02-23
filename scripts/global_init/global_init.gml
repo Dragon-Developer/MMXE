@@ -29,6 +29,7 @@ function global_init() {
 		new XCharacter(),
 		new ZeroCharacter(),
 		new RockCharacter(),
+		new BassCharacter(),
 		new CustomCharacter()
 	]
 	
@@ -36,6 +37,7 @@ function global_init() {
 		XCharacter,
 		ZeroCharacter,
 		RockCharacter,
+		BassCharacter,
 		CustomCharacter
 	]
 	global.character_index = global.player_data.last_used_character;

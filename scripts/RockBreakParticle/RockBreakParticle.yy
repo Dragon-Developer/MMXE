@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"RockBreakParticle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"RockBreakParticle",
+  "parent":{
+    "name":"Generic",
+    "path":"folders/Scripts/Game/Particles/Generic.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

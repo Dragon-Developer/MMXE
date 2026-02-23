@@ -66,6 +66,12 @@
         "y": 24
       }
     },
+    "drill_effect": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
+    },
     "missile": {
       "origin": {
         "x": 16,
@@ -168,6 +174,12 @@
         },
         {
           "name": "curse_pinch",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "drill_effect",
           "properties": {
             "speed": 0.5
           }

@@ -139,11 +139,11 @@ function ComponentCamera() : ComponentBase() constructor {
 		//catch up to the target if possible
 		//if the target is more than a third of a screen's worth of space away, 
 		//go to exactly a third of a screens worth away
-		if(abs(x - _cam_x) > GAME_W / 2 && _target_always_in_view){
+		if(abs(x - _cam_x) > GAME_W / 3 && _target_always_in_view){
 			if(x > _cam_x){
-				_cam_x = x - (abs(x - _cam_x) - GAME_W / 2 + 1);
+				_cam_x = x - (abs(x - _cam_x) - GAME_W / 3 + 1);
 			} else {
-				_cam_x = x + (abs(x - _cam_x) - GAME_W / 2 + 1);
+				_cam_x = x + (abs(x - _cam_x) - GAME_W / 3 + 1);
 			}
 			log("Too far!")
 		} else if(abs(x - _cam_x) > self.movement_limit_x){
@@ -154,11 +154,11 @@ function ComponentCamera() : ComponentBase() constructor {
 			}
 		}
 		
-		if(abs(y - _cam_y) > GAME_H / 2 && _target_always_in_view){
+		if(abs(y - _cam_y) > GAME_H / 3 && _target_always_in_view){
 			if(y > _cam_y){
-				_cam_y = y - (abs(y - _cam_y) - GAME_H / 2);
+				_cam_y = y - (abs(y - _cam_y) - GAME_H / 3);
 			} else {
-				_cam_y = y + (abs(y - _cam_y) - GAME_H / 2);
+				_cam_y = y + (abs(y - _cam_y) - GAME_H / 3);
 			}
 		} else if(abs(y - _cam_y) > self.movement_limit_y){
 			if(y > _cam_y){
