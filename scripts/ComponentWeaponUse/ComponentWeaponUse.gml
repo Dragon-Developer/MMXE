@@ -453,7 +453,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				log(_offset)
 				
 				_x += _offset.x * _dir;
-				_y += _offset.y;
+				_y += _offset.y - 16;
 				//log("added offsets")
 			} else {
 				//log(find("animation"))
@@ -482,5 +482,28 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags);
 		
 		self.projectile_count++;
+	}
+
+	self.draw = function(){
+		var _offsets = JSON.load(working_directory + "sprites/" + global.availible_characters[global.character_index].image_folder + "/offset.json")
+				
+		var _offset = new Vec2(0,0);
+				
+		log(find("animation").animation.__animation)
+				
+		for(var e = 0; e < array_length(_offsets); e++){
+			if(_offsets[e].name == find("animation").animation.__animation)	{
+				_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].x)
+			}
+		}
+		
+		_offset = new Vec2(get_instance().x + _offset.x * find("animation").animation.__xscale, get_instance().y + _offset.y - 16)
+		
+		draw_set_color(c_white);
+		draw_point(_offset.x, _offset.y)
+		draw_point(_offset.x - 1, _offset.y)
+		draw_point(_offset.x + 1, _offset.y)
+		draw_point(_offset.x, _offset.y - 1)
+		draw_point(_offset.x, _offset.y + 1)
 	}
 } 

@@ -1,5 +1,11 @@
 [
   {
+    "name": "idle",
+    "offsets": [
+      {"x": 12, "y": -3}
+    ]
+  },
+  {
     "name": "shoot",
     "offsets": [
       {"x": 12, "y": -3}
