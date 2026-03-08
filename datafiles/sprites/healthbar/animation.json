@@ -201,6 +201,18 @@
             ]
           }
         },
+        {//i doubt this works
+          "name": "healthbar_icon_bass",
+          "properties": {
+            //"action": "healthbar_icon_custom",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
         {
           "name": "healthbar_icon_axl",
           "properties": {

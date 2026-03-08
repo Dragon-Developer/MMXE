@@ -25,29 +25,42 @@ function global_init() {
 		music: "HQ"
 	}
 	
-	global.availible_characters = [
-		new XCharacter(),
-		new ZeroCharacter(),
-		new RockCharacter(),
-		new BassCharacter(),
-		new CustomCharacter()
-	]
-	
 	global.character_ref = [
 		XCharacter,
 		ZeroCharacter,
+		AxlCharacter,
 		RockCharacter,
 		BassCharacter,
 		CustomCharacter
 	]
+	
+	global.availible_characters = []//this is set by character_ref
+	global.armors = [];
+	
+	array_foreach(global.character_ref, function(_item, _index){
+		var _setup = {};
+		
+		with(_setup){
+			script_execute(_item)
+		}
+		
+		array_push(global.availible_characters, _setup)
+		array_push(global.armors, [0,0,0,0,0])
+		if(array_length(global.player_data.last_used_armor) < _index + 1)
+			array_push(global.player_data.last_used_armor, [0,0,0,0,0])
+	})
+	
 	global.character_index = global.player_data.last_used_character;
 	
 	global.player_character = [global.availible_characters[global.character_index]];
-	global.armors = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+	
 	global.checkpoint_id = undefined;
+	global.stage_time = -1;
+	global.beat_time = -1;
+	global.hit_count = 0;
 	
 	global.debug = false;
-	global.stacktracking = false;
+	//global.stacktracking = true;
 	global.last_run_type_of_component = "none"
 	
 	input_source_set(INPUT_KEYBOARD, 0);

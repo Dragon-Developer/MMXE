@@ -14,7 +14,7 @@
 #macro __COLLAGE_MAX_TEXTURE_SIZE 8192 
 
 // The default texture page size
-#macro __COLLAGE_DEFAULT_TEXTURE_SIZE 2048
+#macro __COLLAGE_DEFAULT_TEXTURE_SIZE 4096
 
 // Whether Collage should scale images that are bigger than the texture page itself.
 #macro __COLLAGE_SCALE_TO_TEXTURES_ON_PAGE true

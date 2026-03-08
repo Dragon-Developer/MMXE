@@ -493,58 +493,39 @@
         {
           "name": "intro2",
           "properties": {
+            "action": "intro",
             "keyframes": [
               {
                 "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
                 "frame": 1
               },
               {
-                "key": 4,
+                "key": 7,
                 "frame": 2
               },
               {
-                "key": 8,
+                "key": 9,
                 "frame": 3
               },
               {
-                "key": 12,
+                "key": 11,
                 "frame": 4
               },
               {
-                "key": 16,
+                "key": 13,
                 "frame": 5
               },
               {
-                "key": 20,
+                "key": 15,
                 "frame": 6
               },
               {
-                "key": 24,
-                "frame": 7
-              },
-              {
-                "key": 28,
-                "frame": 8
-              },
-              {
-                "key": 32,
-                "frame": 9
-              },
-              {
-                "key": 36,
-                "frame": 10
-              },
-              {
-                "key": 38,
-                "frame": 11
-              },
-              {
-                "key": 45,
-                "frame": 12
-              },
-              {
-                "key": 56,
-                "frame": 13
+                "key": 18,
+                "frame": 6
               }
             ]
           }
@@ -552,18 +533,15 @@
         {
           "name": "intro2_end",
           "properties": {
+            "action": "intro",
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
+                "frame": 6
               },
               {
                 "key": 4,
-                "frame": 1
-              },
-              {
-                "key": 29,
-                "frame": 1
+                "frame": 6
               }
             ]
           }
@@ -586,14 +564,15 @@
         {
           "name": "outro",
           "properties": {
+            "action": "intro",
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0
+                "frame": 4
               },
               {
                 "key": 3,
-                "frame": 1
+                "frame": 3
               },
               {
                 "key": 6,
@@ -601,33 +580,14 @@
               },
               {
                 "key": 8,
-                "frame": 3
+                "frame": 1
               },
               {
                 "key": 10,
-                "frame": 4
+                "frame": 0
               }
             ],
             "loop_begin": 10
-          }
-        },
-        {
-          "name": "intro2_end",
-          "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              },
-              {
-                "key": 4,
-                "frame": 1
-              },
-              {
-                "key": 29,
-                "frame": 1
-              }
-            ]
           }
         },
         {

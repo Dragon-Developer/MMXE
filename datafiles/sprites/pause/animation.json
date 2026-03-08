@@ -59,6 +59,17 @@
           }
         },
         {
+          "name": "healthbar_icon_bass",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
           "name": "bar_start_cap",
           "properties": {
             "keyframes": [
@@ -326,7 +337,7 @@
           }
         },
         {
-          "name": "S_WHEEL",
+          "name": "WAVE_B",
           "properties": {
             "keyframes": [
               {
@@ -348,7 +359,7 @@
           }
         },
         {
-          "name": "XENO_M",
+          "name": "L_WEB",
           "properties": {
             "keyframes": [
               {

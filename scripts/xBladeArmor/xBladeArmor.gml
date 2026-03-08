@@ -20,7 +20,8 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 	self.sprite_name = "/blade/legs"//this is more for filepath.
 	self.armor_name = "Blade Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
-		_player.states.dash.speed *= 1.1;
+		_player.states.dash.speed *= 1.05;
+		add_air_dash(_player, self);
 		with(_player){
 			struct_set(states, "mach_dash", {
 				speed: 1298/256, //1298/256, 
@@ -54,7 +55,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 				enter: function() {//
 					WORLD.play_sound("dash");
 					if(!self.states.mach_dash.golden)
-						self.states.mach_dash.curr_dashes++;
+						self.states.dash_air.curr_dashes++;
 					var _inst = self.get_instance()
 					
 					self.current_hspd = self.states.mach_dash.speed;	
@@ -174,16 +175,11 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 					draw_arrow(_inst.x + (_dir.x * 30), _inst.y + (_dir.y * 30), _inst.x + (_dir.x * 38), _inst.y + (_dir.y * 38), 8)
 				}
 			})
-			.add_wildcard_transition("t_dash", "dash_hold", function() { return !self.physics.is_on_floor() && self.states.mach_dash.curr_dashes < self.states.mach_dash.max_dashes; })
+			.add_wildcard_transition("t_dash", "dash_hold", function() { return !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
 			.add_transition("t_transition", "mach_dash", "fall", function() 
 				{ return self.timer <= CURRENT_FRAME; })
-			.add_wildcard_transition("t_transition", "dash_hold", function() {return self.input.get_input_pressed_raw("shoot4") && self.states.mach_dash.curr_dashes < self.states.mach_dash.max_dashes;});
+			.add_wildcard_transition("t_transition", "dash_hold", function() {return self.input.get_input_pressed_raw("shoot4") && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes;});
 		}
-		
-		self.step_armor_effects = function(_player) {
-			if(_player.physics.is_on_floor() || _player.fsm.get_current_state() == "wall_slide")
-				_player.states.mach_dash.curr_dashes = 0;
-		};
 	}
 	
 	self.description = "Gives the user the mach dash. The mach dash can be aimed."

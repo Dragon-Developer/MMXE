@@ -15,6 +15,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.states = {};
 	self.ground_distance = 3;
 	self.double_jumps = 0;
+	self.left_manually = false
 	
 	self.timer = 0;
 	
@@ -60,6 +61,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("teleport_in", {
 			enter: function() {
 				self.publish("animation_play", { name: "tp_in" , reset: false});
+				WORLD.play_sound("tp in");
 				self.physics.set_speed(0, 0);
 				self.physics.set_grav(new Vec2(0,0));
 				self.physics.does_collisions = false;
@@ -106,9 +108,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				//self.publish("animation_play", { name: "walk" });
 				self.publish("animation_play", { name: self.states.walk.animation });
 				self.current_hspd = self.states.walk.speed;
+				self.timer = CURRENT_FRAME + 1;
 			},
 			step: function() {
-				self.set_hor_movement();	
+				self.set_hor_movement(self.hdir, self.timer);	
 			}
 		})
 		.add("air", {
@@ -118,19 +121,22 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add_child("air", "jump", {
 			enter: function() {
+				var _inst = self.get_instance();
 				if(self.input.get_input("down") && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_collision_semisolid)){
 					self.fsm.change("fall");
-					var _inst = self.get_instance();
 					_inst.y += 2;
 					return;
 				}
 				
 				if(self.physics.is_on_floor()){
-					self.publish("animation_play", { name: self.states.jump.double_jump_animation });
+					self.publish("animation_play", { name: self.states.jump.animation });
 					double_jumps = self.states.jump.count - 1;
 				}else{ 
 					double_jumps--;
-					self.publish("animation_play", { name: self.states.jump.animation });
+					self.publish("animation_play", { name: self.states.jump.double_jump_animation });
+					
+					if(global.settings.extra_particles)
+						WORLD.spawn_particle(new DustParticle(_inst.x, _inst.y + 16, self.dir))
 				}
 				
 				WORLD.play_sound(self.states.jump.sound);
@@ -139,7 +145,6 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				//self.publish("animation_play", { name: "jump" });
 				self.physics.set_vspd(-self.states.jump.strength);
 				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
-					var _inst = self.get_instance();
 					self.current_hspd = self.states.dash.speed;
 					if(global.settings.extra_particles)
 						WORLD.spawn_particle(new SparkParticle(_inst.x, _inst.y + 16, self.dir))
@@ -205,12 +210,14 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("leave", {
 			enter: function(){
 				self.publish("animation_play", { name: "tp_in" , reset: false});
+				WORLD.play_sound("tp out");
 				//self.publish("animation_play", { name: "leave" });
 				self.physics.set_grav(new Vec2(0,0));
 				var _inst = self.get_instance();
 				var _cam = instance_nearest(_inst.x, _inst.y, obj_camera)
 				_cam.components.get(ComponentCamera).bounds = noone;
 				self.timer = CURRENT_FRAME + 75;
+				global.stage_time = CURRENT_FRAME - global.stage_time;
 			},
 			step: function(){
 				var _inst = self.get_instance();
@@ -218,19 +225,30 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				
 				
 				if(self.timer < CURRENT_FRAME){
+					global.hit_count = get(ComponentDamageable).hit_amount;
+					
 					if(room == rm_intro)
 						global.settings.Has_done_intro_stage = true;
 						
 					if(!variable_struct_exists(global.player_data, "beaten_stages"))
 						variable_struct_set(global.player_data, "beaten_stages", {})
 						
-					variable_struct_set(global.player_data.beaten_stages, room_get_name(room), true)
+					if(!variable_struct_exists(global.player_data.beaten_stages, room_get_name(room)))
+						variable_struct_set(global.player_data.beaten_stages, room_get_name(room), global.stage_time)
+					else if(variable_struct_get(global.player_data.beaten_stages, room_get_name(room)) > global.stage_time || variable_struct_get(global.player_data.beaten_stages, room_get_name(room)) == 1){
+						variable_struct_set(global.player_data.beaten_stages, room_get_name(room), global.stage_time)
+					}
 						
 					JSON.save({
 						settings: global.settings, 
 						player_data: global.player_data
 					},game_save_id + "save.json", true)
-					room_transition_to(rm_stage_select, 0, 24);
+					
+					if(global.settings.score_showcase && !left_manually)
+						room_transition_to(rm_score_showcase, 0, 24);
+					else
+						room_transition_to(rm_stage_select, 0, 24);
+					
 				}
 			}
 		})
@@ -433,6 +451,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Initialization
 	self.init = function() {
+		global.stage_time = CURRENT_FRAME;
+		global.hit_count = 0;
+		
 		array_foreach(global.availible_characters, function(_char, _index){
 			global.availible_characters[_index] = {};
 			with(global.availible_characters[_index]){
@@ -447,7 +468,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	// Sets the player's horizontal movement based on direction
-	self.set_hor_movement = function(_dir = self.hdir) {
+	self.set_hor_movement = function(_dir = self.hdir, _start_time = -1) {
+		if(CURRENT_FRAME < _start_time) return;
 		if (_dir != 0) self.dir = _dir;
 		self.physics.set_hspd(self.current_hspd * _dir);
 		if (_dir != 0) self.publish("animation_xscale", _dir)
@@ -456,7 +478,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	// Double-tap detection system for activating dash
 	self.double_tap = new MultiTap();
 	self.double_tap.onPressed = function(_key, _times) {
-		if (_times <= 1 || self.dir != _key) return;
+		if (_times <= 1 || self.dir != _key || !global.settings.double_tap_dash) return;
 		self.double_tap.reset();
 		self.dash_dir = _key;
 		self.dash_tapped = true;
@@ -528,7 +550,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
 			
-		if !self.debug return;
+		if !global.debug return;
 		
 		if(variable_struct_exists(self, "hdir"))
 			draw_string(string(self.hdir), self.get_instance().x, self.get_instance().y - 32)
@@ -539,7 +561,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 	
 	self.draw_gui = function() {
-		if !self.debug return;
+		if !global.debug return;
 		var _history = self.fsm.history_get();
 		
 		draw_set_valign(fa_top);

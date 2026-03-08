@@ -2,12 +2,12 @@ on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
 		{   sentence : "This lip is too tall to walk up.",
-			mugshot_left : undefined,
+			mugshot_left :  "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "Use the bound jump button to scale the lip, and progress to the next part of the test.",
-			mugshot_left : undefined,
+			mugshot_left :  "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		}

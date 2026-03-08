@@ -2,6 +2,7 @@ function BaseCharacter() constructor{
 	self.default_health = 12;
 	self.player = noone;
 	self.image_folder = "x";
+	self.default_score = 1000;//for the score screen
 	self.states = {	
 		intro: {
 			speed: 8,
@@ -43,6 +44,13 @@ function BaseCharacter() constructor{
 		hurt: {
 			speed: -138 / 256,
 			sound: "hurt"
+		},
+		dash_air: {
+			speed: 885/256, 
+			interval: 15, 
+			max_dashes: 1, 
+			curr_dashes: 0, 
+			animation: "dash_air"
 		}
 	}
 	self.possible_armors = [
@@ -70,6 +78,73 @@ function BaseCharacter() constructor{
 		#f0f0f0,//eye white
 		#f04010//red
 	];
+	
+	self.charge_colors = [
+		[
+			#216bf7,//Blue Armor Bits
+			#0094f7,
+			#00bdff,
+			#1884e7,//Under Armor Teal Bits
+			#52def7,
+			#a5f7f7,
+			#1852e7,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#989898,//glove
+			#e0e0e0,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		],
+		[
+			#216bf7,//Blue Armor Bits
+			#0094f7,
+			#00bdff,
+			#1884e7,//Under Armor Teal Bits
+			#52def7,
+			#a5f7f7,
+			#1852e7,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#989898,//glove
+			#e0e0e0,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		],
+		[
+			#8c73ef,//Blue Armor Bits
+			#b58cff,
+			#b5adff,
+			#9c8cf7,//Under Armor Teal Bits
+			#ceb5ff,
+			#e7e7ff,
+			#9400de,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#989898,//glove
+			#e0e0e0,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		],
+		[
+			#e74a21,//Blue Armor Bits
+			#e78c29,
+			#ffad29,
+			#e78c29,//Under Armor Teal Bits
+			#f7a57b,
+			#ffd69c,
+			#8c0000,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#f7a57b,//glove
+			#ffd69c,
+			#f0f0f0,//eye white
+			#f76bc6//red
+		]
+	]
 	
 	self.weapons = [xBuster];
 	self.weapon_ammo_max = 28;

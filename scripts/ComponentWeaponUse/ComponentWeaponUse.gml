@@ -8,6 +8,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.stock_shot = noone;
 	self.weapon_ammo = [28];
 	self.weapon_max_ammo = 28;
+	self.weapon_use_rate = 1;
 	self.weapon_palette = undefined;
 	self.charge = noone;
 	self.charge_time = [30, 105, 180, 255];
@@ -89,13 +90,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 						if added_melee_weapon break;
 						
 						added_melee_weapon = true;
-						get(ComponentPlayerMove).add_melee_state();
+						add_melee_state(get(ComponentPlayerMove));
 					break;
 					case("Aimable"):
 						if added_aimable_weapon break;
 						
 						added_aimable_weapon = true;
-						get(ComponentPlayerMove).add_aimable_state();
+						add_aimable_state(get(ComponentPlayerMove));
 					break;
 				}
 			})
@@ -157,6 +158,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		if(self.charge != noone){
 			self.charge.shoot_inputs = self.shoot_inputs;
+			self.charge.current_weapon = self.weapon_list[self.current_weapon[0]];
 		}
 		
 		var _anim_name = self.find("animation").animation.__animation;
@@ -202,7 +204,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 						
 					if(self.charge.start_time + charge_time[p] < CURRENT_FRAME
 					&& _shot_code.charge_limit >= p + 1){
-						_shot_index = p + 1;
+						_shot_index = clamp(p + 1, 0, self.charge.charge_limit);
 					}
 				}
 			}
@@ -225,8 +227,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//i love switch statements
 		switch(_type){
 			case("Projectile"):
-				if self.shoot(_input, _id,_shot_data ,_shot_code)
+				if self.shoot_check(_input, _id,_shot_data ,_shot_code)
 					self.create_projectile(_shot_code, _shot_index, _input, _id);
+			break;
+			case("Flamethrower"):
+				if(CURRENT_FRAME > self.refire_time)//sue me
+					if self.shoot_check_repeated(_input, _id,_shot_data ,_shot_code)
+						self.create_projectile(_shot_code, _shot_index, _input, _id);
 			break;
 			case("State Based"):
 				if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input))
@@ -242,45 +249,59 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					get(ComponentPlayerMove).fsm.change("aim")
 				}
 			break;
-			case("Flamethrower"):
-				//unimplemented. will not be implemented until post release as there is literally no reason to!
-			break;
 		}
 	}
 		
-	self.shoot = function(_input, _id, _shot_data, _shot_code){
+	self.shoot_check = function(_input, _id, _shot_data, _shot_code){
 		if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input)){
-			
-			//apply stock shot
-			if(self.stock_shot != noone){
-				_shot_data = {};
-				with(_shot_data){
-					script_execute(other.stock_shot)
-				}
-			}
-			
-			//decrease weapon energy
-			if(self.weapon_ammo[self.current_weapon[_id]] > 0){
-				var _cost = 0;
-				
-				if is_array(_shot_code.cost)
-					_cost = _shot_code.cost[_shot_index];
-				else
-					_cost = _shot_code.cost;
-				
-				//check if theres a projectile limit
-				if(variable_struct_exists(_shot_data, "shot_limit")){
-					self.weapon_ammo[self.current_weapon[_id]] -= _cost;
-					//log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
-				} else 
-					self.weapon_ammo[self.current_weapon[_id]] -= _cost;
-			} else {
-				//bail! you dont have weapon energy
-				return false;
-			}
-			return true;
+			return general_shooting_check(_input, _id, _shot_data, _shot_code);
 		}
 		return false;
+	}
+	
+	self.shoot_check_repeated = function(_input, _id, _shot_data, _shot_code){
+		if(self.input.get_input(_input)){
+			var _possible = general_shooting_check(_input, _id, _shot_data, _shot_code);
+			
+			log(_shot_data.shot_delay)
+			
+			if (_possible) self.refire_time = CURRENT_FRAME + _shot_data.shot_delay;
+
+			return _possible
+		}
+		return false;
+	}
+	
+	self.general_shooting_check = function(_input, _id, _shot_data, _shot_code){
+		//apply stock shot
+		if(self.stock_shot != noone){
+			_shot_data = {};
+			with(_shot_data){
+				script_execute(other.stock_shot)
+			}
+		}
+			
+		//decrease weapon energy
+		if(self.weapon_ammo[self.current_weapon[_id]] > 0){
+			if(global.debug) return true;
+			var _cost = 0;
+				
+			if is_array(_shot_code.cost)
+				_cost = _shot_code.cost[_shot_index];
+			else
+				_cost = _shot_code.cost;
+				
+			//check if theres a projectile limit
+			if(variable_struct_exists(_shot_data, "shot_limit")){
+				self.weapon_ammo[self.current_weapon[_id]] -= _cost * self.weapon_use_rate;
+				//log("pew " + string(self.projectile_count) + " " + string(_shot_data.shot_limit))
+			} else 
+				self.weapon_ammo[self.current_weapon[_id]] -= _cost * self.weapon_use_rate;
+		} else {
+			//bail! you dont have weapon energy
+			return false;
+		}
+		return true;	
 	}
 		
 	self.create_aimable_projectile = function(_shot_code, _shot_index, _input, _id){
@@ -328,7 +349,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			_anim_name += "_air"
 		}
 		
-		log(_anim_name)
+		//log(_anim_name)
 		
 		self.publish("animation_play", {name: _anim_name})
 		self.publish("animation_xscale", _aim_dir.x == 0 ? _dir : sign(_aim_dir.x))
@@ -340,23 +361,36 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		var _y = self.get_instance().y;
 		
-		if(_anim_name == "wall_slide"){
+		if(_anim_name == "wall_slide" && self.get_instance().components.find("animation").animation.__frame > 1){
 			_dir *= -1
 		}
+		
 		
 		//if we have an animator, add the shot offsets
 		try{
 			if(find("animation") != noone){
 				//log("gon add offsets " + string( find("animation").get_shot_offsets()))
-				var _offsets = find("animation").get_shot_offsets();
-				_x += _offsets[0] * _dir;
-				_y += _offsets[1];
+				var _offsets = JSON.load(working_directory + "sprites/" + global.availible_characters[global.character_index].image_folder + "/offset.json")
+				
+				var _offset = new Vec2(0,0);
+				
+				log(find("animation").animation.__animation)
+				
+				for(var e = 0; e < array_length(_offsets); e++){
+					if(_offsets[e].name == find("animation").animation.__animation)	{
+						_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].y)
+					}
+				}
+				
+				
+				log(_offset)
+				
+				_x += _offset.x * _dir;
+				_y += _offset.y;
 				//log("added offsets")
 			} else {
 				//log(find("animation"))
 			}
-		} catch(_exception){
-			
 		}
 			
 		//create the projectile itself
@@ -441,25 +475,23 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				
 				var _offset = new Vec2(0,0);
 				
-				log(find("animation").animation.__animation)
+				//log(find("animation").animation.__animation)
 				
 				for(var e = 0; e < array_length(_offsets); e++){
 					if(_offsets[e].name == find("animation").animation.__animation)	{
-						_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].x)
+						_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].y)
 					}
 				}
 				
 				
-				log(_offset)
+				//log(_offset)
 				
 				_x += _offset.x * _dir;
-				_y += _offset.y - 16;
+				_y += _offset.y;
 				//log("added offsets")
 			} else {
 				//log(find("animation"))
 			}
-		} catch(_exception){
-			
 		}
 			
 		//create the projectile itself
@@ -485,25 +517,22 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 
 	self.draw = function(){
+		if(!global.debug) return;
 		var _offsets = JSON.load(working_directory + "sprites/" + global.availible_characters[global.character_index].image_folder + "/offset.json")
 				
 		var _offset = new Vec2(0,0);
 				
-		log(find("animation").animation.__animation)
+		//log(find("animation").animation.__animation)
 				
 		for(var e = 0; e < array_length(_offsets); e++){
 			if(_offsets[e].name == find("animation").animation.__animation)	{
-				_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].x)
+				_offset = new Vec2(_offsets[e].offsets[find("animation").animation.__frame].x, _offsets[e].offsets[find("animation").animation.__frame].y)
 			}
 		}
 		
-		_offset = new Vec2(get_instance().x + _offset.x * find("animation").animation.__xscale, get_instance().y + _offset.y - 16)
+		_offset = new Vec2(get_instance().x + _offset.x * find("animation").animation.__xscale, get_instance().y + _offset.y)
 		
-		draw_set_color(c_white);
-		draw_point(_offset.x, _offset.y)
-		draw_point(_offset.x - 1, _offset.y)
-		draw_point(_offset.x + 1, _offset.y)
-		draw_point(_offset.x, _offset.y - 1)
-		draw_point(_offset.x, _offset.y + 1)
+		draw_sprite(spr_gamepad_reticle, 0, floor(get_instance().x), floor(get_instance().y))
+		draw_sprite(spr_gamepad_reticle, 0, floor(_offset.x), floor(_offset.y))
 	}
 } 

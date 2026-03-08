@@ -41,7 +41,25 @@
         "x": 4,
         "y": 4
       }
-    }
+    },
+    "bass_shot_0": {
+      "origin": {
+        "x": 33,
+        "y": 35
+      }
+    },
+    "bass_shot_1": {
+      "origin": {
+        "x": 33,
+        "y": 35
+      }
+    },
+    "bass_shot_2": {
+      "origin": {
+        "x": 33,
+        "y": 35
+      }
+    },
   },
   "data": {
     "layers": [
@@ -53,6 +71,30 @@
       "list": [
         {
           "name": "xSuperParticles",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "fire_wave_die",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "bass_shot_0",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "bass_shot_1",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "bass_shot_2",
           "properties": {
             "speed":1
           }

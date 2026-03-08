@@ -3,13 +3,9 @@ function draw_string(_string, _x, _y, _font = "normal"){
 	
 	for(var q = 0; q < string_length(_string); q++){
 		//log(string_char_at(_string, q + 1) + ", " +string(ord(string_char_at(_string, q + 1)) - 1))
-		var _char = string_char_at(_string, q + 1)
-		var _char_ord = ord(_char) - 33
-		if _char == " " _char_ord = 3;
-		if _char == "/" _char_ord = 14;
-		if _char == "\\" _char_ord = 14;
-		
 		var _sprite = noone;
+		
+		var _char = string_char_at(_string, q + 1)
 		
 		switch(_font){
 			default:
@@ -23,7 +19,18 @@ function draw_string(_string, _x, _y, _font = "normal"){
 			case("orange"):
 				_sprite = spr_text_font_orange
 			break;
+			
+			case("big"):
+				_sprite = spr_text_font_big
+				_char = string_upper(_char);
+			break;
 		}
+		var _char_ord = ord(_char) - 33
+		if _char == " " _char_ord = 3;
+		if _char == "/" _char_ord = 14;
+		if _char == "\\" _char_ord = 14;
+		
+		
 		
 		draw_sprite(_sprite, _char_ord, floor(_x + q * 8), floor(_y));
 	}
@@ -38,16 +45,13 @@ function draw_string(_string, _x, _y, _font = "normal"){
 }
 
 // corrupted showed off a thing where the text looked like regular text so I wanted to see 
-function draw_string_condensed(_string, _x, _y){
+function draw_string_condensed(_string, _x, _y, _font = "normal"){
 	var _xx = 0;
 	for(var q = 0; q < string_length(_string); q++){
 		//log(string_char_at(_string, q + 1) + ", " +string(ord(string_char_at(_string, q + 1)) - 1))
 		var _char = string_char_at(_string, q + 1)
-		var _char_ord = ord(_char) - 33
-		if _char == " " _char_ord = 3;
-		if _char == "/" _char_ord = 14;
-		if _char == "\\" _char_ord = 14;
-		draw_sprite(spr_text_font_normal, _char_ord, _x + _xx, _y);
+		
+		draw_string(_char, _x + _xx, _y, _font)
 		_xx += string_get_text_length(_char);
 	}
 }

@@ -55,6 +55,34 @@
           }
         },
         {
+          "name": "axl",
+          "properties": {
+            "action":"axl_regular",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
           "name": "vent",
           "properties": {
             "keyframes": [
@@ -340,6 +368,53 @@
           }
         },
         {
+          "name": "axl_suprise",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "axl_suprise_talking",
+          "properties": {
+            "action":"axl_suprise",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
           "name": "zero_suprise",
           "properties": {
             "keyframes": [
@@ -434,6 +509,37 @@
           }
         },
         {
+          "name": "axl_angry",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "axl_angry_talking",
+          "properties": {
+            "action":"axl_angry",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 1
+              },
+              {
+                "key": 20,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
           "name": "x_talking",
           "properties": {
             "action":"x_regular",
@@ -454,9 +560,190 @@
           }
         },
         {
-          "name": "vent_talking",
+          "name": "axl_talking",
           "properties": {
-            "action":"vent",
+            "action":"axl_regular",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "tut_bot",
+          "properties": {
+            "action":"tut_bot_talking",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "tut_bot_talking",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "megaman",
+          "properties": {
+            "action":"megaman_talking",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "megaman_talking",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "bass",
+          "properties": {
+            "action":"bass_talking",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "bass_talking",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "bass_suprise",
+          "properties": {
+            "action":"bass_suprised",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "bass_surpsie_talking",
+          "properties": {
+            "action":"bass_suprised",
             "keyframes": [
               {
                 "key": 0,
@@ -473,6 +760,7 @@
             ]
           }
         }
+        //eof
       ]
     }
   }

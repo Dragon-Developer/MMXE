@@ -33,6 +33,8 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		_shot.code.tag = array_concat(_shot.code.tag, _tags);
 		_shot.code.create(_shot.position);
 		
+		if(!variable_struct_exists(_shot.code, "boss_damage")) _shot.code.boss_damage = _shot.code.damage;
+		
 		//log(_shot.code.animation)
 		
 		struct_set(_shot, "sprite", get(ComponentSpriteRenderer).add_sprite(_shot.code.animation,false,  _x, _y, _dir));
@@ -109,8 +111,8 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 			for(var p = 0; p < array_length(self.projectiles); p++){
 				if(self.projectiles[p] == _shot){
 					if(variable_struct_exists(_shot.shooter, "projectile_count"))
-						_shot.shooter.projectile_count--;
-					
+						_shot.shooter.projectile_count = clamp(_shot.shooter.projectile_count - 1, 0, 256);
+					self.projectiles[p].code.destroy(self.projectiles[p].position);
 					get(ComponentSpriteRenderer).clear_sprite(_shot.sprite);
 					array_delete(self.projectiles, p,1);
 				}

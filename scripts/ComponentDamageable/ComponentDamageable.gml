@@ -7,12 +7,15 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.combo_offset = 0;//some enemies take more or less comboiness from projectiles
 	self.damage_rate = 1;//the amount that damage gets multiplied by
 	self.dead = false;
+	self.hit_amount = 0;//the amount of times this thing got hit
 	
 	self.invuln_offset = -1;//if its -1 the invuln timer is over
-	self.invuln_time = 5//150;//the time offset in frames that invulnerability lasts for
+	self.invuln_time = 150//150;//the time offset in frames that invulnerability lasts for
 	
 	self.physics = noone;//physics is used to detect collisions with projectiles.
-	self.plays_sound_on_hit = false;//so players dont activate the on hit effect
+	self.plays_sound_on_hit = false;//so players dont activate the on hit 
+	self.bright = false;
+	self.take_boss_damage = true;
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
@@ -73,8 +76,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		//log(self.invuln_offset < CURRENT_FRAME)
 		
 		if(self.invuln_offset > CURRENT_FRAME) {
-			if(CURRENT_FRAME % 2 == 0)
+			if(CURRENT_FRAME % 2 == 0 && bright)
 				array_push(find("animation").shaders,new BrightShader())
+			else if(CURRENT_FRAME % 2 == 0)
+				array_push(find("animation").shaders,new GoneShader())
 			else if(array_length(find("animation").shaders) > 1)
 				array_pop(find("animation").shaders)
 		} else if(self.invuln_offset == CURRENT_FRAME){
@@ -104,8 +109,9 @@ function ComponentDamageable() : ComponentBase() constructor{
 		if(_damage != 0){
 			if(plays_sound_on_hit)
 				WORLD.play_sound("big_damage");
+			hit_amount++;
 				
-			if(1 == 1){//no damage number setting
+			if(global.settings.hit_numbers){//no damage number setting
 				var _inst = self.get_instance()
 				var _num = instance_create_depth(_inst.x, _inst.y - 32, -15000, obj_damage_number);
 				_num.number = ceil(_damage * damage_rate);
@@ -162,7 +168,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 			array_push(self.hit_by_list, _proj)
 			if(!_proj.code.piercing || self.health > 0)
 				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
-			return _proj.code.damage;
+			if(take_boss_damage)
+				return _proj.code.boss_damage;
+			else 
+				return _proj.code.damage;
 		}
 		return 0;
 	}

@@ -6,10 +6,46 @@
         "y": 8
       }
     },
+    "electric_web": {
+      "origin": {
+        "x": 24,
+        "y": 8
+      }
+    },
+    "fire_wave_temp_full_charge": {
+      "origin": {
+        "x": 110,
+        "y": 22
+      }
+    },
+    "electric_web_extended": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
+    },
+    "wave_burner": {
+      "origin": {
+        "x": 12,
+        "y": 12
+      }
+    },
     "xShot2": {
       "origin": {
         "x": 16,
         "y": 16
+      }
+    },
+    "bass_shot_0": {
+      "origin": {
+        "x": 37,
+        "y": 33
+      }
+    },
+    "bass_shot_1": {
+      "origin": {
+        "x": 36,
+        "y": 32
       }
     },
     "charged_curse_pinch": {
@@ -52,6 +88,12 @@
       "origin": {
         "x": 30,
         "y": 24
+      }
+    },
+    "bass_shot_2": {
+      "origin": {
+        "x": 40,
+        "y": 35
       }
     },
     "xShot3X3": {
@@ -141,6 +183,17 @@
       "list": [
         {
           "name": "xShot1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "bass_shot_0",
           "properties": {
             "keyframes": [
               {
@@ -241,6 +294,34 @@
           }
         },
         {
+          "name": "bass_shot_1",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 3
+              }
+            ],
+            "loop_begin": 3
+          }
+        },
+        {
           "name": "xShot4X3",
           "properties": {
             "keyframes": [
@@ -333,6 +414,41 @@
               }
             ],
             "loop_begin": 5
+          }
+        },
+        {
+          "name": "bass_shot_2",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 10,
+                "frame": 1
+              },
+              {
+                "key": 12,
+                "frame": 0
+              }
+            ]
           }
         },
 
@@ -867,6 +983,162 @@
                 "frame": 9
               }
             ]
+          }
+        },
+        {
+          "name": "fire_wave",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 5,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "electric_web",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 4
+              },
+              {
+                "key": 14,
+                "frame": 5
+              },
+              {
+                "key": 16,
+                "frame": 5
+              }
+            ],
+            "loop_begin": 8
+          }
+        },
+        {
+          "name": "electric_web_extended",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 10,
+                "frame": 4
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 6
+              },
+              {
+                "key": 13,
+                "frame": 7
+              },
+              {
+                "key": 14,
+                "frame": 7
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "shotgun_ice_sled",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 6,
+                "frame": 1
+              },
+              {
+                "key": 12,
+                "frame": 2
+              },
+              {
+                "key": 18,
+                "frame": 3
+              },
+              {
+                "key": 24,
+                "frame": 4
+              },
+              {
+                "key": 30,
+                "frame": 5
+              }
+            ],
+            "loop_begin": 30
+          }
+        },
+        {
+          "name": "shotgun_ice",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "wave_burner",
+          "properties": {
+            "speed": 0.333334
+          }
+        },
+        {
+          "name": "shotgun_ice_fragment",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "fire_wave_temp_full_charge",
+          "properties": {
+            "speed": 0.3334,
+            "loop_begin": 1
           }
         }
 

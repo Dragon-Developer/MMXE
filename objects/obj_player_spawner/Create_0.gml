@@ -8,7 +8,7 @@ if(instance_exists(global.checkpoint_id)){
 	x = global.checkpoint_id.x;
 	y = global.checkpoint_id.y - 32;
 }
-
+WORLD = ENTITIES.create_instance(obj_world);
 
 y -= GAME_H + 8
 on_spawn = function(_player) {
@@ -46,7 +46,6 @@ on_spawn = function(_player) {
 	
 	if (current_spawn == global.local_player_index) {
 		//log("this is the player!")
-		WORLD = ENTITIES.create_instance(obj_world);
 		var _camera = ENTITIES.create_instance(obj_camera, x + camera_spawn_offset.x, y + camera_spawn_offset.y);
 		
 		if(_camera.x < 0) _camera.x = 0

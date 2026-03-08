@@ -47,7 +47,7 @@ function ComponentBossTease() : ComponentBase() constructor{
 	}
 	
 	self.draw = function(){
-		draw_string(title, 48, 16);
+		draw_string(string_upper(title), 48, 16, "big");
 		
 		var _split = string_split(description, "%");
 		

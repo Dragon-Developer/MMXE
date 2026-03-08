@@ -59,4 +59,15 @@ if(keyboard_check_pressed(ord("6"))){
 	var _screenshot = game_save_id + "Screenshot" + string(current_month) + string(current_day) + string(current_minute) + string(current_second) + ".png"
 	screen_save(_screenshot)
 	log("image saved as " + _screenshot)
+	
+	var _x = 8
+	var _y = 8
+	
+	if(instance_exists(obj_camera)){
+		_x = instance_nearest(0,0,obj_camera).x + 8
+		_y = instance_nearest(0,0,obj_camera).y + 8
+	}
+	
+	var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+	_response.number = "SCREENSHOT SAVED"
 }

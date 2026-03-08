@@ -5,6 +5,7 @@ function CustomCharacter() : BaseCharacter() constructor{
 	self.default_health = 8;
 	
 	external_data = JSON.load(working_directory + "sprites/custom/data.json")
+	//show_debug_message(external_data)
 	
 	self.states.walk.speed            = external_data.walk_speed;
 	self.states.dash.speed            = external_data.dash_speed;
@@ -17,13 +18,11 @@ function CustomCharacter() : BaseCharacter() constructor{
 	self.init = function(_player){
 		log(external_data);
 		self.init_default(_player);
-		if(external_data.can_dash)
-		with(_player){
-			add_dash();
+		if(external_data.can_dash){
+			add_dash(_player);
 		}
-		if(external_data.can_wall_slide)
-		with(_player){
-			add_wall_jump();
+		if(external_data.can_wall_slide){
+			add_wall_jump(_player);
 		}
 	}
 }

@@ -55,7 +55,7 @@ function GuiRoot() : GuiContainer() constructor {
 				OMY = device_mouse_y_to_gui(0);
 				
 				for(var p = 0; p < gamepad_get_device_count(); p++){
-					show_debug_message(string(gamepad_is_connected(p)) + " " + string(p))
+					//show_debug_message(string(gamepad_is_connected(p)) + " " + string(p))
 					
 					if gamepad_is_connected(p) == 1 connected_controller = p
 				}

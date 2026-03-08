@@ -119,7 +119,8 @@ function ComponentAnimation() : ComponentBase() constructor {
 				animation.__animation, 
 				animation.__frame,
 				animation.get_props().action,
-				animation.__xscale
+				animation.__xscale,
+				undefined
 			]);
 		}
 	}
@@ -159,6 +160,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 						self.animation.__frame,
 						_action,
 						self.animation.__xscale,
+						undefined
 					];
 					return ret;
 				}
@@ -196,6 +198,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 		var _frame = _pos[3];
 		var _action = _pos[4];
 		var _xscale = _pos[5];
+		var _mod = _pos[6];
     
 	    var _ox = self.rotation_point.x;
 	    var _oy = self.rotation_point.y;
@@ -214,7 +217,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 		    self.animation
 				.set_xscale(_xscale)
 				.set_angle(-self.rotation_angle)
-				.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
+				.draw_action(_action, _mod, _frame, floor(_x), floor(_y))
 		}
 		var _modifier = self.animation.__types[$ self.animation.__type][0];
 		if(_modifier != "") _modifier += "_"

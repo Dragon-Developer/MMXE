@@ -1,4 +1,4 @@
-function log(_string, _stack = global.stacktracking, _stacklength = 1){
+function log(_string, _stack = global.debug, _stacklength = 1){
 	
 	show_debug_message(_string);
 	LOG.print(_string);

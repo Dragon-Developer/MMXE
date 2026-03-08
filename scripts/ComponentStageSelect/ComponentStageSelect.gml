@@ -10,8 +10,8 @@ function ComponentStageSelector() : ComponentBase() constructor{
 		{room: rm_explose_horneck, x: 19, y: 18, beat: false, icon: "undefined", music: "blast_hole_2.0", intro: "x", intro_text: "Explose Horneck%Stage"},//'beat' will be replaced with save data info
 		{room: rm_gate_2,          x: 67, y: 18, beat: false, icon: "gate", music: "intro_stage", intro: "gate", intro_text: "The worst of the%worst"},
 		{room: rm_char_select,    x: 140, y: 11, beat: false, icon: "x", music: undefined, intro: "skip", intro_text: "Change your%maverick%hunter!"},
-		{room: rm_intro,           x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial", intro: "x", intro_text: "Go learn the basics!"},
-		{room: rm_horizontal_test, x: 261, y: 18, beat: false, icon: "undefined", music: "x2-intro-stage", intro: "zero", intro_text: "You can use full%color images for the%boss intro"},
+		{room: rm_intro,           x: 213, y: 18, beat: false, icon: "undefined", music: "tutorial", intro: "x", intro_text: "Go learn the%basics!"},
+		{room: rm_horizontal_test, x: 261, y: 18, beat: false, icon: "undefined", music: "x2-intro-stage", intro: "zero", intro_text: "You can use full%color images for%the boss intro"},
 	
 		{room: rm_training_stage, x: 19, y: 182, beat: false, icon: "undefined", music: "blast_hole", intro: "x", intro_text: "A more fleshed out%level to see what%you can do in%the engine"},//'beat' will be replaced with save data info
 		{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: "undefined", music: "fame_stag", intro: "flame_stag", intro_text: "more of a joke%ngl"},

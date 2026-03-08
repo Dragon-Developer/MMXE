@@ -121,3 +121,12 @@ function BrightShader() constructor {
 		shader_reset();	
 	}
 }
+
+function GoneShader() constructor {
+	static apply = function() {
+		shader_set(shader_palette_gone);
+	}
+	static reset = function() {
+		shader_reset();	
+	}
+}

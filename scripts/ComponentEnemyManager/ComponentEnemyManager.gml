@@ -132,6 +132,12 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 				_enemy.code.health -= _proj.code.damage;
 				_enemy.flash = 1;
 				WORLD.play_sound("small_damage");
+				
+				if(global.settings.hit_numbers){
+					var _num = instance_create_depth(_enemy.position.x, _enemy.position.y - _enemy.hitbox.y / 2 + _enemy.hitbox_offset.y, -15000, obj_damage_number);
+					_num.number = _proj.code.damage
+				}
+				
 				if(!_proj.code.piercing || _enemy.code.health > 0)
 					PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			}

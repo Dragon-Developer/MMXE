@@ -8,10 +8,12 @@ function AxlBulletsData() : AimableData() constructor{
 		//var _angle = angle.angle()
 	}
 	
+	self.spd = 5.5;
+	
 	self.step = function(_inst){
 		var _angle = angle.angle() + 90;
 		
-		_inst.x += 3 * sin(_angle / 180 * pi)
-		_inst.y += 3 * cos(_angle / 180 * pi)
+		_inst.x += spd * sin(_angle / 180 * pi)
+		_inst.y += spd * cos(_angle / 180 * pi)
 	}
 }

@@ -1,9 +1,10 @@
 function AimableWeapon() : Weapon() constructor{
 	self.term = "Aimable";
 	self.cost = 0;
+	self.charge_limit = 0;
 }
 
-function AimableData() constructor{
+function AimableData() : ProjectileData() constructor{
 	/*
 		projectileData is the data that a projectile uses to function.
 		this also includes stuff like damage and comboiness
@@ -11,7 +12,7 @@ function AimableData() constructor{
 	self.term = "Aimable";
 	self.dir = 1;
 	self.damage = 1;
-	self.shot_limit = 1;
+	self.shot_limit = 45;
 	self.shot_delay = 5;
 	self.comboiness = 1;//gonna follow z3's system
 	self.init_time = CURRENT_FRAME;

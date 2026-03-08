@@ -15,6 +15,7 @@ self.spawn_boss = function(){
 	//_boss.components.get(ComponentPhysics).grav = new Vec2(0, 0);
 	//log("boss physics set")
 	_boss.components.get(ComponentDamageable).projectile_tags = ["enemy"]
+	_boss.components.get(ComponentDamageable).bright = true;
 	_boss.components.get(ComponentDamageable).damage_rate = 0.5;
 	_boss.components.get(ComponentDamageable).death_function = function(){};
 	_boss.components.get(ComponentBoss).start_state_machine();

@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shader_palette_gone",
+  "name":"shader_palette_gone",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Scripts/Shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

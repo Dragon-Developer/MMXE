@@ -28,8 +28,11 @@ function XSecondArmorBoot() : BootPartBase() constructor{
 	//increased dash speed
 	self.sprite_name = "/x2/legs"//this is more for filepath.
 	self.armor_name = "Second Armor Boots"
+	self.step_armor_effects = function(){
+		//even a comment stops the compiler from deleting empty functions
+	};
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
-		self.add_air_dash(_player);
+		add_air_dash(_player, self);
 		with(_player){
 			struct_set(states.dash_air, "interval", states.dash.interval)
 		}

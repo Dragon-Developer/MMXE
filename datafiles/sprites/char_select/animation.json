@@ -173,6 +173,12 @@
           }
         }, 
         {
+          "name": "bass",
+          "properties": {
+            "speed":  1
+          }
+        }, 
+        {
           "name": "custom",
           "properties": {
             "speed":  1

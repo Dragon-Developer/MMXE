@@ -122,10 +122,19 @@ function GuiSettings() : GuiContainer() constructor {
 	#region other settings
 	
 	if(!variable_struct_exists(global.settings, "charge_flash")){
-		global.settings.charge_flash = false;
+		global.settings.charge_flash = true;
 	}
 	if(!variable_struct_exists(global.settings, "extra_particles")){
-		global.settings.extra_particles = false;
+		global.settings.extra_particles = true;
+	}
+	if(!variable_struct_exists(global.settings, "hit_numbers")){
+		global.settings.hit_numbers = true;
+	}
+	if(!variable_struct_exists(global.settings, "double_tap_dash")){
+		global.settings.double_tap_dash = false;
+	}
+	if(!variable_struct_exists(global.settings, "score_showcase")){
+		global.settings.score_showcase = false;
 	}
 	
 	PsxDashJumpToggle = new GuiButton(190, 12, "PSX Style Dash Jumping: " + (global.settings.PSX_Style_Dash_Jumping ? "true" : "false"))
@@ -148,6 +157,39 @@ function GuiSettings() : GuiContainer() constructor {
 	ChargeFlashToggle.addEventListener("click", function(_val){
 		global.settings.charge_flash = !global.settings.charge_flash;
 		ChargeFlashToggle.children[0].setText("Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
+	});
+	
+	HitNumberToggle = new GuiButton(190, 12, "Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
+	HitNumberToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	HitNumberToggle.addEventListener("click", function(_val){
+		global.settings.hit_numbers = !global.settings.hit_numbers;
+		HitNumberToggle.children[0].setText("Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
+	});
+	
+	DoubleTapDashToggle = new GuiButton(190, 12, "Double Tap Dash: " + (global.settings.double_tap_dash ? "true" : "false"))
+	DoubleTapDashToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	DoubleTapDashToggle.addEventListener("click", function(_val){
+		global.settings.double_tap_dash = !global.settings.double_tap_dash;
+		DoubleTapDashToggle.children[0].setText("Double Tap Dash: " + (global.settings.double_tap_dash ? "true" : "false"))
+	});
+	
+	ScoreShowcaseToggle = new GuiButton(190, 12, "Score Showcase: " + (global.settings.score_showcase ? "true" : "false"))
+	ScoreShowcaseToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	ScoreShowcaseToggle.addEventListener("click", function(_val){
+		global.settings.score_showcase = !global.settings.score_showcase;
+		ScoreShowcaseToggle.children[0].setText("Score Showcase: " + (global.settings.score_showcase ? "true" : "false"))
 	});
 	
 	ExtraParticlesToggle = new GuiButton(190, 12, "Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
@@ -332,7 +374,7 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	GuiScaleContainer.addChild([GuiScaleDecreaseVolume, GuiScaleVolumeSettings, GuiScaleIncreaseVolume]);
 	
-	SettingsContainer.addChild([DevCommentToggle,PsxDashJumpToggle, ChargeFlashToggle, ExtraParticlesToggle,DashOnLandingToggle,MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
+	SettingsContainer.addChild([DevCommentToggle, ScoreShowcaseToggle, ChargeFlashToggle, ExtraParticlesToggle, HitNumberToggle, PsxDashJumpToggle, DoubleTapDashToggle, DashOnLandingToggle, MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
 	#endregion
 	
     addChild(KeybindContainer);

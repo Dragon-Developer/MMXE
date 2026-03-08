@@ -63,6 +63,8 @@ function add_wall_jump(_entity){
 				self.physics.set_grav(new Vec2(0,0));
 				self.dash_jump = false;
 				self.current_hspd = self.states.walk.speed;	
+				self.states.dash_air.curr_dashes = 0;
+				double_jumps = self.states.jump.count - 1;
 				WORLD.play_sound("land");
 			},
 			leave: function() {	
@@ -86,8 +88,9 @@ function add_wall_jump(_entity){
 				self.dir = self.get_wall_jump_dir();
 				if (self.dir != 0) self.publish("animation_xscale", self.dir)
 				self.physics.set_speed(0, 0);
+				self.states.dash_air.curr_dashes = 0;
+				double_jumps = self.states.jump.count - 1;
 				self.physics.set_grav(new Vec2(0,0));
-				var _inst = self.get_instance();
 			},
 			leave: function() {	
 				self.physics.update_gravity();
@@ -248,4 +251,147 @@ function add_aimable_state(_entity){
 		.add_transition("t_transition", "aim", "fall", function() { return self.timer + self.states.aiming.return_delay < CURRENT_FRAME && !self.physics.is_on_floor(); })
 		.add_transition("t_transition", "aim", "idle", function() { return self.timer + self.states.aiming.return_delay < CURRENT_FRAME && self.physics.is_on_floor(); })
 	}
+}
+	
+	
+function add_air_dash(_entity, _armor){
+	with(_entity){
+		self.fsm.add("dash_air", {
+			enter: function() {//
+				WORLD.play_sound("dash");
+				self.states.dash_air.curr_dashes++;
+				var _inst = self.get_instance()
+				WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+				self.timer = CURRENT_FRAME + self.states.dash_air.interval;
+				self.current_hspd = self.states.dash.speed;	
+				self.dash_dir = self.dir;
+				if(self.dash_dir == 0)
+					self.dash_dir = self.hdir;
+				self.publish("animation_play", { name: self.states.dash_air.animation });
+				self.physics.set_speed(0, 0);
+				self.physics.set_grav(new Vec2(0,0));
+			},
+			step: function() {
+				self.set_hor_movement(self.dash_dir);
+			},
+			leave: function() {
+				//if (!self.dash_jump && self.physics.is_on_floor())
+					//self.current_hspd = self.states.walk.speed;	
+				self.physics.set_grav(new Vec2(0,0.25));
+			}
+		})
+		.add("dash_end_air", {
+			enter: function() {
+				self.timer = 0;
+				self.dash_dir = self.dir;
+				self.publish("animation_play", { name: self.states.dash_air.animation + "_end" });
+				self.dash_tapped = false;
+			},
+			step: function() {
+				self.set_hor_movement();
+			},
+		})
+		.add("land", {
+			enter: function() {
+				var _land = WORLD.play_sound(self.states.land.sound);
+				self.publish("animation_play", { name: "land" });
+				self.input.__useBuffer = true;
+				self.states.dash_air.curr_dashes = 0;
+			},
+			leave: function() {
+				self.dash_jump = false;	
+			}
+		})
+		.add_wildcard_transition("t_dash", "dash_air", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
+		.add_transition("t_dash_end", "dash_air", "dash_end_air", function() { return self.physics.is_on_floor(); })
+		.add_transition("t_transition", "dash_air", "dash_end_air", function() 
+			{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
+		.add_transition("t_animation_end", "dash_end_air", "fall")
+	}
+}
+	
+function add_slide(_entity, _armor){
+	with(_entity){
+		struct_set(states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
+		//log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
+		self.fsm.add("slide", {
+			enter: function() {//
+				self.states.slide.old_hitbox = self.get_instance().mask_index;
+				self.get_instance().mask_index = spr_slide_mask;
+				//self.get_instance().y -= 4;
+				log("pre")
+				WORLD.play_sound("dash");
+				var _inst = self.get_instance()
+				WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+				self.timer = CURRENT_FRAME + self.states.slide.interval;
+				self.current_hspd = self.states.slide.speed;	
+				self.dash_dir = self.dir;
+				if(self.dash_dir == 0)
+					self.dash_dir = self.hdir;
+				self.publish("animation_play", { name: self.states.slide.animation });
+			},
+			step: function() {
+				self.set_hor_movement(self.dash_dir);
+				if(CURRENT_FRAME mod 6 == 0){
+					var _inst = self.get_instance();
+					WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
+				}
+			},
+			leave: function() {
+				if(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 1, obj_square_16) && 
+					!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_square_16))
+						self.get_instance().y += 16
+					
+				self.physics.set_grav(new Vec2(0,0.25));
+				self.get_instance().mask_index = self.states.slide.old_hitbox;
+			}
+		})
+		.add("slide_end", {
+			enter: function() {
+				self.current_hspd = self.states.walk.speed;
+				self.timer = 0;
+				self.dash_dir = self.dir;
+				self.publish("animation_play", { name: self.states.slide.animation + "_end" });
+				self.dash_tapped = false;
+			},
+			step: function() {
+				self.set_hor_movement();
+			},
+			leave: function(){
+			}
+		})
+		.add_transition("t_transition", "slide", "slide_end", function() 
+		{ 
+			var _can_bail = true;
+			if(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 16, obj_square_16)){
+					
+				if(self.timer + 5 <= CURRENT_FRAME)
+					self.timer++;
+						
+				_can_bail = false;
+			}
+				
+			return _can_bail && 
+			(
+				(self.hdir != self.dash_dir &&
+					(self.hdir != 0 || self.dash_tapped)
+					) || self.timer <= CURRENT_FRAME || 
+						(!self.dash_tapped && 
+							!(self.input.get_input("down") || self.input.get_input("dash") && !self.fsm.state_exists("dash")
+							)
+						)
+					
+			); })
+		.add_transition("t_dash_end", "slide", "fall", function() { return !self.physics.is_on_floor(); })
+		.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(); })
+		self.fsm.add_wildcard_transition("t_slide", "slide", function() { //log("checking")
+			return self.physics.is_on_floor(); })
+		.add_transition("t_animation_end", "slide_end", "crouch")
+	}
+	_armor.step_armor_effects = function(_player) {
+		if ((_player.input.get_input_pressed_raw("jump") && _player.input.get_input("down") || _player.input.get_input("dash") && !_player.fsm.state_exists("dash")) && _player.physics.is_on_floor()) { 
+			_player.fsm.change("slide"); 
+			//log("yoom")
+		}
+	};
 }

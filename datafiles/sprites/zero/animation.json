@@ -1386,6 +1386,57 @@
               }
             ]
           }
+        },
+        {
+          "name": "double_jump",
+          "properties": {
+            "keyframes":[
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 11,
+                "frame": 5
+              },
+              {
+                "key": 13,
+                "frame": 6
+              },
+              {
+                "key": 15,
+                "frame": 7
+              },
+              {
+                "key": 17,
+                "frame": 8
+              },
+              {
+                "key": 19,
+                "frame": 0
+              },
+              {
+                "key": 30,
+                "frame": 0
+              }
+            ]
+          }
         }
 
 

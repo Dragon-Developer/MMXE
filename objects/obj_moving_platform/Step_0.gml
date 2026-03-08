@@ -13,8 +13,8 @@ if(self.total_moved >= self.move_rate){
 	
 } else {
 	if(actually_moves_self){
-	x += local_offset_list[offset_index][0] / move_rate;
-	y += local_offset_list[offset_index][1] / move_rate;
+		x += local_offset_list[offset_index][0] / move_rate;
+		y += local_offset_list[offset_index][1] / move_rate;
 	}
 	
 	total_moved++;

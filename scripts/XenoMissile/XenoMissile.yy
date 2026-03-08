@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"XenoMissile",
   "parent":{
-    "name":"Weapons",
-    "path":"folders/Scripts/Game/Player Specific/Characters/X/Weapons.yy",
+    "name":"other",
+    "path":"folders/Scripts/Game/Player Specific/Characters/X/Weapons/other.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

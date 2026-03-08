@@ -1,6 +1,7 @@
 function ZeroCharacter() : BaseCharacter() constructor{
 	self.image_folder = "zero";
 	self.weapons = [ZeroSaber];
+	self.default_score = 1200;//slightly higher because he's worse at bosses
 	
 	self.possible_armors = [
 		[noone],//heads
@@ -11,6 +12,7 @@ function ZeroCharacter() : BaseCharacter() constructor{
 	];
 	
 	self.states.intro.animation = "intro"
+	self.states.jump.double_jump_animation = "double_jump"
 	self.states.wall_jump.wall_stick = 0;
 	self.states.wall_jump.launch_lock = 6;
 	self.states.jump.count = 2;

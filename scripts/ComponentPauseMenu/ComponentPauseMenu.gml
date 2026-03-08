@@ -65,6 +65,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 							
 							with(obj_player){
 								components.get(ComponentPlayerMove).fsm.change("outro")
+								components.get(ComponentPlayerMove).left_manually = true;
 							}
 							with(obj_entity){
 								if(variable_struct_exists(components, "__components"))
@@ -92,7 +93,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		})
 		.add("tanks", {
 			step: function(){
-				//self.weapon_selection += self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up")
+				if(self.input.get_input_pressed_raw("shoot") || self.input.get_input_pressed_raw("jump")){
+				}
 			},
 			draw:{
 				
@@ -122,6 +124,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		//set up palette to match player palette
 		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette); i++){
 			palette.setBaseColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
+			palette.setPaletteColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
 		}
 		
 		//set current weapon to player's current weapon
@@ -177,6 +180,10 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("exit", true, 264, 160))
 		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("navigator", true, 264, 180))
 		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("settings", true, 264, 200))
+		
+		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette); i++){
+			palette.setBaseColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
+		}
 	}
 	
 	self.step = function(){
