@@ -28,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_pixel",
-    "path":"sprites/spr_pixel/spr_pixel.yy",
+    "name":"spr_slope_zone",
+    "path":"sprites/spr_slope_zone/spr_slope_zone.yy",
   },
   "spriteMaskId":null,
   "visible":false,

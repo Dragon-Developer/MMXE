@@ -46,8 +46,8 @@ function add_dash(_entity){
 		.add_transition("t_transition", "dash", "dash_end", function() 
 		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
 		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
-		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
-		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(self.ground_distance); })
+		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(self.ground_distance + 1); })
+		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(self.ground_distance + 1); })
 		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16); })
 	}
 }
@@ -168,6 +168,7 @@ function add_melee_state(_entity){
 				_melee_hitbox.hitbox = self.states.melee.hitbox_scale;
 				_melee_hitbox.hitbox_offset = self.states.melee.hitbox_offset;
 				_melee_hitbox.code.damage = self.states.melee.damage;
+				_melee_hitbox.code.boss_damage = self.states.melee.damage;
 				
 				self.states.melee.proj = _melee_hitbox;
 				
@@ -253,7 +254,6 @@ function add_aimable_state(_entity){
 	}
 }
 	
-	
 function add_air_dash(_entity, _armor){
 	with(_entity){
 		self.fsm.add("dash_air", {
@@ -312,7 +312,7 @@ function add_air_dash(_entity, _armor){
 	
 function add_slide(_entity, _armor){
 	with(_entity){
-		struct_set(states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
+		struct_set(global.availible_characters[global.character_index].states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
 		//log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
 		self.fsm.add("slide", {
 			enter: function() {//
@@ -382,16 +382,15 @@ function add_slide(_entity, _armor){
 						)
 					
 			); })
-		.add_transition("t_dash_end", "slide", "fall", function() { return !self.physics.is_on_floor(); })
-		.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(); })
-		self.fsm.add_wildcard_transition("t_slide", "slide", function() { //log("checking")
-			return self.physics.is_on_floor(); })
-		.add_transition("t_animation_end", "slide_end", "crouch")
+		
+		.add_transition("t_animation_end", "slide_end", "idle")
+		.add_transition("t_jump", "slide", "jump", function() { return self.can_jump_check(); })
+		.add_transition("t_transition", "slide", "slide_end", function() 
+		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
+		.add_transition("t_transition", ["land"], "slide", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
+		.add_transition("t_dash_end", "slide", "fall", function() { return !self.physics.is_on_floor(self.ground_distance + 1); })
+		.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(self.ground_distance + 1); })
+		.add_wildcard_transition("t_dash", "slide", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16); })
+	
 	}
-	_armor.step_armor_effects = function(_player) {
-		if ((_player.input.get_input_pressed_raw("jump") && _player.input.get_input("down") || _player.input.get_input("dash") && !_player.fsm.state_exists("dash")) && _player.physics.is_on_floor()) { 
-			_player.fsm.change("slide"); 
-			//log("yoom")
-		}
-	};
 }

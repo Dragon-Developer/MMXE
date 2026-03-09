@@ -101,7 +101,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				else
 					self.publish("animation_play", { name: "idle", reset: false, frame: 0 });
 				self.physics.set_speed(0, 0);
-			},
+				self.get_instance().y = ceil(self.get_instance().y)
+			},draw: function(){
+			}
 		})
 		.add("walk", {
 			enter: function() {
@@ -124,7 +126,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				var _inst = self.get_instance();
 				if(self.input.get_input("down") && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_collision_semisolid)){
 					self.fsm.change("fall");
-					_inst.y += 2;
+					_inst.y += 3;
 					return;
 				}
 				
@@ -160,6 +162,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					self.physics.set_vspd(0);
 				if(self.physics.get_vspd() < 0)
 					self.physics.set_vspd(0);
+			},
+			leave: function() {
+				self.get_instance().y = ceil(self.get_instance().y)
 			}
 		})
 		.add("land", {
@@ -167,9 +172,16 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				var _land = WORLD.play_sound(self.states.land.sound);
 				self.publish("animation_play", { name: "land" });
 				self.input.__useBuffer = true;
+				self.physics.move_down(3, obj_square_16, 0)
+				self.get_instance().y = ceil(self.get_instance().y)
 			},
 			leave: function() {
 				self.dash_jump = false;	
+				self.get_instance().y = ceil(self.get_instance().y)
+				
+				if(!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, self.physics.objects.block)){
+					self.get_instance().y++
+				}
 			}
 		})
 		.add("custom", {})
@@ -233,9 +245,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					if(!variable_struct_exists(global.player_data, "beaten_stages"))
 						variable_struct_set(global.player_data, "beaten_stages", {})
 						
-					if(!variable_struct_exists(global.player_data.beaten_stages, room_get_name(room)))
+					if(!variable_struct_exists(global.player_data.beaten_stages, room_get_name(room)) && !left_manually)
 						variable_struct_set(global.player_data.beaten_stages, room_get_name(room), global.stage_time)
-					else if(variable_struct_get(global.player_data.beaten_stages, room_get_name(room)) > global.stage_time || variable_struct_get(global.player_data.beaten_stages, room_get_name(room)) == 1){
+					else if(!left_manually && variable_struct_get(global.player_data.beaten_stages, room_get_name(room)) > global.stage_time || variable_struct_get(global.player_data.beaten_stages, room_get_name(room)) == 1){
 						variable_struct_set(global.player_data.beaten_stages, room_get_name(room), global.stage_time)
 					}
 						
@@ -401,8 +413,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { 
 			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder) || self.physics.is_on_floor()
 		})
-		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(); })
-		.add_transition("t_transition", ["idle", "walk", "crouch"], "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
+		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(self.ground_distance); })
+		.add_transition("t_transition", ["idle", "walk", "crouch", "land"], "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
 		.add_wildcard_transition("t_complete", "complete")
 	}
 	
@@ -558,6 +570,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			draw_string(string(self.vdir), self.get_instance().x, self.get_instance().y - 24)
 		draw_string(string(self.physics.get_vspd()), self.get_instance().x + 16, self.get_instance().y - 24)
 		draw_string(string(self.physics.get_hspd()), self.get_instance().x + 16, self.get_instance().y - 32)
+		draw_string(string(self.get_instance().x), self.get_instance().x - 64, self.get_instance().y - 24)
+		draw_string(string(self.get_instance().y), self.get_instance().x - 64, self.get_instance().y - 32)
+		draw_string(string(locked), self.get_instance().x + 64, self.get_instance().y - 48)
+		draw_string(string(input.__locked), self.get_instance().x + 64, self.get_instance().y - 64)
 	}
 	
 	self.draw_gui = function() {

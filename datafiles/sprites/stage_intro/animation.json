@@ -68,6 +68,17 @@
               }
             ]
           }
+        },
+        {
+          "name": "flame_mammoth",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
         }
         //eof
       ]

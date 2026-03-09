@@ -18,6 +18,9 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.last_collided_collision = noone;
 	self.collision_last_known_position = new Vec2(0,0);
 	
+	self.on_slope = false;
+	self.prev_slope = false;
+	
 	self.serializer = new NET_Serializer(self);
 	self.serializer
 		.addClone("velocity")
@@ -94,6 +97,17 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		
 		if(!self.does_collisions) return;
 		
+		var _inst = self.get_instance();
+		prev_slope = on_slope;
+		on_slope = get_place_meeting(_inst.x, _inst.y, obj_slope_zone)
+		
+		if(on_slope)
+			if(sign(on_slope.image_xscale) * (on_slope.x - _inst.x) > 0) on_slope = undefined
+		if(prev_slope && !on_slope){
+			log("left")
+			move_down(3, self.objects.block, 0)
+		}
+		
 		self.move_step(self.velocity.multiply(self.time_physics_multiplier));
 		self.velocity = self.velocity.add(self.grav.multiply(self.time_physics_multiplier));
 		
@@ -103,6 +117,15 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		
 		if (self.is_on_floor(2)) self.set_vspd(0);
     }
+	
+	get_slope_collision = function(_offset = 0, _slope = on_slope){
+		var _inst = self.get_instance();
+		var _ret = ((_inst.y - _slope.y) + (_inst.x - _slope.x) * (_slope.image_yscale / _slope.image_xscale)) + 16
+		
+		log(_ret)
+		
+		return (_ret) > _offset;
+	}
 	
 	draw_gui = function(){
 		var _inst = self.get_instance();
@@ -137,11 +160,12 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * @returns {bool} True if entity is on the floor.
 	 */
 	is_on_floor = function(_dist = 1) {
+		
 		var _inst = self.get_instance();
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
-		self.move_step(self.up.multiply(_dist * -1));
 		var _on_floor = 0;
+		self.move_step(self.up.multiply(_dist * -1));
 		if(_dist == 1){
 			_on_floor = (_previous_x == _inst.x && _previous_y == _inst.y)
 		} else {
@@ -149,6 +173,12 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		}
 		_inst.x = _previous_x;
 		_inst.y = _previous_y;
+		
+		if (on_slope){
+			if(get_slope_collision( -0.5 ))
+				_on_floor = true
+		}
+		
 		return _on_floor;
 	}
 	/**
@@ -173,6 +203,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _inst = self.get_instance();
 		var _previous_x = _inst.x;
 		var _previous_y = _inst.y;
+		if(on_slope) _inst.y -= 5;
 		self.move_step(self.right.multiply(_dist), _coll);
 		var _on_wall = new Vec2(_inst.x, _inst.y).subtract(new Vec2(_previous_x, _previous_y)).length() < abs(_dist);
 		_inst.x = _previous_x;
@@ -184,43 +215,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	 * @param {Vec2} v - Movement vector.
 	 */
 	move_step = function(_v,_block = self.objects.block) {
-		var _inst = self.get_instance();
-		var _orig_x = _inst.x;
-	    if (_v.x > 0){ 
-			var _res = self.move_right(_v.x, _block);
-			if(_res != noone){
-				_inst.x = _orig_x;
-				_inst.y -= 1;
-				_res = self.move_right(_v.x, _block);
-				if(_res != noone){
-					_inst.x = _orig_x;
-					_inst.y += 2;
-					self.move_right(_v.x, _block);
-					_inst.y -= 1;
-				}
-			}
-		} else if(_v.x < 0) { 
-			var _res = self.move_left(_v.x, _block);
-			if(_res != noone){
-				_inst.x = _orig_x;
-				_inst.y -= 1;
-				_res = self.move_left(_v.x, _block);
-				if(_res != noone){
-					_inst.x = _orig_x;
-					_inst.y += 2;
-					self.move_left(_v.x, _block);
-					_inst.y -= 1;
-				}
-			}
-		}
+	    if (_v.x >= 0) self.move_right(_v.x, _block);
+		if(_v.x < 0) self.move_left(_v.x, _block);
 		
-		
-		var _orig_y = _inst.y;
-		if(self.move_down(2) == noone || _v.y < 0){
-			_inst.y = _orig_y;
-		}
-		
-	    if (_v.y >= 0) self.move_down(_v.y, _block);
+	    if (_v.y >= 0) self.move_down(_v.y, _block, 0);
 	    if (_v.y < 0) self.move_up(_v.y, _block);
 	};
 	/**
@@ -235,8 +233,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		try{
 			_sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
 			_sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
-		} catch(_err){
-			
 		}
 		
 		return (abs(self.up.x) == 1) ? _sprite_height : _sprite_width;
@@ -252,8 +248,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		try{
 			_sprite_width = sprite_get_xoffset(self.get_instance().mask_index);
 			_sprite_height = sprite_get_yoffset(self.get_instance().mask_index);
-		} catch(_err){
-			
 		}
 		
 		return (abs(self.up.y) == 1) ? _sprite_height : _sprite_width;
@@ -268,8 +262,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		try{
 			_sprite_width = sprite_get_xoffset(_mask);
 			_sprite_height = sprite_get_height(_mask) - sprite_get_yoffset(_mask);
-		} catch(_err){
-			
 		}
 		
 		return (abs(self.up.y) == 1) ? _sprite_height : _sprite_width;
@@ -281,6 +273,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _inst = self.get_instance();
 		var _target_x = _inst.x + _vx;
 		var _origin = self.get_x_origin();
+		if(on_slope) _inst.y -= 5;
     
 		var _nearest_block = noone;
 		var _object = self.objects.block;
@@ -295,10 +288,17 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 				}
 			}
 		}
+		if(on_slope) _inst.y += 5;
 
 		_inst.x = (_nearest_block != noone) 
 			? _nearest_block.bbox_left - _origin
 			: _target_x;
+			
+		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-8, prev_slope) ){
+			if((_inst.x - prev_slope.x + 16) <= prev_slope.image_xscale * 16)
+				move_down(_vx * (prev_slope.image_yscale / prev_slope.image_xscale), self.objects.block, 2)
+				
+		}
 			
 		return _nearest_block;
 	};
@@ -309,6 +309,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _inst = self.get_instance();
 		var _target_x = _inst.x + _vx;
 		var _origin = self.get_x_origin();
+		if(on_slope) _inst.y -= 5;
 
 		var _nearest_block = noone;
 		var _object = _coll;
@@ -323,10 +324,16 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 				}
 			}
 		}
+		if(on_slope) _inst.y += 5;
 
 		_inst.x = (_nearest_block != noone) 
 			? _nearest_block.bbox_right + _origin + 1
 			: _target_x;
+			
+		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-8, prev_slope) ){
+			if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16 - 8)
+			move_down(_vx * (prev_slope.image_yscale / prev_slope.image_xscale), self.objects.block, 2)
+		}
 			
 		return _nearest_block;
 	};
@@ -345,9 +352,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	/**
 	 * Moves the entity downward, stopping at the closest collision.
 	 */
-	move_down = function(_vy, _coll = self.objects.block) {
+	move_down = function(_vy, _coll = self.objects.block, _offset = 0) {
 		var _inst = self.get_instance();
-		var _target_y = _inst.y + _vy;
+		_inst.y -= _offset;
+		var _target_y = _inst.y + _vy + _offset;
 		var _origin = self.get_y_origin_reversed();
 
 		var _nearest_block = noone;
@@ -365,8 +373,14 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		}
 
 		_inst.y = (_nearest_block != noone) 
-			? _nearest_block.bbox_top - _origin
+			? ceil(_nearest_block.bbox_top - _origin)
 			: _target_y;
+		
+		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-3, prev_slope) ){
+			//_inst.y -= (_inst.x - prev_slope.x) + (_inst.y - prev_slope.y) * (prev_slope.image_xscale / prev_slope.image_yscale) + 15
+			log("e")
+			_inst.y = prev_slope.y - clamp(((_inst.x - prev_slope.x) * (prev_slope.image_yscale / prev_slope.image_xscale)), 0, prev_slope.image_yscale * 16 - 2) - 15
+		}
 			
 		return _nearest_block;
 	};

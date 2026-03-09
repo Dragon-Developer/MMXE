@@ -2,6 +2,8 @@
 function BlackZero() : ArmorBase() constructor{
 	self.sprite_name = "/black"//this is more for filepath.
 	
+	self.buster_weapon = BlackSaber;
+	
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		
 		//self.add_slide(_player);

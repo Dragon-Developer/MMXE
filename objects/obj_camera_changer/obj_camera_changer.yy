@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_slope_zone",
-    "path":"sprites/spr_slope_zone/spr_slope_zone.yy",
+    "name":"spr_cam_zone",
+    "path":"sprites/spr_cam_zone/spr_cam_zone.yy",
   },
   "spriteMaskId":null,
   "visible":false,

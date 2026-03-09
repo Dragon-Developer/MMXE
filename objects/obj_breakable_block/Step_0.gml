@@ -1,6 +1,12 @@
 var _plr = instance_place(x, y + 8, obj_player)
 visible = true;
 
+var _nearest = instance_nearest(x,y,obj_player)
+if(_nearest)
+	if(_nearest.components.get(ComponentPlayerMove).fsm.get_current_state() == "wall_jump" && 
+		abs(_nearest.x - x) < 32 && abs(_nearest.y - y + 8) < 16)
+		_plr = _nearest;
+
 if(shaking){
 	with(obj_entity){
 		if(variable_struct_exists(components, "__components"))
@@ -13,7 +19,7 @@ if(shaking){
 }
 
 if(_plr){
-	if(global.armors[0][0] != 1) return;
+	if(global.armors[0][0] != 1 && global.character_ref[global.character_index] == XCharacter) return;
 	
 	with(obj_entity){
 		if(variable_struct_exists(components, "__components"))

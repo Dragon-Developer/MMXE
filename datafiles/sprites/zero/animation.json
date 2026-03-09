@@ -1365,6 +1365,405 @@
           }
         },
         {
+          "name": "atk_1_black",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 12,
+                "frame": 9
+              },
+              {
+                "key": 15,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_1_black_end",
+          "properties": {
+            "action": "atk_1_black",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 10
+              },
+              {
+                "key": 6,
+                "frame": 11
+              },
+              {
+                "key": 10,
+                "frame": 12
+              },
+              {
+                "key": 12,
+                "frame": 13
+              },
+              {
+                "key": 16,
+                "frame": 14
+              },
+              {
+                "key": 21,
+                "frame": 14
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_2_black",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 10,
+                "frame": 8
+              },
+              {
+                "key": 12,
+                "frame": 9
+              },
+              {
+                "key": 15,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_2_black_end",
+          "properties": {
+            "action": "atk_2_black",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 10
+              },
+              {
+                "key": 6,
+                "frame": 11
+              },
+              {
+                "key": 10,
+                "frame": 12
+              },
+              {
+                "key": 12,
+                "frame": 13
+              },
+              {
+                "key": 16,
+                "frame": 14
+              },
+              {
+                "key": 21,
+                "frame": 14
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_3_black",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 7,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 10,
+                "frame": 9
+              },
+              {
+                "key": 11,
+                "frame": 10
+              },
+              {
+                "key": 14,
+                "frame": 11
+              },
+              {
+                "key": 16,
+                "frame": 11
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_3_black_end",
+          "properties": {
+            "action": "atk_3_black",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 12
+              },
+              {
+                "key": 6,
+                "frame": 13
+              },
+              {
+                "key": 10,
+                "frame": 14
+              },
+              {
+                "key": 12,
+                "frame": 15
+              },
+              {
+                "key": 16,
+                "frame": 16
+              },
+              {
+                "key": 22,
+                "frame": 17
+              },
+              {
+                "key": 24,
+                "frame": 17
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_jump_black",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 5,
+                "frame": 4
+              },
+              {
+                "key": 7,
+                "frame": 5
+              },
+              {
+                "key": 10,
+                "frame": 6
+              },
+              {
+                "key": 12,
+                "frame": 7
+              },
+              {
+                "key": 13,
+                "frame": 7
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_jump_black_end",
+          "properties": {
+            "action": "atk_jump_black",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 8
+              },
+              {
+                "key": 1,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_dash_black",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 7,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 7
+              },
+              {
+                "key": 9,
+                "frame": 8
+              },
+              {
+                "key": 10,
+                "frame": 9
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_dash_black_end",
+          "properties": {
+            "action": "atk_dash_black",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 10
+              },
+              {
+                "key": 2,
+                "frame": 11
+              },
+              {
+                "key": 4,
+                "frame": 12
+              },
+              {
+                "key": 7,
+                "frame": 13
+              },
+              {
+                "key": 10,
+                "frame": 14
+              },
+              {
+                "key": 13,
+                "frame": 14
+              }
+            ]
+          }
+        },
+        {
           "name": "tp_in",
           "properties": {
             "action": "intro",

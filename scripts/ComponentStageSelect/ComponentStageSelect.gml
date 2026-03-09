@@ -16,7 +16,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 		{room: rm_training_stage, x: 19, y: 182, beat: false, icon: "undefined", music: "blast_hole", intro: "x", intro_text: "A more fleshed out%level to see what%you can do in%the engine"},//'beat' will be replaced with save data info
 		{room: rm_flame_stag, x: 67, y: 182, beat: false, icon: "undefined", music: "fame_stag", intro: "flame_stag", intro_text: "more of a joke%ngl"},
 		{room: rm_headquarters, x: 140, y: 189, beat: false, icon: undefined, music: "HQ", intro: "x", intro_text: "go home and be%a family man!"},
-		{room: rm_simple, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial", intro: "x", intro_text: "not much of a%stage here. just%needed to%fill out the%stage select"},
+		{room: rm_flame_mammoth, x: 213, y: 182, beat: false, icon: "undefined", music: "tutorial", intro: "flame_mammoth", intro_text: "not much of a%stage here. just%needed to%fill out the%stage select"},
 		{room: rm_desert_bus, x: 261, y: 182, beat: false, icon: "undefined", music: "WeaponGet", intro: "x", intro_text: "even more nothing!%just what the%doctor ordered!"}
 	];//not much for the moment
 	

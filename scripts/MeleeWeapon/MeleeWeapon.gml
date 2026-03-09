@@ -9,6 +9,7 @@ function MeleeData() constructor{
 	
 	self.shot_limit = 5;
 	self.damage = 1;
+	self.boss_damage = 1;
 	self.comboiness = 2;
 	self.animation = "atk1";
 	self.tag = ["enemy"];

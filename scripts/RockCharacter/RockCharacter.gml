@@ -6,7 +6,7 @@ function RockCharacter() : BaseCharacter() constructor{
 	self.default_score = 1500;//way the fuck higher because rock doesnt have armors
 	self.init = function(_player){
 		self.init_default(_player);
-		add_dash(_player);
+		add_slide(_player, self);
 		add_wall_jump(_player);
 	}
 	self.states.dash.animation = "slide"

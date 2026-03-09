@@ -87,10 +87,10 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 		#region states
 		if(activated){
-			curr_player.components.get(ComponentPlayerInput).__locked = true;
-			curr_player.components.get(ComponentPlayerMove).locked = true;
 			switch(state_segment){
 				case(1):
+				curr_player.components.get(ComponentPlayerInput).__locked = true;
+				curr_player.components.get(ComponentPlayerMove).locked = true;
 				//open the door
 				if(animation_end){//this will trigger when animation end is called
 					state_segment++;  
@@ -134,14 +134,14 @@ function ComponentDoor() : ComponentBase() constructor{
 					//self.publish("animation_play", { name: "stay_closed" });
 					state_segment = -1;
 					activated = false;
-					curr_player.components.get(ComponentPlayerMove).locked = false;
+						curr_player.components.get(ComponentPlayerMove).locked = false;
 					if(!spawn_boss) {
 						curr_player.components.get(ComponentPlayerInput).__locked = false;
 						return;
-					}
-					with(Boss_Spawn_Point){
-						spawn_boss();
-						log("boss spawned")
+					} else {
+						with(Boss_Spawn_Point){
+							spawn_boss();
+						}
 					}
 				} else {
 					prev_cam_x = curr_cam.x;
