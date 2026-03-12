@@ -42,6 +42,8 @@ If you want to learn the ins and outs of the engine, start there. It includes pa
 - tips and tricks for creating good levels.
 
 While the engine is currently about 99% feature complete, there is very little example content showing how these features work. 
+
+The wiki was written while the game was being created, but was stopped late in development. Please be aware some of the info is outdated.
 # Features
 
 This engine is meant to be as close as possible to the SNES megaman x games. While we stick to the SNES games as much as possible, we do add features beyond the snes games or beyond the main 8 games. 
@@ -57,19 +59,21 @@ Currently notable features include:
 - Seperate Characters
 - Projectile based special weapons
 - state based special weapons
+- Flamethrower based special weapons
 - weapon get screen
 - armor select
 - melee special weapons
 - stage select 
 - Bosses 
-- Pause menu 
+- Pause menu
+- Armor capsules
 
 In progress features:
 - Ladders (Animation is unfinished and the shoot animation has yet to be handled)
 - aimed special weapons (Code assumes you're axl. does not support moving while jumping, EG metal blade from mm2)
 
 Features not added:
-- Armor Capsules
+- All intended features have been added
 
 Feel free to suggest new features in the discord. If your suggestion is for content and not for a feature (Distinction can be found above), you will be told to make it yourself. 
 
@@ -77,7 +81,7 @@ Feel free to suggest new features in the discord. If your suggestion is for cont
 ### Programming:
 - Dark Shadow (Dragon-Developer): main programmer. (Animation system, Component system, Base player)
 - ApselTheBlue: creates test stages and helps with programming in v1 of the engine.
-- AxlForte: tried his best (Special weapon code, enemy and boss handler code, player armor and )
+- AxlForte: tried his best (Special weapon code, enemy and boss handler code, player armor system, projectile handler, character handler)
 - Gacel: general programming, X game data, SNES palette shader
 
 ### Music:
@@ -85,16 +89,16 @@ Feel free to suggest new features in the discord. If your suggestion is for cont
 - Mentlegen
 
 ### Spriting:
-- Kaegrin: Axl sprites, 4th armor, Vile, general spriting
-- Orion: X Armor Spriter, general spriting
+- Kaegrin: Axl sprites, 4th armor, Vile, Rock weapons, general spriting
+- Orion: X Armor Spriter, Rock Weapons, general spriting
 - SuperKuperX: Effect Spriter, general spriting
 - Vent: Secret Content
 - HombreRandom: Magma Dragoon sprites
 - Luminers: Stage tile designer, background artist
 - Burai: Axl sprites
-- Bwogglyswog: General spriting, Menus
+- Bwogglyswog: General spriting, Menus, mugshots
 - Fncilpeeps: General spriting
-- DocrobotZX: Rock, Protoman, Bass
+- DocrobotZX: Rock, Protoman, Bass, Rock weapons
 - Thomas Light (AKA: MaverickBlue on DeviantArt): Zero, Iris, Ultimate Armor X
 - yesilovenachos: Secret content, X sprites
 - Victor from Maverick Wars: General spriting.
