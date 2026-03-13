@@ -35,7 +35,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	
 	self.fsm = new SnowState("weapons", false)
 	
-	#region FSM
+	#region FSchange_weaponM
 	self.fsm.add("weapons", {
 			step: function(){
 				self.weapon_selection += self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up")
@@ -47,6 +47,35 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 					for(var i = 0; i < array_length(_wep); i++){
 						palette.setPaletteColorByHex(i, _wep[i]);
 					}
+				}
+				
+				
+				var _wep2 = {};
+				var _wep3 = {};
+				var _wep4 = {};
+				
+				with(_wep2){
+					script_execute(other.player.components.get(ComponentWeaponUse).weapon_list[other.player.components.get(ComponentWeaponUse).current_weapon[1]])
+				}
+				
+				with(_wep3){
+					script_execute(other.player.components.get(ComponentWeaponUse).weapon_list[other.player.components.get(ComponentWeaponUse).current_weapon[2]])
+				}
+				
+				with(_wep4){
+					script_execute(other.player.components.get(ComponentWeaponUse).weapon_list[other.player.components.get(ComponentWeaponUse).current_weapon[3]])
+				}
+				
+				if(self.input.get_input_pressed_raw("shoot2") && !_wep2.not_selectable){
+					player.components.get(ComponentWeaponUse).change_weapon(self.weapon_selection, 1)
+				}
+				
+				if(self.input.get_input_pressed_raw("shoot3") && !_wep3.not_selectable){
+					player.components.get(ComponentWeaponUse).change_weapon(self.weapon_selection, 2)
+				}
+				
+				if(self.input.get_input_pressed_raw("shoot4") && !_wep4.not_selectable){
+					player.components.get(ComponentWeaponUse).change_weapon(self.weapon_selection, 3)
 				}
 			},
 			draw:{
@@ -122,14 +151,17 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		}
 		
 		//set up palette to match player palette
-		for(var i = 0; i < array_length(global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette); i++){
-			palette.setBaseColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
+		for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+			palette.setBaseColorByHex(i, global.availible_characters[global.character_index].default_palette[i]);
 			palette.setPaletteColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
 		}
 		
 		//set current weapon to player's current weapon
 		self.weapon_selection = self.player.components.get(ComponentWeaponUse).current_weapon[0]
 		
+		for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+			palette.setBaseColorByHex(i, global.availible_characters[global.character_index].default_palette[i]);
+		}
 		var _weaspon = self.player.components.get(ComponentWeaponUse).change_weapon(self.weapon_selection);
 		for(var i = 0; i < array_length(_weaspon); i++){
 			palette.setPaletteColorByHex(i, _weaspon[i]);
@@ -239,13 +271,14 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		try{
 			//log(player)
 			var _damageable = player.components.get(ComponentDamageable);
+			var _weapons = player.components.get(ComponentWeaponUse);
 		} catch(_err){
 			log(_err)
 			return;
 		}
 		
 		//player healthbar
-		get(ComponentSpriteRenderer).draw_sprite("healthbar_icon_" + global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].image_folder, 0,241,86)
+		//get(ComponentSpriteRenderer).draw_sprite("healthbar_icon_" + global.availible_characters[global.character_index].image_folder, 0,241,86)
 		
 		for(var p = 0; p < _damageable.health_max; p++){
 			get(ComponentSpriteRenderer).draw_sprite("healthbar_tick", 0,241,84 - p * 2)
@@ -260,6 +293,11 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			//add the notch between the other weapons and the buster
 			if(i = 1)
 				i += 0.5;
+			
+			for(var a = 0; a < array_length(_weapons.current_weapon); a++){
+				if(_weapons.current_weapon[a] == floor(i))
+					draw_string(a, 32, 24 + i * 16)
+			}
 			
 			//draw the name of the weapon
 			draw_string(self.weapon_names[floor(i)], 72, 24 + i * 16, "pause menu")

@@ -136,6 +136,13 @@ function GuiSettings() : GuiContainer() constructor {
 	if(!variable_struct_exists(global.settings, "score_showcase")){
 		global.settings.score_showcase = false;
 	}
+	if(!variable_struct_exists(global.settings, "screen_scale_x")){
+		global.settings.screen_scale_x = 320;
+		global.settings.screen_scale_y = 240;
+	} else {
+		global.game_w = global.settings.screen_scale_x;
+		global.game_h = global.settings.screen_scale_y;
+	}
 	
 	PsxDashJumpToggle = new GuiButton(190, 12, "PSX Style Dash Jumping: " + (global.settings.PSX_Style_Dash_Jumping ? "true" : "false"))
 	PsxDashJumpToggle
@@ -157,6 +164,46 @@ function GuiSettings() : GuiContainer() constructor {
 	ChargeFlashToggle.addEventListener("click", function(_val){
 		global.settings.charge_flash = !global.settings.charge_flash;
 		ChargeFlashToggle.children[0].setText("Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
+	});
+	
+	var _text = "4:3"
+		
+		if(global.settings.screen_scale_x == 320){
+			_text = "16:9"
+		} else if(global.settings.screen_scale_x == 426){
+			_text = "SNES"
+		} else {
+			_text = "4:3"
+		}
+	
+	ScreenScaleToggle = new GuiButton(190, 12, "Screen Scale: " + _text)
+	ScreenScaleToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("end")
+		.children[0].setFontOffset(2)
+	ScreenScaleToggle.addEventListener("click", function(_val){
+		var _text = "4:3"
+		
+		if(global.settings.screen_scale_x == 320){
+			global.settings.screen_scale_x = 426;
+			global.settings.screen_scale_y = 240;
+			_text = "16:9"
+		} else if(global.settings.screen_scale_x == 426){
+			global.settings.screen_scale_x = 256;
+			global.settings.screen_scale_y = 240;
+			_text = "SNES"
+		} else {
+			global.settings.screen_scale_x = 320;
+			global.settings.screen_scale_y = 240;
+			_text = "4:3"
+		}
+		global.game_w = global.settings.screen_scale_x;
+		global.game_h = global.settings.screen_scale_y;
+		
+		global_prepare_application();
+		
+		ScreenScaleToggle.children[0].setText("Screen Scale: " + _text)
 	});
 	
 	HitNumberToggle = new GuiButton(190, 12, "Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
@@ -374,7 +421,7 @@ function GuiSettings() : GuiContainer() constructor {
 	
 	GuiScaleContainer.addChild([GuiScaleDecreaseVolume, GuiScaleVolumeSettings, GuiScaleIncreaseVolume]);
 	
-	SettingsContainer.addChild([DevCommentToggle, ScoreShowcaseToggle, ChargeFlashToggle, ExtraParticlesToggle, HitNumberToggle, PsxDashJumpToggle, DoubleTapDashToggle, DashOnLandingToggle, MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
+	SettingsContainer.addChild([DevCommentToggle, ScreenScaleToggle, ScoreShowcaseToggle, ChargeFlashToggle, ExtraParticlesToggle, HitNumberToggle, PsxDashJumpToggle, DoubleTapDashToggle, DashOnLandingToggle, MusicContainer, SoundEffectsContainer, GuiScaleContainer]);
 	#endregion
 	
     addChild(KeybindContainer);

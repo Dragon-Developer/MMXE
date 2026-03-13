@@ -1,0 +1,1 @@
+camera_spawn_offset = new Vec2(-GAME_W / 2,88);

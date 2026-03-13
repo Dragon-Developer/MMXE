@@ -96,9 +96,9 @@ function add_wall_jump(_entity){
 				self.physics.update_gravity();
 			},
 			step: function() {
-				if (self.timer + self.states.wall_jump.launch_lock < CURRENT_FRAME){
+				if (self.timer + self.states.wall_jump.launch_lock == CURRENT_FRAME){
 					self.input.__useBuffer = true;
-					self.publish("animation_play", { name: "jump", frame: 10, reset: false});
+					self.publish("animation_play", { name: "jump", frame: 15, reset: false});
 					self.set_hor_movement();
 				} else if (self.timer + 7 < CURRENT_FRAME) {
 					//please this looks so much better
@@ -228,7 +228,7 @@ function add_melee_state(_entity){
 
 function add_aimable_state(_entity){
 	with(_entity){
-		var _aiming = {return_delay: 20}
+		var _aiming = {return_delay: 35, shot_start_time: -1}
 		
 		variable_struct_set(self.states, "aiming", variable_clone(_aiming));
 		variable_struct_set(global.availible_characters[global.character_index].states, "aiming", variable_clone(_aiming));
@@ -236,6 +236,7 @@ function add_aimable_state(_entity){
 		self.fsm.add("aim", {
 			enter: function() {
 				self.timer = CURRENT_FRAME;
+				self.shot_start_time = CURRENT_FRAME;
 				self.physics.set_hspd(0);
 				self.physics.set_vspd(0);
 				self.physics.set_grav(new Vec2(0,0));
@@ -244,7 +245,8 @@ function add_aimable_state(_entity){
 				self.physics.set_grav(new Vec2(0,0.25));
 			},
 			step: function() {
-				
+				if(CURRENT_FRAME > shot_start_time + self.states.aiming.return_delay)
+					self.physics.set_grav(new Vec2(0,0.125));
 			}
 		})
 		.add_transition("t_transition", "aim", "walk", function(){ return self.hdir != 0 && self.timer + self.states.aiming.return_delay < CURRENT_FRAME;})
@@ -393,4 +395,171 @@ function add_slide(_entity, _armor){
 		.add_wildcard_transition("t_dash", "slide", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16); })
 	
 	}
+}
+	
+function add_mach_dash(_entity, _falcon_flight){
+	_entity.states.dash.speed *= 1.05;
+	with(_entity){
+		struct_set(states, "mach_dash", {
+			speed: 1298/256, //1298/256, 
+			interval: 25, //25,
+			max_dashes: 1, 
+			curr_dashes: 0, 
+			animation: "mach_dash", 
+			angle: new Vec2(0,1), 
+			only_cardinals: true, 
+			golden: false,
+			change_direction: false
+		})
+			
+		if(keyboard_check(ord("P"))){
+			self.states.mach_dash.only_cardinals = false;
+			self.states.mach_dash.interval *= 1.25;
+			self.states.mach_dash.speed *= 1.25;
+		}
+			
+		//falcon flight emulation
+		if(keyboard_check(ord("N"))){
+			self.states.mach_dash.change_direction = true;
+			self.states.mach_dash.golden = true;
+			self.states.mach_dash.only_cardinals = false;
+			self.states.mach_dash.speed *= 0.75;
+			self.states.mach_dash.interval *= 12.5;
+		}
+			
+		self.get_instance().components.get(ComponentWeaponUse).shoot_inputs = ["shoot", "shoot2", "shoot3"]
+			
+		self.fsm.add("mach_dash", {
+			enter: function() {//
+				WORLD.play_sound("dash");
+				if(!self.states.mach_dash.golden)
+					self.states.dash_air.curr_dashes++;
+				var _inst = self.get_instance()
+					
+				self.current_hspd = self.states.mach_dash.speed;	
+				self.physics.terminal_velocity = 1025;
+					
+				var _input_dir = new Vec2(self.hdir, self.vdir);
+				if (_input_dir.x == 0 && _input_dir.y == 0) _input_dir = new Vec2(self.dir, 0);
+					
+				if(_input_dir.x == 0 && _input_dir.y == -1){
+					self.publish("animation_play", { name: "mach_dash_up" });
+					WORLD.spawn_particle(new DashUpParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+				} else if(_input_dir.x == 0 && _input_dir.y == 1){
+					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_yscale", -1);
+					self.publish("animation_xscale", self.dir * -1);
+					WORLD.spawn_particle(new DashDownParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+				} else {
+					self.publish("animation_play", { name: "mach_dash" });
+					self.dir = _input_dir.x;
+						
+					if(self.states.mach_dash.only_cardinals)
+						var _input_dir = new Vec2(_input_dir.x, 0);
+						
+					self.publish("animation_xscale", self.dir)
+					self.publish("animation_angle", 45 * (_input_dir.y * _input_dir.x))
+					WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
+				}
+					
+				_input_dir = _input_dir.normalize();
+					
+				_input_dir.setY(_input_dir.y * 1.5)
+					
+				var _timer_mult = 1 / _input_dir.length();
+					
+				self.timer = CURRENT_FRAME + self.states.mach_dash.interval * _timer_mult;
+					
+				self.states.mach_dash.angle = _input_dir;
+						
+				self.physics.set_speed(self.states.mach_dash.angle.x * self.states.mach_dash.speed, self.states.mach_dash.angle.y * self.states.mach_dash.speed);
+			},
+			step: function() {
+				if(!self.states.mach_dash.change_direction) return;
+				var _input_dir = new Vec2(self.hdir, self.vdir);
+				_input_dir = _input_dir.normalize();
+					
+				if(_input_dir.x == 0 && _input_dir.y == -1){
+					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_yscale", 1);
+				} else if(_input_dir.x == 0 && _input_dir.y == 1){
+					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_yscale", -1);
+				} else {
+					self.publish("animation_play", { name: "mach_dash" });
+					if(_input_dir.x != 0)
+						self.dir = floor(_input_dir.x + 0.5);
+						
+					if(self.states.mach_dash.only_cardinals)
+						var _input_dir = new Vec2(_input_dir.x, 0);
+						
+					self.publish("animation_xscale", self.dir)
+					self.publish("animation_angle", 45 * (_input_dir.y * _input_dir.x))
+					self.publish("animation_yscale", 1);
+				}
+					
+				self.states.mach_dash.angle = _input_dir;
+					
+				self.physics.set_speed(self.states.mach_dash.angle.x * self.states.mach_dash.speed, self.states.mach_dash.angle.y * self.states.mach_dash.speed);
+					
+			},
+			leave: function() {
+				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.set_speed(0,0);
+				self.physics.terminal_velocity = self.physics.terminal_velocity_default;
+				self.publish("animation_yscale", 1);
+				self.publish("animation_angle", 0);
+				self.publish("animation_xscale", self.dir);
+			},
+			draw: function(){
+				var _anim = self.get_instance().components.find("animation");
+				var _pos = _anim.get_interpolated_position();
+				_pos[0] += self.physics.get_hspd() * (CURRENT_FRAME - self.timer) / 6;
+				_pos[1] += self.physics.get_vspd() * (CURRENT_FRAME - self.timer) / 6;
+				_anim.animation.set_color(c_blue);
+				_anim.draw_regular(_pos);
+				_anim.animation.set_color(c_white);
+			}
+		})
+		.add("dash_hold", {
+			enter: function() {
+				self.publish("animation_play", { name: "mach_hold" });
+				self.physics.set_speed(0,0);
+				self.physics.set_grav(new Vec2(0,0));
+			},
+			step: function() {
+				if(self.input.get_input_released("dash") || self.input.get_input_released("shoot4"))
+					self.fsm.change("mach_dash");
+				if(self.input.get_input_pressed_raw("left")){
+					self.publish("animation_xscale", -1);
+					self.dir = -1;
+				}
+				if(self.input.get_input_pressed_raw("right")){
+					self.publish("animation_xscale", 1);
+					self.dir = 1;
+				}
+			},
+			leave: function() {
+			},
+			draw: function(){
+				var _inst = self.get_instance();
+				var _dir = new Vec2(self.hdir, self.vdir);
+				if (_dir.x == 0 && _dir.y == 0) _dir = new Vec2(self.dir, 0);
+				_dir = _dir.normalize();
+					
+				draw_set_color(c_black)
+				draw_arrow(_inst.x + (_dir.x * 32), _inst.y + (_dir.y * 32), _inst.x + (_dir.x * 40), _inst.y + (_dir.y * 40), 15)
+				draw_set_color(c_white)
+				draw_arrow(_inst.x + (_dir.x * 30), _inst.y + (_dir.y * 30), _inst.x + (_dir.x * 38), _inst.y + (_dir.y * 38), 8)
+			}
+		})
+		.add_wildcard_transition("t_dash", "dash_hold", function() { return !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
+		.add_transition("t_transition", "mach_dash", "fall", function() 
+			{ return self.timer <= CURRENT_FRAME; })
+		.add_wildcard_transition("t_transition", "dash_hold", function() {return self.input.get_input_pressed_raw("shoot4") && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes;});
+	}
+}
+	
+function add_falcon_flight(_entity){
+	add_mach_dash(_entity, true)
 }

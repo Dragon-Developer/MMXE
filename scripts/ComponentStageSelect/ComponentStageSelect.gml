@@ -27,6 +27,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 	}
 	
 	self.init = function(){
+			global_prepare_application(MENU_W, MENU_H)
 		global.checkpoint_id = undefined;
 		self.stage_select_height = floor(array_length(self.stages) / self.stage_select_width);
 		

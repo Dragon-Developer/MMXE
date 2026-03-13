@@ -3,6 +3,7 @@
 function Entity() constructor {
 	self.__components = [];
 	self.__instance = other.id;
+	self.__timescale = 1;
 	self.__event_bus = new EventBus();
 	static save = function() {
 		array_foreach(self.__components, function(_component) {
@@ -115,5 +116,6 @@ function Entity() constructor {
 		array_foreach(self.__components, method({ scale: _scale }, function(_component) {
 			_component.timescale = scale;
 		}));
+		self.__timescale = _scale;
 	}
 }

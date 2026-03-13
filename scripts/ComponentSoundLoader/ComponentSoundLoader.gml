@@ -87,7 +87,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 		try {
 			var _id = self.load_sound(_filename, _source_folder);
 			if _id == -4 return;
-			var _snd = audio_play_sound(_id, 1, false, _volume, _start_frame / 60)
+			var _snd = audio_play_sound(_id, 1, false, _volume, _start_frame / 60, global.game.game_loop.game_speed)
 		
 			array_push(self.sounds, {
 				sound_id: _snd, 
@@ -144,6 +144,12 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 			audio_destroy_stream(self.sounds[g].sound_asset);
 		}
 		self.sounds = [];
+	}
+	
+	self.set_sound_pitch = function(_pitch){
+		for(var g = 0; g < array_length(self.sounds); g++){
+			audio_sound_pitch(self.sounds[g].sound_id, _pitch)
+		}
 	}
 	
 	self.draw = function(){

@@ -98,7 +98,7 @@ function xBuster14Data() : ProjectileData() constructor{
 	self.particle_radius = 4;
 	self.rotation_strength = 1.5;
 	
-	self.animation = "undefined";
+	self.animation = "poopy joe";
 	self.hitbox_scale = new Vec2(24,24);
 	self.hitbox_offset = new Vec2(8,0);
 	

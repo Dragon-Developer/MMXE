@@ -19,21 +19,37 @@
       }
     }
   },
-  "data": {
+"data": {
     "layers": [
-      "normal"
+      "normal",
+      "legs",
+      "helm",
+      "body",
+      "arms"
     ],
     "animations": {
       "speed": 1,
       "type_combinations": [
         [
-          ""
+          "",
+          "shoot",
+          "throw"
         ],
         [
-          ""
+          "",
+          "x1",
+          "x2",
+          //"x3",
+          "falcon",
+          "blade",
+          "hermes"
         ],
         [
-          ""
+          "",
+          "legs",
+          "body",
+          "arms",
+          "helm"
         ]
       ],
       "list": [
@@ -147,7 +163,38 @@
             ],
             "loop_begin": 10
           }
+        },
+        {
+          "name": "capsule",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
+                "frame": 1
+              },
+              {
+                "key": 16,
+                "frame": 2
+              },
+              {
+                "key": 24,
+                "frame": 3
+              },
+              {
+                "key": 32,
+                "frame": 0
+              }
+            ]
+          }
         }
+
+
+
+        //eof
       ]
     }
   }

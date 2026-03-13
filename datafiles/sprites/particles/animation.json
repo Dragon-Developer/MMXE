@@ -12,6 +12,18 @@
         "y": 42
       }
     },
+    "speed_gear": {
+      "origin": {
+        "x": 24,
+        "y": 28
+      }
+    },
+    "power_gear": {
+      "origin": {
+        "x": 24,
+        "y": 28
+      }
+    },
     "lime_die": {
       "origin": {
         "x": 24,
@@ -34,6 +46,12 @@
       "origin": {
         "x": 8,
         "y": 8
+      }
+    },
+    "capsule_nugget": {
+      "origin": {
+        "x": 2,
+        "y": 0
       }
     },
     "rock_break": {
@@ -77,6 +95,12 @@
         },
         {
           "name": "fire_wave_die",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "capsule_nugget",
           "properties": {
             "speed":1
           }
@@ -167,6 +191,18 @@
         },
         {
           "name": "rock_break",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "speed_gear",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "power_gear",
           "properties": {
             "speed":1
           }

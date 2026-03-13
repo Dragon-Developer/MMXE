@@ -126,7 +126,6 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		}
 		
 		if(_proj != noone){
-			log(_proj.code)
 			if(!array_contains(_enemy.hit_by_list, _proj)){
 				array_push(_enemy.hit_by_list, _proj)
 				_enemy.code.health -= _proj.code.damage;

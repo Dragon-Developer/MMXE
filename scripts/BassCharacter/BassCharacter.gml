@@ -1,7 +1,7 @@
 function BassCharacter() : BaseCharacter() constructor{
 	self.image_folder = "bass";
 	
-	self.weapons = [BassBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner]
+	self.weapons = [BassBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner, RollingShield]
 	
 	self.default_score = 1100;//double jump is real strong he aint getting any leeway
 	self.states.jump.count = 2;

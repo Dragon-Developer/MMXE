@@ -10,6 +10,8 @@ if(instance_exists(global.checkpoint_id)){
 }
 WORLD = ENTITIES.create_instance(obj_world);
 
+global_prepare_application();
+
 y -= GAME_H + 8
 on_spawn = function(_player) {
 	_player.x += current_spawn * 5

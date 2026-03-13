@@ -166,7 +166,11 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 				with(_armor){
 					script_execute(_code)
 				}
-			
+				
+				if(!_armor.selectable && _change != 0){
+					self.change_armor(_change, true);
+					return;
+				}
 				var _sprite_name = _armor.sprite_name;
 				_sprite_name = string_delete(_sprite_name, 0, 1);
 				_sprite_name = string_replace(_sprite_name, "/", "_");

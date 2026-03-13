@@ -89,32 +89,30 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentPhysics, _func);
 		ENTITIES.for_each_component(ComponentSoundLoader, _func);
 		ENTITIES.for_each_component(ComponentCharge, _func);
-		ENTITIES.for_each_component(ComponentAnimation, _func);
-		ENTITIES.for_each_component(ComponentAnimationShadered, _func);
 		ENTITIES.for_each_component(ComponentNPC, _func);
 		ENTITIES.for_each_component(ComponentInteractibleContact, _func);
 		ENTITIES.for_each_component(ComponentInteractibleInteract, _func);
 		ENTITIES.for_each_component(ComponentParallax, _func);
 		ENTITIES.for_each_component(ComponentCamera, _func);
 		ENTITIES.for_each_component(ComponentRide, _func);
+		ENTITIES.for_each_component(ComponentArmorCapsule, _func);
 		ENTITIES.for_each_component(ComponentDoor, _func);
+		ENTITIES.for_each_component(ComponentDoubleGearHandler, _func);
 		ENTITIES.for_each_component(ComponentDamageable, _func);
 		ENTITIES.for_each_component(ComponentDialouge, _func);
 		ENTITIES.for_each_component(ComponentHealthbar, _func);
 		ENTITIES.for_each_component(ComponentHealable, _func);
 		ENTITIES.for_each_component(ComponentParticles, _func);
+		ENTITIES.for_each_component(ComponentAnimation, _func);
+		ENTITIES.for_each_component(ComponentAnimationShadered, _func);
 		ENTITIES.for_each_component(ComponentCameraRecorder, _func);
 	}
 	self.step = function() {
 		
 		
 		try{
-			self.game_timer += self.game_speed;
-			while (self.game_timer >= 1) {
-				self.game_timer -= 1;
-				if(!frame_advancing || (frame_advancing && keyboard_check_pressed(ord("0"))))
-					self.entities_step();
-			}
+			if(!frame_advancing || (frame_advancing && keyboard_check_pressed(ord("0"))))
+				self.entities_step();
 		}catch(_exception) {
 			show_debug_message(_exception.message);
 			show_debug_message(_exception.longMessage);
@@ -153,7 +151,9 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
 		ENTITIES.for_each_component(ComponentBoss, _draw_gui);
 		ENTITIES.for_each_component(ComponentWeaponGet, _draw_gui);
+		ENTITIES.for_each_component(ComponentAnimation, _draw_gui);
 		ENTITIES.for_each_component(ComponentPauseMenu, _draw_gui);
+		ENTITIES.for_each_component(ComponentDoubleGearHandler, _draw_gui);
 		ENTITIES.for_each_component(ComponentProjectileManager, _draw_gui);
 		
 		if(self.debug){

@@ -44,8 +44,8 @@
   },
   "origin":4,
   "parent":{
-    "name":"Sprites",
-    "path":"folders/Sprites.yy",
+    "name":"Static Sprites",
+    "path":"folders/Sprites/Static Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

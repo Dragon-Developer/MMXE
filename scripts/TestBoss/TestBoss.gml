@@ -157,12 +157,12 @@ function TestBoss() : BaseBoss() constructor{
 					self.get(ComponentPhysics).set_grav(new Vec2(0,0));
 				}, 
 				step: function(){
-					get(ComponentDamageable).invuln_offset = CURRENT_FRAME + 1;
+					get(ComponentDamageable).invuln_offset = CURRENT_FRAME + 2;
 				},
 				leave: function(){
 					self.get(ComponentPhysics).set_hspd(0)
 					self.get(ComponentPhysics).set_grav(new Vec2(0,0.25));
-					get(ComponentDamageable).invuln_offset = -1;
+					//get(ComponentDamageable).invuln_offset = -1;
 				}
 			})
 			.add("desperate_jump",{

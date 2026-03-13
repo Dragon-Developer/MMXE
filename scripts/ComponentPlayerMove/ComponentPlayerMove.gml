@@ -169,7 +169,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("land", {
 			enter: function() {
-				var _land = WORLD.play_sound(self.states.land.sound);
+				WORLD.play_sound(self.states.land.sound);
 				self.publish("animation_play", { name: "land" });
 				self.input.__useBuffer = true;
 				self.physics.move_down(3, obj_square_16, 0)
@@ -179,8 +179,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.dash_jump = false;	
 				self.get_instance().y = ceil(self.get_instance().y)
 				
-				if(!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, self.physics.objects.block)){
-					self.get_instance().y++
+				if(!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, self.physics.objects.block) && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 8, self.physics.objects.block)){
+					try{
+						self.get_instance().y = self.physics.get_place_meeting(self.get_instance().x, self.get_instance().y + 8, self.physics.objects.block).y - 16;
+					}
 				}
 			}
 		})
@@ -200,6 +202,18 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			},
 			leave: function() {
 				self.publish("on_crouch", false);		
+			}
+		})
+		.add("pose", {
+			enter: function(){
+				self.publish("animation_play", { name: "complete" });
+				self.physics.set_speed(0, 0);
+				WORLD.play_sound("full_charge");
+				var _inst = self.get_instance();
+				WORLD.spawn_particle(new CompleteParticle(_inst.x, _inst.y - 24, self.dir))
+			},
+			leave: function(){
+				locked = false;
 			}
 		})
 		.add("complete", {
@@ -397,6 +411,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_animation_end", "intro", "intro_end")
 		.add_transition("t_animation_end", "intro_end", "idle")
 		.add_transition("t_animation_end", "complete", "outro")
+		.add_transition("t_animation_end", "pose", "idle")
 		.add_transition("t_animation_end", "outro", "leave")
 		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
 		.add_wildcard_transition("t_dialouge", "idle")
@@ -499,8 +514,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	
 	// Handles input and triggers attack transitions	
 	self.step = function() {
-		if(!(paused || locked))
-			self.default_step();
+		if (self.timescale != 1) self.timescale = 1
+		if(!(paused || locked))self.default_step();
 	}
 	
 	self.default_step = function(){

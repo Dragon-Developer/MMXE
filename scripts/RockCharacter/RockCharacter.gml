@@ -1,7 +1,7 @@
 function RockCharacter() : BaseCharacter() constructor{
 	self.image_folder = "megaman";
 	
-	self.weapons = [xBuster, BassBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner];
+	self.weapons = [xBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner, RollingShield, PowerGear, SpeedGear];
 	
 	self.default_score = 1500;//way the fuck higher because rock doesnt have armors
 	self.init = function(_player){

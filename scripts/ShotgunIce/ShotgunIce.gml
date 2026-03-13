@@ -123,8 +123,14 @@ function ShotgunIceSled() : ProjectileData() constructor{
 		
 		if(CURRENT_FRAME - start_time < 20 || !instance_exists(collision)) return;
 		
-		if(instance_position(_inst.x, _inst.y + 8, obj_square_16)){
-			while(instance_position(_inst.x, _inst.y + 7, obj_square_16) && instance_position(_inst.x, _inst.y + 8, obj_square_16) != collision){
+		if(instance_position(_inst.x - 2, _inst.y + 8, obj_square_16)){
+			while(instance_position(_inst.x - 2, _inst.y + 7, obj_square_16) && instance_position(_inst.x, _inst.y + 8, obj_square_16) != collision){
+				_inst.y--;
+				collision.y--;
+			}
+			vspd = 0;
+		} else if(instance_position(_inst.x + 22, _inst.y + 8, obj_square_16)){
+			while(instance_position(_inst.x + 22, _inst.y + 7, obj_square_16) && instance_position(_inst.x, _inst.y + 8, obj_square_16) != collision){
 				_inst.y--;
 				collision.y--;
 			}
@@ -151,8 +157,7 @@ function ShotgunIceSled() : ProjectileData() constructor{
 				}
 				
 				if(_move_player){
-					_move_player.x += _spd
-					_move_player.y += vspd
+					_move_player.components.get(ComponentPhysics).move_step(new Vec2(_spd, vspd));
 				}
 				
 			}

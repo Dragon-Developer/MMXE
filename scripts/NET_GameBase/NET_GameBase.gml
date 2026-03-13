@@ -5,6 +5,7 @@ function NET_GameBase() constructor {
 	self.inputs = new NET_InputManager();
 	self.game_loop = new GameLoop();
 	self.__current_frame = 0;
+	self.__frame_step = 0;
 	self.__started = false;
 	self.__local_players = [];
 	self.__events = {};
@@ -119,6 +120,7 @@ function NET_GameBase() constructor {
      */
 	static step = function() {
 		if (!self.__started || (self.game_loop.frame_advancing && !keyboard_check_pressed(ord("0")))) return;
+		
 		self.add_local_inputs(self.__current_frame);
 		self.run_current_frame();
 		self.__current_frame++;

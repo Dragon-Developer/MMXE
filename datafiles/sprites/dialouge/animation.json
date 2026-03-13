@@ -759,6 +759,53 @@
               }
             ]
           }
+        },
+        {
+          "name": "dr_light",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              },
+              {
+                "key": 120,
+                "frame": 2
+              },
+              {
+                "key": 125,
+                "frame": 1
+              },
+              {
+                "key": 130,
+                "frame": 2
+              },
+              {
+                "key": 135,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "dr_light_talking",
+          "properties": {
+            "action":"dr_light",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 20,
+                "frame": 3
+              }
+            ]
+          }
         }
         //eof
       ]

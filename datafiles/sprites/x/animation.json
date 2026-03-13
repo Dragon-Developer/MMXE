@@ -27,10 +27,15 @@
           "",
           "x1",
           "x2",
-          //"x3",
-         // "falcon",
+          "x3",
+          "x4",
+          "falcon",
+          "gaea",
           "blade",
-          "hermes"
+          "shadow",
+          "hermes",
+          "x7",
+          "icarus"
         ],
         [
           "",
@@ -744,18 +749,18 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 3,
-                "shot_offset_x": 18,
-                "shot_offset_y": -8
+                "frame": 0
               },
               {
-                "key": 3,
-                "frame": 4,
-                "shot_offset_x": 21,
-                "shot_offset_y": -9
+                "key": 2,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
               }
             ],
-            "loop_begin": 3
+            "loop_begin": 4
           }
         },
         {

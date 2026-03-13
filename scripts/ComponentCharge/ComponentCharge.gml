@@ -33,6 +33,7 @@ function ComponentCharge() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
+		if (self.timescale != 1) self.timescale = 1
 		self.charge();
 	}
 	

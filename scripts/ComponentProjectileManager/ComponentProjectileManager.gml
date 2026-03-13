@@ -29,6 +29,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		with(_shot.code){script_execute(_code)}
 		
 		_shot.code.dir = _dir;
+		_shot.code.shooter = _shooter;
 		_shot.dir = _dir;
 		_shot.code.tag = array_concat(_shot.code.tag, _tags);
 		_shot.code.create(_shot.position);
@@ -124,6 +125,10 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.draw = function(){
 		array_foreach(self.projectiles, function(_shot){
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y)
+			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir)
+			
+			if(variable_struct_exists(_shot.code, "draw"))
+				_shot.code.draw(_shot.position);
 			
 			if draw_enabled
 			draw_rectangle( (_shot.hitbox.x / 2) + _shot.position.x + _shot.hitbox_offset.x * _shot.dir,  
@@ -135,6 +140,10 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	}
 	
 	self.draw_gui = function(){
+		array_foreach(self.projectiles, function(_shot){
+			if(variable_struct_exists(_shot.code, "draw_gui"))
+				_shot.code.draw_gui(_shot.position);
+		})
 	}
 	
 	self.get_collision = function(_object){

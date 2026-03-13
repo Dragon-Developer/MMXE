@@ -96,6 +96,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     };
 	
 	self.step = function() {
+		if (self.timescale != 1) self.timescale = 1
+		
 		self.update_inputs();
 		//log(string(__locked ? "Locked" : "Free") + " " + string(__locked))
 	}

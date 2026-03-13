@@ -12,6 +12,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.last_game_frame = 0;
 	self.do_drawing = true;
 	self.draw_base_sprite = true;
+	self.draw_in_gui = false;
 	
 	self.serializer
 		.addVariable("armors")
@@ -171,7 +172,12 @@ function ComponentAnimation() : ComponentBase() constructor {
 	};
 
 	self.draw = function(){
-		if(!self.do_drawing) return;
+		if(!self.do_drawing || self.draw_in_gui) return;
+		self.draw_regular(self.get_interpolated_position());
+	}
+	
+	self.draw_gui = function(){
+		if(!self.do_drawing || !self.draw_in_gui) return;
 		self.draw_regular(self.get_interpolated_position());
 	}
 

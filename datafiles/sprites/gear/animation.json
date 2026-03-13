@@ -1,0 +1,142 @@
+{
+  "sprites": {
+    "default": {
+      "origin": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "data": {
+    "layers": [
+      "normal"
+    ],
+    "animations": {
+      "speed": 1,
+      "type_combinations": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "list": [
+        {
+          "name": "resting",
+          "properties": {
+            "action": "bar",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "overheat",
+          "properties": {
+            "action": "bar",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 10
+              },
+              {
+                "key": 2,
+                "frame": 11
+              },
+              {
+                "key": 4,
+                "frame": 12
+              },
+              {
+                "key": 6,
+                "frame": 11
+              }
+            ]
+          }
+        },
+        {
+          "name": "power_gearing",
+          "properties": {
+            "action": "bar",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              },
+              {
+                "key": 3,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "speed_gearing",
+          "properties": {
+            "action": "bar",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 4
+              },
+              {
+                "key": 1,
+                "frame": 5
+              },
+              {
+                "key": 2,
+                "frame": 6
+              },
+              {
+                "key": 3,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "double_gearing",
+          "properties": {
+            "action": "bar",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 7
+              },
+              {
+                "key": 2,
+                "frame": 8
+              },
+              {
+                "key": 4,
+                "frame": 9
+              },
+              {
+                "key": 6,
+                "frame": 7
+              }
+            ]
+          }
+        }
+
+
+        //eof
+      ]
+    }
+  }
+}

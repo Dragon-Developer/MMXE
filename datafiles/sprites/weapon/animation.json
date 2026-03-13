@@ -6,6 +6,30 @@
         "y": 8
       }
     },
+    "rolling_shield": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "gaea_shot": {
+      "origin": {
+        "x": 20,
+        "y": 10
+      }
+    },
+    "gaea_shot_charged": {
+      "origin": {
+        "x": 38,
+        "y": 32
+      }
+    },
+    "rolling_shield_charged": {
+      "origin": {
+        "x": 24,
+        "y": 24
+      }
+    },
     "electric_web": {
       "origin": {
         "x": 24,
@@ -612,6 +636,122 @@
               }
             ],
             "loop_begin": 13
+          }
+        },
+        {
+          "name": "rolling_shield",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 5
+              }
+            ],
+            "loop_begin": 4
+          }
+        },
+        {
+          "name": "rolling_shield_charged",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 2,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 6,
+                "frame": 3
+              },
+              {
+                "key": 8,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 5
+              },
+              {
+                "key": 12,
+                "frame": 6
+              },
+              {
+                "key": 14,
+                "frame": 7
+              },
+              {
+                "key": 16,
+                "frame": 8
+              },
+              {//loop point
+                "key": 18,
+                "frame": 9
+              },
+              {
+                "key": 19,
+                "frame": 14
+              },
+              {
+                "key": 20,
+                "frame": 10
+              },
+              {
+                "key": 21,
+                "frame": 14
+              },
+              {
+                "key": 22,
+                "frame": 11
+              },
+              {
+                "key": 23,
+                "frame": 14
+              },
+              {
+                "key": 24,
+                "frame": 12
+              },
+              {
+                "key": 25,
+                "frame": 14
+              },
+              {
+                "key": 26,
+                "frame": 13
+              }
+            ],
+            "loop_begin": 18
           }
         },
         {
@@ -1420,6 +1560,81 @@
           "properties": {
             "speed": 0.3334,
             "loop_begin": 1
+          }
+        },
+        {
+          "name": "gaea_shot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "gaea_shot_charged",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 7
+              },
+              {
+                "key": 3,
+                "frame": 6
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 12,
+                "frame": 2
+              },
+              {
+                "key": 15,
+                "frame": 0
+              },
+              {
+                "key": 18,
+                "frame": 1
+              },
+              {
+                "key": 21,
+                "frame": 2
+              },
+              {
+                "key": 24,
+                "frame": 3
+              },
+              {
+                "key": 27,
+                "frame": 0
+              }
+            ],
+            "loop_begin": 15
           }
         }
 

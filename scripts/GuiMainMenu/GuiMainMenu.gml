@@ -1,11 +1,11 @@
 function GuiMainMenu() : GuiContainer() constructor {
     setMaximize();
-    setWidth(GAME_W);
+    setWidth(MENU_W);
     setFlexDirection("column");
     setUsingCache(true);
     setBorderSprite(-1);
     
-    mainContainer = new GuiContainer();
+    mainContainer = new GuiContainer(MENU_W, MENU_H)
     mainContainer
         .setAutoWidth(true)
         .setAutoHeight(true)

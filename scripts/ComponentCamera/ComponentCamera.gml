@@ -1,6 +1,8 @@
 function ComponentCamera() : ComponentBase() constructor {
     self.x = 0;
     self.y = 0;
+	self.sx = 0;
+	self.sy = 0;
     self.width = GAME_W;
     self.height = GAME_H;
 	self.angle = 0;
@@ -58,6 +60,10 @@ function ComponentCamera() : ComponentBase() constructor {
 	}
 
     self.step = function() {
+		var _inst = self.get_instance();
+		
+		_inst.x += sx;
+		_inst.y += sy;
 		
 		if(self.timescale != 1){
 			//self.movement_limit_x *= self.timescale;
@@ -111,10 +117,11 @@ function ComponentCamera() : ComponentBase() constructor {
 		}
 		
 		self.update_pos(self.target.x,self.target.y);
-		var _inst = self.get_instance();
 		
-		_inst.x = self.x;
-		_inst.y = self.y;
+		_inst.x = floor(self.x);
+		_inst.y = floor(self.y);
+		sx = self.x mod 1;
+		sy = self.y mod 1;
     }
 	
 	self.update_pos = function(_x, _y) {

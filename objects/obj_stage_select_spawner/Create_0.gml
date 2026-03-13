@@ -4,6 +4,9 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentPlayerInput).set_player_index(0);
 }
 
+global_prepare_application();
+
+
 global.stage_Data = {
 		room: rm_explose_horneck, 
 		x: 19, 

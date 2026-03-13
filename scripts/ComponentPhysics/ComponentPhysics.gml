@@ -295,7 +295,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			: _target_x;
 			
 		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-8, prev_slope) ){
-			if((_inst.x - prev_slope.x + 16) <= prev_slope.image_xscale * 16)
+			if((_inst.x - prev_slope.x + 16) <= prev_slope.image_xscale * 16 - 9)
 				move_down(_vx * (prev_slope.image_yscale / prev_slope.image_xscale), self.objects.block, 2)
 				
 		}
@@ -331,7 +331,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			: _target_x;
 			
 		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-8, prev_slope) ){
-			if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16 - 8)
+			if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16 - 9)
 			move_down(_vx * (prev_slope.image_yscale / prev_slope.image_xscale), self.objects.block, 2)
 		}
 			
@@ -376,10 +376,13 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			? ceil(_nearest_block.bbox_top - _origin)
 			: _target_y;
 		
-		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-3, prev_slope) ){
+		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(0, prev_slope) ){
 			//_inst.y -= (_inst.x - prev_slope.x) + (_inst.y - prev_slope.y) * (prev_slope.image_xscale / prev_slope.image_yscale) + 15
 			log("e")
-			_inst.y = prev_slope.y - clamp(((_inst.x - prev_slope.x) * (prev_slope.image_yscale / prev_slope.image_xscale)), 0, prev_slope.image_yscale * 16 - 2) - 15
+			//if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16 - 9 * sign(prev_slope.image_xscale))
+			_inst.y = prev_slope.y - clamp(((_inst.x - prev_slope.x) * (prev_slope.image_yscale / prev_slope.image_xscale)), 0, prev_slope.image_yscale * 16 - 2) - 14
+		
+			if(_inst.y + 16 >= prev_slope.y) _inst.y = prev_slope.y - 16
 		}
 			
 		return _nearest_block;

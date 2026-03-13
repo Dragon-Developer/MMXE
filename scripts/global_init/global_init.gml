@@ -1,3 +1,8 @@
+global.game_w = 426//320
+global.game_h = 240
+global.menu_w = 320
+global.menu_h = 240
+
 function global_init() {
 	ENTITIES = new EntityManager();
 	//soundmanager?
@@ -8,7 +13,6 @@ function global_init() {
 		LOG = new LogFile();	
 	//}
 	
-	//log(working_directory);
 	
 	global.local_player_index = 0;
 	global.server = undefined;
@@ -68,9 +72,15 @@ function global_init() {
 	
 }
 
-function global_prepare_application(){	
+function global_prepare_application(_width = GAME_W, _height = GAME_H){		
+
+	
 	window_set_fullscreen(global.settings.Game_Scale > floor(display_get_height() / GAME_H))
 	
 	window_set_size(global.settings.Game_Scale*GAME_W, global.settings.Game_Scale*GAME_H);
 	window_center();
+	view_wport[view_current] = _width * global.settings.Game_Scale
+	view_hport[view_current] = _height * global.settings.Game_Scale
+	camera_set_view_size(view_camera[view_current], _width, _height);
+surface_resize(application_surface, _width, _height);
 }

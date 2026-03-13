@@ -5,6 +5,12 @@
         "x": 28,
         "y": 32
       }
+    },
+    "capsule": {
+      "origin": {
+        "x": 24,
+        "y": 76
+      }
     }
   },
   "data": {
@@ -133,7 +139,19 @@
               }
             ]
           }
+        },
+        {
+          "name": "capsule",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
         }
+        //eof
       ]
     }
   }

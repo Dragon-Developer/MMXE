@@ -2,15 +2,21 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function ComponentArmorHandler() : ComponentBase() constructor{
 	self.armor_parts = variable_clone(global.armors[global.character_index],256);
+	self.armor_structs = variable_clone(global.armors[global.character_index],256);
+	self.reset = false;
 	
-	self.apply_full_armor_set = function(_armors){
+	self.apply_full_armor_set = function(_armors, _state = "init", _reset = true){
 		
-		get(ComponentPlayerMove).reset_state_variables();
+		get(ComponentPlayerMove).reset_state_variables(_state);
 		self.armor_parts = [[],[],["/normal"]];
+		self.reset = _reset;
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm, _index){
 			try{
-				_arm = global.availible_characters[global.character_index].possible_armors[clamp(_index, 0, array_length( global.availible_characters[global.character_index].possible_armors))][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
+				if(reset){
+					_arm = global.availible_characters[global.character_index].possible_armors[clamp(_index, 0, array_length( global.availible_characters[global.character_index].possible_armors))][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
+					self.armor_structs[_index] = _arm;
+				}
 			} catch(_exception){
 				log(_exception)
 				return;
@@ -36,10 +42,20 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 				if(_can_cont){
 					//add the currently listed armor to the armor array
 					array_push(self.armor_parts[0], _arm)
-					var _directory_name = "/armor" + string(_arm.sprite_name)
-					_directory_name = string_replace(_directory_name, "_", "/")
-					//log(_directory_name);
-					find("animation").add_subdirectories([_directory_name]);
+					if(variable_struct_exists(_arm, "sprite_name")){
+						var _armor_name = string(_arm.sprite_name);
+						_armor_name = string_delete(_armor_name, 0, 1);
+						_armor_name = string_replace(_armor_name, "/", "_");
+						var _directory_name = "/armor" + string(_arm.sprite_name)
+						_directory_name = string_replace(_directory_name, "_", "/")
+						find("animation").add_subdirectories([_directory_name]);
+						array_push(self.armor_parts[2], _directory_name);
+						array_push(self.armor_parts[1], _armor_name);
+					} else {
+						array_push(self.armor_parts[2], "");
+						array_push(self.armor_parts[1], "");	
+					}
+					
 					if(variable_struct_exists(_arm, "apply_armor_effects"))
 						_arm.apply_armor_effects(get(ComponentPlayerMove));
 					
@@ -51,14 +67,8 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 						get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
 					}
 				
-					array_push(self.armor_parts[2], _directory_name);
-				
-					//add the armor to the _armor_set array so we can set the armors in the animator
-					var _armor_name = string(_arm.sprite_name);
-					_armor_name = string_delete(_armor_name, 0, 1);
-					_armor_name = string_replace(_armor_name, "/", "_");
-					//log(_armor_name)
-					array_push(self.armor_parts[1], _armor_name);
+					
+					
 				}
 			}
 			
