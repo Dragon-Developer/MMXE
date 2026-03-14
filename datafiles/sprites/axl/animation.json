@@ -881,18 +881,26 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               },
               {
                 "key": 3,
-                "frame": 1,
-                "shot_offset_x": 32,
-                "shot_offset_y": 4
+                "frame": 1
+              },
+              {
+                "key": 9,
+                "frame": 2
+              },
+              {
+                "key": 12,
+                "frame": 3
+              },
+              {
+                "key": 15,
+                "frame": 4
               }
             ],
-            "loop_begin": 3
+            "loop_begin": 15
           }
         },
         {
@@ -921,36 +929,44 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               },
               {
                 "key": 3,
-                "frame": 1,
-                "shot_offset_x": 32,
-                "shot_offset_y": 4
+                "frame": 3
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 1
               }
             ],
-            "loop_begin": 3
+            "loop_begin": 7
           }
         },
         {
-          "name": "dash_end_air",
+          "name": "dash_air_end",
           "properties": {
             "action": "dash_air",
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               },
               {
                 "key": 8,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               }
             ]
           }

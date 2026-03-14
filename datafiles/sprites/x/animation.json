@@ -548,7 +548,7 @@
                 "frame": 12
               },
               {
-                "key": 56,
+                "key": 46,
                 "frame": 13
               }
             ]
@@ -567,7 +567,7 @@
                 "frame": 1
               },
               {
-                "key": 29,
+                "key": 39,
                 "frame": 1
               }
             ]
@@ -1216,6 +1216,37 @@
               }
             ],
             "loop_begin": 5
+          }
+        },
+        {
+          "name": "genki_dama",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 15,
+                "frame": 1
+              },
+              {
+                "key": 20,
+                "frame": 2
+              },
+              {
+                "key": 45,
+                "frame": 3
+              },
+              {
+                "key": 49,
+                "frame": 4
+              },
+              {
+                "key": 120,
+                "frame": 4
+              }
+            ]
           }
         }
 

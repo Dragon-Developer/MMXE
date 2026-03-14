@@ -62,7 +62,7 @@ function PowerGearHandler() : ProjectileData() constructor{
 		
 		
 		with(obj_double_gear_handler){
-			components.get(ComponentDoubleGearHandler).stop_gear("power")
+			components.get(ComponentDoubleGearHandler).stop_gear("power", "speed")
 		}
 	}
 }

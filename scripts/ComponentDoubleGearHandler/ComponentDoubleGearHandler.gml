@@ -62,8 +62,8 @@ function ComponentDoubleGearHandler() : ComponentBase() constructor{
 			gear = "double"
 	}
 	
-	self.stop_gear = function(_gear){
-		if(gear != _gear) return;
+	self.stop_gear = function(_gear, _disable_gear){
+		if(gear == _disable_gear) return;
 			
 		gear = "none";
 				

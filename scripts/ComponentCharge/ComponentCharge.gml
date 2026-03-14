@@ -6,7 +6,7 @@ function ComponentCharge() : ComponentBase() constructor{
 	self.shoot_input = "shoot";
 	self.shoot_inputs = ["shoot"]
 	self.charging = false;
-	self.charge_time = [30, 105, 180, 255]
+	self.charge_time = [30, 105, 180, 255, 330, 405, 480]
 	//theres no way to get hex from other sources and everything expects hex
 	self.charge_colors = global.availible_characters[global.character_index].charge_colors;
 	self.charge_limit = 2;//2
@@ -26,7 +26,7 @@ function ComponentCharge() : ComponentBase() constructor{
 	
 	self.on_register = function(){
 		self.subscribe("child_connected_to_parent", function() {
-			node_parent = self.get_instance().components.get(ComponentNode).node_parent;
+			//node_parent = self.get_instance().components.get(ComponentNode).node_parent;
 			input = node_parent.get_instance().components.get(ComponentPlayerInput);
 			node_parent.get_instance().components.get(ComponentWeaponUse).charge = self;
 		});
@@ -88,8 +88,8 @@ function ComponentCharge() : ComponentBase() constructor{
 			self.publish("animation_visible", true);
 		}
 		
-		self.get_instance().x = self.get_instance().components.get(ComponentNode).node_parent.get_instance().x;
-		self.get_instance().y = self.get_instance().components.get(ComponentNode).node_parent.get_instance().y;
+		self.get_instance().x = node_parent.get_instance().x;
+		self.get_instance().y = node_parent.get_instance().y;
 
 		//log(find("animation").animation.__visible)
 		//log(find("animation").animation.__animation)

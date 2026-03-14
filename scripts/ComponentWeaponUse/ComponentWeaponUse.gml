@@ -10,7 +10,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.weapon_max_ammo = 28;
 	self.weapon_use_rate = 1;
 	self.weapon_palette = undefined;
-	self.charge = noone;
+	self.charge = undefined;
 	self.charge_time = [30, 105, 180, 255];
 	self.shoot_inputs = ["shoot","shoot2","shoot3", "shoot4"]
 	self.bar = noone;
@@ -34,7 +34,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	"teleport_in",
 	"intro_end",
 	"slide",
-	"slide_end"
+	"slide_end",
+	"genki_dama"
 	]
 	
 	self.projectile_count = 0;
@@ -48,8 +49,16 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		.addVariable("weapon_list")
 		
 	self.init = function(){
+		self.charge = get(ComponentNode).add_child(ENTITIES.create_instance(obj_charge));
+		self.charge = self.charge.components.get(ComponentCharge)
+		self.charge.node_parent = get(ComponentNode);
+		self.charge.input = get(ComponentPlayerInput);
+		self.charge.publish("character_set", "player");
+		self.charge.current_weapon = xBuster;
 		self.current_weapon = [0,0,array_length(global.availible_characters[global.character_index].weapons) - 1,array_length(global.availible_characters[global.character_index].weapons) - 2];
-		self.weapon_palette = global.player_character[0].default_palette;
+		if(self.current_weapon[2] < 0)self.current_weapon[2] = 0;
+		if(self.current_weapon[3] < 0)self.current_weapon[3] = 0;
+ 		self.weapon_palette = global.player_character[0].default_palette;
 	}
 		
 	self.on_register = function(){
@@ -178,6 +187,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		if(self.charge != noone){
 			self.charge.shoot_inputs = self.shoot_inputs;
 			self.charge.current_weapon = self.weapon_list[self.current_weapon[0]];
+			self.charge_time = self.charge.charge_time;
 		}
 		
 		var _anim_name = self.find("animation").animation.__animation;
@@ -382,7 +392,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//set the time for shooting to end
 		self.shot_end_time = CURRENT_FRAME + 15;
 		
-		self.create_shot(_shot_data, _shot_index, _input, _id, _anim_name);
+		var _shot = self.create_shot(_shot_data, _shot_index, _input, _id, _anim_name);
 		
 		//_aim_dir = new Vec2(_aim_dir.x * _dir, _aim_dir.y);
 		_shot.code.angle = _aim_dir;
@@ -486,9 +496,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		//log(string(_tags) + " are the projectile tagts")
 		
-		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags);
+		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags, self.damage_increase);
 		
 		self.projectile_count++;
+		
+		return _shot;
 	}
 
 	self.draw = function(){

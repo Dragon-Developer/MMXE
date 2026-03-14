@@ -14,7 +14,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		get_instance().depth = -16000;
 	}
 	
-	self.create_projectile = function(_x, _y,_dir,  _code, _shooter, _tags){
+	self.create_projectile = function(_x, _y,_dir,  _code, _shooter, _tags, _damage_offset = 0){
 		var _shot = {};
 		
 		//log(string(_tags) + " are the tags i got")
@@ -32,6 +32,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		_shot.code.shooter = _shooter;
 		_shot.dir = _dir;
 		_shot.code.tag = array_concat(_shot.code.tag, _tags);
+		_shot.code.damage += _damage_offset;
 		_shot.code.create(_shot.position);
 		
 		if(!variable_struct_exists(_shot.code, "boss_damage")) _shot.code.boss_damage = _shot.code.damage;

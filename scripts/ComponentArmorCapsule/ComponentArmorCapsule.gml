@@ -4,6 +4,8 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 	self.gave_armor = false;
 	self.armor = ArmorDoubleGear;
 	self.player = undefined;
+	self.set_global_armor = true;
+	self.global_armor_index = 0;
 	self.give_time = undefined;
 	self.already_equipped_armor = [];
 	self.armor_slot_to_replace = 4;
@@ -29,8 +31,11 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 			if(self.give_time > CURRENT_FRAME)
 				WORLD.spawn_particle(new ArmorCapsuleParticle(_inst.x + irandom_range(-16,16), _inst.y - 48, 1))
 			else if self.give_time == CURRENT_FRAME {
-				player.components.get(ComponentArmorHandler).apply_full_armor_set(already_equipped_armor, "pose", false)
+				player.components.get(ComponentArmorHandler).apply_full_armor_set(already_equipped_armor, "pose")
 				player.components.get(ComponentPlayerMove).fsm.change("pose")
+				
+				if set_global_armor
+					global.armors[global.character_index][armor_slot_to_replace] = global_armor_index;
 			}
 		} else if(has_opened){
 			if(!instance_exists(obj_dialouge) && !giving_armor){
@@ -48,6 +53,7 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 				give_time = CURRENT_FRAME + 300;
 				
 				already_equipped_armor = player.components.get(ComponentArmorHandler).armor_structs;
+				log(already_equipped_armor);
 				already_equipped_armor[armor_slot_to_replace] = armor;
 				
 			}

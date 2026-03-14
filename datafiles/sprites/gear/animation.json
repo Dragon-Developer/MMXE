@@ -44,19 +44,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 10
+                "frame": 1
               },
               {
                 "key": 2,
-                "frame": 11
+                "frame": 2
               },
               {
                 "key": 4,
-                "frame": 12
-              },
-              {
-                "key": 6,
-                "frame": 11
+                "frame": 1
               }
             ]
           }
@@ -68,19 +64,23 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 1
-              },
-              {
-                "key": 3,
-                "frame": 2
-              },
-              {
-                "key": 6,
                 "frame": 3
               },
               {
+                "key": 3,
+                "frame": 4
+              },
+              {
+                "key": 6,
+                "frame": 5
+              },
+              {
                 "key": 9,
-                "frame": 1
+                "frame": 6
+              },
+              {
+                "key": 12,
+                "frame": 3
               }
             ]
           }
@@ -92,19 +92,23 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 4
-              },
-              {
-                "key": 1,
-                "frame": 5
-              },
-              {
-                "key": 2,
-                "frame": 6
+                "frame": 7
               },
               {
                 "key": 3,
-                "frame": 4
+                "frame": 8
+              },
+              {
+                "key": 6,
+                "frame": 9
+              },
+              {
+                "key": 9,
+                "frame": 10
+              },
+              {
+                "key": 12,
+                "frame": 7
               }
             ]
           }
@@ -116,19 +120,23 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 7
+                "frame": 23
               },
               {
-                "key": 2,
-                "frame": 8
-              },
-              {
-                "key": 4,
-                "frame": 9
+                "key": 3,
+                "frame": 24
               },
               {
                 "key": 6,
-                "frame": 7
+                "frame": 25
+              },
+              {
+                "key": 9,
+                "frame": 26
+              },
+              {
+                "key": 12,
+                "frame": 23
               }
             ]
           }

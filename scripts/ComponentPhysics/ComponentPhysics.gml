@@ -1,6 +1,7 @@
 function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	self.velocity = new Vec2(0, 0); 
     self.grav = new Vec2(0, 0.25);
+    self.grav_default = new Vec2(0, 0.25);
 	self.up = new Vec2(0, -1);
 	self.right = new Vec2(1, 0);
 	self.grav_magnitude = self.grav.length(); 

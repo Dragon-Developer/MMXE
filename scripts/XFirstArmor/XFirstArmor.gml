@@ -22,8 +22,8 @@ function XFirstArmorArms() : ArmsPartBase() constructor{
 	self.armor_name = "First Armor Arms"
 	self.description = "Gives the user the drill buster."
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
-		_player.get(ComponentWeaponUse).weapon_use_rate = 0.75;
-		_player.get(ComponentWeaponUse).charge.charge_limit += self.extra_charge_limit;
+		_player.get(ComponentWeaponUse).weapon_use_rate = 0.9;
+		_player.get(ComponentWeaponUse).charge.charge_limit = self.extra_charge_limit;
 	}
 }
 

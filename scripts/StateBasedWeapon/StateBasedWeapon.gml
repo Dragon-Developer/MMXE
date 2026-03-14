@@ -7,6 +7,7 @@ function StateBasedWeapon() : Weapon() constructor{
 function StateBasedData() constructor{
 	self.term = "State Based"
 	self.state_name = "undefined"
+	self.shot_limit = 3;
 	
 	self.init = function(_fsm){
 		log("No defined states! This weapon may produce crashes!")

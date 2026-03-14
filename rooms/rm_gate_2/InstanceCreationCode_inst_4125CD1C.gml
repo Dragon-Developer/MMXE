@@ -1,1 +1,2 @@
-contact_damage = 128;
+contact_damage = 256;
+ignores_defense = true

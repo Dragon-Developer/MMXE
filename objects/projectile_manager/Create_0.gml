@@ -6,8 +6,8 @@ components.add([
 
 components.init();
 
-self.create_projectile = function(_x, _y,_dir, _code, _shooter, _tags){
-	return components.get(ComponentProjectileManager).create_projectile(_x, _y,_dir, _code, _shooter, _tags);
+self.create_projectile = function(_x, _y,_dir, _code, _shooter, _tags, _damage_offset = 0){
+	return components.get(ComponentProjectileManager).create_projectile(_x, _y,_dir, _code, _shooter, _tags, _damage_offset);
 }
 
 self.create_melee_hitbox = function(_x, _y,_dir, _code, _shooter, _tags, _animation, _length){

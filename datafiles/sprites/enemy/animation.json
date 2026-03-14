@@ -11,6 +11,24 @@
         "x": 19,
         "y": 28
       }
+    },
+    "junk_reploid": {
+      "origin": {
+        "x": 19,
+        "y": 28
+      }
+    },
+    "junk_snake": {
+      "origin": {
+        "x": 19,
+        "y": 28
+      }
+    },
+    "little_shit": {
+      "origin": {
+        "x": 24,
+        "y": 32
+      }
     }
   },
   "data": {
@@ -88,7 +106,94 @@
               }
             ]
           }
+        },
+        {
+          "name": "junk_snake",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "junk_reploid",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "junk_reploid_fall",
+          "properties": {
+            "action": "junk_reploid",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "junk_reploid_shoot",
+          "properties": {
+            "action": "junk_reploid",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              },
+              {
+                "key": 3,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
+          "name": "little_shit",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "little_shit_throw",
+          "properties": {
+            "action": "little_shit",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "little_shit_laugh",
+          "properties": {
+            "action": "little_shit",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
         }
+
+        //eof
       ]
     }
   }

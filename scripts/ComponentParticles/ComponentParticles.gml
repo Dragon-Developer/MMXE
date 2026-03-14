@@ -56,7 +56,7 @@ function ComponentParticles() : ComponentBase() constructor{
 				if(variable_struct_exists(_particle, "acceleration")){
 					_particle.velocity.x += _particle.acceleration.x;
 					_particle.velocity.y += _particle.acceleration.y;
-					log("nyoom")
+					//log("nyoom")
 				}
 			}
 		});

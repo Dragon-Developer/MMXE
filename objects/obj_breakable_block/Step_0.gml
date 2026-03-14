@@ -19,7 +19,7 @@ if(shaking){
 }
 
 if(_plr){
-	if(global.armors[0][0] != 1 && global.character_ref[global.character_index] == XCharacter) return;
+	if((global.armors[0][0] != 1 && global.armors[0][0] != 3) && global.character_ref[global.character_index] == XCharacter) return;
 	
 	with(obj_entity){
 		if(variable_struct_exists(components, "__components"))

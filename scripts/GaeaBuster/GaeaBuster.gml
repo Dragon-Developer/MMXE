@@ -1,7 +1,7 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function GaeaBuster() : ProjectileWeapon() constructor{
-	self.data = [GaeaBusterUnchargedData,GaeaBusterChargedData,GaeaBusterChargedData,GaeaBusterChargedData,HermesBuster5Data];
+	self.data = [GaeaBusterUnchargedData,GaeaBusterUnchargedData,GaeaBusterChargedData,GaeaBusterChargedData,HermesBuster5Data];
 	self.charge_limit = 5;
 	self.cost = 0;
 	self.title = "X BUSTER";
@@ -14,6 +14,12 @@ function GaeaBusterUnchargedData() : xBuster11Data() constructor{
 	self.animation = "gaea_shot";
 	self.damage = 2;
 	self.comboiness = 5;
+	
+	self.create = function(_inst){
+		WORLD.play_sound("shoot_3");
+		WORLD.spawn_particle(new BassLimeFireParticle(_inst.x, _inst.y, 1))
+	}
+	
 	self.step = function(_inst){
 		
 		var _hspd = 0;
@@ -30,4 +36,9 @@ function GaeaBusterChargedData() : xBuster13Data() constructor{
 	self.animation = "gaea_shot_charged";
 	self.damage = 4;
 	self.comboiness = -1;
+	
+	self.create = function(_inst){
+		WORLD.play_sound("shoot_3");
+		WORLD.spawn_particle(new BassFullShotFireParticle(_inst.x, _inst.y, 1))
+	}
 }

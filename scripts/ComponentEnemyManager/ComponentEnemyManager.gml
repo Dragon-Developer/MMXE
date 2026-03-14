@@ -127,7 +127,9 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		
 		if(_proj != noone){
 			if(!array_contains(_enemy.hit_by_list, _proj)){
-				array_push(_enemy.hit_by_list, _proj)
+				if(!_proj.code.super_piercing)
+					array_push(_enemy.hit_by_list, _proj)
+					
 				_enemy.code.health -= _proj.code.damage;
 				_enemy.flash = 1;
 				WORLD.play_sound("small_damage");
@@ -137,7 +139,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 					_num.number = _proj.code.damage
 				}
 				
-				if(!_proj.code.piercing || _enemy.code.health > 0)
+				if((!_proj.code.piercing || _enemy.code.health > 0) && !_proj.code.super_piercing)
 					PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			}
 		}

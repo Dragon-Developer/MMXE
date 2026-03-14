@@ -12,6 +12,18 @@
         "y": 16
       }
     },
+    "fuckass_pickaxe": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "genki_dama": {
+      "origin": {
+        "x": 40,
+        "y": 32
+      }
+    },
     "gaea_shot": {
       "origin": {
         "x": 20,
@@ -1541,6 +1553,19 @@
           "name": "shotgun_ice",
           "properties": {
             "speed": 1
+          }
+        },
+        {
+          "name": "fuckass_pickaxe",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
+          "name": "genki_dama",
+          "properties": {
+            "speed": 0.5,
+            "loop_begin": 4
           }
         },
         {

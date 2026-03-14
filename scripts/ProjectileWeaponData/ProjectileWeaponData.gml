@@ -19,6 +19,7 @@ function ProjectileData() constructor{
 	self.hitbox_offset = new Vec2(0,0);
 	self.tag = ["enemy"]
 	self.piercing = false;
+	self.super_piercing = false;
 	self.general_init = function(_comp){
 		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
 	}

@@ -1,3 +1,7 @@
+if (global.character_ref[global.character_index] == XCharacter) instance_destroy(self); 
+
+self.set_global_armor = false;
+
 dialouge = [
 	{   sentence : "Step into this capsule, " + string(PLAYER_SPRITE) + ". I have prepared something from the past to help you protect the future.",
 		mugshot_left : "dr_light",

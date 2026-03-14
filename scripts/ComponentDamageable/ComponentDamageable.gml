@@ -16,6 +16,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.plays_sound_on_hit = false;//so players dont activate the on hit 
 	self.bright = false;
 	self.take_boss_damage = true;
+	self.immune_to_damage_zones = false;
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
@@ -163,10 +164,14 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(_proj.code.damage > 0){
 			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
-			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+			if(variable_struct_exists(_proj.code, "invuln_rate"))
+				self.invuln_offset = CURRENT_FRAME + (self.invuln_time * _proj.code.invuln_rate);
+			else
+				self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.combo_count = _proj.code.comboiness;
-			array_push(self.hit_by_list, _proj)
-			if(!_proj.code.piercing || self.health > 0)
+			if(!_proj.code.super_piercing)
+				array_push(self.hit_by_list, _proj)
+			if((!_proj.code.piercing || self.health > 0) && !_proj.code.super_piercing)
 				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			if(take_boss_damage)
 				return _proj.code.boss_damage;
@@ -230,6 +235,9 @@ function ComponentDamageable() : ComponentBase() constructor{
 	}
 	
 	self.check_for_damage_zones = function(){
+		
+		
+		
 		var _zone = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,obj_hurt_zone);
 		
 		if(!variable_instance_exists(_zone, "contact_damage")){ 
@@ -239,6 +247,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 		if(self.invuln_offset > CURRENT_FRAME){
 			return 0;
 		}
+		
+		if(immune_to_damage_zones && !_zone.ignores_defense) return 0;
 		
 		//if(_zone.contact_damage > 0){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;

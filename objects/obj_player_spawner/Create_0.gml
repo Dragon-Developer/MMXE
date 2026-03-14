@@ -19,15 +19,15 @@ on_spawn = function(_player) {
 	[ "/normal"]);
 	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
 	_player.components.publish("character_set", global.availible_characters[global.character_index].image_folder);
-	_player.components.publish("armor_set",
-	[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
+	//_player.components.publish("armor_set",
+	//[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
 	
 	//create the charge graphics and make it a child
 	
-	var _charge = ENTITIES.create_instance(obj_charge);
-	_charge.depth = _player.depth - 1;
-	_charge.components.publish("character_set", "player");
-	_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
+	//var _charge = ENTITIES.create_instance(obj_charge);
+	//_charge.depth = _player.depth - 1;
+	//_charge.components.publish("character_set", "player");
+	//_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
 	_player.components.get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
 	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.availible_characters[global.character_index].weapon_ammo_max;
 	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.availible_characters[global.character_index].weapons), global.availible_characters[global.character_index].weapon_ammo_max);
@@ -44,7 +44,7 @@ on_spawn = function(_player) {
 	
 	//log(global.armors[current_spawn])
 	
-	_player.components.get(ComponentArmorHandler).apply_full_armor_set(global.armors[current_spawn]);
+	//_player.components.get(ComponentArmorHandler).apply_full_armor_set(global.armors[current_spawn]);
 	
 	if (current_spawn == global.local_player_index) {
 		//log("this is the player!")

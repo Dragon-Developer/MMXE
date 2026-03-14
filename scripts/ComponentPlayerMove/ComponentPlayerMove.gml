@@ -73,7 +73,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			},
 			leave: function(){
 				self.physics.set_speed(0, 0);
-				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.set_grav(self.physics.grav_default);
 				self.physics.does_collisions = true;
 				
 				with(obj_camera){
