@@ -8,7 +8,7 @@ function ZeroCharacter() : BaseCharacter() constructor{
 		[noone],//arms
 		[noone],//bodies
 		[noone],//boots
-		[noone, BlackZero]//full set
+		[noone, BlackZero, X1Zero]//full set
 	];
 	
 	self.states.intro.animation = "intro"

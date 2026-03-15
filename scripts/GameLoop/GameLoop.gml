@@ -190,17 +190,14 @@ function GameLoop() constructor {
 			draw_surface(application_surface, 0, 0)
 		shader_reset();
 		
-		if(keyboard_check_pressed(ord("5")))
+		if(keyboard_check_pressed(ord("1")))
 			self.blur = !self.blur;
 			
 		if(keyboard_check_pressed(ord("9")))
 			self.frame_advancing = !self.frame_advancing;
 			
-		if(keyboard_check_pressed(ord("4")))
-			global.debug = !global.debug
-			
 		if(keyboard_check_pressed(ord("2")))
-			global.stacktracking = !global.stacktracking;
+			global.debug = !global.debug
 		
 		
 		

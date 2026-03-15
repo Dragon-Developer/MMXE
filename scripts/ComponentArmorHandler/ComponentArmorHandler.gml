@@ -26,6 +26,7 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 		self.armor_parts = [[],[],["/normal"]];
 		//self.armor_structs = _armors;
 		self.reset = _reset;
+		self.set_bonuses = [];
 		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm, _index){
 			try{
@@ -38,7 +39,7 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 				return;
 			}
 			
-			if(typeof(_arm) != "struct" && _arm != noone){
+			if(typeof(_arm) == "ref"){
 				var _temp = {};
 			
 				with(_temp){
@@ -59,13 +60,19 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 				if(_can_cont){
 					//add the currently listed armor to the armor array
 					array_push(self.armor_parts[0], _arm)
-					array_push(self.set_bonuses, _arm.set_bonus)
+					if(_arm.set_bonus != undefined){
+						array_push(self.set_bonuses, _arm.set_bonus)
+						log(_arm.set_bonus)
+					} else 
+						log(array_length(self.set_bonuses))
 					
-					if(array_length(self.set_bonuses) > 3)
+					if(array_length(self.set_bonuses) > 3){
 						if(self.set_bonuses[0] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[3]){
-							script_execute(self.set_bonuses[0], get(ComponentPlayerMove))
-							log("SET BONUS RAAGHHHHHHHHHHHHHHHHHHHHHHHH")
+							if script_exists(self.set_bonuses[0])
+								script_execute(self.set_bonuses[0], get(ComponentPlayerMove))
+							//log("SET BONUS RAAGHHHHHHHHHHHHHHHHHHHHHHHH")
 						}
+					}
 					
 					if(variable_struct_exists(_arm, "sprite_name")){
 						var _armor_name = string(_arm.sprite_name);

@@ -5,7 +5,7 @@ function xBuster() : ProjectileWeapon() constructor{
 	self.title = "X BUSTER";
 	self.description = "Mega Buster Mark 17"
 	
-	self.weapon_palette = global.player_character[global.local_player_index].default_palette;
+	self.weapon_palette = global.availible_characters[global.character_index].default_palette;
 }
 
 function xBuster11Data() : ProjectileData() constructor{
@@ -95,8 +95,8 @@ function xBuster14Data() : ProjectileData() constructor{
 	self.damage = 4;
 	self.shot_limit = 3;
 	self.piercing = true;
-	self.particle_radius = 4;
-	self.rotation_strength = 1.5;
+	self.particle_radius = 0;
+	self.rotation_strength = 1.75;
 	
 	self.animation = "poopy joe";
 	self.hitbox_scale = new Vec2(24,24);
@@ -106,6 +106,11 @@ function xBuster14Data() : ProjectileData() constructor{
 		WORLD.play_sound("shoot_3");
 		
 		PROJECTILES.create_projectile(_inst.x, _inst.y, dir, DrillBusterShieldData, PROJECTILES, tag);
+		if(!global.settings.extra_particles){
+			PROJECTILES.create_projectile(_inst.x, _inst.y, dir, xBuster14ClassicData, PROJECTILES, tag);
+			PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(self)
+		}
+		
 	}
 	self.destroy = function(_inst){
 		WORLD.spawn_particle(new FullShotDieParticle(_inst.x - 8 * dir, _inst.y, self.dir))
@@ -123,6 +128,41 @@ function xBuster14Data() : ProjectileData() constructor{
 			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin((CURRENT_FRAME / 5) + (pi / 3) * 4) * particle_radius,self.dir, sin((CURRENT_FRAME / 5) + (pi / 3) * 4) * rotation_strength))
 			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin((CURRENT_FRAME / 5) + (pi / 3) * 2) * particle_radius,self.dir, sin((CURRENT_FRAME / 5) + (pi / 3) * 2) * rotation_strength))
 			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin(CURRENT_FRAME / 5) * particle_radius,                 self.dir, sin(CURRENT_FRAME / 5) * rotation_strength))
+		}
+	}
+}
+
+
+function xBuster14ClassicData() : ProjectileData() constructor{
+	self.comboiness = 15;
+	self.damage = 4;
+	self.shot_limit = 3;
+	self.piercing = true;
+	self.particle_radius = -12;
+	self.rotation_strength = 3;
+	
+	self.animation = "poopy joe";
+	self.hitbox_scale = new Vec2(24,24);
+	self.hitbox_offset = new Vec2(8,0);
+	
+	self.create = function(_inst){
+	}
+	self.destroy = function(_inst){
+		WORLD.spawn_particle(new FullShotDieParticle(_inst.x - 8 * dir, _inst.y, self.dir))
+	}
+	self.step = function(_inst){
+		
+		var _hspd = 0;
+		if (is_in_range(CURRENT_FRAME, self.init_time, self.init_time + 2)) _hspd = 4;
+		else if (is_in_range(CURRENT_FRAME, self.init_time + 2, self.init_time + 5)) _hspd = 5;
+		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6;
+		else if (CURRENT_FRAME - self.init_time > 24) _hspd = 6.25;
+		_inst.x += _hspd * self.dir;
+		
+		if(CURRENT_FRAME mod 2 == 0){
+			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin((CURRENT_FRAME / 5) + (pi / 3) * 4) * particle_radius,self.dir, 0))
+			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin((CURRENT_FRAME / 5) + (pi / 3) * 2) * particle_radius,self.dir, 0))
+			WORLD.spawn_particle(new DrillBusterParticle(_inst.x + 6 * self.dir, _inst.y + sin(CURRENT_FRAME / 5) * particle_radius,                 self.dir, 0))
 		}
 	}
 }

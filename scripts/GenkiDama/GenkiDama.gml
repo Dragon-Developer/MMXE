@@ -23,7 +23,7 @@ function GenkiDamaHandler() : StateBasedData() constructor{
 				},
 				step: function() {
 					if(timer == CURRENT_FRAME){
-						PROJECTILES.create_projectile(get_instance().x, get_instance().y, 1, GenkiDamaData, get(ComponentWeaponUse), ["enemy"], 0);
+						PROJECTILES.create_projectile(get_instance().x, get_instance().y, dir, GenkiDamaData, get(ComponentWeaponUse), ["enemy"], 0);
 					}
 				},
 				leave: function() {

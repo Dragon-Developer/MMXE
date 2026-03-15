@@ -23,7 +23,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	self.scripted_inputs = [{left: false, right: false, dash: true, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: true, switchLeft: false, switchRight: false}];
 	self.scripted_input_index = 0;
 	
-	self.write_inputs = global.settings.write_inputs;
+	self.write_inputs = false;
+	self.saved_inputs = [];
 		
 	self.init = function(){
 		self.buffer_reset();
@@ -54,8 +55,30 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	}
 	
 	self.input_check_scripted = function(_verb){
-		self.scripted_input_index++;
-		return self.scripted_inputs[self.scripted_input_index - 1][$ _verb];
+		var _set = {};
+		try{
+			_set = self.scripted_inputs[self.scripted_input_index];
+		} catch(_err){
+			log(_err)
+			_set = {
+				left: false,
+				right: false,
+				jump: true,
+				dash: true,
+				shoot: false,
+				shoot2: false,
+				shoot3: false,
+				shoot4: false,
+				switchLeft: false,
+				switchRight: false,
+				pause: false,
+				up: false,
+				down: false
+		    }
+		}
+		
+		
+		return _set[$ _verb]
 	}
 	
 	self.input_check_regular = function(_verb){
@@ -75,6 +98,9 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 
     self.update_inputs = function() {
 		if(is_undefined(self.__input)) return;
+		
+		if using_scripted_inputs
+			self.scripted_input_index++;
 		
 	    array_foreach(self.verbs, function(_verb) {
 	        var _isPressed = self.__input_check(_verb);
@@ -98,10 +124,97 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	self.step = function() {
 		if (self.timescale != 1) self.timescale = 1
 		
+		if(write_inputs){
+			array_push(saved_inputs, __input);
+			log(__input)
+		}
+			
+		if(keyboard_check_pressed(ord("5"))){
+			write_inputs = !write_inputs
+			var _x = 8
+			var _y = 8
+	
+			if(instance_exists(obj_camera)){
+			_x = instance_nearest(0,0,obj_camera).x + 8
+			_y = instance_nearest(0,0,obj_camera).y + 8
+			}
+	
+			var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+			_response.number = write_inputs ? "RECORDING" : "STOPPED RECORDING"
+		}
+		
+		if(keyboard_check_pressed(ord("6"))){
+			JSON.save({
+				input: saved_inputs
+			},game_save_id + "recorded inputs.json", true)
+			write_inputs = false;
+			
+			var _x = 8
+			var _y = 8
+	
+			if(instance_exists(obj_camera)){
+				_x = instance_nearest(0,0,obj_camera).x + 8
+				_y = instance_nearest(0,0,obj_camera).y + 8
+			}
+	
+			var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+			_response.number = "RECORDED INPUTS SAVED"
+		}
+		
+		
+		if(keyboard_check_pressed(ord("7"))){
+			if(using_scripted_inputs){
+				using_scripted_inputs = false;
+				scripted_input_index = 0;
+			} else {
+				scripted_inputs = JSON.load(game_save_id + "recorded inputs.json").input
+				log(is_array(scripted_inputs))
+				log(array_length(scripted_inputs))
+				//log(scripted_inputs)
+				using_scripted_inputs = true;
+				var _x = 8
+				var _y = 8
+	
+				if(instance_exists(obj_camera)){
+				_x = instance_nearest(0,0,obj_camera).x + 8
+				_y = instance_nearest(0,0,obj_camera).y + 8
+				}
+	
+				var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+				_response.number = "PLAYING BACK INPUT"
+			}
+		}
+		
 		self.update_inputs();
 		//log(string(__locked ? "Locked" : "Free") + " " + string(__locked))
 	}
 
+	self.draw = function(){
+		if(write_inputs){
+			var _str = string(__input);
+			_str = string_replace_all(_str, " ", "")
+			_str = string_replace_all(_str, ":", "")
+			//_str = string_replace_all(_str, ",", "")
+			_str = string_replace_all(_str, "[", "")
+			_str = string_replace_all(_str, "]", "")
+			
+			draw_string_condensed(_str, get_instance().x - GAME_W / 2 + 2, get_instance().y + 32)
+			draw_string(array_length(saved_inputs), get_instance().x, get_instance().y + 22)
+		}
+			
+		if(using_scripted_inputs){
+			var _str = string(scripted_inputs[scripted_input_index]);
+			_str = string_replace_all(_str, " ", "")
+			_str = string_replace_all(_str, ":", "")
+			//_str = string_replace_all(_str, ",", "")
+			_str = string_replace_all(_str, "[", "")
+			_str = string_replace_all(_str, "]", "")
+			
+			draw_string_condensed(_str, get_instance().x - GAME_W / 2 + 2, get_instance().y + 32)
+			draw_string(scripted_input_index, get_instance().x, get_instance().y + 22)
+		}
+	}
+	
     self.get_input = function(_verb) {
         if (struct_exists(self.__input, _verb)) return self.__input[$ _verb];
 		return false;

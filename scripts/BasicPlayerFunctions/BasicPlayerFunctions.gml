@@ -419,11 +419,10 @@ function add_mach_dash(_entity, _falcon_flight){
 		}
 			
 		//falcon flight emulation
-		if(keyboard_check(ord("N"))){
+		if(keyboard_check(ord("N")) || _falcon_flight){
 			self.states.mach_dash.change_direction = true;
-			self.states.mach_dash.golden = true;
 			self.states.mach_dash.only_cardinals = false;
-			self.states.mach_dash.speed *= 0.75;
+			self.states.mach_dash.speed = self.states.walk.speed;
 			self.states.mach_dash.interval *= 12.5;
 		}
 			
@@ -562,4 +561,11 @@ function add_mach_dash(_entity, _falcon_flight){
 	
 function add_falcon_flight(_entity){
 	add_mach_dash(_entity, true)
+}
+	
+function remove_dash(_entity){
+	with(_entity){
+		self.states.dash.interval = 0;
+		self.states.dash.speed = self.states.walk.speed;
+	}
 }
