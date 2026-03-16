@@ -64,4 +64,21 @@ function XGaeaArmorSetBonus(_player){
 	_weps.set_weapons(_weps.weapon_list)
 	_weps.current_weapon[2] += 1;
 	_weps.current_weapon[3] += 1;
+	
+	with(_player){
+		struct_set(global.availible_characters[global.character_index].states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
+		//log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
+		self.fsm.add("superland", {
+			enter: function() {
+				self.publish("animation_play", { name: "superland" });
+				
+				with(obj_camera){
+					components.get(ComponentCamera).shake_intensity = 6;
+				}
+			}
+		})		
+		.add_transition("t_animation_end", "superland", "idle")
+		.add_transition("t_transition", "fall", "superland", function(){return self.physics.is_on_floor(12) && self.physics.get_vspd() > 7.5})
+		.add_transition("t_move_h", "superland", "walk", function() { return !self.physics.check_wall(self.hdir); })
+	}
 }

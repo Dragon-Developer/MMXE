@@ -1248,6 +1248,37 @@
               }
             ]
           }
+        },
+        {
+          "name": "superland",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 4,
+                "frame": 2
+              },
+              {
+                "key": 5,
+                "frame": 3
+              },
+              {
+                "key": 50,
+                "frame": 3
+              },
+              {
+                "key": 51,
+                "frame": 1
+              }
+            ]
+          }
         }
 
 

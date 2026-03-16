@@ -24,6 +24,9 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.bounds_bottom_right_x = 356;
 	self.bounds_bottom_right_y = 0;
 	
+	self.shake_intensity = 0;
+	self.shake_rate = 0.91;
+	
 	self.serializer
 		.addVariable("x")
 		.addVariable("y")
@@ -70,6 +73,8 @@ function ComponentCamera() : ComponentBase() constructor {
 			//self.movement_limit_y *= self.timescale;
 			self.timescale = 1;
 		}
+		
+		self.shake_intensity *= self.shake_rate * -1;
 		
         self.rotation_controller.step();
 		self.angle = self.rotation_controller.current_angle;
@@ -178,7 +183,7 @@ function ComponentCamera() : ComponentBase() constructor {
 		if (self.flipped_y) {
 			camera_set_view_pos(self.camera, _cam_x, _cam_y + self.height);
 		} else {
-			camera_set_view_pos(self.camera, _cam_x, _cam_y);
+			camera_set_view_pos(self.camera, _cam_x, _cam_y + shake_intensity);
 		}
 		self.x = _cam_x;
 		self.y = _cam_y;
