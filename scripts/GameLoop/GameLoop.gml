@@ -193,7 +193,7 @@ function GameLoop() constructor {
 		if(keyboard_check_pressed(ord("1")))
 			self.blur = !self.blur;
 			
-		if(keyboard_check_pressed(ord("9")))
+		if(keyboard_check_pressed(ord("8")))
 			self.frame_advancing = !self.frame_advancing;
 			
 		if(keyboard_check_pressed(ord("2")))

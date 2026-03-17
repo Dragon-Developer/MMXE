@@ -11,6 +11,7 @@ function BlackZero() : ArmorBase() constructor{
 		_player.states.walk.speed *= 1.25;
 		_player.states.jump.strength *= 1.25;
 		_player.find("animation").draw_base_sprite = false;
+		_player.get(ComponentPhysics).terminal_velocity = 7.5;
 	}
 	self.description = "Increased speed, jump height, and defense."
 	self.damage_rate = 1/3;

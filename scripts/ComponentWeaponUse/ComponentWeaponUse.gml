@@ -492,6 +492,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				if(get(ComponentDamageable).projectile_tags[0] != _tag)
 					array_push(_tags, _tag);
 			}
+		} else {
+			_tags = "player"	
 		}
 		
 		//log(string(_tags) + " are the projectile tagts")

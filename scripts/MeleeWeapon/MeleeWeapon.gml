@@ -12,7 +12,7 @@ function MeleeData() constructor{
 	self.boss_damage = 1;
 	self.comboiness = 2;
 	self.animation = "atk1";
-	self.tag = ["enemy"];
+	self.tag = [];
 	self.hitbox_scale = new Vec2(64,64);
 	self.hitbox_offset = new Vec2(32,0);
 	

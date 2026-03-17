@@ -45,7 +45,7 @@ function XGaeaArmorBoot() : BootPartBase() constructor{
 	self.armor_name = "gaea Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		_player.states.walk.speed *= 0.85;
-		_player.states.dash.speed *= 0.8;
+		_player.states.dash.speed *= 0.9;
 		_player.get(ComponentPhysics).grav = new Vec2(0,0.3);
 		_player.get(ComponentPhysics).grav_default = new Vec2(0,0.3);
 		_player.get(ComponentDamageable).immune_to_damage_zones = true;
@@ -76,9 +76,16 @@ function XGaeaArmorSetBonus(_player){
 					components.get(ComponentCamera).shake_intensity = 6;
 				}
 			}
-		})		
+		})	
+		
+		self.fsm.add_child("fall", "superfall", {
+			enter: function() {
+				self.publish("animation_play", { name: "superfall" });
+			}
+		})	
 		.add_transition("t_animation_end", "superland", "idle")
-		.add_transition("t_transition", "fall", "superland", function(){return self.physics.is_on_floor(12) && self.physics.get_vspd() > 7.5})
+		.add_transition("t_transition", "fall", "superfall", function(){return self.physics.get_vspd() > 7.5})
+		.add_transition("t_transition", "superfall", "superland", function(){return self.physics.is_on_floor(12)})
 		.add_transition("t_move_h", "superland", "walk", function() { return !self.physics.check_wall(self.hdir); })
 	}
 }

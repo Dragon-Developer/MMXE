@@ -35,6 +35,7 @@ on_spawn = function(_player) {
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.max_health,global.player_data.max_health);
 	_player.components.get(ComponentDamageable).invuln_time = 120;
+	_player.components.get(ComponentDamageable).projectile_tags = ["enemy"];
 	
 	with(_player.components.get(ComponentDamageable)){
 		self.death_function = function(){

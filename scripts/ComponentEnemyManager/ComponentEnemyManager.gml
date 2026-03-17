@@ -126,7 +126,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		}
 		
 		if(_proj != noone){
-			if(!array_contains(_enemy.hit_by_list, _proj)){
+			if(!array_contains(_enemy.hit_by_list, _proj) && !array_contains(_proj.code.tag, "enemy")){
 				if(!_proj.code.super_piercing)
 					array_push(_enemy.hit_by_list, _proj)
 					

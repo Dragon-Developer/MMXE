@@ -17,7 +17,7 @@ function ProjectileData() constructor{
 	self.animation_append = "_shoot";
 	self.hitbox_scale = new Vec2(8,8);
 	self.hitbox_offset = new Vec2(0,0);
-	self.tag = ["enemy"]
+	self.tag = []
 	self.piercing = false;
 	self.super_piercing = false;
 	self.general_init = function(_comp){

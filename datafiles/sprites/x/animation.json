@@ -1279,6 +1279,12 @@
               }
             ]
           }
+        },
+        {
+          "name": "superfall",
+          "properties": {
+            "speed" : 1
+          }
         }
 
 

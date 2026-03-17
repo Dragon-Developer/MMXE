@@ -58,6 +58,7 @@ function TestBoss() : BaseBoss() constructor{
 			self.intro_animation_name = other.intro_animation_name;
 			self.death_animation_name = other.death_animation_name;
 			self.attack_states = ["dash", "walkdown"]
+			self.walked = false;
 			self.timer = -1;
 			fsm.add("idle", { 
 					enter: function(){
@@ -65,7 +66,7 @@ function TestBoss() : BaseBoss() constructor{
 						self.publish("animation_xscale", self.dir);
 						self.publish("animation_play", { name: "idle" });
 						
-						var _rand = random_range(0,array_length(self.attack_states));
+						var _rand = walked ? 0 : 1
 						
 						if(random_range(0,2) <= 1 && desperate){
 							self.fsm.change("desperate_jump");
@@ -81,6 +82,7 @@ function TestBoss() : BaseBoss() constructor{
 				enter: function(){
 					self.publish("animation_play", { name: "dash" });
 					self.get(ComponentPhysics).set_hspd(3.25 * self.dir)
+					walked = false;
 				}, 
 				step: function(){
 					//self.get_instance().x += self.dir * 3.25;
@@ -143,7 +145,8 @@ function TestBoss() : BaseBoss() constructor{
 			.add("walkdown", {
 				enter: function(){
 					self.publish("animation_play", { name: "walk" });
-						self.get(ComponentPhysics).set_hspd(2 * self.dir)
+					self.get(ComponentPhysics).set_hspd(2 * self.dir)
+					self.walked = true;
 				},
 				leave: function(){
 					self.get(ComponentPhysics).set_hspd(0)

@@ -160,7 +160,7 @@ function add_melee_state(_entity){
 				
 				//create the actual saber
 				
-				var _tags = [];
+				var _tags = ["player"];
 				
 				var _melee_hitbox = PROJECTILES.create_melee_hitbox(self.get_instance().x, self.get_instance().y, self.dir, MeleeProjectile, get(ComponentWeaponUse), _tags, self.states.melee.animation, 12);
 			
