@@ -3,7 +3,7 @@ event_inherited();
 components.add([
 	ComponentCamera,
 	ComponentCameraRecorder,
-	ComponentHealthbar
+	ComponentBar
 ]);
 
 components.init();

@@ -111,6 +111,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			if(plays_sound_on_hit)
 				WORLD.play_sound("big_damage");
 			hit_amount++;
+			self.publish("took_damage", _damage);//so other components dont need to hook into this to get info
 				
 			if(global.settings.hit_numbers){//no damage number setting
 				var _inst = self.get_instance()
@@ -163,7 +164,6 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 		
 		if(_proj.code.damage > 0){
-			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			if(variable_struct_exists(_proj.code, "invuln_rate"))
 				self.invuln_offset = CURRENT_FRAME + (self.invuln_time * _proj.code.invuln_rate);
 			else
@@ -202,7 +202,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 		
 		if(_enemy.code.contact_damage > 0){
-			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+			//self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			array_push(self.hit_by_list, _enemy)
 			return _enemy.code.contact_damage;
@@ -225,7 +225,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(_enemy.components.get(ComponentBoss).contact_damage > 0){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
-			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+			//self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			log("hit by enemy")
 			log(_enemy.components.get(ComponentBoss).contact_damage)
 			log(object_get_name(_enemy.object_index))
@@ -252,7 +252,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		//if(_zone.contact_damage > 0){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
-			self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
+			//self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			//log("hit by zone")
 			return _zone.contact_damage;
 		//}

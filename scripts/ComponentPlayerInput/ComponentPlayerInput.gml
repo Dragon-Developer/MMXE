@@ -250,7 +250,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 						_input_struct.pause = true;
 					if(__input_string_contains(_inputs, "Y"))//switch left
 						_input_struct.switchLeft = true;
-					if(__input_string_contains(_inputs, "Y"))//switch right
+					if(__input_string_contains(_inputs, "T"))//switch right
 						_input_struct.switchRight = true;
 					
 				    var _repeats = file_text_read_real(input_file);

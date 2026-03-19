@@ -100,7 +100,7 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentDoubleGearHandler, _func);
 		ENTITIES.for_each_component(ComponentDamageable, _func);
 		ENTITIES.for_each_component(ComponentDialouge, _func);
-		ENTITIES.for_each_component(ComponentHealthbar, _func);
+		ENTITIES.for_each_component(ComponentBar, _func);
 		ENTITIES.for_each_component(ComponentHealable, _func);
 		ENTITIES.for_each_component(ComponentParticles, _func);
 		ENTITIES.for_each_component(ComponentAnimation, _func);
@@ -138,7 +138,7 @@ function GameLoop() constructor {
 		surface_set_target(application_surface)
 		
 		// some things use the draw_gui function regardless of debug
-		ENTITIES.for_each_component(ComponentHealthbar, _draw_gui);
+		ENTITIES.for_each_component(ComponentBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentDialouge, _draw_gui);
 		ENTITIES.for_each_component(ComponentMinimap, _draw_gui);
 		ENTITIES.for_each_component(ComponentSpriteRenderer, _draw_gui);

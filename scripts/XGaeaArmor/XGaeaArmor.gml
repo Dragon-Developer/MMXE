@@ -24,6 +24,7 @@ function XGaeaArmorBody() : BodyPartBase() constructor{
 	
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		_player.get(ComponentPhysics).terminal_velocity = 8;
+		_player.get(ComponentPhysics).terminal_velocity_default = 8;
 	}
 	self.set_bonus = XGaeaArmorSetBonus;
 }
@@ -46,8 +47,8 @@ function XGaeaArmorBoot() : BootPartBase() constructor{
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		_player.states.walk.speed *= 0.85;
 		_player.states.dash.speed *= 0.9;
-		_player.get(ComponentPhysics).grav = new Vec2(0,0.3);
-		_player.get(ComponentPhysics).grav_default = new Vec2(0,0.3);
+		//_player.get(ComponentPhysics).grav = new Vec2(0,0.3);
+		//_player.get(ComponentPhysics).grav_default = new Vec2(0,0.3);
 		_player.get(ComponentDamageable).immune_to_damage_zones = true;
 	}
 	

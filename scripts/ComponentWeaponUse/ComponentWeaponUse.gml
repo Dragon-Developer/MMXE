@@ -19,6 +19,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.supercharged_amount = 0;
 	
 	self.damage_increase = 0;
+	self.giga_index = -1;
 	
 	self.state_blacklist = [
 	"death",
@@ -66,11 +67,18 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			self.input = self.parent.find("input") ?? new ComponentInputBase();
 			self.physics = self.parent.find("physics") ?? new ComponentPhysicsBase();
 		});
+		
+		self.subscribe("took_damage", function(_damage) {
+			if(giga_index != -1){
+				self.heal_ammo(max(round(_damage / 4), 1), giga_index)
+			}
+			log("YEOW")
+		});
 	}
 	
-	self.heal_ammo = function(_amount){
-		if(weapon_ammo[current_weapon[0]] < weapon_max_ammo)
-			weapon_ammo[current_weapon[0]] += _amount;
+	self.heal_ammo = function(_amount, _index = current_weapon[0]){
+		if(weapon_ammo[_index] < weapon_max_ammo)
+			weapon_ammo[_index] += _amount;
 	}
 	
 	self.set_weapons = function(_weapons){
@@ -83,12 +91,15 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			_weapons = [_weapons];
 		}
 		
-		array_foreach(_weapons, function(_wep){
+		array_foreach(_weapons, function(_wep, _index){
 			var _code = {};
 			
 			with(_code){
 				script_execute(_wep)
 			}
+			
+			if(_code.giga)
+				giga_index = _index
 			
 			array_foreach(_code.data, function(_proj){
 				
@@ -99,6 +110,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				}
 				
 				array_push(weapon_ammo, 28);
+				
+				//if(_proj.code.)
 				
 				switch(_proj_code.term){
 					case("State Based"):
@@ -136,7 +149,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		if(_wep == undefined) return;
 		
 		if(_wep.not_selectable) {
-			self.change_weapon(self.current_weapon[_index] + sign(_change - _old_change) * 2)
+			self.change_weapon(self.current_weapon[_index] + sign(_change - _old_change))
 			return
 		}
 		
@@ -153,6 +166,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			} else {
 				bar.barCount = 2;
 			}
+			if(giga_index != -1)
+				bar.barCount++;
 		
 		return _wep.weapon_palette;
 	}
@@ -177,11 +192,26 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			} else {
 				bar.barCount = 2;
 			}
+			
+			if(giga_index != -1)
+				bar.barCount++;
 		}
 		
 		if self.bar != noone {
 			self.bar.barValues = [self.weapon_ammo[self.current_weapon[0]]]
 			self.bar.barValueMax = [self.weapon_max_ammo]
+			
+			if(giga_index != -1){
+				if(bar.barCount == 2){
+					self.bar.barValues = [self.weapon_ammo[self.giga_index]]
+					self.bar.barValueMax = [self.weapon_max_ammo]
+					bar.barTypes = ["gigabar"]
+				} else {
+					array_push(self.bar.barValues, self.weapon_ammo[self.giga_index])
+					array_push(self.bar.barValueMax, self.weapon_max_ammo)
+					bar.barTypes = ["healthbar", "gigabar"]
+				}
+			}
 		}
 		
 		if(self.charge != noone){
@@ -269,8 +299,9 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 						self.create_standard_projectile(_shot_code, _shot_index, _input, _id);
 			break;
 			case("State Based"):
-				if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input))
+				if self.shoot_check(_input, _id,_shot_data ,_shot_code){
 					get(ComponentPlayerMove).fsm.change(_shot_data.state_name)
+				}
 			break;
 			case("Melee"):
 				if(self.input.get_input_pressed_raw(_input) || self.input.get_input_released(_input))
@@ -308,23 +339,26 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 	
 	self.general_shooting_check = function(_input, _id, _shot_data, _shot_code){
-		//apply stock shot
+		/*apply stock shot
 		if(self.stock_shot != noone){
 			_shot_data = {};
 			with(_shot_data){
 				script_execute(other.stock_shot)
 			}
-		}
+		}*/
 			
 		//decrease weapon energy
-		if(self.weapon_ammo[self.current_weapon[_id]] > 0){
-			if(global.debug) return true;
-			var _cost = 0;
+		
+		var _cost = 0;
 				
 			if is_array(_shot_code.cost)
 				_cost = _shot_code.cost[_shot_index];
 			else
 				_cost = _shot_code.cost;
+				
+		if(self.weapon_ammo[self.current_weapon[_id]] >= _cost){
+			if(global.debug) return true;
+			
 				
 			//check if theres a projectile limit
 			if(variable_struct_exists(_shot_data, "shot_limit")){

@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"ComponentHealthbar",
+  "%Name":"ComponentBar",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ComponentHealthbar",
+  "name":"ComponentBar",
   "parent":{
     "name":"Camera",
     "path":"folders/Scripts/Game/Entity Components/Camera.yy",

@@ -132,7 +132,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	
 	self.rotate_up = function(_angle) {
 		self.rotation_angle += _angle;
-//		self.animation.set_angle(self.animation.__angle + _angle);	
+		self.animation.set_angle(self.animation.__angle + _angle);	
 	}
 	
 	self.get_interpolated_position = function() {

@@ -20,7 +20,7 @@ function XBladeArmorBoot() : BootPartBase() constructor{
 	self.sprite_name = "/blade/legs"//this is more for filepath.
 	self.armor_name = "Blade Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
-		
+		add_mach_dash(_player)
 	}
 	
 	self.description = "Gives the user the mach dash. The mach dash can be aimed."

@@ -85,11 +85,11 @@ function ComponentCamera() : ComponentBase() constructor {
 		
 		if (keyboard_check_pressed(ord("1"))) {
 			self.flip_y();	
-		}
-		if (keyboard_check_pressed(ord("2"))) {
+		}*/
+		if (keyboard_check_pressed(ord("9"))) {
 			if (!self.rotation_controller.enabled)
 				self.start_rotation(self.rotation_controller.current_angle - 90);	
-		}*/
+		}
 		if(self.target == noone) {
 			if (self.flipped_y) {
 				camera_set_view_pos(self.camera, x, y + self.height);
@@ -183,7 +183,7 @@ function ComponentCamera() : ComponentBase() constructor {
 		if (self.flipped_y) {
 			camera_set_view_pos(self.camera, _cam_x, _cam_y + self.height);
 		} else {
-			camera_set_view_pos(self.camera, _cam_x, _cam_y + shake_intensity);
+			camera_set_view_pos(self.camera, _cam_x + shake_intensity * ((((_cam_y + shake_intensity) * 15) mod 3) - 1) * 0.25, _cam_y + shake_intensity);
 		}
 		self.x = _cam_x;
 		self.y = _cam_y;

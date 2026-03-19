@@ -55,14 +55,14 @@ on_spawn = function(_player) {
 		
 		_player.components.get(ComponentPlayerMove).camera = _camera;
 		//_camera.components.publish("target_set", _player);	
-		_camera.components.get(ComponentHealthbar).compDamageable = _player.components.get(ComponentDamageable);
-		_camera.components.get(ComponentHealthbar).barCount = 2;
-		_camera.components.get(ComponentHealthbar).barOffsets = [new Vec2(12,78), new Vec2(28,78)];
+		_camera.components.get(ComponentBar).compDamageable = _player.components.get(ComponentDamageable);
+		_camera.components.get(ComponentBar).barCount = 2;
+		_camera.components.get(ComponentBar).barOffsets = [new Vec2(12,78), new Vec2(28,78), new Vec2(44,78)];
 		
-		_camera.components.get(ComponentHealthbar).barValues = [_player.components.get(ComponentWeaponUse).weapon_ammo[_player.components.get(ComponentWeaponUse).current_weapon[0]]]
-		_camera.components.get(ComponentHealthbar).barValueMax = [_player.components.get(ComponentWeaponUse).weapon_max_ammo]
+		_camera.components.get(ComponentBar).barValues = [_player.components.get(ComponentWeaponUse).weapon_ammo[_player.components.get(ComponentWeaponUse).current_weapon[0]]]
+		_camera.components.get(ComponentBar).barValueMax = [_player.components.get(ComponentWeaponUse).weapon_max_ammo]
 		
-		_player.components.get(ComponentWeaponUse).bar = _camera.components.get(ComponentHealthbar);
+		_player.components.get(ComponentWeaponUse).bar = _camera.components.get(ComponentBar);
 		_player.components.get(ComponentAnimationShadered).max_queue_size = 0;
 		//_player.components.get(ComponentPlayerInput).__BufferLength = global.settings.Input_Buffer;
 		//_player.components.get(ComponentPlayerInput).buffer_reset();

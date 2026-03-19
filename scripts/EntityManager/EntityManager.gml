@@ -152,10 +152,16 @@ function EntityManager() constructor {
 	 */
 	static find_all = function(_tags) {
 		var _results = [];
+		//if instance_exists(asset_object)
 		for (var i = 0; i < array_length(self.__instances); i++) {
 			var _inst = self.__instances[i];
-			if (asset_has_tags(_inst.object_index, _tags, asset_object)) {
-				array_push(_results, _inst);
+			
+			if(instance_exists(_inst))
+			if(object_exists(_inst.object_index))
+			try{
+				if (asset_has_tags(_inst.object_index, _tags, asset_object)) {
+					array_push(_results, _inst);
+				}
 			}
 		}
 		return _results;

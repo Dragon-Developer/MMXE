@@ -40,6 +40,7 @@ function LittleShit() : BaseEnemy() constructor{
 			_pick.code.hspd = d * sqrt(g) / (sqrt(2) * (sqrt(h1) + sqrt(h2)));
 			_pick.code.vspd = -sqrt(2 * g * h1);
 			_pick.code.dir = (d == abs(d) ? 1 : -1);
+			dir = _pick.code.dir;
 			
 			fire_time += 200;
 		}

@@ -242,7 +242,7 @@ function add_aimable_state(_entity){
 				self.physics.set_grav(new Vec2(0,0));
 			},
 			leave: function() {	
-				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.update_gravity();
 			},
 			step: function() {
 				if(CURRENT_FRAME > shot_start_time + self.states.aiming.return_delay)
@@ -279,7 +279,7 @@ function add_air_dash(_entity, _armor){
 			leave: function() {
 				//if (!self.dash_jump && self.physics.is_on_floor())
 					//self.current_hspd = self.states.walk.speed;	
-				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.update_gravity();
 			}
 		})
 		.add("dash_end_air", {
@@ -344,7 +344,7 @@ function add_slide(_entity, _armor){
 					!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_square_16))
 						self.get_instance().y += 16
 					
-				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.update_gravity();
 				self.get_instance().mask_index = self.states.slide.old_hitbox;
 			}
 		})
@@ -461,6 +461,8 @@ function add_mach_dash(_entity, _falcon_flight){
 					WORLD.spawn_particle(new DashParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
 				}
 					
+				_input_dir = _input_dir.rotate(find("animation").rotation_angle)
+					
 				_input_dir = _input_dir.normalize();
 					
 				_input_dir.setY(_input_dir.y * 1.5)
@@ -503,7 +505,7 @@ function add_mach_dash(_entity, _falcon_flight){
 					
 			},
 			leave: function() {
-				self.physics.set_grav(new Vec2(0,0.25));
+				self.physics.update_gravity();
 				self.physics.set_speed(0,0);
 				self.physics.terminal_velocity = self.physics.terminal_velocity_default;
 				self.publish("animation_yscale", 1);
@@ -550,6 +552,18 @@ function add_mach_dash(_entity, _falcon_flight){
 				draw_arrow(_inst.x + (_dir.x * 32), _inst.y + (_dir.y * 32), _inst.x + (_dir.x * 40), _inst.y + (_dir.y * 40), 15)
 				draw_set_color(c_white)
 				draw_arrow(_inst.x + (_dir.x * 30), _inst.y + (_dir.y * 30), _inst.x + (_dir.x * 38), _inst.y + (_dir.y * 38), 8)
+			}
+		})
+		
+		.add("land", {
+			enter: function() {
+				var _land = WORLD.play_sound(self.states.land.sound);
+				self.publish("animation_play", { name: "land" });
+				self.input.__useBuffer = true;
+				self.states.dash_air.curr_dashes = 0;
+			},
+			leave: function() {
+				self.dash_jump = false;	
 			}
 		})
 		.add_wildcard_transition("t_dash", "dash_hold", function() { return !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })

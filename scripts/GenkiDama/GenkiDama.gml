@@ -1,8 +1,9 @@
 function GenkiDama() : ProjectileWeapon() constructor{
 	self.data = [GenkiDamaHandler];
-	self.charge_limit = 4;
-	self.cost = 0;
+	self.charge_limit = 0;
+	self.cost = 7;
 	self.not_selectable = true;
+	self.giga = true;
 	self.title = "GAEA CRUSH";
 	self.description = "LARGE RELEASE OF ABSORBED DAMAGE"
 	
@@ -23,7 +24,7 @@ function GenkiDamaHandler() : StateBasedData() constructor{
 				},
 				step: function() {
 					if(timer == CURRENT_FRAME){
-						PROJECTILES.create_projectile(get_instance().x, get_instance().y, dir, GenkiDamaData, get(ComponentWeaponUse), ["enemy"], 0);
+						PROJECTILES.create_projectile(get_instance().x, get_instance().y, dir, GenkiDamaData, get(ComponentWeaponUse), ["player"], 0);
 					}
 				},
 				leave: function() {

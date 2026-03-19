@@ -46,7 +46,7 @@ function PopDashProjectile() : StateBasedData() constructor{
 				leave: function() {
 					//if (!self.dash_jump && self.physics.is_on_floor())
 						//self.current_hspd = self.states.walk.speed;	
-					self.physics.set_grav(new Vec2(0,0.25));
+					self.physics.update_gravity();
 				}
 			})
 			.add_transition("t_dash_end", other.state_name, "fall", function() { return self.physics.is_on_floor(); })
@@ -84,7 +84,7 @@ function SuperPopDashProjectile() : StateBasedData() constructor{
 				leave: function() {
 					//if (!self.dash_jump && self.physics.is_on_floor())
 						//self.current_hspd = self.states.walk.speed;	
-					self.physics.set_grav(new Vec2(0,0.25));
+					self.physics.update_gravity();
 				}
 			})
 			.add_transition("t_dash_end", other.state_name, "fall", function() { return self.physics.is_on_floor(); })

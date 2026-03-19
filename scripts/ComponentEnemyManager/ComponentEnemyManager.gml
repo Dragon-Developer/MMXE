@@ -70,6 +70,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		array_foreach(self.enemies, function(_enemy){
 			if(!_enemy.code.dead){
 				get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir)
 			}
 			
 			//draw_string(_enemy.code.health, _enemy.position.x, _enemy.position.y - 32)

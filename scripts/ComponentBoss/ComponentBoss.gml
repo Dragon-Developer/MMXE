@@ -41,9 +41,9 @@ function ComponentBoss() : ComponentBase() constructor{
 			.add("pose", {
 				enter: function() {
 					self.publish("animation_play", { name: self.pose_animation_name });
-					self.get_instance().components.add([ComponentHealthbar]);
-					self.get_instance().components.get(ComponentHealthbar).init();
-					self.get_instance().components.get(ComponentHealthbar).barOffsets[0] = new Vec2(GAME_W - 24,78)
+					self.get_instance().components.add([ComponentBar]);
+					self.get_instance().components.get(ComponentBar).init();
+					self.get_instance().components.get(ComponentBar).barOffsets[0] = new Vec2(GAME_W - 24,78)
 					self.get_instance().components.get(ComponentDamageable).health_max = 32;
 					self.get_instance().components.get(ComponentDamageable).health = 1;
 				},

@@ -1,7 +1,7 @@
 var _dist = distance_to_object(instance_nearest(x,y,obj_player))
 if(_dist < 0){
 	with(obj_gui){
-		transition_fade(rm_stage_select);
+		//transition_fade(rm_stage_select);
 	}
-	WORLD.stop_music();
+	//WORLD.stop_music();
 }
