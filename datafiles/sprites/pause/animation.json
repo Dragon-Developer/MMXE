@@ -412,6 +412,39 @@
               }
             ]
           }
+        },
+        {
+          "name": "TWIN_S",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "METAL_A",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "G_HUNTER",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
         }
         //eof
       ]

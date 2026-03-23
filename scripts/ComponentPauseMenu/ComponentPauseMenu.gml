@@ -296,7 +296,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			
 			for(var a = 0; a < array_length(_weapons.current_weapon); a++){
 				if(_weapons.current_weapon[a] == floor(i))
-					draw_string(a, 32, 24 + i * 16)
+					draw_string(a, 36  + a * 2, 24 + i * 16 + a * 2)
 			}
 			
 			//draw the name of the weapon
