@@ -356,7 +356,12 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			else
 				_cost = _shot_code.cost;
 				
-		if(self.weapon_ammo[self.current_weapon[_id]] >= _cost){
+		var _req = 0;
+		
+		if(_shot_code.giga)
+			_req = _cost;
+				
+		if(self.weapon_ammo[self.current_weapon[_id]] >= _req){
 			if(global.debug) return true;
 			
 				
@@ -517,18 +522,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		var _shot = noone
 		
 		
-		var _tags = [];
-		
-		if(global.server_settings.client_data.friendly_fire){
-			for(var t = 0; t < instance_number(obj_player); t++){
-				var _tag = "player" + string(t)
-				
-				if(get(ComponentDamageable).projectile_tags[0] != _tag)
-					array_push(_tags, _tag);
-			}
-		} else {
-			_tags = "player"	
-		}
+		var _tags = ["player"];
 		
 		//log(string(_tags) + " are the projectile tagts")
 		

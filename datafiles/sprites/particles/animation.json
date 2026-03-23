@@ -130,6 +130,12 @@
           }
         },
         {
+          "name": "twin_slasher",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
           "name": "dash_spark",
           "properties": {
             "speed":1

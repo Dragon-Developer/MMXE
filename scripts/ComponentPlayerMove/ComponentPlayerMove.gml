@@ -179,9 +179,21 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.dash_jump = false;	
 				self.get_instance().y = ceil(self.get_instance().y)
 				
-				if(!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, self.physics.objects.block) && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 8, self.physics.objects.block)){
+				var _rot = find("animation").rotation_angle mod 360;
+				var _offset = new Vec2(0,8);
+				_offset = _offset.rotate(_rot);
+				
+				if(!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, self.physics.objects.block) && self.physics.check_place_meeting(self.get_instance().x + _offset.x, self.get_instance().y + _offset.y, self.physics.objects.block)){
 					try{
-						self.get_instance().y = self.physics.get_place_meeting(self.get_instance().x, self.get_instance().y + 8, self.physics.objects.block).y - 16;
+						var _block = self.physics.get_place_meeting(self.get_instance().x + _offset.x, self.get_instance().y + _offset.y, self.physics.objects.block);
+						if(_rot == 0)
+							self.get_instance().y = _block.y - 16;
+						else if(_rot == 90)
+							self.get_instance().x = _block.x - 16;
+						else if(_rot == 180)
+							self.get_instance().y = _block.y + 16 + _block.image_yscale * 16;
+						else if(_rot == 270)
+							self.get_instance().x = _block.x + 16 + _block.image_xscale * 16;
 					}
 				}
 			}

@@ -89,6 +89,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.step = function(){
 		array_foreach(self.projectiles, function(_shot){
 			_shot.code.step(_shot.position);
+			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir)
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y);
 				
 			//get every player instance and see if they are within a screen's distance away from the projectile
@@ -127,7 +128,6 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.draw = function(){
 		array_foreach(self.projectiles, function(_shot){
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y)
-			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir)
 			
 			if(variable_struct_exists(_shot.code, "draw"))
 				_shot.code.draw(_shot.position);

@@ -203,6 +203,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	
 	self.swap_sprite = function(_sprite = 0,_color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
 		self.sprites[_sprite].animationController.__xscale = _xscale;
+		self.sprites[_sprite].dir = _xscale;
 		self.sprites[_sprite].animationController.__yscale = _yscale;
 		self.sprites[_sprite].animationController.__alpha = _alpha;
 		self.sprites[_sprite].animationController.__color = _color;

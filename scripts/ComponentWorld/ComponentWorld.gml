@@ -12,6 +12,7 @@ function ComponentWorld() : ComponentBase() constructor {
 		var _rotate = method({angle: _angle}, function(_component) { _component.rotate_up(angle) });
 		ENTITIES.for_each_component(ComponentPhysics, _rotate);
 		ENTITIES.for_each_component(ComponentAnimation, _rotate);
+		ENTITIES.for_each_component(ComponentAnimationShadered, _rotate);
 		ENTITIES.for_each_component(ComponentMask, _rotate);
 		self.reset_speed();
 	}

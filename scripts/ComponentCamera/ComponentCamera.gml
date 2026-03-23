@@ -86,7 +86,7 @@ function ComponentCamera() : ComponentBase() constructor {
 		if (keyboard_check_pressed(ord("1"))) {
 			self.flip_y();	
 		}*/
-		if (keyboard_check_pressed(ord("9"))) {
+		if (keyboard_check_pressed(ord("~"))) {
 			if (!self.rotation_controller.enabled)
 				self.start_rotation(self.rotation_controller.current_angle - 90);	
 		}
@@ -208,9 +208,10 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.rotation_controller.on_end = function() {
 		ENTITIES.pause(["actor"], false);
 			//log(WORLD)
-		var _instances = ENTITIES.find_all(["actor"]);
-		if(WORLD != undefined)
+		//var _instances = ENTITIES.find_all(["actor"]);
+		if(WORLD != undefined){
 			WORLD.components.get(ComponentWorld).rotate_up(-90);
+		}
 	}
 }
 

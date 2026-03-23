@@ -156,13 +156,21 @@ function EntityManager() constructor {
 		for (var i = 0; i < array_length(self.__instances); i++) {
 			var _inst = self.__instances[i];
 			
-			if(instance_exists(_inst))
-			if(object_exists(_inst.object_index))
-			try{
-				if (asset_has_tags(_inst.object_index, _tags, asset_object)) {
-					array_push(_results, _inst);
+			//if(instance_exists(_inst)){
+				log(_inst)
+				//log(_inst.object_index)
+				if(object_exists(_inst.object_index)){
+					try{
+						if (asset_has_tags(_inst.object_index, _tags, asset_object)) {
+							array_push(_results, _inst);
+						}
+					}
+				}else {
+					log("entity doesnt have an object")
 				}
-			}
+			//} else {
+				//log("entity doesnt exist what the fuck")
+			//}
 		}
 		return _results;
 	};

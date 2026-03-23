@@ -1,5 +1,5 @@
 function XCharacter() : BaseCharacter() constructor{
-	self.weapons = [xBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner, RollingShield];
+	self.weapons = [xBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner, RollingShield, TwinSlasher, MetalAnchor, GroundHunter];
 	
 	self.possible_armors = [
 		[noone, XFirstArmorHead, XSecondArmorHead, XGaeaArmorHead],//heads

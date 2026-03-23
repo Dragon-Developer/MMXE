@@ -18,10 +18,64 @@
         "y": 16
       }
     },
+    "ground_hunter": {
+      "origin": {
+        "x": 40,
+        "y": 8
+      }
+    },
+    "metal_anchor": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "metal_anchor_bird": {
+      "origin": {
+        "x": 64,
+        "y": 80
+      }
+    },
     "genki_dama": {
       "origin": {
         "x": 40,
         "y": 32
+      }
+    },
+    "twin_slasher": {
+      "origin": {
+        "x": 24,
+        "y": 17
+      }
+    },
+    "twin_slasher_down": {
+      "origin": {
+        "x": 24,
+        "y": 16
+      }
+    },
+    "twin_slasher_charged_outer": {
+      "origin": {
+        "x": 36,
+        "y": 10
+      }
+    },
+    "twin_slasher_charged_outer_down": {
+      "origin": {
+        "x": 36,
+        "y": 20
+      }
+    },
+    "twin_slasher_charged_middle": {
+      "origin": {
+        "x": 39,
+        "y": 18
+      }
+    },
+    "twin_slasher_charged_middle_down": {
+      "origin": {
+        "x": 39,
+        "y": 30
       }
     },
     "gaea_shot": {
@@ -1575,9 +1629,69 @@
           }
         },
         {
+          "name": "undefined",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "ground_hunter",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
           "name": "shotgun_ice_fragment",
           "properties": {
             "speed": 1
+          }
+        },
+        {
+          "name": "metal_anchor",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "metal_anchor_bird",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "twin_slasher",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "twin_slasher_down",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "twin_slasher_charged_outer",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "twin_slasher_charged_outer_down",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "twin_slasher_charged_middle",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "twin_slasher_charged_middle_down",
+          "properties": {
+            "speed": 0.5
           }
         },
         {
