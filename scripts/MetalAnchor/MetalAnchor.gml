@@ -8,11 +8,11 @@ function MetalAnchor() : ProjectileWeapon() constructor{
 	self.description = "HEAVY DAMAGE BOUNCING ANCHORS"
 	
 	self.weapon_palette = [
-		#303078,//Blue Armor Bits
-		#4848a0,
-		#6868b0,
-		#705848,//teal bits
-		#c8b8a8,
+		#302870,//Blue Armor Bits
+		#4050a8,
+		#7088c8,
+		#805858,//teal bits
+		#c8b0a0,
 		#f0f0d8
 	];
 }

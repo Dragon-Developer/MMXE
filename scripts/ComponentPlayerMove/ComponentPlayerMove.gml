@@ -204,6 +204,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.publish("animation_play", { name: "crouch" });
 				self.physics.set_speed(0, 0);
 				self.publish("on_crouch", false);	
+				self.get_instance().mask_index = spr_slide_mask;
 			},
 			step: function(){
 				if(self.hdir != 0){
@@ -213,7 +214,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				
 			},
 			leave: function() {
-				self.publish("on_crouch", false);		
+				self.publish("on_crouch", false);	
+				self.get_instance().mask_index = spr_player_mask;
 			}
 		})
 		.add("pose", {

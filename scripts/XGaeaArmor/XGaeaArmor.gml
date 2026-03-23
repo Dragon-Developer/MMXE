@@ -7,8 +7,8 @@ function XGaeaArmorHead() : HeadPartBase() constructor{
 	self.selectable = false;
 	
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
-		_player.get(ComponentWeaponUse).damage_increase = 1;
-		_player.get(ComponentWeaponUse).charge.charge_time = [30, 90, 150, 210, 270, 330, 400]
+		
+		_player.get(ComponentWeaponUse).charge.charge_time = [30, 68, 106, 144, 182, 220, 258]
 	}
 	self.set_bonus = XGaeaArmorSetBonus;
 }
@@ -67,6 +67,7 @@ function XGaeaArmorSetBonus(_player){
 	_weps.current_weapon[3] += 1;
 	
 	with(_player){
+		
 		struct_set(global.availible_characters[global.character_index].states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
 		//log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
 		self.fsm.add("superland", {

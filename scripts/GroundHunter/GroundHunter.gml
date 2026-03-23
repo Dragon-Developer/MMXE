@@ -10,7 +10,7 @@ function GroundHunter() : ProjectileWeapon() constructor{
 	self.weapon_palette = [
 		#882840,//Blue Armor Bits
 		#d04070,
-		#e060b0,
+		#f878c0,
 		#205060,//teal bits
 		#2080b0,
 		#20d0f0

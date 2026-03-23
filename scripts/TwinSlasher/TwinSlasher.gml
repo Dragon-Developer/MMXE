@@ -8,9 +8,9 @@ function TwinSlasher() : ProjectileWeapon() constructor{
 	self.description = "FIRES MULTIPLE CUTTING BLASTS"
 	
 	self.weapon_palette = [
-		#484848,//Blue Armor Bits
-		#606060,
-		#787878,
+		#403840,//Blue Armor Bits
+		#606068,
+		#808080,
 		#704008,//teal bits
 		#c86008,
 		#e8c808

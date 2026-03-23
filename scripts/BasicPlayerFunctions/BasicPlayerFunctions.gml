@@ -96,14 +96,14 @@ function add_wall_jump(_entity){
 				self.physics.update_gravity();
 			},
 			step: function() {
-				if (self.timer + self.states.wall_jump.launch_lock == CURRENT_FRAME){
+				if (self.timer + self.states.wall_jump.launch_lock < CURRENT_FRAME){
+					self.set_hor_movement();	
+				} else if (self.timer + self.states.wall_jump.launch_lock == CURRENT_FRAME){
 					self.input.__useBuffer = true;
 					self.publish("animation_play", { name: "jump", frame: 15, reset: false});
 					self.set_hor_movement();
-				} else if (self.timer + 7 < CURRENT_FRAME) {
-					//please this looks so much better
-					//self.publish("animation_play_at_loop", { name: "jump", frame: 10});
 				}
+				
 				if (self.timer + self.states.wall_jump.wall_stick == CURRENT_FRAME) {
 					self.physics.update_gravity();
 					
