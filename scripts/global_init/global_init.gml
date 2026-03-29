@@ -1,4 +1,4 @@
-global.game_w = 426//320
+global.game_w = 320//320
 global.game_h = 240
 global.menu_w = 320
 global.menu_h = 240
@@ -19,6 +19,7 @@ function global_init() {
 	global.client = undefined;
 	global.socket = undefined;
 	global.online = false;
+	global.dynamo_race = false;
 	
 	global.stage_Data = {
 		room: rm_explose_horneck, 

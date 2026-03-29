@@ -6,8 +6,11 @@ function ArmorDoubleGear() : ArmorBase() constructor{
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		var _weps = _player.get(ComponentWeaponUse)
 		array_push(_weps.weapon_list, PowerGear)
+		array_push(global.availible_characters[global.character_index].weapons, PowerGear)
 		array_push(_weps.weapon_list, SpeedGear)
+		array_push(global.availible_characters[global.character_index].weapons, SpeedGear)
 		_weps.set_weapons(_weps.weapon_list)
+		
 		_weps.current_weapon[2] += 2;
 		_weps.current_weapon[3] += 2;
 		

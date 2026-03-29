@@ -39,7 +39,7 @@ function ComponentDialouge() : ComponentBase() constructor{
 		//                                                              (_animation = "idle", _on_gui_layer = false, _x = 0, _y = 0, _dir = 1, _depth = 0, _color = c_white)
 		self.right_mugshot_sprite  = get(ComponentSpriteRenderer).add_sprite("x", true, GAME_W / 2 - self.dialouge_box_width / 2 - self.dialouge_margin - 22, dialouge_y_top + 22)
 		
-		
+		get(ComponentSpriteRenderer).swap_sprite(self.right_mugshot_sprite, c_white, 1, -1)
 		
 		self.set_dialouge_with_enum(self.chat[0]);
 	}
@@ -118,10 +118,10 @@ function ComponentDialouge() : ComponentBase() constructor{
 		log(_sprite_name_right)
 			
 		get(ComponentSpriteRenderer).change_sprite(self.left_mugshot_sprite, _sprite_name_right)
-		get(ComponentSpriteRenderer).swap_sprite(self.left_mugshot_sprite, focus == "right" ? c_white : c_grey)
+		get(ComponentSpriteRenderer).swap_sprite(self.left_mugshot_sprite, focus == "right" ? c_white : c_grey, 1, -1)
 		get(ComponentSpriteRenderer).change_sprite(self.right_mugshot_sprite, _sprite_name_left)
 		get(ComponentSpriteRenderer).swap_sprite(self.right_mugshot_sprite, focus != "right" ? c_white : c_grey)
-		get(ComponentSpriteRenderer).sprites[self.right_mugshot_sprite].animationController.__xscale = -1;
+		//get(ComponentSpriteRenderer).sprites[self.right_mugshot_sprite].animationController.__xscale = -1;
 	};
 	
 	self.step = function(){

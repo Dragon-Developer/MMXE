@@ -269,6 +269,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					
 					if(room == rm_intro)
 						global.settings.Has_done_intro_stage = true;
+					else if(room == rm_dynamos_hellhole)
+						global.dynamo_race = false;
 						
 					if(!variable_struct_exists(global.player_data, "beaten_stages"))
 						variable_struct_set(global.player_data, "beaten_stages", {})
@@ -284,7 +286,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 						player_data: global.player_data
 					},game_save_id + "save.json", true)
 					
-					if(global.settings.score_showcase && !left_manually)
+					if(global.settings.score_showcase && !left_manually) || (global.dynamo_race)
 						room_transition_to(rm_score_showcase, 0, 24);
 					else
 						room_transition_to(rm_stage_select, 0, 24);

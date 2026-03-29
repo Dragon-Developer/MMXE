@@ -15,7 +15,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.physics = noone;//physics is used to detect collisions with projectiles.
 	self.plays_sound_on_hit = false;//so players dont activate the on hit 
 	self.bright = false;
-	self.take_boss_damage = true;
+	self.take_boss_damage = false;
 	self.immune_to_damage_zones = false;
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
@@ -174,7 +174,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			if((!_proj.code.piercing || self.health > 0) && !_proj.code.super_piercing)
 				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			if(take_boss_damage)
-				return _proj.code.boss_damage;
+				return _proj.code.boss_damage / self.damage_rate;
 			else 
 				return _proj.code.damage;
 		}

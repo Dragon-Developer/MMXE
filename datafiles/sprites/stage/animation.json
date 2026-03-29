@@ -17,39 +17,29 @@
         "x": 16,
         "y": 32
       }
+    },
+    "dynamo": {
+      "origin": {
+        "x": 24,
+        "y": 38
+      }
     }
   },
 "data": {
     "layers": [
-      "normal",
-      "legs",
-      "helm",
-      "body",
-      "arms"
+      "normal"
     ],
     "animations": {
       "speed": 1,
       "type_combinations": [
         [
-          "",
-          "shoot",
-          "throw"
+          ""
         ],
         [
-          "",
-          "x1",
-          "x2",
-          //"x3",
-          "falcon",
-          "blade",
-          "hermes"
+          ""
         ],
         [
-          "",
-          "legs",
-          "body",
-          "arms",
-          "helm"
+          ""
         ]
       ],
       "list": [
@@ -81,6 +71,12 @@
                 "frame": 1
               }
             ]
+          }
+        },
+        {
+          "name": "dynamo",
+          "properties": {
+            "speed": 1
           }
         },
         {

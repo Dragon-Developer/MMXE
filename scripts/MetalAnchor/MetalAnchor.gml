@@ -36,7 +36,9 @@ function MetalAnchorData() : ProjectileData() constructor{
 		_inst.y += vspd;
 		vspd += grav;
 		
-		if(instance_position(_inst.x, _inst.y + 16, obj_square_16)){
+		if(instance_position(_inst.x, _inst.y - 8, obj_square_16) && vspd < 0){
+			vspd *= -1;
+		} else if(instance_position(_inst.x, _inst.y + 8, obj_square_16)){
 			vspd = bounce_speed;
 			_inst.y += bounce_speed * 2
 			bounce_speed *= 0.9;

@@ -18,15 +18,51 @@
         "y": 16
       }
     },
+    "rock_lemon_power_gear": {
+      "origin": {
+        "x": 42,
+        "y": 32
+      }
+    },
+    "rock_shot_1": {
+      "origin": {
+        "x": 42,
+        "y": 32
+      }
+    },
+    "rock_shot_2": {
+      "origin": {
+        "x": 42,
+        "y": 34
+      }
+    },
     "ground_hunter": {
       "origin": {
-        "x": 40,
-        "y": 8
+        "x": 26,
+        "y": 20
+      }
+    },
+    "ground_hunter_diagonal": {
+      "origin": {
+        "x": 26,
+        "y": 20
+      }
+    },
+    "ground_hunter_diagonal": {
+      "origin": {
+        "x": 22,
+        "y": 22
+      }
+    },
+    "ground_hunter_charged": {
+      "origin": {
+        "x": 32,
+        "y": 32
       }
     },
     "metal_anchor": {
       "origin": {
-        "x": 16,
+        "x": 24,
         "y": 16
       }
     },
@@ -1641,6 +1677,24 @@
           }
         },
         {
+          "name": "ground_hunter_diagonal",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "ground_hunter_charged",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "ground_hunter_charged_shot",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
           "name": "shotgun_ice_fragment",
           "properties": {
             "speed": 1
@@ -1649,7 +1703,28 @@
         {
           "name": "metal_anchor",
           "properties": {
-            "speed": 0.5
+            "loop_begin": 3,
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "rock_lemon_power_gear",
+          "properties": {
+            "loop_begin": 1,
+            "speed": 0.33
+          }
+        },
+        {
+          "name": "rock_shot_1",
+          "properties": {
+            "loop_begin": 1,
+            "speed": 0.33
+          }
+        },
+        {
+          "name": "rock_shot_2",
+          "properties": {
+            "speed": 0.33
           }
         },
         {

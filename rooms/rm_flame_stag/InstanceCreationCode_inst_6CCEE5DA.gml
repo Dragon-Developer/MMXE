@@ -13,7 +13,7 @@ dialouge = [
 		mugshot_right : PLAYER_SPRITE,
 		focus : "right"
 	},
-	{   sentence : "R-Right! Uhh, Gaea Head, two extra damage, Step into capsule!",
+	{   sentence : "R-Right! Uhh, Gaea Head, halved charge time, Step into capsule!",
 		mugshot_left : "dr_light",
 		mugshot_right : PLAYER_SPRITE,
 		focus : "left"

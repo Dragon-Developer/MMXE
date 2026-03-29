@@ -76,7 +76,11 @@ function ComponentScoreShowcase() : ComponentBase() constructor{
 		draw_string_condensed(_verification, 0, 233);
 		
 		if(self.input.get_input_pressed_raw("shoot") || self.input.get_input_pressed_raw("jump")){
-			room_transition_to(rm_stage_select, 0, 24);
+			if(global.dynamo_race)
+				room_transition_to(rm_dynamos_hellhole, 0, 24);
+			else
+				room_transition_to(rm_stage_select, 0, 24);
+					
 			death_time++;
 		}
 	}

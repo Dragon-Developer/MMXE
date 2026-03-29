@@ -1,7 +1,7 @@
 function BassCharacter() : BaseCharacter() constructor{
 	self.image_folder = "bass";
 	
-	self.weapons = [BassBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner, RollingShield]
+	self.weapons = [BassBuster, FireWave, ElectricWeb, ShotgunIce, WaveBurner, RollingShield, MetalAnchor, TwinSlasher, GroundHunter]
 	
 	self.default_score = 1100;//double jump is real strong he aint getting any leeway
 	self.states.jump.count = 2;
@@ -11,6 +11,14 @@ function BassCharacter() : BaseCharacter() constructor{
 		add_dash(_player);
 		add_wall_jump(_player);
 	}
+	
+		self.possible_armors = [
+		[noone],//heads
+		[noone],//arms
+		[noone],//bodies
+		[noone],//boots
+		[noone, ArmorDoubleGear]//full set
+	];
 	
 	self.default_palette = [
 		#b10000,//eye

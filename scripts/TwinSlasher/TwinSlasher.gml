@@ -45,7 +45,6 @@ function TwinSlasherUpData() : ProjectileData() constructor{
 function TwinSlasherDownData() : TwinSlasherUpData() constructor{
 	self.comboiness = 6;
 	self.vdir = -1;
-	self.animation = "twin_slasher_charged_middle_down";
 	
 	self.create = function(_inst){
 	}

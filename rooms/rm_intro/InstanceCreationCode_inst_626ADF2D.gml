@@ -2,12 +2,12 @@ on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
 		{   sentence : "You are about to enter the last part of the intro!",
-			mugshot_left : undefined,
+			mugshot_left : "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "This room contains a boss. Make sure you know your controls before entering!",
-			mugshot_left : undefined,
+			mugshot_left : "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		}

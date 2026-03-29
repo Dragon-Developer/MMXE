@@ -2,17 +2,17 @@ on_spawn = function(_npc){
 	_npc.components.get(ComponentNPC).face_player = true;
 	_npc.components.get(ComponentNPC).dialouge = [
 		{   sentence : "When approaching a boss door, there is usually an invisible checkpoint.",
-			mugshot_left : undefined,
+			mugshot_left : "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
 		{   sentence : "It will still flash and make a noise, but you will not be able to see it after that.",
-			mugshot_left : undefined,
+			mugshot_left : "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		},
-		{   sentence : "Don't worry about it's functionality! It still works as the visible variation!",
-			mugshot_left : undefined,
+		{   sentence : "Don't worry about its functionality! It still works as the visible variation!",
+			mugshot_left : "tut_bot",
 			mugshot_right : PLAYER_SPRITE,
 			focus : "left"
 		}

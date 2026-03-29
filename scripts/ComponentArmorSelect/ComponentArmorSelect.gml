@@ -141,7 +141,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		if(_change != 0 || _force){
 			//increment the armor part by 1
 			log(self.selected_armor)
-			self.selected_armor[self.selected_part]+= _change;
+			self.selected_armor[self.selected_part] += _change;
 			
 			
 			self.selected_armor[self.selected_part] = 
@@ -167,7 +167,9 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 					script_execute(_code)
 				}
 				
-				if(!_armor.selectable && _change != 0){
+				if(!_armor.selectable){
+					if(_change == 0)
+						self.selected_armor[self.selected_part] = 0;
 					self.change_armor(_change, true);
 					return;
 				}

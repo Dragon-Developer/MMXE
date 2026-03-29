@@ -31,6 +31,14 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		_shot.code.dir = _dir;
 		_shot.code.shooter = _shooter;
 		_shot.dir = _dir;
+		
+		if(variable_struct_exists(_shot.code, "vdir")){
+			_shot.vdir = _shot.code.vdir;
+		} else {
+			_shot.code.vdir = 1;
+			_shot.vdir = 1;
+		}
+		
 		_shot.code.tag = array_concat(_shot.code.tag, _tags);
 		_shot.code.damage += _damage_offset;
 		_shot.code.create(_shot.position);
@@ -40,6 +48,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		//log(_shot.code.animation)
 		
 		struct_set(_shot, "sprite", get(ComponentSpriteRenderer).add_sprite(_shot.code.animation,false,  _x, _y, _dir));
+		struct_set(_shot, "animation", _shot.code.animation);
 		//log(_shot.sprite)
 		struct_set(_shot, "hitbox", _shot.code.hitbox_scale);
 		struct_set(_shot, "hitbox_offset", _shot.code.hitbox_offset);
@@ -62,12 +71,21 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		
 		_shot.code.dir = _dir;
 		_shot.dir = _dir;
+		
+		if(variable_struct_exists(_shot.code, "vdir")){
+			_shot.vdir = _shot.code.vdir;
+		} else {
+			_shot.code.vdir = 1;
+			_shot.vdir = 1;
+		}
+		
 		_shot.code.tag = array_concat(_shot.code.tag, _tags);
 		_shot.code.create(_shot.position);
 		
 		//log(_shot.code.animation)
 		
 		struct_set(_shot, "sprite", get(ComponentSpriteRenderer).add_sprite(_animation,false,  _x, _y, _dir, -35565));
+		struct_set(_shot, "animation", _shot.code.animation);
 		//log(_shot.sprite)
 		struct_set(_shot, "hitbox", _shot.code.hitbox_scale);
 		struct_set(_shot, "hitbox_offset", _shot.code.hitbox_offset);
@@ -89,9 +107,14 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.step = function(){
 		array_foreach(self.projectiles, function(_shot){
 			_shot.code.step(_shot.position);
-			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir)
+			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir, _shot.vdir)
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y);
-				
+			
+			if(_shot.animation != _shot.code.animation){
+				get(ComponentSpriteRenderer).change_sprite(_shot.sprite, _shot.code.animation);
+				_shot.animation = _shot.code.animation;
+			}
+			
 			//get every player instance and see if they are within a screen's distance away from the projectile
 			//if none return true, kill yourself NOW
 			
