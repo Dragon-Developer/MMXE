@@ -18,6 +18,12 @@
         "y": 32
       }
     },
+    "welder": {
+      "origin": {
+        "x": 16,
+        "y": 25
+      }
+    },
     "dynamo": {
       "origin": {
         "x": 24,
@@ -75,6 +81,12 @@
         },
         {
           "name": "dynamo",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "welder",
           "properties": {
             "speed": 1
           }

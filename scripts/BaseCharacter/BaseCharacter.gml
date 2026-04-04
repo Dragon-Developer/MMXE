@@ -31,6 +31,9 @@ function BaseCharacter() constructor{
 		land:{
 			sound: "land"
 		},
+		wall_slide: {
+			speed: 2
+		},
 		wall_jump: {
 			strength: 5,
 			wall_stick: 5,

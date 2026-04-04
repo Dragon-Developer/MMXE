@@ -37,9 +37,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 		});
 	}
 	
-	self.init = function(){
-		
-	}
+	self.init = function(){ }
 	
 	self.heal = function(_count){
 		if(_count + self.health > self.health_max){
@@ -66,15 +64,11 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(self.get_instance() == noone || self.get_instance() == undefined) return;
 		
-		//log(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_player))
 		if(instance_exists(obj_player)){
-			//log(self.get_instance().mask_index)
 			if(self.get_instance().mask_index == -1){
 				self.get_instance().mask_index = spr_player_mask;	
 			}
 		}
-		
-		//log(self.invuln_offset < CURRENT_FRAME)
 		
 		if(self.invuln_offset > CURRENT_FRAME) {
 			if(CURRENT_FRAME % 2 == 0 && bright)
@@ -105,6 +99,13 @@ function ComponentDamageable() : ComponentBase() constructor{
 		_damage += self.check_for_bosses();
 		_damage += self.check_for_damage_zones();
 		
+		if(get(ComponentPlayerMove)){
+			_damage *= (global.settings.difficulty + 1) / 2;
+			
+			if(_damage > self.health_max && DIFF == 0)//ohko protection for easy mode
+				_damage = self.health_max - 1;
+		}
+		
 		self.health -= _damage == 0 ? 0 : max(ceil(_damage * damage_rate), 1)
 		
 		if(_damage != 0){
@@ -119,8 +120,6 @@ function ComponentDamageable() : ComponentBase() constructor{
 				_num.number = ceil(_damage * damage_rate);
 			}
 		}
-		
-		
 		
 		if(self.health <= 0)
 		{
@@ -197,12 +196,11 @@ function ComponentDamageable() : ComponentBase() constructor{
 		if(_enemy == false) return 0;
 		
 		if(self.invuln_offset > CURRENT_FRAME) || array_contains(self.hit_by_list, _enemy){
-			//if the comboiness is too high and the projectile is not comboy enough
+			//if the comboiness is too high and the projectile is not comboy enough 
 			return 0;
 		}
 		
 		if(_enemy.code.contact_damage > 0){
-			//self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			array_push(self.hit_by_list, _enemy)
 			return _enemy.code.contact_damage;
@@ -225,19 +223,12 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(_enemy.components.get(ComponentBoss).contact_damage > 0){
 			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
-			//self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
-			log("hit by enemy")
-			log(_enemy.components.get(ComponentBoss).contact_damage)
-			log(object_get_name(_enemy.object_index))
 			return _enemy.components.get(ComponentBoss).contact_damage;
 		}
 		return 0;
 	}
 	
 	self.check_for_damage_zones = function(){
-		
-		
-		
 		var _zone = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,obj_hurt_zone);
 		
 		if(!variable_instance_exists(_zone, "contact_damage")){ 
@@ -250,12 +241,12 @@ function ComponentDamageable() : ComponentBase() constructor{
 		
 		if(immune_to_damage_zones && !_zone.ignores_defense) return 0;
 		
-		//if(_zone.contact_damage > 0){
-			self.invuln_offset = CURRENT_FRAME + self.invuln_time;
-			//self.publish("took_damage", self.health);//so other components dont need to hook into this to get info
-			//log("hit by zone")
-			return _zone.contact_damage;
-		//}
-		//return 0;
+		if _zone.ignores_defense {
+			self.health -= 1;
+			return _zone.contact_damage / self.damage_rate - 1;
+		}
+		
+		self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+		return _zone.contact_damage;
 	}
 }

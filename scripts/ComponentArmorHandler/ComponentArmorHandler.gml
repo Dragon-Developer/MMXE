@@ -5,8 +5,10 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 	self.armor_structs = variable_clone(global.armors[global.character_index],256);
 	self.reset = false;
 	self.set_bonuses = [];
+	self._purchases = [];
 	
 	self.init = function(){
+		
 		array_foreach(armor_parts, function(_arm, _index){
 			try{
 				_arm = global.availible_characters[global.character_index].possible_armors[clamp(_index, 0, array_length( global.availible_characters[global.character_index].possible_armors))][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
@@ -17,6 +19,19 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 			}
 		})
 		
+		if(get(ComponentPlayerMove)){
+			_purchases = [];
+			
+			array_foreach(global.settings.shop_items, function(_item, _index){
+				array_push(_purchases, global.shop_items[_item])
+			})
+			
+			armor_parts = array_concat(armor_parts, _purchases)
+		}
+		
+		apply_full_armor_set(armor_parts);
+	}
+	self.reapply = function(){
 		apply_full_armor_set(armor_parts);
 	}
 	
@@ -24,14 +39,11 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 		
 		get(ComponentPlayerMove).reset_state_variables(_state);
 		self.armor_parts = [[],[],["/normal"]];
-		//self.armor_structs = _armors;
 		self.reset = _reset;
 		self.set_bonuses = [];
-		//var _armors_to_load = [];
 		array_foreach(_armors, function(_arm, _index){
 			try{
 				if(reset){
-					//_arm = global.availible_characters[global.character_index].possible_armors[clamp(_index, 0, array_length( global.availible_characters[global.character_index].possible_armors))][clamp(_arm, 0, array_length( global.availible_characters[global.character_index].possible_armors[_index]))]
 					self.armor_structs[_index] = _arm;
 				}
 			} catch(_exception){
@@ -70,7 +82,6 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 						if(self.set_bonuses[0] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[3]){
 							if script_exists(self.set_bonuses[0])
 								script_execute(self.set_bonuses[0], get(ComponentPlayerMove))
-							//log("SET BONUS RAAGHHHHHHHHHHHHHHHHHHHHHHHH")
 						}
 					}
 					
@@ -109,8 +120,6 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 		self.publish("armor_set",self.armor_parts[1]);
 		self.get_instance().components.get(ComponentAnimationShadered).set_subdirectories(self.armor_parts[2]);
 		self.get_instance().components.get(ComponentAnimationShadered).reload_animations();
-		//log(self.armor_parts[1])
-		//log(self.armor_parts[2])
 		//fix the armor_parts array. it does not need to store an array of strings
 		self.armor_parts = self.armor_parts[0];
 	}

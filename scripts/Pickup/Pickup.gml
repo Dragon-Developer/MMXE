@@ -37,7 +37,44 @@ function HugeWeaponPickup() : MediumWeaponPickup() constructor{
 	self.sprite = "wp_3"
 }
 
+function Money() : BasePickup() constructor{
+	self.skip_cond = "none";
+	self.delay = 0;
+	self.value = 1;
+	self.count = 1;
+	self.apply = function(){
+		global.player_data.metals += 1
+	}
+	self.sprite = "money_small_yellow"
+}
 
+function BlueMoney() : Money() constructor{
+	self.apply = function(){
+		global.player_data.metals += 5
+	}
+	self.sprite = "money_small_blue"
+}
+
+function RedMoney() : Money() constructor{
+	self.apply = function(){
+		global.player_data.metals += 25
+	}
+	self.sprite = "money_big_red"
+}
+
+function GreenMoney() : Money() constructor{
+	self.apply = function(){
+		global.player_data.metals += 100
+	}
+	self.sprite = "money_big_yellow"
+}
+
+function PurpleMoney() : Money() constructor{
+	self.apply = function(){
+		global.player_data.metals += 500
+	}
+	self.sprite = "money_big_purple"
+}
 
 function HeartTankPickup() : BasePickup() constructor{
 	self.sound = "collectible";

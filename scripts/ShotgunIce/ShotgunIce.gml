@@ -9,6 +9,7 @@ function ShotgunIce() : ProjectileWeapon() constructor{
 		#efad31,
 		#ffe752
 	];
+	
 	self.title = "S. ICE";
 }
 

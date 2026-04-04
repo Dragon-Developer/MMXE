@@ -10,7 +10,7 @@ function GameLoop() constructor {
 	// Always 255 on modern PCs;
 	self.fullSpace = 255;
 	// Here we use 31 as it's 15-bit max value.
-	self.colorSpace = 31;
+	self.colorSpace = 32;
 	
 	self.save_state = function() {
 		ENTITIES.save();	
@@ -92,6 +92,7 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentNPC, _func);
 		ENTITIES.for_each_component(ComponentInteractibleContact, _func);
 		ENTITIES.for_each_component(ComponentInteractibleInteract, _func);
+		ENTITIES.for_each_component(ComponentShop, _func);
 		ENTITIES.for_each_component(ComponentParallax, _func);
 		ENTITIES.for_each_component(ComponentCamera, _func);
 		ENTITIES.for_each_component(ComponentRide, _func);

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"GuiVolume",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GuiVolume",
+  "parent":{
+    "name":"Gui",
+    "path":"folders/Scripts/Gui.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -104,6 +104,36 @@
           "properties": {
             "speed": 0.1
           }
+        },
+        {
+          "name": "money_big_red",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
+          "name": "money_big_yellow",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
+          "name": "money_big_purple",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
+          "name": "money_small_blue",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
+          "name": "money_small_yellow",
+          "properties": {
+            "speed": 0.2
+          }
         }
 
       ]

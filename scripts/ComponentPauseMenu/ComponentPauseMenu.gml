@@ -31,11 +31,13 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	self.input = noone;
 	self.animation_timescale = 0;
 	
+	self.chip_icons = [];
+	
 	self.can_unpause = false;//to prevent immediately leaving the pause menu
 	
 	self.fsm = new SnowState("weapons", false)
 	
-	#region FSchange_weaponM
+	#region FSM
 	self.fsm.add("weapons", {
 			step: function(){
 				self.weapon_selection += self.input.get_input_pressed_raw("down") - self.input.get_input_pressed_raw("up")
@@ -208,6 +210,21 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		get(ComponentSpriteRenderer).add_sprite("weapon_tank", true, 224, 176)
 		get(ComponentSpriteRenderer).add_sprite("weapon_tank", true, 224, 200)
 		
+		var _chip_sprite = ""
+		var _chip;
+		
+		for(var k = 0; k < array_length(global.settings.shop_items); k++){
+			_chip = {}
+			
+			with(_chip){
+				script_execute(global.shop_items[global.settings.shop_items[k]])
+			}
+			
+			_chip_sprite = _chip.icon;
+			
+			get(ComponentSpriteRenderer).add_sprite(_chip_sprite, true, 168 + (k / (array_length(global.settings.shop_items) - 1)) * 96, 128)
+		}
+		
 		//settings bar
 		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("exit", true, 264, 160))
 		array_push(self.settings_icons, get(ComponentSpriteRenderer).add_sprite("navigator", true, 264, 180))
@@ -294,9 +311,10 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			if(i = 1)
 				i += 0.5;
 			
+			//show equipped number
 			for(var a = 0; a < array_length(_weapons.current_weapon); a++){
 				if(_weapons.current_weapon[a] == floor(i))
-					draw_string(a, 36  + a * 2, 24 + i * 16 + a * 2)
+					draw_string(a, 48  + (a >= 2 ? 0 : 8), 24 + i * 16 + (a mod 2) * 8)
 			}
 			
 			//draw the name of the weapon
@@ -322,14 +340,9 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			}
 		}
 		
-		//weapon descriptions
-		if(array_length(self.weapon_descs) > 0)
-			if(string_length(self.weapon_descs[self.weapon_selection]) > 15){
-				draw_string(string_copy(self.weapon_descs[0], 0,15), 36, 204, "pause menu")
-				draw_string(string_copy(self.weapon_descs[0],16,15), 36, 212, "pause menu")
-			} else {
-				draw_string(self.weapon_descs[self.weapon_selection], 36, 204, "pause menu")
-			}
+		//Money (used to be weapon descriptions)
+		get(ComponentSpriteRenderer).draw_sprite("money", CURRENT_FRAME / 5,36, 206)
+		draw_string(string(global.player_data.metals), 56, 208, "pause menu")
 		
 		//draw the tanks menu
 		draw_string("E", 176, 176, "orange")
@@ -376,6 +389,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		
 		palette.reset();
 		
+		//selection reticle
 		if (self.fsm.get_current_state() == "weapons")
 			draw_sprite_ext(spr_reticle_armor_select, 0, 34,16,123 / 32,181 / 32,0,c_white, 1);
 		else if (self.fsm.get_current_state() == "tanks")
@@ -383,5 +397,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		else {
 			draw_sprite_ext(spr_reticle_armor_select, 0, 259,155,27 / 32,69 / 32,0,c_white, 1);
 		}
+		
+		//chips
+		
 	}
 }

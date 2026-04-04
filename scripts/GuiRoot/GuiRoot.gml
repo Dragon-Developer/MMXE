@@ -23,15 +23,21 @@ function GuiRoot() : GuiContainer() constructor {
 	}
 	
 	mainMenuContainer = new GuiMainMenu();
+	OptionsContainer = new GuiOptions();
 	hudContainer = new GuiPlayerHUD();
-	SettingsContainer = new GuiSettings();
+	SettingsContainer = new GuiSettingsMenu();
+	KeybindsContainer = new GuiKeybinds();
+	VolumeContainer = new GuiVolume();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
 	SettingsContainer.setEnabled(false);
+	OptionsContainer.setEnabled(false);
+	KeybindsContainer.setEnabled(false);
+	VolumeContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, hudContainer, SettingsContainer]);
+	addChild([mainMenuContainer, hudContainer, SettingsContainer, OptionsContainer, KeybindsContainer, VolumeContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;

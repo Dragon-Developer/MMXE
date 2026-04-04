@@ -332,7 +332,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					x = instance_nearest(x,y,obj_ladder).x + 16;
 				}
 				self.publish("animation_play", { name: "ladder_enter" });
-				self.fsm.change("ladder")
+				self.find("animation").animation.__speed = 1;
+			},
+			step: function(){
+				self.get_instance().y += self.vdir * self.states.ladder.speed / 2;
 			}
 		})
 		.add_child("ladder", "ladder_move", {
@@ -345,11 +348,24 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.get_instance().y += self.vdir * self.states.ladder.speed;
 			}
 		})
+		.add_child("ladder", "ladder_idle", {
+			enter: function(){
+				self.fsm.inherit();
+				self.publish("animation_play", { name: "ladder_move" });
+				self.find("animation").animation.__speed = 0;
+			}
+		})
 		.add("ladder_exit", {
 			enter: function(){
 				self.find("animation").animation.__speed = 1;
 				self.publish("animation_play", { name: "ladder_exit" });
-				self.fsm.change("fall")
+				
+				if(self.vdir > 0)
+					self.fsm.change("fall") 
+				else {
+					var _inst = self.get_instance()
+					_inst.y = instance_nearest(_inst.x, _inst.y, obj_ladder).y - 17;
+				}
 			},
 			leave: function(){
 				self.physics.update_gravity();
@@ -429,7 +445,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_animation_end", "complete", "outro")
 		.add_transition("t_animation_end", "pose", "idle")
 		.add_transition("t_animation_end", "outro", "leave")
-		.add_transition("t_jump", ["ladder", "ladder_move"], "jump")
+		.add_transition("t_animation_end", "ladder_enter", "ladder_move")
+		.add_transition("t_jump", ["ladder_idle", "ladder_move", "ladder_enter"], "jump")
 		.add_wildcard_transition("t_dialouge", "idle")
 		.add_transition("t_hadouken", "idle", "land")
 		/*automatic transitions between states*/
@@ -437,12 +454,11 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "walk", "idle", function() { return self.hdir == 0 || self.physics.check_wall(self.hdir); })
 		.add_transition("t_transition", "crouch", "idle", function() { return !self.input.get_input("down"); })
 		.add_transition("t_transition", "jump", "fall", function() { return !self.input.get_input("jump") || self.physics.is_on_ceil() || self.physics.get_vspd() >= 0; })
-		.add_transition("t_transition", ["fall", "idle", "walk", "dash", "walljump"], "ladder_enter", function() { return self.vdir != 0 && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder)})
-		.add_transition("t_transition", "ladder", "ladder_move", function() { return self.vdir != 0})
-		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
-		.add_transition("t_transition", "ladder_move", "ladder", function() { return self.vdir == 0})
-		.add_transition("t_transition", ["ladder", "ladder_move"], "ladder_exit", function() { 
-			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder) || self.physics.is_on_floor()
+		.add_transition("t_transition", ["fall", "idle", "walk", "dash", "walljump"], "ladder_enter", function() { return self.vdir != 0 && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_ladder) && !(self.physics.is_on_floor(4) && self.vdir > 0)})
+		.add_transition("t_transition", "ladder_idle", "ladder_move", function() { return self.vdir != 0})
+		.add_transition("t_transition", "ladder_move", "ladder_idle", function() { return self.vdir == 0})
+		.add_transition("t_transition", ["ladder_idle", "ladder_move"], "ladder_exit", function() { 
+			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 8, obj_ladder) || self.physics.is_on_floor(4)
 		})
 		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(self.ground_distance); })
 		.add_transition("t_transition", ["idle", "walk", "crouch", "land"], "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
@@ -605,6 +621,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		draw_string(string(self.get_instance().y), self.get_instance().x - 64, self.get_instance().y - 32)
 		draw_string(string(locked), self.get_instance().x + 64, self.get_instance().y - 48)
 		draw_string(string(input.__locked), self.get_instance().x + 64, self.get_instance().y - 64)
+		draw_string(string(fsm.get_current_state()), self.get_instance().x - 32, self.get_instance().y - 64)
 	}
 	
 	self.draw_gui = function() {

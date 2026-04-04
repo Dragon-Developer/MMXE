@@ -13,3 +13,4 @@
 #macro MENU_H global.menu_h
 #macro CURRENT_FRAME global.game.__current_frame * global.game.game_loop.game_speed
 #macro PLAYER_SPRITE global.availible_characters[global.character_index].image_folder
+#macro DIFF global.settings.difficulty

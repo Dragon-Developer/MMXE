@@ -920,7 +920,23 @@
                 "frame": 0
               },
               {
-                "key": 30,
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_shoot",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
                 "frame": 0
               }
             ]
@@ -969,11 +985,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 1
+                "frame": 5
               },
               {
-                "key": 10,
-                "frame": 2
+                "key": 4,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 6
               }
             ]
           }

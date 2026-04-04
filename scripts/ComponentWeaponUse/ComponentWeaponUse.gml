@@ -72,7 +72,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			if(giga_index != -1){
 				self.heal_ammo(max(round(_damage / 4), 1), giga_index)
 			}
-			log("YEOW")
+			//log("YEOW")
 		});
 	}
 	
@@ -472,6 +472,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		if(_code.animation_append != "")
 		if(_anim_name == "shoot"){
 			self.publish("animation_play", {name: "shoot", reset: true})
+		} else if(_anim_name == "ladder_move" || _anim_name == "ladder_exit" || _anim_name == "ladder_enter"){
+			self.publish("animation_play", {name: "ladder_shoot"})
 		}
 		
 		self.create_shot(_shot_data, _shot_index, _input, _id, _anim_name);

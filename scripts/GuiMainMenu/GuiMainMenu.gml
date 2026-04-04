@@ -34,11 +34,11 @@ function GuiMainMenu() : GuiContainer() constructor {
 		} else 
 			parent.startGame(rm_stage_select);
 	});
-		
-    buttonOptions = new GuiButton(80, 16,"Options");
-	buttonOptions.setBorderSprite(undefined);
-	buttonOptions.setSprite(undefined);
-	buttonOptions.addEventListener("click", function() { 
+	
+	buttonSettings = new GuiButton(80, 16,"Settings");
+	buttonSettings.setBorderSprite(undefined);
+	buttonSettings.setSprite(undefined);
+	buttonSettings.addEventListener("click", function() { 
 		self.setEnabled(false);
 		parent.SettingsContainer.setEnabled(true);
 	});
@@ -47,6 +47,6 @@ function GuiMainMenu() : GuiContainer() constructor {
 	buttonExit.setBorderSprite(undefined);
 	buttonExit.setSprite(undefined);
     
-    mainContainer.addChild([titleImage, buttonStart, buttonOptions, buttonExit]);
+    mainContainer.addChild([titleImage, buttonStart, buttonSettings, buttonExit]);
     addChild(mainContainer);
 }

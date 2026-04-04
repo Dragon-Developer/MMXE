@@ -74,7 +74,7 @@ function add_wall_jump(_entity){
 			step: function() {
 				self.timer++;
 				if(self.timer == 6){
-					self.physics.set_vspd(2);
+					self.physics.set_vspd(self.states.wall_slide.speed);
 				}
 				self.set_hor_movement();	
 			}

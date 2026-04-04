@@ -22,7 +22,9 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		var _enemy = {};
 		
 		struct_set(_enemy, "position", new Vec2(_x,_y));
+		struct_set(_enemy, "initial_position", new Vec2(_x,_y));
 		struct_set(_enemy, "code", {});
+		struct_set(_enemy, "struct", _code);
 		struct_set(_enemy, "hit_by_list", []);
 		
 		with(_enemy.code){script_execute(_code)}
@@ -64,8 +66,41 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 			self.get_collision(_enemy);
 		})
 		
+		for(var p = 0; p < array_length(self.enemies); p++){
+			for(var k = 0; k < array_length(self.to_delete); k++){
+				if(enemies[p] == to_delete[k]){
+					//reset the enemy
+					
+					if(!onscreen(enemies[p]))
+						respawn_enemy(enemies[p])
+				}
+			}
+		}
+		
 		if (keyboard_check_pressed(ord("3"))) {draw_enabled = !draw_enabled;}
 	}
+	
+	self.respawn_enemy = function(_enemy){
+		_enemy.position = _enemy.initial_position;
+		with(_enemy.code){script_execute(_enemy.struct)}
+	}
+	
+	self.onscreen = function(_enemy){
+		
+		var _near_player = false;
+		for(var p = 0; p < instance_number(obj_player); p++){
+			var _plr = instance_find(obj_player, p);
+				
+			if(_plr.x - GAME_W < _enemy.position.x &&
+				_plr.x + GAME_W > _enemy.position.x &&
+				_plr.y - GAME_W < _enemy.position.y &&
+				_plr.y + GAME_W > _enemy.position.y)
+					_near_player = true
+		}
+		
+		return _near_player;
+	}
+	
 	self.draw = function(){
 		array_foreach(self.enemies, function(_enemy){
 			if(!_enemy.code.dead){
