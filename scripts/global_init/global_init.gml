@@ -68,8 +68,8 @@ function global_init() {
 	//global.stacktracking = true;
 	global.last_run_type_of_component = "none"
 	
-	global.shop_items = [ChipSpeedster, ChipHyperDash, ChipJumper, ChipDasher, ChipAirDasher, ChipClinger];
-	global.shop_prices = [250, 450, 300, 200, 800, 575];
+	global.shop_items = [ChipSpeedster, ChipHyperDash, ChipJumper, ChipDasher, ChipAirDasher, ChipClinger, ChipWeighter, ChipDamager];
+	global.shop_prices = [250, 450, 300, 200, 800, 575, 425, 700];
 	
 	input_source_set(INPUT_KEYBOARD, 0);
 	global_prepare_application();

@@ -27,8 +27,23 @@ on_spawn = function(_npc){
 				global.dynamo_race = true;
 				room_transition_to(rm_desert_bus, 0, 24);
 			},
-			option_4: "Nah",
+			option_4: "Old Flame Stag",
 			option_4_function: function(){
+				global.dynamo_race = true;
+				room_transition_to(rm_old_flame_stag, 0, 24);
+			},
+			option_5: "Old Storm Eagle",
+			option_5_function: function(){
+				global.dynamo_race = true;
+				room_transition_to(rm_old_storm_eagle, 0, 24);
+			},
+			option_6: "Old Chill Penguin",
+			option_6_function: function(){
+				global.dynamo_race = true;
+				room_transition_to(rm_chill_penguin, 0, 24);
+			},
+			option_7: "Nah",
+			option_7_function: function(){
 				//nah
 			},
 		}

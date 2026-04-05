@@ -98,6 +98,18 @@
           }
         },
         {
+          "name": "chip_damager",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "chip_weighter",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
           "name": "bar_start_cap",
           "properties": {
             "speed": 1

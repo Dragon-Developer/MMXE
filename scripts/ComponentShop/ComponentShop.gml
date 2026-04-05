@@ -21,7 +21,7 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 	item_draw_count = 3; //only counts one direction
 	item_draw_radius = 32; // how far away the last item is from the center
 	
-	shop_draw_x_offset = -160;
+	shop_draw_x_offset = -170;
 	shop_draw_y_offset = -64;
 	shop_draw_x_real_offset = -200;
 	shop_draw_y_real_offset = -96;
@@ -109,8 +109,10 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 		var _text_type = "normal"
 		var _inst = get_instance();
 		
+		//money display
 		draw_string("Metals: " + string(global.player_data.metals), _inst.x + _x, _inst.y + _y, "pause menu")
 		
+		//top item
 		for(var t = 1; t < item_draw_count ; t++){
 			 _rot = ((t + shop_rot / shop_rot_time * -1 * shop_rot_dir) / item_draw_count) * (pi / 2) + pi
 			 _x = shop_draw_x_real_offset + sin(_rot) * item_draw_radius
@@ -134,6 +136,7 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 			draw_string(shop_prices[_item_index], _inst.x + _x - 24, _inst.y + _y + 3, _text_type)
 		}
 		
+		//bottom items
 		for(var t = 1; t < item_draw_count ; t++){
 			 _rot = ((t + shop_rot / shop_rot_time * shop_rot_dir) / item_draw_count) * (pi / 2) 
 			 _x = shop_draw_x_real_offset + sin(_rot * -1) * item_draw_radius
@@ -160,7 +163,7 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 		 _x = shop_draw_x_real_offset + sin(_rot * -1) * item_draw_radius
 		 _y = shop_draw_y_real_offset + cos(_rot * -1) * item_draw_radius
 			
-		//draw_sprite(spr_lemon_mask, 0, _inst.x + _x, _inst.y + _y);
+		//center item
 		draw_set_color(#f0f0f0)
 		draw_rectangle(_inst.x + _x - 1, _inst.y + _y - 1, _inst.x + _x + shop_draw_width + 1, _inst.y + _y + shop_draw_height + 1, false)
 		draw_set_color(#404048)
@@ -175,6 +178,30 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 			_text_type = "normal"
 			
 		draw_string(shop_prices[_item_index], _inst.x + _x - 24, _inst.y + _y + 3, _text_type)
+		
+		//description panel
+		var _x = shop_draw_x_real_offset
+		var _y = shop_draw_y_real_offset
+		draw_set_color(c_white)
+		draw_rectangle(_inst.x + _x + shop_draw_width - 1, _inst.y + _y - shop_draw_height - item_draw_radius - 1, _inst.x + _x + shop_draw_width + 80 + 1, _inst.y + _y + shop_draw_height + item_draw_radius + 1, false)
+		draw_set_color(c_black)
+		draw_rectangle(_inst.x + _x + shop_draw_width, _inst.y + _y - shop_draw_height - item_draw_radius, _inst.x + _x + shop_draw_width + 80, _inst.y + _y + shop_draw_height + item_draw_radius, false)
+		
+		//description text
+		var _text = shop_structs[_item_index].description
+		var _split_text = string_split(_text, " ")
+		var _final_text = "";
+		var _string_pos = 0;
+		for(var g = 0; g < array_length(_split_text); g++){
+			_final_text = ""
+			while(string_get_text_length(_final_text) < 48){
+				_final_text += " " + _split_text[g];
+				g++;
+			}
+			g--;
+			draw_string_condensed(_final_text, _inst.x + _x + shop_draw_width, _inst.y + _y - shop_draw_height - item_draw_radius + _string_pos * 10, "pause menu")
+			_string_pos++;
+		}
 	}
 	
 	self.set_interacted_script(function(){

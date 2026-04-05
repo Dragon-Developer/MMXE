@@ -1,5 +1,6 @@
 function ChipBase(): ArmorBase() constructor{
 	self.icon = "chip_dummy"
+	self.description = "Well, it's a chip, that's for sure."
 }
 
 function ChipDiagonalMachDash(): ArmorBase() constructor{
@@ -60,6 +61,23 @@ function ChipClinger(): ArmorBase() constructor{
 	self.icon = "chip_clinger"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 			_player.states.wall_slide.speed *= 0.5;
+	}
+}
+
+function ChipWeighter(): ArmorBase() constructor{
+	self.armor_name = "weighter";
+	self.icon = "chip_weighter"
+	self.apply_armor_effects = function(_player){
+		_player.get(ComponentPhysics).terminal_velocity += 1;
+		_player.get(ComponentPhysics).terminal_velocity_default += 1;
+	}
+}
+
+function ChipDamager(): ArmorBase() constructor{
+	self.armor_name = "damager";
+	self.icon = "chip_damager"
+	self.apply_armor_effects = function(_player){
+		_player.get(ComponentWeaponUse).damage_increase += 1;
 	}
 }
 
