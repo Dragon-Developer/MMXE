@@ -36,6 +36,19 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 	shop_index = 0;
 	
 	self.init = function(){
+		array_push(shop_items, ChipHeart)
+		array_push(shop_items, ChipWeaponUp)
+		var _hert = {}
+		with(_hert){
+			script_execute(ChipHeart)
+		}
+		
+		var _weps = {}
+		with(_weps){
+			script_execute(ChipWeaponUp)
+		}
+		array_push(shop_prices, 500)
+		array_push(shop_prices, 400)
 		get(ComponentAnimation).set_subdirectories(
 		["/npc"]);
 		publish("character_set", "stage");
@@ -49,6 +62,8 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 				script_execute(_item)
 			}
 		});
+		array_push(shop_structs, _hert)
+		array_push(shop_structs, _weps)
 		get_instance().depth = 550;
 	}
 	
@@ -69,10 +84,33 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 			}
 			
 			//purchase
-			if(_input.get_input_pressed("jump") || _input.get_input_pressed("dash")) && global.player_data.metals >= shop_prices[shop_index] && !array_contains(global.settings.shop_items, shop_index){
+			if(_input.get_input_pressed_raw("jump") || _input.get_input_pressed_raw("dash")) && global.player_data.metals >= shop_prices[shop_index] && !array_contains(global.settings.shop_items, shop_index){
 				//buy something will ya?
-				array_push(global.settings.shop_items, shop_index);
-				global.player_data.metals -= shop_prices[shop_index];
+				
+				//health up
+				if(global.shop_items[shop_index] == ChipHeart){
+					global.player_data.max_health++;
+					global.player_data.metals -= shop_prices[shop_index];
+					with(obj_player){
+						components.get(ComponentDamageable).health_max++;
+					}
+				//weapon up
+				} else if(global.shop_items[shop_index] == ChipWeaponUp){
+					global.player_data.weapon_energy++;
+					global.player_data.metals -= shop_prices[shop_index];
+					with(obj_player){
+						components.get(ComponentWeaponUse).weapon_ammo_max++
+						array_foreach(components.get(ComponentWeaponUse).weapon_ammo, function(_item){
+							_item++;
+						})
+					}
+					with(obj_camera){
+						components.get(ComponentBar).barValueMax = [global.player_data.weapon_energy]
+					}
+				} else {
+					array_push(global.settings.shop_items, shop_index);
+					global.player_data.metals -= shop_prices[shop_index];
+				}
 			}
 			
 			//bail
@@ -194,7 +232,7 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 		var _string_pos = 0;
 		for(var g = 0; g < array_length(_split_text); g++){
 			_final_text = ""
-			while(string_get_text_length(_final_text) < 48){
+			while(string_get_text_length(_final_text) < 48 && g < array_length(_split_text)){
 				_final_text += " " + _split_text[g];
 				g++;
 			}

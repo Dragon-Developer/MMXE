@@ -3,7 +3,7 @@ function ComponentBar() : ComponentBase() constructor{
 	healthBarCap = noone;
 	hp = 2;
 	maxhp = 20;  
-	barLoopPoint = 64;
+	barLoopPoint = 40;
 	barRepeatDistance = 14
 	barOffsets = [new Vec2(12,78)];
 	
@@ -59,6 +59,27 @@ function ComponentBar() : ComponentBase() constructor{
 	}
 	
 	self.draw_bar = function(_val, _maxVal, _offset, _icon = PLAYER_SPRITE, _bar_type = "healthbar"){
+		var _vertoffset = clamp(min(barLoopPoint, _maxVal) - 32, 0, 12000) * 2;
+		animation.draw_action(_bar_type + "_icon_" + _icon, undefined, 0, _offset.x, _offset.y + _vertoffset);//icon
+		for(var i = 0; i <= _maxVal; i++)
+		{			
+			if(i < barLoopPoint)
+			animation.draw_action(_bar_type + "_tick", undefined, 0, _offset.x, _offset.y - 2 - ((i) mod barLoopPoint) * 2 + _vertoffset);//backing
+			
+			if(_val > i)
+			{
+				animation.draw_action(_bar_type + "_fill", undefined, floor(i / barLoopPoint), _offset.x + 4, _offset.y - 2 - ((i) mod barLoopPoint) * 2 + _vertoffset);//tick
+			}
+		}
+		
+		if(i < barLoopPoint)
+			animation.draw_action(_bar_type + "_cap", undefined, 0, _offset.x + floor(i / barLoopPoint) * barRepeatDistance, _offset.y - 2 - ((i) mod barLoopPoint) * 2 + _vertoffset);//top
+		else
+			animation.draw_action(_bar_type + "_cap", undefined, 0, _offset.x, _offset.y - 4 - barLoopPoint * 2 + _vertoffset);//top
+		
+	}
+	
+	self.draw_bar_old = function(_val, _maxVal, _offset, _icon = PLAYER_SPRITE, _bar_type = "healthbar"){
 		
 		var _vertoffset = clamp(min(barLoopPoint, _maxVal) - 32, 0, 12000) * 2;
 		//var _vertoffset = 0

@@ -1,6 +1,7 @@
 func = undefined;
 func_repeat = 2
 damageable = -4;
+pauses = true;
 music_wait = 130;
 increase_wait = 5;
 timer = music_wait;

@@ -37,7 +37,7 @@ function GuiVolume()  : GuiContainer() constructor {
         .setAlignItems("center")
         .setPadding([4,0,4,0])
 		.setGap(4)
-		.setScrollEnabled(true)
+		.setScrollEnabled(false)
         .setAutoHeight(false)
 		.height = 16;
 		
@@ -76,7 +76,7 @@ function GuiVolume()  : GuiContainer() constructor {
         .setAlignItems("center")
         .setPadding([4,0,4,0])
 		.setGap(4)
-		.setScrollEnabled(true)
+		.setScrollEnabled(false)
         .setAutoHeight(false)
 		.height = 16;
 		
@@ -116,7 +116,25 @@ function GuiVolume()  : GuiContainer() constructor {
 		
 	SoundEffectsContainer.addChild([SoundEffectsDecreaseVolume, SoundEffectsVolumeSettings, SoundEffectsIncreaseVolume]);
 	
-	mainContainer.addChild([buttonBack, MusicContainer, SoundEffectsContainer])
+	buttonSetRaceSong = new GuiButton(128, 14, "Change Race Song")
+	buttonSetRaceSong.addEventListener("click", function() {
+		var file;
+		if(directory_exists(working_directory+ "\\music"))
+			file = get_open_filename_ext("music file|*.ogg", "", (working_directory+ "\\music"), "Select music track");
+		else
+			file = get_open_filename_ext("music file|*.ogg", "", working_directory, "Select music track");
+		//log(file)
+		
+		//gets the last part of the file path, so it only has the file name
+		global.settings.race_song = string_split(file, "\\")[array_length(string_split(file, "\\")) - 1];
+		//removes the file extension. the music system does not use it
+		global.settings.race_song = string_replace(global.settings.race_song, ".ogg", "");
+		TextRaceMusic.setText("Race Song: " + global.settings.race_song)
+	});
+	
+	TextRaceMusic = new GuiText("Race Song: " + global.settings.race_song)
+	
+	mainContainer.addChild([buttonBack, buttonSetRaceSong, TextRaceMusic, MusicContainer, SoundEffectsContainer])
 	
 	addChild(mainContainer);
 }

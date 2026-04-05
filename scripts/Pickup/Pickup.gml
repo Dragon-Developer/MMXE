@@ -2,6 +2,7 @@ function BasePickup() constructor{
 	self.count = 2;
 	self.sound = undefined;
 	self.delay = 60;
+	self.pauses = true;
 	self.skip_cond = "health_full";
 	self.apply = function(_damageable){
 		_damageable.heal(1, false);
@@ -42,6 +43,7 @@ function Money() : BasePickup() constructor{
 	self.delay = 0;
 	self.value = 1;
 	self.count = 1;
+	self.pauses = false;
 	self.apply = function(){
 		global.player_data.metals += 1
 	}

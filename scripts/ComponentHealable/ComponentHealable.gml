@@ -35,12 +35,14 @@ function ComponentHealable() : ComponentBase() constructor{
 		_pause.collect_sound = _data.sound;
 		_pause.music_wait = _data.delay;
 		_pause.damageable = get(ComponentDamageable);
-		with(obj_entity){
-		if(variable_struct_exists(components, "__components"))
-			array_foreach(components.__components, function(_comp){
-				_comp.step_enabled = false;
-			})
-		}
+		
+		if(_data.pauses)
+			with(obj_entity){
+				if(variable_struct_exists(components, "__components"))
+					array_foreach(components.__components, function(_comp){
+						_comp.step_enabled = false;
+					})
+			}
 		
 		ENTITIES.destroy_instance(_pickup);
 		instance_destroy(_pickup);

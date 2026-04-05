@@ -399,6 +399,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		}
 		
 		//chips
+		draw_string("CHIPS", 168, 120, "orange")
 		
 	}
 }

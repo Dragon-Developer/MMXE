@@ -47,7 +47,7 @@ function GuiSettingsMenu() : GuiContainer() constructor {
 		parent.OptionsContainer.setEnabled(true);
 	});
 	
-	buttonVolume = new GuiButton(160, 16, "Volume");
+	buttonVolume = new GuiButton(160, 16, "Sounds");
 	buttonVolume.addEventListener("click", function() { 
 		self.setEnabled(false);
 		parent.VolumeContainer.setEnabled(true);

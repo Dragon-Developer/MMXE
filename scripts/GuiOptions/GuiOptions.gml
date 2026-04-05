@@ -33,8 +33,14 @@ function GuiOptions() : GuiContainer() constructor {
 	if(!variable_struct_exists(global.settings, "charge_flash")){
 		global.settings.charge_flash = true;
 	}
+	if(!variable_struct_exists(global.settings, "race_song")){
+		global.settings.race_song = "Saphira_The_Unleashed_Power";
+	}
 	if(!variable_struct_exists(global.player_data, "metals")){
 		global.player_data.metals = 0;
+	}
+	if(!variable_struct_exists(global.player_data, "weapon_energy")){
+		global.player_data.weapon_energy = 28;
 	}
 	if(!variable_struct_exists(global.settings, "extra_particles")){
 		global.settings.extra_particles = true;

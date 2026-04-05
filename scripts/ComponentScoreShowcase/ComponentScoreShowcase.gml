@@ -40,6 +40,15 @@ function ComponentScoreShowcase() : ComponentBase() constructor{
 		
 		var _best_time = variable_struct_get(global.player_data.beaten_stages, room_get_name(global.stage_Data.room))
 		
+		if(_best_time == undefined){
+			if(global.dynamo_race){
+				room_goto(rm_dynamos_hellhole);
+				global.stage_Data.music = "WeaponGet"
+			} else
+				room_goto(rm_stage_select);
+			return;
+		}
+		
 		var _best_minutes = floor(_best_time / 3600);
 		var _best_seconds = floor(_best_time / 60) % 60;
 		var _best_frames = _best_time % 60;

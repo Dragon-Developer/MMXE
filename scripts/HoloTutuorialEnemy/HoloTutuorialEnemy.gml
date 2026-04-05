@@ -5,6 +5,6 @@ function HoloTutuorialEnemy() : BaseEnemy() constructor{
 }
 
 function HoloTutuorialEnemyWithShield() : HoloTutuorialEnemy() constructor{
-	self.health = 2;
+	self.health = 99999;
 	self.sprite = "skull_bot_shield"
 }

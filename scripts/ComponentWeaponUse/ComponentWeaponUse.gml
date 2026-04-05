@@ -6,8 +6,8 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	XenoMissile
 	];
 	self.stock_shot = noone;
-	self.weapon_ammo = [28];
-	self.weapon_max_ammo = 28;
+	self.weapon_ammo = [0];
+	self.weapon_max_ammo = global.player_data.weapon_energy
 	self.weapon_use_rate = 1;
 	self.weapon_palette = undefined;
 	self.charge = undefined;
@@ -109,7 +109,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 					script_execute(_proj)
 				}
 				
-				array_push(weapon_ammo, 28);
+				array_push(weapon_ammo, global.player_data.weapon_energy);
 				
 				//if(_proj.code.)
 				
