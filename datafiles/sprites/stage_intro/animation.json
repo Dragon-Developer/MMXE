@@ -28,56 +28,37 @@
         {
           "name": "x",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 1
           }
         },
         {
           "name": "gate",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 1
           }
         },
         {
           "name": "flame_stag",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 1
           }
         },
         {
           "name": "zero",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 1
+          }
+        },
+        {
+          "name": "sigma",
+          "properties": {
+            "speed": 1
           }
         },
         {
           "name": "flame_mammoth",
           "properties": {
-            "keyframes": [
-              {
-                "key": 0,
-                "frame": 0
-              }
-            ]
+            "speed": 1
           }
         }
         //eof

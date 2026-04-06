@@ -50,6 +50,18 @@
           }
         },
         {
+          "name": "fortress",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "dynamo",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
           "name": "reticle",
           "properties": {
             "speed": 0.2

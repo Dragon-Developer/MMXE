@@ -21,6 +21,10 @@ function ComponentStageSelector() : ComponentBase() constructor{
 		{room: rm_dynamos_hellhole, x: 261, y: 182, beat: false, icon: "undefined", music: "WeaponGet", intro: "x", intro_text: "Dynamo set up%an amusement%park?!?!% %Go investigate%the park!"}
 	];//not much for the moment
 	
+	self.fortress_stages = [
+		{room: rm_fortress_1, x: 0, y: 78, beat: false, icon: "fortress", music: "blast_hole", intro: "sigma", intro_text: "A more fleshed out%level to see what%you can do in%the engine"},//'beat' will be replaced with save data info
+	]
+	
 	self.on_register = function() {
 		self.subscribe("components_update", function() {
 			self.input = self.parent.find("input") ?? new ComponentPlayerInput();
