@@ -8,8 +8,8 @@
   "name":"obj_player_spawner",
   "overriddenProperties":[],
   "parent":{
-    "name":"Player",
-    "path":"folders/Objects/Player.yy",
+    "name":"Spawm",
+    "path":"folders/Objects/Player/Spawm.yy",
   },
   "parentObjectId":{
     "name":"par_spawner",

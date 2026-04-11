@@ -8,7 +8,7 @@ function ComponentScoreShowcase() : ComponentBase() constructor{
 		self.input = get(ComponentPlayerInput);
 		
 		log(global.stage_time)
-		log(variable_struct_get(global.player_data.beaten_stages, room_get_name(global.stage_Data.room)))
+		log(variable_struct_get(global.player_data.beaten_stages, room_get_name(global.stage_Data.rm)))
 	}
 	
 	self.draw = function(){
@@ -38,7 +38,7 @@ function ComponentScoreShowcase() : ComponentBase() constructor{
 		if(_seconds < 10) _seconds = "0" + string(_seconds);
 		if(_frames < 10) _frames = "0" + string(_frames);
 		
-		var _best_time = variable_struct_get(global.player_data.beaten_stages, room_get_name(global.stage_Data.room))
+		var _best_time = variable_struct_get(global.player_data.beaten_stages, room_get_name(global.stage_Data.rm))
 		
 		if(_best_time == undefined){
 			if(global.dynamo_race){

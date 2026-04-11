@@ -149,7 +149,10 @@ function ComponentDialouge() : ComponentBase() constructor{
 			completed_text = false;
 		}
 		
-		
+		with(obj_player){
+			if(components.get(ComponentPlayerInput).using_scripted_inputs)
+				components.get(ComponentPlayerInput).scripted_input_index--;
+		}
 			
 			
 	}

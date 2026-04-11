@@ -24,6 +24,18 @@
         "y": 32
       }
     },
+    "exe_beam": {
+      "origin": {
+        "x": 32,
+        "y": 32
+      }
+    },
+    "exe_circles": {
+      "origin": {
+        "x": 24,
+        "y": 24
+      }
+    },
     "rock_shot_1": {
       "origin": {
         "x": 42,
@@ -276,7 +288,19 @@
         "y": 70
       }
     },
+    "atk_1_x": {
+      "origin": {
+        "x": 37,
+        "y": 39
+      }
+    },
     "atk_jump": {
+      "origin": {
+        "x": 64,
+        "y": 70
+      }
+    },
+    "atk_jump_x": {
       "origin": {
         "x": 64,
         "y": 70
@@ -1695,6 +1719,18 @@
           }
         },
         {
+          "name": "exe_beam",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "exe_circles",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
           "name": "shotgun_ice_fragment",
           "properties": {
             "speed": 1
@@ -1850,7 +1886,113 @@
             ],
             "loop_begin": 15
           }
-        }
+        },
+        {
+          "name": "atk_jump_x",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 7,
+                "frame": 5
+              },
+              {
+                "key": 8,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 7
+              },
+              {
+                "key": 10,
+                "frame": 8
+              },
+              {
+                "key": 11,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "atk_1_x",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 4,
+                "frame": 3
+              },
+              {
+                "key": 6,
+                "frame": 4
+              },
+              {
+                "key": 8,
+                "frame": 5
+              },
+              {
+                "key": 10,
+                "frame": 6
+              },
+              {
+                "key": 12,
+                "frame": 7
+              },
+              {
+                "key": 14,
+                "frame": 8
+              },
+              {
+                "key": 16,
+                "frame": 9
+              },
+              {
+                "key": 18,
+                "frame": 10
+              },
+              {
+                "key": 20,
+                "frame": 11
+              },
+              {
+                "key": 22,
+                "frame": 11
+              }
+            ]
+          }
+        },
 
 
 

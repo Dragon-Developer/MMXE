@@ -92,6 +92,7 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentNPC, _func);
 		ENTITIES.for_each_component(ComponentInteractibleContact, _func);
 		ENTITIES.for_each_component(ComponentInteractibleInteract, _func);
+		ENTITIES.for_each_component(ComponentCutscene, _func);
 		ENTITIES.for_each_component(ComponentShop, _func);
 		ENTITIES.for_each_component(ComponentParallax, _func);
 		ENTITIES.for_each_component(ComponentCamera, _func);
@@ -148,6 +149,7 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentCharacterSelect, _draw_gui);
 		ENTITIES.for_each_component(ComponentEditorBar, _draw_gui);
 		ENTITIES.for_each_component(ComponentScoreShowcase, _draw_gui);
+		ENTITIES.for_each_component(ComponentCutscene, _draw_gui);
 		ENTITIES.for_each_component(ComponentInputDisplay, _draw_gui);
 		ENTITIES.for_each_component(ComponentSoundLoader, _draw_gui);
 		ENTITIES.for_each_component(ComponentBoss, _draw_gui);

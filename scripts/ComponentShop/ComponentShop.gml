@@ -84,7 +84,7 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 			}
 			
 			//purchase
-			if(_input.get_input_pressed_raw("jump") || _input.get_input_pressed_raw("dash")) && global.player_data.metals >= shop_prices[shop_index] && !array_contains(global.settings.shop_items, shop_index){
+			if(_input.get_input_pressed_raw("jump") || _input.get_input_pressed_raw("dash")) && global.player_data.metals >= shop_prices[shop_index]{
 				//buy something will ya?
 				
 				//health up
@@ -107,9 +107,17 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 					with(obj_camera){
 						components.get(ComponentBar).barValueMax = [global.player_data.weapon_energy]
 					}
+				} else if array_contains(global.settings.shop_items, shop_index){
+					array_foreach(global.settings.shop_enabled, function(_item){
+						if _item.index == shop_index _item.enabled = !_item.enabled
+					})
+					
+					log("Toggled!")
 				} else {
 					array_push(global.settings.shop_items, shop_index);
+					array_push(global.settings.shop_enabled, {index: shop_index, enabled: true});
 					global.player_data.metals -= shop_prices[shop_index];
+					log("Paid!")
 				}
 			}
 			
@@ -144,6 +152,7 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 		var _x = shop_draw_x_real_offset - item_draw_radius - 6
 		var _y = shop_draw_y_real_offset - item_draw_radius - 6
 		var _item_index = 0
+		var _enabled = false;
 		var _text_type = "normal"
 		var _inst = get_instance();
 		
@@ -166,8 +175,21 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 			
 			_item_index = (item_draw_count - t + shop_index + array_length(shop_items)) mod array_length(shop_items)
 			
-			if(array_contains(global.settings.shop_items, _item_index) || global.shop_prices[_item_index] > global.player_data.metals)
+			_enabled = false;
+			if array_length(global.settings.shop_enabled) > 0
+				for(var h = 0; h < array_length(global.settings.shop_enabled); h++){
+					//log(global.settings.shop_enabled[h])
+					if(global.settings.shop_enabled[h].index == _item_index && global.settings.shop_enabled[h].enabled) _enabled = true;
+				}
+			
+			if (global.shop_prices[_item_index] > global.player_data.metals)
+				_text_type = "purple"
+			else if _enabled
 				_text_type = "orange"
+			else if !_enabled
+				_text_type = "pause menu"
+			else if(!array_contains(global.settings.shop_items, _item_index))
+				_text_type = "normal"
 			else 
 				_text_type = "normal"
 			
@@ -189,8 +211,21 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 			draw_string(shop_structs[(array_length(shop_items) - (item_draw_count - t) + shop_index) mod array_length(shop_items)].armor_name, _inst.x + _x + 1, _inst.y + _y + 3)
 			_item_index = (array_length(shop_items) - (item_draw_count - t) + shop_index) mod array_length(shop_items)
 		
-			if(array_contains(global.settings.shop_items, _item_index) || global.shop_prices[_item_index] > global.player_data.metals)
+			_enabled = false;
+			if array_length(global.settings.shop_enabled) > 0
+				for(var h = 0; h < array_length(global.settings.shop_enabled); h++){
+					//log(global.settings.shop_enabled[h])
+					if(global.settings.shop_enabled[h].index == _item_index && global.settings.shop_enabled[h].enabled) _enabled = true;
+				}
+			
+			if (global.shop_prices[_item_index] > global.player_data.metals)
+				_text_type = "purple"
+			else if _enabled
 				_text_type = "orange"
+			else if !_enabled
+				_text_type = "pause menu"
+			else if(!array_contains(global.settings.shop_items, _item_index))
+				_text_type = "normal"
 			else 
 				_text_type = "normal"
 			
@@ -210,8 +245,21 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 		
 		_item_index = (shop_index) mod array_length(shop_items)
 		
-		if(array_contains(global.settings.shop_items, _item_index) || global.shop_prices[_item_index] > global.player_data.metals)
+		_enabled = false;
+			if array_length(global.settings.shop_enabled) > 0
+				for(var h = 0; h < array_length(global.settings.shop_enabled); h++){
+					//log(global.settings.shop_enabled[h])
+					if(global.settings.shop_enabled[h].index == _item_index && global.settings.shop_enabled[h].enabled) _enabled = true;
+				}
+			
+		if (global.shop_prices[_item_index] > global.player_data.metals)
+			_text_type = "purple"
+		else if _enabled
 			_text_type = "orange"
+		else if !_enabled
+			_text_type = "pause menu"
+		else if(!array_contains(global.settings.shop_items, _item_index))
+			_text_type = "normal"
 		else 
 			_text_type = "normal"
 			

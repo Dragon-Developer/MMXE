@@ -32,6 +32,11 @@ function ComponentMask() : ComponentBase() constructor {
 		with (obj_block_parent) {
 			visible = other.draw_enabled;	
 		}
+		
+		with (obj_exe_walls) {
+			visible = true
+		}
+		
 		with (obj_ladder) {
 			visible = other.draw_enabled;	
 		}

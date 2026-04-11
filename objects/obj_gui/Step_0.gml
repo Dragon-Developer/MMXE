@@ -1,5 +1,10 @@
 try{
-	if(room == rm_init || global.gui.SettingsContainer.enabled)
+	if(room == rm_init || 
+	global.gui.SettingsContainer.enabled ||
+	global.gui.VolumeContainer.enabled ||
+	global.gui.KeybindsContainer.enabled ||
+	global.gui.OptionsContainer.enabled
+	)
 	global.gui.step();
 } catch(_err){
 	log(_err)

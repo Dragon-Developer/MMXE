@@ -8,8 +8,8 @@
   "name":"obj_double_gear_handler",
   "overriddenProperties":[],
   "parent":{
-    "name":"Player",
-    "path":"folders/Objects/Player.yy",
+    "name":"Parent",
+    "path":"folders/Objects/Player/Parent.yy",
   },
   "parentObjectId":{
     "name":"obj_entity",

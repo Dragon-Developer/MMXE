@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"Stage_Select_icon_generate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Stage_Select_icon_generate",
+  "parent":{
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

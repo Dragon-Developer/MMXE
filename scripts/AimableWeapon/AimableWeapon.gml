@@ -22,8 +22,6 @@ function AimableData() : ProjectileData() constructor{
 	self.hitbox_offset = new Vec2(0,0);
 	
 	self.angle = new Vec2(1,0)
-	
-	self.tag = ["enemy"]
 	self.general_init = function(_comp){
 		self.dir = _comp.get_instance().components.get(ComponentAnimation).animation.__xscale;
 	}

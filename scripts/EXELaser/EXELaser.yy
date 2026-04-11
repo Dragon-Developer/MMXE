@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"EXELaser",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"EXELaser",
+  "parent":{
+    "name":"EXE",
+    "path":"folders/Scripts/Game/stages/Boss/EXE.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

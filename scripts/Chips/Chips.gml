@@ -12,6 +12,32 @@ function ChipHeart(): ChipBase() constructor{
 	self.description = "Gives you one extra point of maximum health. We finally recreated the heart tank!"
 }
 
+function ChipGoldenArmor(): ChipBase() constructor{
+	self.armor_name = "golden up bitch";
+	self.icon = "chip_dummy"
+	self.apply_armor_effects = function(_player){
+		_player.get(ComponentDamageable).damage_rate *= 0.5;
+		global.availible_characters[global.character_index].default_palette = [
+			#f04000,//Blue Armor Bits
+			#f07818,
+			#f8f090,//f8f090
+			#f86010,//Under Armor Teal Bits
+			#f8d839,
+			#f8f8f0,//f8f8f0
+			#181818,//black
+			#804020,//Face
+			#b86048,
+			#f8b080,
+			#f07818,//glove
+			#f8f090,//f07818
+			#f0f0f0,//eye white
+			#f04010,//red
+			#f07818//other grey
+		];
+	}
+	self.description = "Gives you one extra point of maximum health. We finally recreated the heart tank!"
+}
+
 function ChipWeaponUp(): ChipBase() constructor{
 	self.armor_name = "weapon up";
 	self.icon = "chip_dummy"

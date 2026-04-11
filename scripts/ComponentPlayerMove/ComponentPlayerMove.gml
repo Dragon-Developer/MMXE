@@ -54,8 +54,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("init", {
 			enter: function() {
 				self.publish("animation_play", { name: "idle" });
-				
-				
+				global.return_stage = rm_stage_select;
 			}
 		})
 		.add("teleport_in", {
@@ -289,7 +288,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					if(global.settings.score_showcase && !left_manually) || (global.dynamo_race)
 						room_transition_to(rm_score_showcase, 0, 24);
 					else
-						room_transition_to(rm_stage_select, 0, 24);
+						room_transition_to(global.return_stage, 0, 24);
 					
 				}
 			}

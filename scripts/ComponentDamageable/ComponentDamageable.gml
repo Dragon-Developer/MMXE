@@ -128,6 +128,45 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 	}
 	
+	self.take_damage = function(_damage){
+		if(self.damage_rate == undefined || !variable_struct_exists(self, "damage_rate")) self.damage_rate = 1;
+		
+		if(damage_rate <= 0 || dead) return;//cant take damage if your damage rate is below or at zero.
+		
+		if(self.invuln_offset > CURRENT_FRAME){
+			return 0;
+		}
+		
+		if(get(ComponentPlayerMove)){
+			_damage *= (global.settings.difficulty + 1) / 2;
+			
+			if(_damage > self.health_max && DIFF == 0)//ohko protection for easy mode
+				_damage = self.health_max - 1;
+		}
+		
+		self.health -= _damage == 0 ? 0 : max(ceil(_damage * damage_rate), 1)
+		self.invuln_offset = CURRENT_FRAME + self.invuln_time;
+		
+		if(_damage != 0){
+			if(plays_sound_on_hit)
+				WORLD.play_sound("big_damage");
+			hit_amount++;
+			self.publish("took_damage", _damage);//so other components dont need to hook into this to get info
+				
+			if(global.settings.hit_numbers){//no damage number setting
+				var _inst = self.get_instance()
+				var _num = instance_create_depth(_inst.x, _inst.y - 32, -15000, obj_damage_number);
+				_num.number = ceil(_damage * damage_rate);
+			}
+		}
+		
+		if(self.health <= 0)
+		{
+			dead = true;
+			self.death_function();
+		}
+	}
+	
 	self.death_function = function(){
 		ENTITIES.destroy_instance(self.get_instance());
 	}
@@ -173,7 +212,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			if((!_proj.code.piercing || self.health > 0) && !_proj.code.super_piercing)
 				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			if(take_boss_damage)
-				return _proj.code.boss_damage / self.damage_rate;
+				return _proj.code.boss_damage;
 			else 
 				return _proj.code.damage;
 		}

@@ -1,6 +1,6 @@
 function ComponentBoss() : ComponentBase() constructor{
 	
-	self.has_done_dialouge = false;
+	self.has_dialouge = false;
 	self.boss_data = noone//for example purposes
 	
 	self.health_tick = false;
@@ -11,6 +11,10 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.contact_damage = 2;
 	self.desperate = false;
 	self.desperate_rate = 1/2;
+	self.floor_detect_dist = 2
+	self.random_value = 0;
+	
+	self.max_health = 32;
 	
 	self.pose_animation_name = "walk";
 	self.intro_animation_name = "blade_fall";
@@ -23,6 +27,8 @@ function ComponentBoss() : ComponentBase() constructor{
 					WORLD.stop_sound();
 					WORLD.play_music("new_boss_encounter");
 		
+		
+		
 		//self.boss_data.init(self);
 	}
 	
@@ -32,10 +38,33 @@ function ComponentBoss() : ComponentBase() constructor{
 			.add("enter", {
 				enter: function() {
 					self.publish("animation_play", { name: self.intro_animation_name });
-					log(intro_animation_name)
 				},
 				step: function() {
 					//log("step")
+				},
+				leave: function(){
+					log("leaft")
+				}
+			})
+			.add("enter_grounded", {
+				enter: function() {
+					if has_dialouge {
+						log("DIALOUGE")
+						var _plr = instance_nearest(0,0,obj_player)
+						
+						var _dialogue = ENTITIES.create_instance(obj_dialouge);
+						_dialogue.x = 0;
+						_dialogue.y = 0;
+						_dialogue.components.get(ComponentPlayerInput).set_player_index(_plr.components.get(ComponentPlayerInput).get_player_index())
+						_dialogue.components.get(ComponentDialouge).set_dialouge(dialouge, dialouge[0].mugshot_left, dialouge[0].mugshot_right);
+						_dialogue.components.publish("change_dialouge",dialouge);
+					}
+				},
+				step: function() {
+					//log("step")
+				},
+				leave: function(){
+					log("leaft 2 electric bogaloo")
 				}
 			})
 			.add("pose", {
@@ -44,7 +73,8 @@ function ComponentBoss() : ComponentBase() constructor{
 					self.get_instance().components.add([ComponentBar]);
 					self.get_instance().components.get(ComponentBar).init();
 					self.get_instance().components.get(ComponentBar).barOffsets[0] = new Vec2(GAME_W - 24,78)
-					self.get_instance().components.get(ComponentDamageable).health_max = 32;
+					self.get_instance().components.get(ComponentBar).barValueMax[0] = max_health
+					self.get_instance().components.get(ComponentDamageable).health_max = max_health;
 					self.get_instance().components.get(ComponentDamageable).health = 1;
 				},
 				step: function() {
@@ -156,12 +186,15 @@ function ComponentBoss() : ComponentBase() constructor{
 				
 				}
 			})
-		self.fsm.add_transition("t_transition", "enter", "pose", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor();})
-			.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= 32;})
+		self.fsm.add_transition("t_transition", "enter", "enter_grounded", function(){return self.get_instance().components.get(ComponentPhysics).is_on_floor(floor_detect_dist);})
+			.add_transition("t_animation_end", "enter_grounded", "pose", function(){return !instance_exists(obj_dialouge)})
+			.add_transition("t_animation_end", "pose", "idle", function(){return self.get_instance().components.get(ComponentDamageable).health >= max_health;})
 			.add_wildcard_transition("t_transition", "die", function(){return self.fsm.get_current_state() != "die" && self.get(ComponentDamageable).health <= 0})
 	}	
 	
 	self.step = function() {
+		self.random_value = random_range(0,99)
+		
 		try {
 			if(variable_struct_exists(self, "fsm")){
 				self.fsm.trigger("t_transition");
@@ -199,6 +232,10 @@ function ComponentBoss() : ComponentBase() constructor{
 			if(variable_struct_exists(self, "fsm"))
 				self.fsm.trigger("t_animation_end");	
 		});
+		self.subscribe("has_dialouge", function() {
+			log("CHAT GET")
+			has_dialouge = true;
+		});
 	}
 	
 	self.draw_gui = function(){
@@ -212,5 +249,6 @@ function ComponentBoss() : ComponentBase() constructor{
 			self.dir = 1;
 		else 
 			self.dir = -1;
+		self.publish("animation_xscale", self.dir);
 	}
 }

@@ -8,8 +8,8 @@
   "name":"obj_dialouge_spawner",
   "overriddenProperties":[],
   "parent":{
-    "name":"Player",
-    "path":"folders/Objects/Player.yy",
+    "name":"Parent",
+    "path":"folders/Objects/Player/Parent.yy",
   },
   "parentObjectId":{
     "name":"par_spawner",

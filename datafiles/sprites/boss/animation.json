@@ -18,6 +18,48 @@
         "y": 128
       }
     },
+    "exe_idle": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
+    "exe_grab": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
+    "exe_clamp": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
+    "exe_hand": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
+    "exe_shoot": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
+    "exe_laser": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
+    "exe_die": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
     "blade": {
       "origin": {
         "x": 128,
@@ -535,7 +577,57 @@
               }
             ]
           }
-        }
+        },
+        {
+          "name": "exe_idle",
+          "properties": {
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "exe_die",
+          "properties": {
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "exe_charge_laser",
+          "properties": {
+            "action": "exe_laser",
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "exe_hand",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "exe_laser",
+          "properties": {
+            "speed": 0.5, 
+            "loop_begin": 2
+          }
+        },
+        {
+          "name": "exe_shoot",
+          "properties": {
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "exe_clamp",
+          "properties": {
+            "speed": 0.3334
+          }
+        },
+        {
+          "name": "exe_grab",
+          "properties": {
+            "speed": 0.2
+          }
+        },
 
 
         

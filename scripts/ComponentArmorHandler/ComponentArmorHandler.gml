@@ -4,6 +4,7 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 	self.armor_parts = variable_clone(global.armors[global.character_index],256);
 	self.armor_structs = variable_clone(global.armors[global.character_index],256);
 	self.reset = false;
+	self.uses_chips = true;
 	self.set_bonuses = [];
 	self._purchases = [];
 	
@@ -19,11 +20,15 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 			}
 		})
 		
-		if(get(ComponentPlayerMove)){
+		if(get(ComponentPlayerMove) && uses_chips){
 			_purchases = [];
 			
 			array_foreach(global.settings.shop_items, function(_item, _index){
-				array_push(_purchases, global.shop_items[_item])
+				item = _item;
+				array_foreach(global.settings.shop_enabled, function(_item, _index){
+					if _item.index == item && _item.enabled
+						array_push(_purchases, global.shop_items[item])
+				})
 			})
 			
 			armor_parts = array_concat(armor_parts, _purchases)

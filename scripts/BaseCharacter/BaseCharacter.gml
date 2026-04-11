@@ -76,10 +76,11 @@ function BaseCharacter() constructor{
 		#804020,//Face
 		#b86048,
 		#f8b080,
-		#989898,//glove
+		#808080,//glove
 		#e0e0e0,
 		#f0f0f0,//eye white
-		#f04010//red
+		#f04010,//red
+		#989898//other grey
 	];
 	
 	self.charge_colors = [

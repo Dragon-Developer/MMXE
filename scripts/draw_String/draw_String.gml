@@ -20,6 +20,10 @@ function draw_string(_string, _x, _y, _font = "normal"){
 				_sprite = spr_text_font_orange
 			break;
 			
+			case("purple"):
+				_sprite = spr_text_font_purple
+			break;
+			
 			case("big"):
 				_sprite = spr_text_font_big
 				_char = string_upper(_char);

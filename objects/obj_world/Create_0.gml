@@ -11,6 +11,9 @@ components.init();
 #region Sound Stuff
 var _loop_music = global.stage_Data.music + "L";
 
+if(!file_exists(working_directory + "\\music\\" + _loop_music))
+var _loop_music = global.stage_Data.music;
+
 self.music = self.components.get(ComponentSoundLoader).play_sound(global.stage_Data.music,0,global.stage_Data.music);
 if(self.music != undefined)
 audio_sound_loop(self.music, true);
@@ -31,7 +34,11 @@ self.play_music = function(_sound){
 	self.components.get(ComponentSoundLoader).source_folder = self.components.get(ComponentSoundLoader).music_folder;
 	self.components.get(ComponentSoundLoader).volume = global.settings.Music_Volume * 1.1;
 	self.components.get(ComponentSoundLoader).stop_sound(self.music);
-	self.music = self.components.get(ComponentSoundLoader).play_sound(_sound,0,_sound + "L", global.settings.Music_Volume * 1.1, "music/");
+	
+	if(!file_exists(working_directory + "\\music\\" + _sound + "L"))
+		self.music = self.components.get(ComponentSoundLoader).play_sound(_sound,0,_sound, global.settings.Music_Volume * 1.1, "music/");
+	else
+		self.music = self.components.get(ComponentSoundLoader).play_sound(_sound,0,_sound + "L", global.settings.Music_Volume * 1.1, "music/");
 	self.components.get(ComponentSoundLoader).source_folder = self.components.get(ComponentSoundLoader).sounds_folder;
 	self.components.get(ComponentSoundLoader).volume = global.settings.Sound_Effect_Volume * 0.9;
 	

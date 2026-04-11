@@ -2,7 +2,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.projectiles = [];
 	self.to_delete = [];
 	
-	self.draw_enabled = false;
+	self.draw_hitbox = false;
 	
 	//self.serializer
 		//.addCustom("projectiles")
@@ -122,10 +122,13 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 			for(var p = 0; p < instance_number(obj_player); p++){
 				var _plr = instance_find(obj_player, p);
 				
-				if(_plr.x - GAME_W < _shot.position.x &&
-					_plr.x + GAME_W > _shot.position.x &&
-					_plr.y - GAME_W < _shot.position.y &&
-					_plr.y + GAME_W > _shot.position.y)
+				var _cam_x = camera_get_view_x(view_get_camera(view_current))
+				var _cam_y = camera_get_view_y(view_get_camera(view_current))
+				
+				if(_cam_x < _shot.position.x &&
+					_cam_x + GAME_W > _shot.position.x &&
+					_cam_y < _shot.position.y &&
+					_cam_y + GAME_H > _shot.position.y)
 						_near_player = true
 			}
 			
@@ -146,16 +149,17 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 			}
 		})
 		
-		if (keyboard_check_pressed(ord("3"))) {draw_enabled = !draw_enabled;}
+		if (keyboard_check_pressed(ord("3"))) {draw_hitbox = !draw_hitbox;}
 	}
 	self.draw = function(){
 		array_foreach(self.projectiles, function(_shot){
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y)
 			
-			if(variable_struct_exists(_shot.code, "draw"))
+			if(variable_struct_exists(_shot.code, "draw")){
 				_shot.code.draw(_shot.position);
+			}
 			
-			if draw_enabled
+			if draw_hitbox
 			draw_rectangle( (_shot.hitbox.x / 2) + _shot.position.x + _shot.hitbox_offset.x * _shot.dir,  
 				(_shot.hitbox.y / 2) + _shot.position.y + _shot.hitbox_offset.y,
 				(_shot.hitbox.x / -2) + _shot.position.x + _shot.hitbox_offset.x * _shot.dir,  

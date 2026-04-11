@@ -2,8 +2,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     self.__input = GAME.inputs.getEmptyInput();
     self.__inputPressed = GAME.inputs.getEmptyInput();
     self.__inputPressedBuffer = [];
-	self.__BufferLength = 3;
-	self.__useBuffer = true;
+	self.__BufferLength = 0;
+	self.__useBuffer = false;
     self.__inputReleased = GAME.inputs.getEmptyInput();
 	self.__swap_horizontal = false;
 	self.__player_index = 0;
@@ -285,7 +285,72 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		//log(string(__locked ? "Locked" : "Free") + " " + string(__locked))
 	}
 
+	self.make_scripted_inputs_from_compressed = function(_inputs){
+		self.scripted_inputs = [];
+		var _finished = false
+		var _index = -1;
+				
+		while(!_finished){
+			var _input_struct = {left: false, right: false,up: false, down: false, dash: false, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: false, switchLeft: false, switchRight: false, pause: false}
+				
+			
+			_index++
+			//bail if the input file is done
+			if(!is_array(_inputs))
+				log(_inputs)
+			
+			if(_inputs[_index] == "Maverick dead"){
+				_finished = true;
+				continue;
+			}
+			
+			var _string = _inputs[_index]
+					
+			//convert inputs to struct
+			if(__input_string_contains(_string, "L"))//left
+				_input_struct.left = true;
+			if(__input_string_contains(_string, "R"))//right
+				_input_struct.right = true;
+			if(__input_string_contains(_string, "U"))//up
+				_input_struct.up = true;
+			if(__input_string_contains(_string, "D"))//down
+				_input_struct.down = true;
+			if(__input_string_contains(_string, "F"))//dash
+				_input_struct.dash = true;
+			if(__input_string_contains(_string, "P"))//shoot 1
+				_input_struct.shoot = true;
+			if(__input_string_contains(_string, "A"))//shoot 2
+				_input_struct.shoot2 = true;
+			if(__input_string_contains(_string, "G"))//shoot 3
+				_input_struct.shoot3 = true;
+			if(__input_string_contains(_string, "O"))//shoot 4
+				_input_struct.shoot4 = true;
+			if(__input_string_contains(_string, "J"))//jump
+				_input_struct.jump = true;
+			if(__input_string_contains(_string, "Z"))//pause
+				_input_struct.pause = true;
+			if(__input_string_contains(_string, "Y"))//switch left
+				_input_struct.switchLeft = true;
+			if(__input_string_contains(_string, "T"))//switch right
+				_input_struct.switchRight = true;
+					
+			_index++;
+			var _repeats = _inputs[_index]
+			_repeats++;
+					
+			for(var w = 0; w < _repeats; w++){
+				array_push(scripted_inputs, _input_struct)
+			}
+		}
+		
+		scripted_input_index = 1;
+		using_scripted_inputs = true;
+	}
+
 	self.draw = function(){
+		if(!global.debug) 
+			return;
+		
 		if(write_inputs){
 			var _str = current_recorded_input;
 			

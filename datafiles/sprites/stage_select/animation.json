@@ -56,6 +56,24 @@
           }
         },
         {
+          "name": "fortress_2",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "fortress_3",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "fortress_4",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
           "name": "dynamo",
           "properties": {
             "speed": 1

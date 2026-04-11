@@ -1,5 +1,5 @@
 function ComponentBossTease() : ComponentBase() constructor{
-	self.title = room_get_name(global.stage_Data.room);
+	self.title = room_get_name(global.stage_Data.rm);
 	self.description = global.stage_Data.intro_text
 	
 	self.init_time = CURRENT_FRAME;
@@ -40,7 +40,7 @@ function ComponentBossTease() : ComponentBase() constructor{
 		var _input = get(ComponentPlayerInput);
 		
 		if(CURRENT_FRAME - init_time > move_on_time || _input.get_input("jump") || _input.get_input("shoot") || _input.get_input("pause")){
-			room_transition_to(global.stage_Data.room,"standard", 20)
+			room_transition_to(global.stage_Data.rm,"standard", 20)
 		}
 		
 		//get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)

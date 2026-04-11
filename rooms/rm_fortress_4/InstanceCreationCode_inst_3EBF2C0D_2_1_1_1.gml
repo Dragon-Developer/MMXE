@@ -1,0 +1,1 @@
+return_stage = rm_fortress_beat_cutscene;

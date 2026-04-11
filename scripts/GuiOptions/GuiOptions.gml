@@ -30,6 +30,7 @@ function GuiOptions() : GuiContainer() constructor {
 			parent.SettingsContainer.setEnabled(true);
 	});
 	
+	//when i dont want people to delete their old save data i add new data here
 	if(!variable_struct_exists(global.settings, "charge_flash")){
 		global.settings.charge_flash = true;
 	}
@@ -41,6 +42,9 @@ function GuiOptions() : GuiContainer() constructor {
 	}
 	if(!variable_struct_exists(global.player_data, "weapon_energy")){
 		global.player_data.weapon_energy = 28;
+	}
+	if(!variable_struct_exists(global.player_data, "seen_fortress_cutscene")){
+		global.player_data.seen_fortress_cutscene = false;
 	}
 	if(!variable_struct_exists(global.settings, "extra_particles")){
 		global.settings.extra_particles = true;
@@ -59,6 +63,11 @@ function GuiOptions() : GuiContainer() constructor {
 	}
 	if(!variable_struct_exists(global.settings, "shop_items")){
 		global.settings.shop_items = [];
+		global.settings.shop_enabled = [];
+	}
+	if(!variable_struct_exists(global.settings, "shop_enabled")){
+		global.settings.shop_items = [];
+		global.settings.shop_enabled = [];
 	}
 	if(!variable_struct_exists(global.settings, "screen_scale_x")){
 		global.settings.screen_scale_x = 320;

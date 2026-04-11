@@ -56,10 +56,15 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		self.charge.input = get(ComponentPlayerInput);
 		self.charge.publish("character_set", "player");
 		self.charge.current_weapon = xBuster;
-		self.current_weapon = [0,0,array_length(global.availible_characters[global.character_index].weapons) - 1,array_length(global.availible_characters[global.character_index].weapons) - 2];
+		self.current_weapon = [0,clamp(1, 0, array_length(global.availible_characters[global.character_index].weapons)),array_length(global.availible_characters[global.character_index].weapons) - 1,array_length(global.availible_characters[global.character_index].weapons) - 2];
+		if(self.current_weapon[1] < 0)self.current_weapon[1] = 0;
 		if(self.current_weapon[2] < 0)self.current_weapon[2] = 0;
 		if(self.current_weapon[3] < 0)self.current_weapon[3] = 0;
  		self.weapon_palette = global.player_character[0].default_palette;
+		
+		if(array_length(global.availible_characters[global.character_index].weapons) <= 0){
+			self.current_weapon = [0,0,0,0];
+		}
 	}
 		
 	self.on_register = function(){

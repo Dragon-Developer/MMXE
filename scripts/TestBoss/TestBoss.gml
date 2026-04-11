@@ -46,7 +46,7 @@ function TestBoss() : BaseBoss() constructor{
 	}
 	
 	
-	self.pose_animation_name = "mach_hold";
+	self.pose_animation_name = "dash";
 	self.intro_animation_name = "mach_hold";
 	self.death_animation_name = "hurt";
 	
@@ -177,7 +177,7 @@ function TestBoss() : BaseBoss() constructor{
 				{return self.get_instance().components.get(ComponentPhysics).check_place_meeting(self.get_instance().x + self.dir * 12, self.get_instance().y, obj_square_16)
 			})
 			.add_transition("t_transition", ["fall", "jump"], "idle", function()
-				{return self.get_instance().components.get(ComponentPhysics).is_on_floor()
+				{return self.get_instance().components.get(ComponentPhysics).is_on_floor(3)
 			})
 			.add_transition("t_transition", ["dash", "walkdown"], "fall", function()
 				{return self.get(ComponentPhysics).get_vspd() > 0
