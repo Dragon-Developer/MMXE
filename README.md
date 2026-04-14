@@ -12,7 +12,7 @@ This is NOT a proper game. We will NOT add content if you ask us. We CANNOT take
 
 ## Social Media
 - YouTube: https://www.youtube.com/@MMXEngine
-- Discord: https://discord.gg/dXygbY9
+- Discord: https://discord.gg/h5unXT3j3W
 
 The majority of updates come from discord. If you need help, go ask there!
 
