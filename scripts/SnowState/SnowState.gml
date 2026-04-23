@@ -1043,7 +1043,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 			if (SNOWSTATE_DEBUG_WARNING) {
 				__snowstate_trace("History is disabled, can not get_history().");	
 			}
-			return new [];
+			return [];
 		}
 		if (get_previous_state() == undefined) return [__get_current_state()];
 		var _len = min(array_length(__history), __historyMaxSize);
