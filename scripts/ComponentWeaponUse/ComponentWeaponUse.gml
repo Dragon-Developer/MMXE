@@ -392,6 +392,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 	self.create_aimable_projectile = function(_shot_code, _shot_index, _input, _id){
 		//apply stock shot
+		var _shot_data;
 		if(self.stock_shot != noone){
 			_shot_data = {};
 			log("stock shot!")
@@ -413,7 +414,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		}
 		
 		//turn the shot data into the actual projectile data
-		var _shot_data = _shot_code.data[_shot_index];
+		_shot_data = _shot_code.data[_shot_index];
 		
 		var _code = {};
 		
@@ -427,7 +428,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		var _dir = self.get_instance().components.find("animation").animation.__xscale;
 		var _aim_dir = new Vec2(get(ComponentPlayerInput).get_input("right") - get(ComponentPlayerInput).get_input("left"), get(ComponentPlayerInput).get_input("down") - get(ComponentPlayerInput).get_input("up"))
-		var _anim_name = "aim_shoot";
+		_anim_name = "aim_shoot";
 		
 		if(abs(_aim_dir.x) < 0.2 && abs(_aim_dir.y) < 0.2)
 			_aim_dir = new Vec2(_dir,0);

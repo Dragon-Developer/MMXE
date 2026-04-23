@@ -24,7 +24,7 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 	}
 	
 	self.step = function(){
-		if player == undefined player = instance_nearest(0,0,obj_player);
+		player ??= instance_nearest(0,0,obj_player);
 		var _inst = self.get_instance();
 		
 		if(giving_armor){
@@ -60,7 +60,7 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 		} else {
 			if(abs(player.x - _inst.x) < 64 && abs(player.y - _inst.y + 32) < 64 && player.components.get(ComponentPhysics).is_on_floor()){
 				has_opened = true;
-				var _inst = self.get_instance();
+				_inst = self.get_instance();
 				player.components.get(ComponentPlayerMove).locked = true;
 				player.components.get(ComponentPlayerMove).fsm.trigger("t_dialouge");
 				var _dialogue = ENTITIES.create_instance(obj_dialouge);

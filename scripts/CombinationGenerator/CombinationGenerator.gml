@@ -15,7 +15,7 @@ function CombinationGenerator() constructor {
 	static generate_as_arrays = function(_arrays) {
 	    var _raw_combinations = [];
 	    __combine(_arrays, 0, [], _raw_combinations);
-	    return array_filter(_raw_combinations, function(_val) { return _val != ""; }); ;
+	    return array_filter(_raw_combinations, function(_val) { return _val != ""; });
 	}
 	
 	static generate_with_fallback = function(_arrays, _separator) {

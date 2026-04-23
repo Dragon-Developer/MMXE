@@ -20,8 +20,7 @@ if(!file_exists(game_save_id + "server.json")){
 
 var _server = JSON.load(game_save_id + "server.json");
 
-if(_server == undefined)
-	_server = JSON.load(working_directory + "server.json");
+_server ??= JSON.load(working_directory + "server.json");
 
 depth = -15000
 

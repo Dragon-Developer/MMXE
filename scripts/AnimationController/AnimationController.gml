@@ -2,7 +2,7 @@
 //why do we need to have a macro for the animation sprite seperator? it just adds characters
 #macro ANIMATION_SPRITE_SEPARATOR "_"
 
-/// @param {string} character	Character name used in animation
+/// @param {string} _character	Character name used in animation
 function AnimationController(_character = "") constructor {
     enum ANIMATION_MODE {
 		SPEED,
@@ -68,8 +68,8 @@ function AnimationController(_character = "") constructor {
 		self.__collage = _collage;
 		return self;
 	}
-	/// @param {string} character
-	/// @returns {AnimationController} self
+	/// @param {string} _character
+	/// @returns {Struct.AnimationController} self
 	static set_character = function(_character) {
 		self.__character = _character;
 		return self;
@@ -78,8 +78,8 @@ function AnimationController(_character = "") constructor {
 	static get_character = function() {
 		return self.__character;
 	}
-	/// @param {real} xscale
-	/// @returns {AnimationController} self
+	/// @param {real} _xscale
+	/// @returns {Struct.AnimationController} self
 	static set_xscale = function(_xscale) {
 		self.__xscale = _xscale;
 		return self;
@@ -88,24 +88,24 @@ function AnimationController(_character = "") constructor {
 	static get_xscale = function() {
 		return self.__xscale;
 	}
-	/// @param {real} yscale
-	/// @returns {AnimationController} self
+	/// @param {real} _yscale
+	/// @returns {Struct.AnimationController} self
 	static set_yscale = function(_yscale) {
 		self.__yscale = _yscale;
 		return self;
 	}
-	/// @param {real} xscale
-	/// @returns {AnimationController} self
+	/// @param {real} _color
+	/// @returns {Struct.AnimationController} self
 	static set_color = function(_color) {
 		self.__color = _color;
 		return self;
 	}
-	/// @returns {real}	
+	/// @returns {Constant.Color}
 	static get_color = function() {
 		return self.__color;
 	}
-	/// @param {real} angle
-	/// @returns {AnimationController} self
+	/// @param {real} _angle
+	/// @returns {Struct.AnimationController} self
 	static set_angle = function(_angle) {
 		self.__angle = _angle;
 		return self;
@@ -114,7 +114,7 @@ function AnimationController(_character = "") constructor {
 	static get_yscale = function() {
 		return self.__yscale;
 	}
-	/// @param {real} index
+	/// @param {real} _index
 	static set_index = function(_index) {
 		self.__index = _index;
 		return self;
@@ -123,16 +123,16 @@ function AnimationController(_character = "") constructor {
 	static get_index = function() {
 		return self.__index;
 	}
-	/// @param {real} visible
+	/// @param {real} _visible
 	static set_visible = function(_visible) {
 		self.__visible = _visible;
 		return self;
 	}
-	/// @returns {real}
+	/// @returns {bool}
 	static get_visible = function() {
 		return self.__visible;
 	}
-	/// @param {real} alpha
+	/// @param {real} _alpha
 	static set_alpha = function(_alpha) {
 		self.__alpha = _alpha;
 		return self;
@@ -149,13 +149,13 @@ function AnimationController(_character = "") constructor {
 	static get_animations = function() {
 		return variable_clone(self.__animations);
 	}
-	/// @returns {Array<struct>}
+	/// @returns {struct}
 	static get_props = function(_animation = self.__animation) {
 		return self.__props[$ _animation];
 	}
-	/// @param {string} animation
-	/// @param {real} key
-	/// @param {real} frame
+	/// @param {string} _animation
+	/// @param {real} _key
+	/// @param {real} _frame
 	static add_keyframe = function(_animation, _key, _frame) {
 		var _props = get_props(_animation);
 		var _keyframes = _props.keyframes;
@@ -166,8 +166,8 @@ function AnimationController(_character = "") constructor {
 		self.__refresh_props(_animation);
 		if (self.is_playing(_animation)) self.play(_animation, false);
 	}
-	/// @param {string} animation
-	/// @param {real} index
+	/// @param {string} _animation
+	/// @param {real} _index
 	static remove_keyframe = function(_animation, _index) {
 		var _props = get_props(_animation);
 		var _keyframes = _props.keyframes;
@@ -175,11 +175,12 @@ function AnimationController(_character = "") constructor {
 		self.__refresh_props(_animation);
 		if (self.is_playing(_animation)) self.play(_animation, false);
 	}
+	
 	static __refresh_props = function(_animation) {
 		var _props = get_props(_animation);
 		if (struct_exists(_props, "keyframes")) {
 			var _max_key = 0;
-			var _keyframes = _props[$ "keyframes"];
+			//var _keyframes = _props[$ "keyframes"];
 			var _keyframes = _props.keyframes;
 			array_sort(_keyframes, function(_a, _b) { return _a.key - _b.key });
 			var _len = array_length(_keyframes);
@@ -190,9 +191,9 @@ function AnimationController(_character = "") constructor {
 		}
 		
 	}
-	/// @param {string} animation
-    /// @param {struct} props
-	/// @returns {AnimationController} self
+	/// @param {string} _animation
+    /// @param {struct} _props
+	/// @returns {Struct.AnimationController} self
 	static add_animation = function(_animation, _props = {}) {
 		_props[$ "action"] ??= _animation;
         array_push(self.__actions, _props[$ "action"]);
@@ -209,9 +210,9 @@ function AnimationController(_character = "") constructor {
 		}
         return self;
     }
-	/// @param {string} type
-	/// @param {string} fallback_type
-	/// @returns {AnimationController} self
+	/// @param {string} _type
+	/// @param {string|array} _fallback_types
+	/// @returns {Struct.AnimationController|undefined} self
 	static add_type = function(_type, _fallback_types = []) {
 		if (_type == "") return;
 		self.__types[$ _type] = [_type];
@@ -221,8 +222,8 @@ function AnimationController(_character = "") constructor {
 		self.__types[$ _type] = array_concat([_type], _fallback_types);
         return self;
     }
-    /// @param {Array<Array<string>>} arrays
-	/// @returns {AnimationController} self
+    /// @param {Array<Array<string>>} _arrays
+	/// @returns {Struct.AnimationController} self
 	static add_type_combinations = function(_arrays) {
 		var _combinations = CombinationGenerator.generate_with_fallback(_arrays, ANIMATION_SPRITE_SEPARATOR);
 		array_foreach(_combinations, function(_combination) {
@@ -230,14 +231,14 @@ function AnimationController(_character = "") constructor {
 		});
 		return self;
 	}
-	/// @param {string} event
-    /// @param {function} method
-	/// @returns {AnimationController} self
+	/// @param {string} _event
+    /// @param {function} _method
+	/// @returns {Struct.AnimationController} self
 	static set_event = function(_event, _method) {
 		self.__events[$ _event] = _method;
 		return self;
 	}
-	/// @returns {AnimationController} self
+	/// @returns {Struct.AnimationController} self
     static init = function() {
         self.__collection = {};
         struct_foreach(self.__types, function(_type, _suffixes) {
@@ -279,11 +280,11 @@ function AnimationController(_character = "") constructor {
         });
 		return self;
     }
-	/// @param {real} current_index
-	/// @param {real} speed
-	/// @param {real} loop_begin
-	/// @param {Array<Struct>} keyframes
-	/// @param {real} max_key
+	/// @param {real} _current_index
+	/// @param {real} _speed
+	/// @param {real|undefined} _loop_begin
+	/// @param {Array<Struct>} _keyframes
+	/// @param {real} _max_key
 	function __process_keyframes(_current_index, _speed, _loop_begin, _keyframes, _max_key) {
 	    var _key_progress = _current_index + _speed;
 		if (self.__wait_frames > 0) {
@@ -307,7 +308,7 @@ function AnimationController(_character = "") constructor {
 	    }
 	    return { chosen_frame: _chosen_frame, new_index: _key_progress};
 	}
-	/// @returns {AnimationController} self
+	/// @returns {Struct.AnimationController|undefined} self
     static advance_frame = function() {
 		if (self.__animation == "") return;
 		if (self.__current_animation == "" || self.__current_animation == undefined) return;
@@ -329,7 +330,7 @@ function AnimationController(_character = "") constructor {
 	    if (self.__current_animation.mode == ANIMATION_MODE.KEYFRAMES) {
 			var _max_key = undefined;
 			try{
-				var _max_key = _props[$ "max_key"];
+				_max_key = _props[$ "max_key"];
 			} catch (_err){
 				log(self.__animation + " was missing properties")
 			}
@@ -393,7 +394,7 @@ function AnimationController(_character = "") constructor {
 
 	/**
 	 * Checks for sprite index events based on the current index.
-	 * @param {real} index - The current index of the sprite.
+	 * @param {real} _index - The current index of the sprite.
 	 */
 	static __check_for_index_events = function(_index) {
 	    if (_index == self.__last_index) return;
@@ -438,7 +439,7 @@ function AnimationController(_character = "") constructor {
 	}
 	/**
 	 * Triggers a specific event and calls all registered listeners for that event.
-	 * @param {string} event - The name of the event to trigger.
+	 * @param {string} _event - The name of the event to trigger.
 	 */
 	static trigger_event = function(_event, _args = undefined) {
 	    // Check if there are listeners for the event
@@ -479,26 +480,26 @@ function AnimationController(_character = "") constructor {
 	    }
 	    return self.__index + _speed;
 	}
-	/// @param {real} speed
-	/// @returns {AnimationController} self
+	/// @param {real} _speed
+	/// @returns {Struct.AnimationController} self
 	static set_speed = function(_speed) {
 		self.__speed = _speed;
 		return self;	
 	}
-	/// @returns {AnimationController} self
+	/// @returns {Struct.AnimationController} self
     static step = function() {
         self.__sprite = self.get_sprite();
         self.advance_frame();
 		return self;
     }
-	/// @returns {Asset.Sprite}
-	static get_sprite = function(_animation, _type) {
+	/// @returns {Asset.GMSprite}
+	static get_sprite = function(_animation = undefined, _type = undefined) {
 		if (is_undefined(_animation)) _animation = self.__animation;
 		if (!struct_exists(self.__props, _animation)) return - 1;
 		var _action = self.__props[$ _animation].action;
 		return self.get_sprite_from_action(_action, _type);
 	}
-	/// @returns {Asset.Sprite}
+	/// @returns {Asset.GMSprite}
 	static get_sprite_from_action = function(_action, _type) {
 		if (is_undefined(_type)) _type = self.__type;
 		if (!struct_exists(self.__collection, _type)) return -1;
@@ -509,8 +510,9 @@ function AnimationController(_character = "") constructor {
 		var _sprite = _sprites[$ _action];
 		return _sprite;
 	}
-	/// @param {string} animation
-	/// @param {bool} reset_if_same
+	/// @param {string} _animation
+	/// @param {bool} _reset
+	/// @param {real} _frame
     static play = function(_animation, _reset = true, _frame = 0) {
 		if (_animation == "") return;
         if (self.__animation != _animation || _reset){
@@ -532,10 +534,10 @@ function AnimationController(_character = "") constructor {
 		}
 		return self;
     }
-	/// @param {string} type
-	/// @param {real} x
-	/// @param {real} y
-	/// @returns {AnimationController} self
+	/// @param {string} _type
+	/// @param {real} _x
+	/// @param {real} _y
+	/// @returns {Struct.AnimationController} self
     static draw = function(_type, _x, _y) {
 		if (!self.__visible) return self;
 		var _sprite = self.__sprite;
@@ -547,23 +549,23 @@ function AnimationController(_character = "") constructor {
 		var _index = self.__frame;
 		return self.__draw_sprite(_sprite, _index, _x, _y);
     }
-	/// @param {string} action
-	/// @param {string} type
-	/// @param {real} index
-	/// @param {real} x
-	/// @param {real} y
-	/// @returns {AnimationController} self
+	/// @param {string} _action
+	/// @param {string} _type
+	/// @param {real} _index
+	/// @param {real} _x
+	/// @param {real} _y
+	/// @returns {Struct.AnimationController} self
     static draw_action = function(_action, _type, _index, _x, _y) {
 		if (!self.__visible) return self;
 		var _sprite = self.get_sprite_from_action(_action, _type);
         self.__draw_sprite(_sprite, _index, _x, _y);    
 		return self;
     }
-	/// @param {Asset.Sprite} sprite
-	/// @param {real} index
-	/// @param {real} x
-	/// @param {real} y
-	/// @returns {AnimationController} self
+	/// @param {Asset.GMSprite} _sprite
+	/// @param {real} _index
+	/// @param {real} _x
+	/// @param {real} _y
+	/// @returns {Struct.AnimationController} self
 	static __draw_sprite = function(_sprite, _index, _x, _y) {
 		if (instance_exists(self.__owner)) {
 			if (is_undefined(_x)) _x = floor(self.__owner.x);
@@ -602,8 +604,8 @@ function AnimationController(_character = "") constructor {
 	static is_playing = function(_animation) {
         return self.__animation == _animation;
     }
-	/// @param {struct} data
-	/// @returns {AnimationController} self
+	/// @param {struct} _data
+	/// @returns {Struct.AnimationController|any|undefined} self
 	static parse_data = function(_data, _return_self = true) {
         if (!is_struct(_data)) {log("crap");return;}
     
@@ -614,13 +616,15 @@ function AnimationController(_character = "") constructor {
         if (struct_exists(_data, "speed")) {
             self.set_speed(_data.speed);    
         }
+		
+		var _anim_data;
     
         if (struct_exists(_data, "list")) {
             var _animations = _data.list;
             for (var _i = 0, _len = array_length(_animations); _i < _len; _i++) {
                 var _animation = _animations[_i];
                 var _name = _animation.name;
-                var _anim_data = _animation.properties;
+                _anim_data = _animation.properties;
             
                 if (!is_struct(_anim_data)) continue;
             
@@ -669,7 +673,7 @@ function AnimationController(_character = "") constructor {
                 }
 				
 				//shot offsets. i know i can get the active animation here. 
-				var _anim_data = {
+				_anim_data = {
                     action: _action,
                     keyframes: _keyframes,
                     loop_begin: _loop_begin,

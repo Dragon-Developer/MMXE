@@ -91,7 +91,8 @@ function gigaCrush(){
 	// Lines
 	if (t mod 2 == 0 && t >= 120 && t <= 132) {
 		repeat(2) {
-			var _x = 0, _y = __view_get(e__VW.YView, 0) + irandom_range(1, 45) * 5, is_ok;
+			var _x = 0, _y = __view_get(e__VW.YView, 0) + irandom_range(1, 45) * 5;
+			var is_ok = false;
 			do {
 				_x = __view_get(e__VW.XView, 0) + irandom_range(1, 63) * 5;
 				is_ok = true;

@@ -14,7 +14,7 @@ function NET_GameBase() constructor {
 	self.__mode = 0;
 	/**
      * Sets the game loop instance.
-     * @param {Struct.NET_GameLoopBase} game - The game loop to assign.
+     * @param {Struct.NET_GameLoopBase} _game - The game loop to assign.
      */
 	static set_game_loop = function(_game) {
 		self.game_loop = _game;
@@ -22,21 +22,21 @@ function NET_GameBase() constructor {
 	}
 	/**
      * Sets the input manager instance.
-     * @param {Struct.NET_InputManager} input - The input manager to assign.
+     * @param {Struct.NET_InputManager} _input - The input manager to assign.
      */
 	static set_input_manager = function(_input) {
 		self.inputs = _input;	
 	}
 	/**
      * Adds local players to the game.
-     * @param {array} players - The players to add.
+     * @param {array} _players - The players to add.
      */
 	static add_local_players = function(_players) {
 		self.__local_players = array_union(self.__local_players, _players);	
 	}
 	/**
      * Removes specified local players from the game.
-     * @param {array} players - The players to remove.
+     * @param {array} _players - The players to remove.
      */
 	static remove_local_players = function(_players) {
 		self.__local_players = array_filter(self.__local_players, 
@@ -64,7 +64,7 @@ function NET_GameBase() constructor {
 	}
 	/**
 	 * Triggers a specific event and calls all registered listeners for that event.
-	 * @param {string} event - The name of the event to trigger.
+	 * @param {string} _event The name of the event to trigger.
 	 */
 	static trigger_event = function(_event, _args = undefined) {
 	    // Check if there are listeners for the event
@@ -79,8 +79,8 @@ function NET_GameBase() constructor {
 	}
 	/**
      * Adds inputs for all local players for a given frame.
-     * @param {number} frame - The frame to associate the inputs with.
-     * @returns {array} The collected inputs for the frame.
+     * @param {real} _frame The frame to associate the inputs with.
+     * @returns {array<Struct>} The collected inputs for the frame.
      */
 	static add_local_inputs = function(_frame) {
 		var _result = [];
@@ -94,7 +94,7 @@ function NET_GameBase() constructor {
 	}
 	/**
      * Retrieves input for a given player at the current frame.
-     * @param {real} player_index - The index of the player.
+     * @param {real} _player_index - The index of the player.
      * @returns {any} The input data.
      */
 	static get_input = function(_player_index) {
@@ -102,8 +102,8 @@ function NET_GameBase() constructor {
 	}
 	/**
      * Adds input data for a specific player at a given frame.
-     * @param {real} frame - The frame number.
-     * @param {real} player_index - The player index.
+     * @param {real} _frame - The frame number.
+     * @param {real} _player_index - The player index.
      * @param {any} _input - The input data.
      */
 	static add_input = function(_frame, _player_index, _input) {
@@ -120,7 +120,6 @@ function NET_GameBase() constructor {
      */
 	static step = function() {
 		if (!self.__started || (self.game_loop.frame_advancing && !keyboard_check_pressed(ord("0")))) return;
-		
 		self.add_local_inputs(self.__current_frame);
 		self.run_current_frame();
 		self.__current_frame++;

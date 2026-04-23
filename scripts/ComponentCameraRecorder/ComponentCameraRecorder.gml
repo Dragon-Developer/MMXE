@@ -4,7 +4,7 @@ function ComponentCameraRecorder() : ComponentBase() constructor {
 	self.folder = "frame-record/";
 	self.get_frame_name = function(_index) {
 		var _frame = string_replace_all(string_format(string(_index), 8, 0), " ", "0");
-		var _frame = _index;
+		_frame = _index;
 		return $"{self.folder}frame_{_frame}.png"; 
 	}
 	self.save_frame = function() {

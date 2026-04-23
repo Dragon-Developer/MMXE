@@ -71,7 +71,7 @@ function ComponentSoundLoader() : ComponentBase() constructor{
 	            if (string_lower(chunk_id) != "riff" || audio_format != 1) return undefined;
 	            var _format = (bps == 8) ? buffer_u8 : buffer_s16;
 	            var _channels = (channels_num == 2) ? audio_stereo : ((channels_num == 1) ? audio_mono : audio_3d);
-	            return audio_create_buffer_sound(audio_file_buff, _format, sample_rate, _ho_data, audio_buff_length-_ho_data, _channels);;
+	            return audio_create_buffer_sound(audio_file_buff, _format, sample_rate, _ho_data, audio_buff_length-_ho_data, _channels);
 	        }
 	    } else {
 	        return undefined;

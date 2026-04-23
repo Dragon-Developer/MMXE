@@ -1,4 +1,4 @@
-function add_dash(_entity){
+function add_dash(_entity = undefined){
 	with(_entity){
 		self.fsm.add("dash", {
 			enter: function() {//
@@ -54,7 +54,7 @@ function add_dash(_entity){
 	}
 }
 	
-function add_wall_jump(_entity){
+function add_wall_jump(_entity = undefined){
 	with(_entity){
 		self.fsm.add("wall_slide", {
 			enter: function() {
@@ -261,7 +261,7 @@ function add_aimable_state(_entity){
 	}
 }
 	
-function add_air_dash(_entity, _armor){
+function add_air_dash(_entity, _armor = undefined){
 	with(_entity){
 		self.fsm.add("dash_air", {
 			enter: function() {//
@@ -408,7 +408,7 @@ function add_slide(_entity, _armor){
 	}
 }
 	
-function add_mach_dash(_entity, _falcon_flight){
+function add_mach_dash(_entity, _falcon_flight = undefined){
 	_entity.states.dash.speed *= 1.05;
 	with(_entity){
 		struct_set(states, "mach_dash", {
@@ -469,7 +469,7 @@ function add_mach_dash(_entity, _falcon_flight){
 					self.dir = _input_dir.x;
 						
 					if(self.states.mach_dash.only_cardinals)
-						var _input_dir = new Vec2(_input_dir.x, 0);
+						_input_dir = new Vec2(_input_dir.x, 0);
 						
 					self.publish("animation_xscale", self.dir)
 					self.publish("animation_angle", 45 * (_input_dir.y * _input_dir.x))
@@ -507,7 +507,7 @@ function add_mach_dash(_entity, _falcon_flight){
 						self.dir = floor(_input_dir.x + 0.5);
 						
 					if(self.states.mach_dash.only_cardinals)
-						var _input_dir = new Vec2(_input_dir.x, 0);
+						_input_dir = new Vec2(_input_dir.x, 0);
 						
 					self.publish("animation_xscale", self.dir == 0 ? 1 : self.dir)
 					self.publish("animation_angle", 45 * (_input_dir.y * _input_dir.x))

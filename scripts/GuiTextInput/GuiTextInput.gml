@@ -62,7 +62,7 @@ function GuiTextInput() : GuiContainer() constructor {
 	step = function() {
 		childrenStep();
 		if (!self.editable) return;
-		if (focused) {;
+		if (focused) {
 			if (keyboard_check(vk_control) && keyboard_check_pressed(ord("V"))) {
 				keyboard_string += clipboard_get_text();
 			}

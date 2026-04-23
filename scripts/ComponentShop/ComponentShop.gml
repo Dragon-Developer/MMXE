@@ -268,8 +268,8 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 		draw_string(shop_prices[_item_index], _inst.x + _x - 24, _inst.y + _y + 3, _text_type)
 		
 		//description panel
-		var _x = shop_draw_x_real_offset
-		var _y = shop_draw_y_real_offset
+		_x = shop_draw_x_real_offset
+		_y = shop_draw_y_real_offset
 		draw_set_color(c_white)
 		draw_rectangle(_inst.x + _x + shop_draw_width - 1, _inst.y + _y - shop_draw_height - item_draw_radius - 1, _inst.x + _x + shop_draw_width + 80 + 1, _inst.y + _y + shop_draw_height + item_draw_radius + 1, false)
 		draw_set_color(c_black)

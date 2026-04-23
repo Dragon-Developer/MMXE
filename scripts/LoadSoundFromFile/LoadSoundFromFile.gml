@@ -12,9 +12,11 @@ function play_sound_from_datafile(_sound){
 	audio_play_sound(_snd, 0, false);
 }
 
+// TODO: Finish this.
 function import_wav_trimmed(filename) {
 	return noone;
-   log(filename);
+	/*
+	log(filename);
     var buffer_init = buffer_load(filename);
     var buffer_size = buffer_get_size(buffer_init);
     var channels = buffer_peek(buffer_init,22,buffer_u8);
@@ -66,6 +68,7 @@ function import_wav_trimmed(filename) {
     var snd = audio_create_buffer_sound(buffer,buffer_s16,sampleRate,0,buffer_size,channelType);
 	//log(snd);
     return snd;
+	*/
 }
 
 function wav_get_sample_rate(buffer) {

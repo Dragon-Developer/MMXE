@@ -77,7 +77,7 @@ function NET_Server(_type, _port, _max_clients) constructor {
 	static setEvent = function(_event, _method) {
 		self.events[$ _event] = _method;
 	}
-	static triggerEvent = function(_event, _params) {
+	static triggerEvent = function(_event, _params = undefined) {
 		if (variable_struct_exists(self.events, _event)) {
 			self.events[$ _event](_params);	
 		}

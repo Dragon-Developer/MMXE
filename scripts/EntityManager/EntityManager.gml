@@ -7,7 +7,7 @@ function EntityManager() constructor {
 	/**
 	 * Caches the given component to be reused later.
 	 * Ensures the component is stored in the corresponding constructor-based map.
-	 * @param {Struct.EntityComponent} component - The component instance to cache.
+	 * @param {Struct.EntityComponent} _component - The component instance to cache.
 	 */
 	static cache_component = function(_component) {
 		var _constructor = _component.get_constructor();
@@ -20,7 +20,7 @@ function EntityManager() constructor {
 	/**
 	 * Removes the given component from the cache.
 	 * Ensures the component is deleted from the corresponding constructor-based map.
-	 * @param {Struct.EntityComponent} component - The component instance to remove.
+	 * @param {Struct.EntityComponent} _component - The component instance to remove.
 	 */
 	static remove_component = function(_component) {
 		var _constructor = _component.get_constructor();
@@ -34,7 +34,7 @@ function EntityManager() constructor {
 	/**
 	 * Creates a new instance and returns it.
 	 * @param {Asset.GMObject} _object - The object containing components.
-	 * @returns {Instance} The created instance.
+	 * @returns {Id.Instance} The created instance.
 	 */
 	static create_instance = function(_object, _x = 0, _y = 0) {
 		var _inst = instance_create_depth(_x, _y, 0, _object);
@@ -50,7 +50,7 @@ function EntityManager() constructor {
 
 	/**
 	 * Destroys an instance and removes it from the manager.
-	 * @param {Instance} _inst - The instance to be destroyed.
+	 * @param {Id.Instance} _inst - The instance to be destroyed.
 	 */
 	static destroy_instance = function(_inst) {
 		try{
@@ -79,7 +79,7 @@ function EntityManager() constructor {
 
 	/**
 	 * Removes all components from an entity.
-	 * @param {Instance} _inst - The instance from which to remove all components.
+	 * @param {Id.Instance} _inst - The instance from which to remove all components.
 	 */
 	static remove_all_components = function(_inst) {
 		try{
@@ -102,7 +102,7 @@ function EntityManager() constructor {
 	/**
 	 * Returns an array of components of a given type.
 	 * @param {function} _component_type - The component type to search for.
-	 * @returns {Array<Component>} An array of matching components.
+	 * @returns {Array<Struct.Component>} An array of matching components.
 	 */
 	static get_ecs_components = function(_component_type) {
 		if (struct_exists(self.__component_map, _component_type)) {
@@ -122,8 +122,8 @@ function EntityManager() constructor {
 
 	/**
 	 * Returns the instance by ID.
-	 * @param {number} _id - The entity ID.
-	 * @returns {Instance|undefined} The found instance, or undefined if not found.
+	 * @param {real} _id - The entity ID.
+	 * @returns {Id.Instance|undefined|Any} The found instance, or undefined if not found.
 	 */
 	static find_by_id = function(_id) {
 		return self.__instance_map[$ _id];
@@ -132,7 +132,7 @@ function EntityManager() constructor {
     /**
      * Returns the first instance that has the specified tags.
      * @param {Array<string>} _tags - The tags to search for.
-     * @returns {Instance|undefined} The found instance, or undefined if none match.
+     * @returns {Id.Instance|undefined} The found instance, or undefined if none match.
      */
 	static find = function(_tags) {
 		for (var i = 0; i < array_length(self.__instances); i++) {
@@ -148,14 +148,12 @@ function EntityManager() constructor {
     /**
      * Returns all instances that have the specified tags.
      * @param {Array<string>} _tags - The tags to search for.
-     * @returns {Array<Instance>} An array of matching instances.
+     * @returns {Array<Id.Instance>} An array of matching instances.
 	 */
 	static find_all = function(_tags) {
 		var _results = [];
 		//if instance_exists(asset_object)
 		for (var i = 0; i < array_length(self.__instances); i++) {
-			var _inst = self.__instances[i];
-			
 			//if(instance_exists(_inst)){
 				log(_inst)
 				//log(_inst.object_index)

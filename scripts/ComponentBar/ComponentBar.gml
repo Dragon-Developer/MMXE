@@ -61,7 +61,9 @@ function ComponentBar() : ComponentBase() constructor{
 	self.draw_bar = function(_val, _maxVal, _offset, _icon = PLAYER_SPRITE, _bar_type = "healthbar"){
 		var _vertoffset = clamp(min(barLoopPoint, _maxVal) - 32, 0, 12000) * 2;
 		animation.draw_action(_bar_type + "_icon_" + _icon, undefined, 0, _offset.x, _offset.y + _vertoffset);//icon
-		for(var i = 0; i <= _maxVal; i++)
+		
+		var i;
+		for(i = 0; i <= _maxVal; i++)
 		{			
 			if(i < barLoopPoint)
 			animation.draw_action(_bar_type + "_tick", undefined, 0, _offset.x, _offset.y - 2 - ((i) mod barLoopPoint) * 2 + _vertoffset);//backing
@@ -85,7 +87,8 @@ function ComponentBar() : ComponentBase() constructor{
 		//var _vertoffset = 0
 		
 		animation.draw_action(_bar_type + "_icon_" + _icon, undefined, 0, _offset.x, _offset.y + _vertoffset);//icon
-		for(var i = 0; i <= _maxVal; i++)
+		var i;
+		for(i = 0; i <= _maxVal; i++)
 		{			
 			animation.draw_action(_bar_type + "_tick", undefined, 0, _offset.x + floor(i / barLoopPoint) * barRepeatDistance, _offset.y - 2 - ((i) mod barLoopPoint) * 2 + _vertoffset);//backing
 			if(_val > i)

@@ -285,10 +285,12 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 	}
 	
 	self.draw_gui = function(){
+		var _damageable;
+		var _weapons;
 		try{
 			//log(player)
-			var _damageable = player.components.get(ComponentDamageable);
-			var _weapons = player.components.get(ComponentWeaponUse);
+			_damageable = player.components.get(ComponentDamageable);
+			_weapons = player.components.get(ComponentWeaponUse);
 		} catch(_err){
 			log(_err)
 			return;
@@ -323,7 +325,8 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			//draw the start of the ammo bar
 			get(ComponentSpriteRenderer).draw_sprite("bar_start_cap", 0,72,32 + i * 16)
 			//draw the ticks, change if its no longer full
-			for(var q = 0; q < 28; q++){
+			var q = 0;
+			for(q = 0; q < 28; q++){
 				if(self.weapon_energies[floor(i)] >= q)
 					get(ComponentSpriteRenderer).draw_sprite("bar_full_tick", 0,76 + q * 2,32 + i * 16)
 				else

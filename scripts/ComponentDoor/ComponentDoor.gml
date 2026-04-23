@@ -70,9 +70,8 @@ function ComponentDoor() : ComponentBase() constructor{
 				state_segment = 1;
 				time_offset = CURRENT_FRAME + time_delay;
 				curr_player = physics.get_place_meeting(_inst.x, _inst.y, obj_player);
-				if(curr_player == undefined){
-					curr_player = instance_nearest(_inst.x, _inst.y, obj_player)
-				}
+				curr_player ??= instance_nearest(_inst.x, _inst.y, obj_player)
+				
 				log(curr_player)
 				curr_player.components.get(ComponentPlayerInput).__locked = true;
 				curr_player.components.get(ComponentPlayerMove).locked = true;

@@ -419,7 +419,7 @@ function ComponentEditorBar() : ComponentBase() constructor{
 					}
 			}
 			file_text_readln(_sav);
-			var _lvl = file_text_read_string(_sav);
+			_lvl = file_text_read_string(_sav);
 			_lvl = string_split(_lvl, self.delimiter);
 		}
 		file_text_close(_sav);

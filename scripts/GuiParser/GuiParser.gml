@@ -93,7 +93,7 @@ function GuiParser() constructor {
 				default:
 					var _setter_hash = hashSetters[$ _key];
 					var _setter_func = undefined;
-					var _value = _data[$ _key];
+					_value = _data[$ _key];
 	                if (!is_undefined(_setter_hash)) {
 						_setter_func = struct_get_from_hash(_instance, _setter_hash);
 					}

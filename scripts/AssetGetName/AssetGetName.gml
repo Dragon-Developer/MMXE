@@ -6,6 +6,8 @@ function asset_get_name(_asset)
  
     switch(type_)
     {
+        case asset_unknown:
+            return string(_asset);///not found
         case asset_object:
             return object_get_name(_asset);
         case asset_sprite:
@@ -35,7 +37,6 @@ function asset_get_name(_asset)
                 var _ps = part_system_get_info(_asset);
                 return _ps.name;
             }
-        case asset_unknown:
         default:
             return string(_asset);///not found
     }

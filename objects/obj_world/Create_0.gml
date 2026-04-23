@@ -12,7 +12,7 @@ components.init();
 var _loop_music = global.stage_Data.music + "L";
 
 if(!file_exists(working_directory + "\\music\\" + _loop_music))
-var _loop_music = global.stage_Data.music;
+	_loop_music = global.stage_Data.music;
 
 self.music = self.components.get(ComponentSoundLoader).play_sound(global.stage_Data.music,0,global.stage_Data.music);
 if(self.music != undefined)

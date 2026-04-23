@@ -12,10 +12,13 @@ function ComponentNode() : ComponentBase() constructor{
 	
 	self.step = function(){
 		return;
+		// TODO: Check this, as now is unreachable.
+		/*
 		array_foreach(self.children_nodes, function(_node){
 			_node.get_instance().x += self.get_instance().x - self.previous_position.x;
 			_node.get_instance().y += self.get_instance().y - self.previous_position.y;
 		});
+		*/
 	}
 	
 	self.add_child = function(_child){

@@ -6,8 +6,8 @@
 */
 
 /// @func SnowState(initial_state, [execute_enter])
-/// @param {string} initial_state		Initial state for the state machine
-/// @param {bool}   [execute_enter]		Whether to execute the "enter" event for the initial state (true) or not (false) [Default: true]
+/// @param {string} _initState Initial state for the state machine
+/// @param {bool} [_execEnter] Whether to execute the "enter" event for the initial state (true) or not (false) [Default: true]
 function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region SnowState System
@@ -73,10 +73,10 @@ function SnowState(_initState, _execEnter = true) constructor {
 	// Add .on() events
 	__on_events[$ "state changed"] = undefined;
 		
-	/// @param {string} state_name
-	/// @param {struct} state_struct
-	/// @param {bool} has_parent
-	/// @returns {SnowState} self
+	/// @param {string} _name
+	/// @param {struct} _struct
+	/// @param {bool} _hasParent
+	/// @returns {Struct.SnowState} self
 	__add = function(_name, _struct, _hasParent) {
 		var _events, _state, _event, _i;
 		
@@ -114,13 +114,13 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 		
-	/// @param {string} name
-	/// @param {string} from
-	/// @param {string} to
-	/// @param {function} condition
-	/// @param {function} leave_func
-	/// @param {function} enter_func
-	/// @returns {SnowState} self
+	/// @param {string} _transitionName
+	/// @param {string} _from
+	/// @param {string} _to
+	/// @param {function} _condition
+	/// @param {function} _leave
+	/// @param {function} _enter
+	/// @returns {Struct.SnowState} self
 	__add_transition = function(_transitionName, _from, _to, _condition, _leave, _enter) {
 		// Define the transition
 		var _transition = {
@@ -154,8 +154,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {string} event
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @returns {Struct.SnowState} self
 	__add_event_method = function(_event) {
 		var _temp = {
 			exec : __execute,
@@ -176,8 +176,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {string} event
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @returns {Struct.SnowState} self
 	__assert_event_available = function(_event) {
 		if (!variable_struct_exists(__defaultEvents, _event)) {
 			__set_default_event(_event, function() {}, SNOWSTATE_EVENT.NOT_DEFINED);
@@ -186,8 +186,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {string} event
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @returns {bool}
 	__assert_event_name_valid = function(_event) {
 		if (variable_struct_exists(__defaultEvents, _event)) return true;
 		if (variable_struct_exists(self, _event)) {
@@ -198,8 +198,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return true;
 	};
 	
-	/// @param {string} state_name
-	/// @param {bool} [show_error]
+	/// @param {string} _state
+	/// @param {bool} [_error]
 	/// @returns {bool} Whether the name is valid (true), or not (false)
 	__assert_state_name_valid = function(_state, _error = true) {
 		var _func = __snowstate_error;
@@ -224,8 +224,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return true;
 	};
 	
-	/// @param {string} transition_name
-	/// @param {bool} [show_error]
+	/// @param {string} _state
+	/// @param {bool} [_error]
 	/// @returns {bool} Whether the name is valid (true), or not (false)
 	__assert_transition_name_valid = function(_state, _error = true) {
 		var _func = __snowstate_error;
@@ -241,9 +241,9 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return true;
 	};
 	
-	/// @param {string} event
-	/// @param {array<any>} [args]
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @param {array<any>} [_args]
+	/// @returns {Struct.SnowState} self
 	__broadcast_event = function(_event, _args) {
 		var _func = __on_events[$ _event];
 		if (_func != undefined) __func_exec(_func, _args);
@@ -251,11 +251,11 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {string} state_name
-	/// @param {function} leave_func
-	/// @param {function} enter_func
-	/// @param {struct} [data]
-	/// @returns {SnowState} self
+	/// @param {string} _state
+	/// @param {function} _leave
+	/// @param {function} _enter
+	/// @param {struct} [_data]
+	/// @returns {Struct.SnowState} self
 	__change = function(_state, _leave, _enter, _data) {
 		var _defLeave, _defEnter;
 		_defLeave = leave;
@@ -292,7 +292,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 		
-	/// @param {struct} state_struct
+	/// @param {struct} _struct
 	/// @return {struct} Struct filled with all possible events
 	__create_events_struct = function(_struct) {
 		var _events = {};
@@ -326,12 +326,12 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return _events;
 	};
 		
-	/// @param {string} event
-	/// @param {string} [state_name]
-	/// @param {array} [args]
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @param {string} [_state]
+	/// @param {struct|array} [_args]
+	/// @returns {Struct.SnowState|undefined} self
 	__execute = function(_event, _state = undefined, _args = undefined) {
-		if (_state == undefined) _state = __history[0];
+		_state ??= __history[0];
 		
 		if (!__is_state_defined(_state)) {
 			__snowstate_error("State \"", _state, "\" is not defined.");
@@ -346,8 +346,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {function} function
-	/// @param {array<any>} [args=undefined]
+	/// @param {function} _func
+	/// @param {array<any>} [_args=undefined]
 	/// @returns {any} Return value of function
 	__func_exec = function(_func, _args = undefined) {
 		if (_args == undefined) return _func();
@@ -384,8 +384,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return _state;
 	};
 		
-	/// @param {string} state
-	/// @returns {SnowState} self
+	/// @param {string} _state
+	/// @returns {Struct.SnowState} self
 	__history_add = function(_state) {
 		if (__historyEnabled) {
 			if (__history[1] == undefined) {
@@ -403,7 +403,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 		
-	/// @returns {SnowState} self
+	/// @returns {Struct.SnowState} self
 	__history_fit_contents = function() {
 		array_resize(__history, max(2, min(__historyMaxSize, array_length(__history))));
 		return self;
@@ -418,16 +418,16 @@ function SnowState(_initState, _execEnter = true) constructor {
 		}
 	};
 		
-	/// @param {string} state_name
+	/// @param {string} _state
 	/// @return {bool} Whether the state is defined (true), or not (false)
 	__is_state_defined = function(_state) {
 		return (is_string(_state) && variable_struct_exists(__states, _state));
 	};
 		
-	/// @param {string} event
-	/// @param {function} method
-	/// @param {int} defined
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @param {function} _method
+	/// @param {real} _defined
+	/// @returns {Struct.SnowState} self
 	__set_default_event = function(_event, _method, _defined) {
 		__defaultEvents[$ _event] = {
 			exists: _defined,
@@ -439,7 +439,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	};
 		
 	/// @param {any} [args]
-	/// @returns {SnowState} self
+	/// @returns {Struct.SnowState} self
 	__snowstate_error = function() {
 		var _str = "[SnowState]\n";
 		var _i = 0; repeat(argument_count) {
@@ -451,7 +451,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	};
 		
 	/// @param {any} [args]
-	/// @returns {SnowState} self
+	/// @returns {Struct.SnowState} self
 	__snowstate_trace = function() {
 		var _str = "[SnowState] ";
 		var _i = 0; repeat(argument_count) {
@@ -461,9 +461,9 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 		
-	/// @param {string} transition_name
-	/// @param {string} from_state
-	/// @returns {int} SNOWSTATE_TRIGGER
+	/// @param {string} _transitionName
+	/// @param {string} _from
+	/// @returns {real} SNOWSTATE_TRIGGER
 	__transition_exists = function(_transitionName, _from) {
 		if (_from == SNOWSTATE_WILDCARD_TRANSITION_NAME) {
 			// Wildcard transition
@@ -486,8 +486,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return SNOWSTATE_TRIGGER.NOT_DEFINED;
 	};
 	
-	/// @param {string} transition_name
-	/// @param {struct} [data]
+	/// @param {string} _transitionName
+	/// @param {struct} [_data]
 	/// @returns {bool} Whether the transition has been triggered (true), or not (false)
 	__trigger = function(_transitionName, _data) {
 		if (!__assert_transition_name_valid(_transitionName)) return false;
@@ -517,10 +517,10 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return false;
 	};
 	
-	/// @param {array} transitions
-	/// @param {string} source_state
-	/// @param {string} trigger_name
-	/// @param {struct} [data]
+	/// @param {array} _transitions
+	/// @param {string} _source
+	/// @param {string} _trigger
+	/// @param {struct} [_data]
 	/// @returns {bool} Whether the trigger is successful (true), or not (false)
 	__try_triggers = function(_transitions, _source, _trigger, _data) {
 		var _transition, _dest, _i;
@@ -542,8 +542,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return false;
 	};
 		
-	/// @param {string} state_name
-	/// @returns {SnowState} self
+	/// @param {string} _name
+	/// @returns {Struct.SnowState} self
 	__update_events_from_parent = function(_name) {
 		var _parent, _state, _events, _event, _exists, _parEvent, _i;
 			
@@ -573,9 +573,9 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 		
-	/// @param {bool} has_parent
-	/// @returns {SnowState} self
-	__update_states = function(_hasParent) {
+	/// @param {bool|undefined} _hasParent
+	/// @returns {Struct.SnowState} self
+	__update_states = function(_hasParent = undefined) {
 		var _states, _events, _state, _event, _defEvent, _i, _j;
 		_states = variable_struct_get_names(__states);
 		_events = variable_struct_get_names(__defaultEvents);
@@ -603,9 +603,9 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region Basics
 	
-	/// @param {string} state_name
-	/// @param {struct} [state_struct]
-	/// @returns {SnowState} self
+	/// @param {string} _name
+	/// @param {struct} [_struct]
+	/// @returns {Struct.SnowState|undefined} self
 	add = function(_name, _struct = {}) {
 		if (!__assert_state_name_valid(_name)) return undefined;
 	
@@ -623,11 +623,11 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 
-	/// @param {string} state_name
-	/// @param {function} [leave_func=undefined]
-	/// @param {function} [enter_func=undefined]
-	/// @param {struct} [data=undefined]
-	/// @returns {SnowState} self
+	/// @param {string} _state
+	/// @param {function} [_leave=undefined]
+	/// @param {function} [_enter=undefined]
+	/// @param {struct} [_data=undefined]
+	/// @returns {Struct.SnowState|undefined} self
 	change = function(_state, _leave = undefined, _enter = undefined, _data = undefined) {
 		if ((_leave != undefined) && !__is_really_a_method(_leave)) {
 			__snowstate_error("Invalid value for \"leave_func\" in change(). Should be a function.");
@@ -646,9 +646,9 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 
-	/// @param {string} state_name
-	/// @param {string} [state_to_check]
-	/// @returns {bool} Whether state_name is state_to_check or a parent of state_to_check (true), or not (false)
+	/// @param {string} _target
+	/// @param {string} [_source] state to check
+	/// @returns {bool} Whether target is source or a parent of source (true), or not (false)
 	state_is = function(_target, _source = get_current_state()) {
 		var _state = _source;
 		
@@ -663,7 +663,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return false;
 	};
 	
-	/// @param {string} state_name
+	/// @param {string} _state
 	/// @returns {bool} Whether state_name exists (true), or not (false)
 	state_exists = function(_state) {
 		return variable_struct_exists(__states, _state);
@@ -684,16 +684,16 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return ((array_length(__history) > 1) ? __history[1] : undefined);
 	};
 	
-	/// @param {bool} [in_microseconds]
-	/// @returns {number} Number of microseconds (or steps) the current state has been running for
+	/// @param {bool} [_us] If use microseconds instead of steps. Defaults true.
+	/// @returns {real} Number of microseconds (or steps) the current state has been running for
 	get_time = function(_us = true) {
 		var _time = (get_timer()-__stateStartTime);
 		return (_us ? _time : (_time * game_get_speed(gamespeed_fps) * 1/1000000));
 	};
 	
-	/// @param {number} time
-	/// @param {bool} [in_microseconds]
-	/// @returns {SnowState} self
+	/// @param {real} _time
+	/// @param {bool} [_us]  If use microseconds instead of steps. Defaults true.
+	/// @returns {Struct.SnowState|undefined} self
 	set_time = function(_time, _us = true) {
 		if (!is_real(_time)) {
 			__snowstate_error("Time should be a number");
@@ -705,10 +705,10 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {string} event
-	/// @param {string} callback
-	/// @param {struct} [context=noone]
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @param {string} _callback
+	/// @param {struct} [_context=noone]
+	/// @returns {Struct.SnowState|undefined} self
 	on = function(_event, _callback, _context = noone) {
 		if (!is_string(_event)) {
 			__snowstate_error("Event name should be a string.");
@@ -733,10 +733,10 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region Inheritance
 	
-	/// @param {string} parent_state_name
-	/// @param {string} state_name
-	/// @param {struct} [state_struct]
-	/// @return {SnowState} self
+	/// @param {string} _parent Parent state name
+	/// @param {string} _name State name
+	/// @param {struct} [_struct] State struct
+	/// @return {Struct.SnowState|undefined} self
 	add_child = function(_parent, _name, _struct = {}) {
 		if (!__assert_state_name_valid(_name)) return undefined;
 		if (!__assert_state_name_valid(_parent)) return undefined;
@@ -774,7 +774,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;		
 	};
 	
-	/// @returns {SnowState} self
+	/// @returns {Struct.SnowState|undefined} self
 	inherit = function() {
 		var _state = __history[0];
 			
@@ -820,9 +820,9 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region Events
 	
-	/// @param {string} event
-	/// @param {function} function
-	/// @returns {SnowState} self
+	/// @param {string} _event
+	/// @param {function} _function
+	/// @returns {Struct.SnowState|undefined} self
 	event_set_default_function = function(_event, _function) {
 		if (SNOWSTATE_DEBUG_WARNING && (variable_struct_names_count(__states) > 0)) {
 			__snowstate_trace("event_set_default_function() should be called before defining any state.");
@@ -851,8 +851,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return __tempEvent;
 	}
 	
-	/// @param {string} event
-	/// @returns {int} SNOWSTATE_EVENT
+	/// @param {string} _event
+	/// @returns {real} SNOWSTATE_EVENT (int)
 	event_exists = function(_event) {
 		if (!is_string(_event) || (_event == "")) {
 			if (SNOWSTATE_DEBUG_WARNING) {
@@ -866,15 +866,15 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return __states[$ _state][$ _event].exists;
 	};
 
-	/// @param {struct} [data]
-	/// @returns {SnowState} self
+	/// @param {struct} [_data]
+	/// @returns {Struct.SnowState} self
 	enter = function(_data = undefined) {
 		__execute("enter", undefined, _data);
 		return self;
 	};
 	
-	/// @param {struct} [data]
-	/// @returns {SnowState} self
+	/// @param {struct} [_data]
+	/// @returns {Struct.SnowState} self
 	leave = function(_data = undefined) {
 		__execute("leave", undefined, _data);
 		return self;
@@ -884,13 +884,13 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region Transitions
 
-	/// @param {string} transition_name
-	/// @param {string/array} source_state
-	/// @param {string} dest_state
-	/// @param {function} [condition]
-	/// @param {function} [leave_func]
-	/// @param {function} [enter_func]
-	/// @returns {SnowState} self
+	/// @param {string} _transitionName Transition name
+	/// @param {string|array} _source Source state
+	/// @param {string} _dest Dest state
+	/// @param {function} [_condition] Condition function
+	/// @param {function} [_leave] leave function
+	/// @param {function} [_enter] Enter function
+	/// @returns {Struct.SnowState|undefined} _self
 	add_transition = function(_transitionName, _source, _dest, _condition = function() { return true; }, _leave = leave, _enter = enter) {
 		if (!__assert_transition_name_valid(_transitionName)) return undefined;
 		if (!is_string(_dest) || (_dest == "")) {
@@ -936,29 +936,29 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @param {string} transition_name
-	/// @param {string} dest_state
-	/// @param {function} [condition]
-	/// @param {function} [leave_func]
-	/// @param {function} [enter_func]
-	/// @returns {SnowState} self
+	/// @param {string} _transitionName
+	/// @param {string} _dest
+	/// @param {function} [_condition]
+	/// @param {function} [_leave]
+	/// @param {function} [_enter]
+	/// @returns {Struct.SnowState} self
 	add_wildcard_transition = function(_transitionName, _dest, _condition = function() { return true; }, _leave = undefined, _enter = undefined) {
 		return add_transition(_transitionName, SNOWSTATE_WILDCARD_TRANSITION_NAME, _dest, _condition, _leave, _enter);
 	};
 	
-	/// @param {string} transition_name
-	/// @param {string/array} source_state
-	/// @param {function} [condition]
-	/// @param {function} [leave_func]
-	/// @param {function} [enter_func]
-	/// @returns {SnowState} self
+	/// @param {string} _transitionName
+	/// @param {string|array} _source
+	/// @param {function} [_condition]
+	/// @param {function} [_leave]
+	/// @param {function} [_enter]
+	/// @returns {Struct.SnowState} self
 	add_reflexive_transition = function(_transitionName, _source, _condition = function() { return true; }, _leave = undefined, _enter = undefined) {
 		return add_transition(_transitionName, _source, SNOWSTATE_REFLEXIVE_TRANSITION_NAME, _condition, _leave, _enter);
 	};
 	
-	/// @param {string} transition_name
-	/// @param {string} source_state
-	/// @returns {int} SNOWSTATE_TRIGGER
+	/// @param {string} _transitionName
+	/// @param {string} _source
+	/// @returns {real|bool} SNOWSTATE_TRIGGER
 	transition_exists = function(_transitionName, _source) {
 		if (!is_string(_transitionName)) return false;
 		if (!is_string(_source)) return false;
@@ -969,8 +969,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return __transition_exists(_transitionName, _source);
 	};
 	
-	/// @param {string|array} transition_name
-	/// @param {struct} [data=undefined]
+	/// @param {string|array} _transition
+	/// @param {struct} [_data=undefined]
 	/// @returns {bool} Whether a transition has been triggered (true), or not (false)
 	trigger = function(_transition, _data = undefined) {
 		if (is_array(_transition)) {
@@ -988,7 +988,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	#region History
 	
-	/// @returns {SnowState} self
+	/// @returns {Struct.SnowState} self
 	history_enable = function() {
 		if (!__historyEnabled) {
 			__historyEnabled = true;
@@ -998,7 +998,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @returns {SnowState} self
+	/// @returns {Struct.SnowState} self
 	history_disable = function() {
 		if (__historyEnabled) {
 			__historyEnabled = false;
@@ -1013,8 +1013,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return __historyEnabled;
 	};
 	
-	/// @param {int} size
-	/// @returns {SnowState} self
+	/// @param {real} _size (int)
+	/// @returns {Struct.SnowState|undefined} self
 	history_set_max_size = function(_size) {
 		if (!is_real(_size)) {
 			__snowstate_error("Size should be a number.");
@@ -1032,18 +1032,18 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 	
-	/// @returns {int} The maximum storage capacity of state history
+	/// @returns {real} (int) The maximum storage capacity of state history
 	history_get_max_size = function() {
 		return __historyMaxSize;
 	};
 	
-	/// @returns {array} Array containing the state history
+	/// @returns {array<String>} Array containing the state history
 	history_get = function() {
 		if (!__historyEnabled) {
 			if (SNOWSTATE_DEBUG_WARNING) {
 				__snowstate_trace("History is disabled, can not get_history().");	
 			}
-			return [];
+			return new [];
 		}
 		if (get_previous_state() == undefined) return [__get_current_state()];
 		var _len = min(array_length(__history), __historyMaxSize);

@@ -25,10 +25,10 @@ function NET_Rpc() constructor {
 	/// Function to send requests by invoking the specified method with the given parameters
 	/// over the provided socket. Allows handling both successful results and errors through callbacks.
 	///
-	/// @param {String} method - Name of the method to be invoked.
-	/// @param {Struct|Array} params - Parameters to be used in the request.
-	/// @param {Socket.Id} socket - Socket to which the request will be sent.
-	/// @param {Real} timeout - Time, in seconds, to wait for the request result before timing out.
+	/// @param {String} _method - Name of the method to be invoked.
+	/// @param {Struct|Array} _params - Parameters to be used in the request.
+	/// @param {Struct.Socket.Id} _socket - Socket to which the request will be sent.
+	/// @param {Real} _timeout - Time, in seconds, to wait for the request result before timing out.
 	static sendRequest = function(_method, _params, _socket, _timeout = timeout) {
 		var _id = generateID();
 		var _request = new NET_RpcRequest(_id, _timeout, self);
@@ -45,9 +45,9 @@ function NET_Rpc() constructor {
 	/// @description
 	/// Sends a notification with the specified method and parameters over the given socket.
 	///
-	/// @param {String} method - Name of the method to be invoked.
-	/// @param {Struct|Array} params - Parameters to be used in the notification.
-	/// @param {Function} socket - Socket to which the notification will be sent.
+	/// @param {String} _method - Name of the method to be invoked.
+	/// @param {Struct|Array} _params - Parameters to be used in the notification.
+	/// @param {Function|Array} _socket - Socket to which the notification will be sent.
 	static sendNotification = function(_method, _params, _socket) {
 		sendJSON({
 			"method": _method,
@@ -58,10 +58,10 @@ function NET_Rpc() constructor {
 	/// @description
 	/// Sends an error with the specified code, message, and ID over the given socket.
 	///
-	/// @param {Real} code - Error code.
-	/// @param {String} message - Error message.
-	/// @param {Real} id - ID associated with the error.
-	/// @param {Function} socket - Socket to which the error will be sent.
+	/// @param {Real} _code - Error code.
+	/// @param {String} _message - Error message.
+	/// @param {Real} _id - ID associated with the error.
+	/// @param {Function} _socket - Socket to which the error will be sent.
 	static sendError = function(_code, _message, _id, _socket) {
 		sendJSON({
 			"error": {
@@ -80,7 +80,7 @@ function NET_Rpc() constructor {
 	static handleMessageFromClient = function(_data, _client) {
 		handleMessageFromSocket(_data, _client.socket, _client);
 	}
-	static handleMessageFromSocket = function(_data, _socket, _client) {
+	static handleMessageFromSocket = function(_data, _socket = undefined, _client = undefined) {
 		if (struct_exists(_data, "method")) {
 			if (struct_exists(_data, "id")) {
 				handleRequest(_data, _client, _socket);
@@ -163,8 +163,8 @@ function NET_Rpc() constructor {
 	/// @description
 	/// This function allows associating a method with a unique name for later invocation.
 	///
-	/// @param {String} name - Name associated with the RPC handler.
-	/// @param {Function} method - Method to be registered as the RPC handler.
+	/// @param {String} _name - Name associated with the RPC handler.
+	/// @param {Function} _method - Method to be registered as the RPC handler.
 	static registerHandler = function(_name, _method) {
 		var _handler = new NET_RpcHandler();
 		handlers[$ _name] = _handler;

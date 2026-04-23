@@ -34,15 +34,15 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		.addVariable("does_collisions")
 	/**
 	 * Sets the velocity of the entity.
-	 * @param {real} x - X velocity.
-	 * @param {real} y - Y velocity.
+	 * @param {real} _x - X velocity.
+	 * @param {real} _y - Y velocity.
 	 */
 	set_speed = function(_x, _y) {
 		self.velocity.set(_x, _y);
 	}
 	/**
 	 * Sets horizontal speed while maintaining rotation.
-	 * @param {real} speed - Horizontal speed value.
+	 * @param {real} _speed - Horizontal speed value.
 	 */
 	set_hspd = function(_speed) {
 	    var _rotated_velocity = self.velocity.rotate(self.right.angle()); 
@@ -59,7 +59,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	}
 	/**
      * Sets vertical speed while maintaining rotation.
-     * @param {real} speed - Vertical speed value.
+     * @param {real} [_speed] - Vertical speed value.
      */
 	set_vspd = function(_speed) {
 	    var _rotated_velocity = self.velocity.rotate(self.up.angle()); 
@@ -136,10 +136,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	}
 	/**
 	 * Checks if the entity is colliding with an object at a given position.
-	 * @param {real} x - X position.
-	 * @param {real} y - Y position.
-	 * @param {Object} obj - Object to check collision against.
-	 * @returns {boolean} True if collision occurs.
+	 * @param {real} _x - X position.
+	 * @param {real} _y - Y position.
+	 * @param {Asset.GMObject} _obj - Object to check collision against.
+	 * @returns {bool} True if collision occurs.
 	 */
 	check_place_meeting = function(_x, _y, _obj) {
 		with (self.get_instance()) {
@@ -148,10 +148,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	}
 	/**
 	 * If the entity collides with an entity at a given position, return said entity
-	 * @param {real} x - X position.
-	 * @param {real} y - Y position.
-	 * @param {Object} obj - Object to check collision against.
-	 * @returns {boolean} True if collision occurs.
+	 * @param {real} _x - X position.
+	 * @param {real} _y - Y position.
+	 * @param {Asset.GMObject} _obj - Object to check collision against.
+	 * @returns {Id.Instance} True if collision occurs.
 	 */
 	get_place_meeting = function(_x, _y, _obj) {
 		with (self.get_instance()) {
@@ -215,10 +215,10 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	}
 	/**
 	 * Moves the entity step by step while handling collisions in 4 separate directions.
-	 * @param {Vec2} v - Movement vector.
+	 * @param {Struct.Vec2} _v - Movement vector.
 	 */
 	move_step = function(_v,_block = self.objects.block) {
-	    if (_v.x >= 0) self.move_right(_v.x, _block);
+		if (_v.x >= 0) self.move_right(_v.x, _block);
 		if(_v.x < 0) self.move_left(_v.x, _block);
 		
 	    if (_v.y >= 0) self.move_down(_v.y, _block, 0);
@@ -431,11 +431,11 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
     }
 	/**
      * Rotates the up vector and updates gravity accordingly.
-     * @param {real} angle - Angle in degrees.
+     * @param {real} _angle - Angle in degrees.
      */
 	rotate_up = function(_angle) {
 		self.up = self.up.rotate(_angle).round_vec();
-		self.right = self.up.rotate(-90*self.up_to_right_dir).round_vec();;
+		self.right = self.up.rotate(-90*self.up_to_right_dir).round_vec();
 		self.update_gravity();
 	}
 	/**

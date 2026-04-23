@@ -1,9 +1,9 @@
-/// @param {real} x1
-/// @param {real} y1
-/// @param {real} x2
-/// @param {real} y2
-/// @param {real} w
-/// @param {real} p
+/// @param {real} _x1
+/// @param {real} _y1
+/// @param {real} _x2
+/// @param {real} _y2
+/// @param {real} _w
+/// @param {real} _p
 function draw_line_percentage(_x1,_y1,_x2,_y2,_w,_p){
 
 	//get the distance between the two points

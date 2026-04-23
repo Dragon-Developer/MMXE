@@ -90,7 +90,7 @@ function NET_Network() constructor {
 	static onMessage = function(_buffer, _socket) {};
 	/// @function						readBufferText()
 	/// @description					Read the buffer as a text.
-	/// @param {Id.Buffer} buffer		The index of the buffer to read from.
+	/// @param {Id.Buffer} _buffer The index of the buffer to read from.
 	/// @returns {String}
 	static readBufferText = function(_buffer) {
 		if (!compress) {
@@ -104,8 +104,8 @@ function NET_Network() constructor {
 	}
 	/// @function						sendData()
 	/// @description					Send data to socket.
-	/// @param {Struct} data			Data to be sent.
-	/// @param {Id.Socket} [sockets]	Sockets to send to.
+	/// @param {Struct} _data			Data to be sent.
+	/// @param {Id.Socket} [_sockets]	Sockets to send to.
 	static sendData = function(_data, _sockets) {
 		if (is_undefined(_sockets)) {
 			if (type == network_socket_udp) {

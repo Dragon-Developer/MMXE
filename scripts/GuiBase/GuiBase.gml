@@ -226,8 +226,8 @@ function GuiBase() constructor {
         array_push(events[$ _event_name], _callback);
 		return self;
     };
-    
-    emitEvent = function(_event_name, _data) {
+
+    emitEvent = function(_event_name, _data = undefined) {
 		if (!enabled) return;
         if (struct_exists(events, _event_name)) {
             for (var i = 0; i < array_length(events[$ _event_name]); i++) {
@@ -263,19 +263,19 @@ function GuiBase() constructor {
 		drawDebug();
     };
 	
-	drawDebug = function() {
+	drawDebug = function(_x = undefined, _y = undefined) {
 		if (!debug) return;
 		var _pos = getDrawPosition();
 		draw_set_color(c_red);
 		draw_set_alpha(1);
-		var _x = _pos.x;
-		var _y = _pos.y;
+		_x ??= _pos.x;
+		_y ??= _pos.y;
 		draw_sprite_stretched_ext(debugSprite, 0, _x, _y, width, height, c_red, 1);
 		//draw_text_color(_x, _y, name, c_white, c_white, c_white, c_white, 1);
 		
     };
 	
-	drawMe = function(_x, _y) {}
+	drawMe = function(_x = undefined, _y = undefined) {}
 
 	init = function() {}
 

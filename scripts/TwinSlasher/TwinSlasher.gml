@@ -90,32 +90,32 @@ function TwinSlasherUpChargedData() : ProjectileData() constructor{
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
 		
-		var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataB, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
+		_shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataB, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
 		_shot.code.hspd = _angle.x;
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
 		
-		var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataB, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
+		_shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataB, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
 		_shot.code.hspd = _angle.x;
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
 		
-		var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataC, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
+		_shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataC, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
 		_shot.code.hspd = _angle.x;
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
 		
-		var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataC, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
+		_shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataC, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
 		_shot.code.hspd = _angle.x;
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
 		
-		var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataD, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
+		_shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataD, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
 		_shot.code.hspd = _angle.x;
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
 		
-		var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataD, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
+		_shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, TwinSlasherDownChargedDataD, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);
 		_shot.code.hspd = _angle.x;
 		_shot.code.vspd = _angle.y;
 		_angle = _angle.rotate(-20);
