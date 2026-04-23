@@ -50,8 +50,14 @@ on_spawn = function(_npc){
 				room_transition_to(rm_chill_penguin, 0, 24);
 				global.stage_Data.music = global.settings.race_song
 			},
-			option_7: "Nah",
+			option_7: "An incomplete test stage",
 			option_7_function: function(){
+				global.dynamo_race = true;
+				room_transition_to(rm_oldschool, 0, 24);
+				global.stage_Data.music = global.settings.race_song
+			},
+			option_8: "Nah",
+			option_8_function: function(){
 				//nah
 			},
 		}

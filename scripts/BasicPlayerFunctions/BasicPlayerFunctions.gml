@@ -635,8 +635,17 @@ function add_falcon_flight(_entity){
 	
 function remove_dash(_entity){
 	with(_entity){
-		self.states.dash.interval = 0;
-		self.states.dash.speed = self.states.walk.speed;
+		if(variable_struct_exists(self.fsm, "remove")){
+			if (fsm.get_current_state() == "dash" || fsm.get_current_state() == "dash_end")
+				self.fsm.change("idle")
+			self.fsm.remove("dash")
+			self.fsm.remove("dash_end")
+			
+			log("removed?")
+		} else {
+			self.states.dash.interval = 0;
+			self.states.dash.speed = self.states.walk.speed;
+		} 
 	}
 }
 	

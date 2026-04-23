@@ -47,7 +47,10 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.add_base_state_machine = function(){
 		
 	self.reset_state_variables();
-	self.fsm = new SnowState("init", true);
+	if keyboard_check(ord("O"))
+		self.fsm = new FortState("init", true);
+	else
+		self.fsm = new SnowState("init", true);
 	self.fsm
 		.history_enable()
 		.history_set_max_size(10)

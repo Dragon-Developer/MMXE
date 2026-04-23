@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"FortState",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"FortState",
+  "parent":{
+    "name":"SnowState",
+    "path":"folders/Scripts/LIbraries/SnowState.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
