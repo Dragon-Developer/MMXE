@@ -2304,6 +2304,7 @@
     {"id":{"name":"FlameStagBoss","path":"scripts/FlameStagBoss/FlameStagBoss.yy",},},
     {"id":{"name":"FlamethrowerWeapon","path":"scripts/FlamethrowerWeapon/FlamethrowerWeapon.yy",},},
     {"id":{"name":"Folder_Copy","path":"scripts/Folder_Copy/Folder_Copy.yy",},},
+    {"id":{"name":"FortState","path":"scripts/FortState/FortState.yy",},},
     {"id":{"name":"FullChargeParticle","path":"scripts/FullChargeParticle/FullChargeParticle.yy",},},
     {"id":{"name":"GaeaBuster","path":"scripts/GaeaBuster/GaeaBuster.yy",},},
     {"id":{"name":"GameClient","path":"scripts/GameClient/GameClient.yy",},},
