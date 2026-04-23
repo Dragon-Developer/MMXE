@@ -6,7 +6,7 @@
   "name":"PowerGear",
   "parent":{
     "name":"Weapons",
-    "path":"folders/Scripts/Game/Player Specific/Characters/Rock/Weapons.yy",
+    "path":"folders/Scripts/Game/Player Specific/Rock/Weapons.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -5,7 +5,7 @@ function HermesBuster() : ProjectileWeapon() constructor{
 	self.title = "X BUSTER";
 	self.description = "Mega Buster Mark 17"
 	
-	self.weapon_palette = global.player_character[global.local_player_index].default_palette;
+	self.weapon_palette = global.availible_characters[global.character_index].default_palette;
 }
 
 function HermesBuster1Data() : xBuster11Data() constructor{

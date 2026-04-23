@@ -1,1 +1,1 @@
-self.armorComponent = new XFirstArmorBody();
+self.chip_to_give = array_get_index(global.shop_items, ChipPlatinumArmor)

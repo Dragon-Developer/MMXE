@@ -662,15 +662,35 @@
                 "frame": 0
               },
               {
-                "key": 3,
+                "key": 1,
                 "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+              {
+                "key": 5,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 5
               }
             ],
             "loop_begin": 3
           }
         },
         {
-          "name": "dash_end_air",
+          "name": "dash_air_end",
           "properties": {
             "action": "dash_air",
             "keyframes": [

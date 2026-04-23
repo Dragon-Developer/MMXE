@@ -133,6 +133,7 @@ function BassEXEBoss() : BaseBoss() constructor{
 			self.dialouge = other.dialouge
 			self.desperate_rate = 1/3
 			self.max_health = 32 * ((DIFF + 1) / 2)
+			self.contact_damage = 3
 			fsm.add("idle", { 
 					enter: function(){
 						self.get(ComponentPhysics).set_vspd(0);
@@ -242,22 +243,18 @@ function BassEXEBoss() : BaseBoss() constructor{
 				enter: function(){
 					self.publish("animation_play", { name: "exe_clamp" });
 					self.timer = CURRENT_FRAME
-					with(obj_player){
-						if(omponents.get(ComponentDamageable).health > 0)
-						components.get(ComponentPlayerMove).fsm.change("hurt")
-					}
 				},
 				
 				step: function(){
 					var _inst = self.get_instance();
 					with(_inst){
 						var _point = instance_nearest(x, y, Boss_ref_node)
-						move_towards_point(_point.x, _point.y, distance_to_object(_point) / 3)
+						move_towards_point(_point.x, _point.y, distance_to_object(_point) / 10)
 					}
 					if(CURRENT_FRAME - self.timer < 70){
 						with(obj_player){
 							var _point = instance_nearest(x, y, Boss_ref_node)
-							move_towards_point(_point.x, y, distance_to_point(_point.x, y) / 14)
+							move_towards_point(_point.x, y, distance_to_point(_point.x, y) / 20)
 						}
 					} else {
 						with(obj_player){
@@ -292,7 +289,7 @@ function BassEXEBoss() : BaseBoss() constructor{
 					
 					_inst.x = _point.x;
 					_inst.y = _point.y;
-					self.publish("animation_play", { name: "exe_hand" });
+					self.publish("animation_play", { name: "exe_volley" });
 					self.timer = CURRENT_FRAME
 					self.ball_speed = desperate ? 10 : 1
 				},
@@ -326,22 +323,20 @@ function BassEXEBoss() : BaseBoss() constructor{
 					var _inst = self.get_instance();
 					with(_inst){
 						var _point = instance_nearest(x, y, Boss_ref_node)
-						move_towards_point(_point.x - 120 * other.dir, _point.y - 64, distance_to_point(_point.x - 120 * other.dir, _point.y - 64) / 10)
+						move_towards_point(_point.x - 120 * other.dir, _point.y - 64, distance_to_point(_point.x - 120 * other.dir, _point.y - 64) / 8)
 					}
 					
 					if(desperate) {
-						if(CURRENT_FRAME - self.timer == 40){
-							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallFloor, self, ["enemy"], 0);
-							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallRoof, self, ["enemy"], 0);
-						} else if(CURRENT_FRAME - self.timer == 50){
-							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallFloor, self, ["enemy"], 0);
-							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallRoof, self, ["enemy"], 0);
-						} else if(CURRENT_FRAME - self.timer == 60){
+						if(CURRENT_FRAME - self.timer == 60 || CURRENT_FRAME - self.timer == 50 || CURRENT_FRAME - self.timer == 40 || CURRENT_FRAME - self.timer == 30){
 							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallFloor, self, ["enemy"], 0);
 							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallRoof, self, ["enemy"], 0);
 						}
 					} else {
 						if(CURRENT_FRAME - self.timer == 40){
+							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallFloor, self, ["enemy"], 0);
+						} else if(CURRENT_FRAME - self.timer == 50){
+							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallRoof, self, ["enemy"], 0);
+						} else if(CURRENT_FRAME - self.timer == 60){
 							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallFloor, self, ["enemy"], 0);
 						} else if(CURRENT_FRAME - self.timer == 70){
 							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXEBallRoof, self, ["enemy"], 0);
@@ -363,6 +358,7 @@ function BassEXEBoss() : BaseBoss() constructor{
 						if(CURRENT_FRAME - self.timer >= 55 && CURRENT_FRAME mod 2 == 0){
 							var _shot = PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXELaser, self, ["enemy"], 0);
 							_shot.code.rotation = (CURRENT_FRAME - self.timer - 55) * -3 * dir
+							_inst.speed = 0;
 						} else if(CURRENT_FRAME - self.timer >= 30){
 							if CURRENT_FRAME mod 2 == 0 
 								PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXELaser, self, ["enemy"], 0);
@@ -380,6 +376,7 @@ function BassEXEBoss() : BaseBoss() constructor{
 							_shot.code.rotation = (CURRENT_FRAME - self.timer - 90) * -3 * dir
 						} else if(CURRENT_FRAME - self.timer >= 80 && CURRENT_FRAME mod 2 == 0){
 							PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXELaser, self, ["enemy"], 0);
+							_inst.speed = 0;
 						} else if(CURRENT_FRAME - self.timer >= 30){
 							if CURRENT_FRAME mod 2 == 0 
 								PROJECTILES.create_projectile(_inst.x, _inst.y, dir, EXELaser, self, ["enemy"], 0);
@@ -396,15 +393,18 @@ function BassEXEBoss() : BaseBoss() constructor{
 			})
 			.add_transition("t_animation_end", "idle", "dash")
 			.add_transition("t_transition", "crush_wheel", "antivirus", function(){return CURRENT_FRAME - self.timer > (desperate ? 95 : 90)})
-			.add_transition("t_transition", "antivirus", "area_grab_startup", function(){return CURRENT_FRAME - self.timer > (desperate ? 85 : 120) && random_value < 60})
-			.add_transition("t_transition", "antivirus", "panel_remove_startup", function(){return CURRENT_FRAME - self.timer > (desperate ? 85 : 120) && random_value >= 60})
+			.add_transition("t_transition", "antivirus", "area_grab_startup", function(){return CURRENT_FRAME - self.timer > (desperate ? 115 : 150) && random_value < 60})
+			.add_transition("t_transition", "antivirus", "panel_remove_startup", function(){return CURRENT_FRAME - self.timer > (desperate ? 115 : 150) && random_value >= 60})
 			.add_transition("t_transition", "panel_remove_startup", "panel_remove", function(){return CURRENT_FRAME - self.timer > 90 })
 			.add_transition("t_transition", "panel_remove", "area_grab_startup", function(){return CURRENT_FRAME - self.timer > 300 })
 			.add_transition("t_transition", "area_grab_startup", "area_grab", function(){return CURRENT_FRAME - self.timer > (desperate ? 35 : 80) })
 			.add_transition("t_transition", "area_grab", "dash", function(){return CURRENT_FRAME - self.timer > 20 })
 			.add_transition("t_transition", "area_grab_slam", "dash", function(){return CURRENT_FRAME - self.timer > 59 })
-			.add_transition("t_transition", ["area_grab", "area_grab_startup"], "area_grab_slam", function(){return instance_position(self.get_instance().x, self.get_instance().y, obj_player) || instance_position(self.get_instance().x + dir * 6, self.get_instance().y, obj_player) })
-			.add_transition("t_transition", "dash", "crush_wheel", function(){return CURRENT_FRAME - self.timer > (desperate ? 150 : 100)})
+			.add_transition("t_transition", ["area_grab", "area_grab_startup"], "area_grab_slam", function(){return instance_position(self.get_instance().x, self.get_instance().y, obj_player) || 
+				instance_position(self.get_instance().x + dir * 6, self.get_instance().y, obj_player) ||
+				instance_position(self.get_instance().x + dir * 12, self.get_instance().y, obj_player) 
+				})
+			.add_transition("t_transition", "dash", "crush_wheel", function(){return CURRENT_FRAME - self.timer > (desperate ? 90 : 100)})
 		}
 	}
 }

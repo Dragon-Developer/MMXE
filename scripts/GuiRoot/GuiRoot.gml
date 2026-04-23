@@ -28,6 +28,7 @@ function GuiRoot() : GuiContainer() constructor {
 	SettingsContainer = new GuiSettingsMenu();
 	KeybindsContainer = new GuiKeybinds();
 	VolumeContainer = new GuiVolume();
+	VisualsContainer = new GuiVisuals();
 	
 	mainMenuContainer.setEnabled(true);
 	hudContainer.setEnabled(false);
@@ -35,9 +36,10 @@ function GuiRoot() : GuiContainer() constructor {
 	OptionsContainer.setEnabled(false);
 	KeybindsContainer.setEnabled(false);
 	VolumeContainer.setEnabled(false);
+	VisualsContainer.setEnabled(false);
 	
 	
-	addChild([mainMenuContainer, hudContainer, SettingsContainer, OptionsContainer, KeybindsContainer, VolumeContainer]);
+	addChild([mainMenuContainer, hudContainer, SettingsContainer, OptionsContainer, KeybindsContainer, VolumeContainer, VisualsContainer]);
 	
 	mouseX = -1;
 	mouseY = -1;
@@ -71,8 +73,14 @@ function GuiRoot() : GuiContainer() constructor {
 				}
 			} else {
 				
-				_mx += gamepad_axis_value(connected_controller, gp_axislh) * 3
-				_my += gamepad_axis_value(connected_controller, gp_axislv) * 3
+				var _tx = gamepad_axis_value(connected_controller, gp_axislh)
+				if abs(_tx) < 0.3 _tx = 0;
+				var _ty = gamepad_axis_value(connected_controller, gp_axislv)
+				if abs(_ty) < 0.3 _ty = 0;
+				
+				_mx += _tx * 3
+				_my += _ty * 3
+				
 				
 				if(OMX != device_mouse_x_to_gui(0) || OMY != device_mouse_y_to_gui(0)){
 					usingMouse = true;
@@ -82,7 +90,7 @@ function GuiRoot() : GuiContainer() constructor {
 			if (_mx != mouseX || _my != mouseY || _scroll) {
 				onHover({ x: _mx, y: _my })	
 			}
-			if (mouse_check_button_pressed(mb_left) || gamepad_button_check_pressed(connected_controller, gp_stickl)) {
+			if (mouse_check_button_pressed(mb_left) || (gamepad_button_check(connected_controller, gp_select) && gamepad_button_check_pressed(connected_controller, gp_face2))) {
 				onClick({ x: _mx, y: _my });
 			}
 			mouseX = _mx;

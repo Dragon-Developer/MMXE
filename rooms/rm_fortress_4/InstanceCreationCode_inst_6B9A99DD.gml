@@ -1,1 +1,1 @@
-spawns_boss = false;
+spawns_boss = true;

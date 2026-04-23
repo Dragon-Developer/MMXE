@@ -6,7 +6,7 @@
   "name":"MetalAnchor",
   "parent":{
     "name":"x6",
-    "path":"folders/Scripts/Game/Player Specific/Characters/X/Weapons/x6.yy",
+    "path":"folders/Scripts/Game/Player Specific/X/Weapons/x6.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

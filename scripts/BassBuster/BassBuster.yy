@@ -6,7 +6,7 @@
   "name":"BassBuster",
   "parent":{
     "name":"Bass",
-    "path":"folders/Scripts/Game/Player Specific/Characters/Bass.yy",
+    "path":"folders/Scripts/Game/Player Specific/Bass.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

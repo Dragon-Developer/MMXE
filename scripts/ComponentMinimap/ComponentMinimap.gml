@@ -1,10 +1,12 @@
 function ComponentMinimap() : ComponentBase() constructor{
 	
-	self.draw = function(){
+	self.draw_gui = function(){
 		//Super metroid style coords
 		//var _xoff = floor(player.x / GAME_W), _yoff = floor(player.y / GAME_H);
 		//tile by tile coords
-		var _xoff = floor(player.x / 16), _yoff = floor(player.y / 16);
+		var _xoff = 0, _yoff = 0;
+		
+		draw_sprite(spr_player_mask, 0, 16, 16)
 		
 		
 		var _tileset = layer_tilemap_get_id("TS_Map")

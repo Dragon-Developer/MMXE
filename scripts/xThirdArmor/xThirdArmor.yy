@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"ShopItems",
+  "%Name":"xThirdArmor",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ShopItems",
+  "name":"xThirdArmor",
   "parent":{
-    "name":"mp",
-    "path":"folders/Scripts/Game/Player Specific/mp.yy",
+    "name":"Armors",
+    "path":"folders/Scripts/Game/Player Specific/X/Armors.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

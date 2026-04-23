@@ -20,6 +20,7 @@ function XSecondArmorBody() : BodyPartBase() constructor{
 function XSecondArmorArms() : ArmsPartBase() constructor{
 	//drill buster!
 	self.sprite_name = "/x2/arms"//this is more for filepath.
+	self.buster_weapon = xBusterX2;
 	self.armor_name = "Second Armor Arms"
 	self.description = "Gives the user a double buster."
 }

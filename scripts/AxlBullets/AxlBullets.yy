@@ -6,7 +6,7 @@
   "name":"AxlBullets",
   "parent":{
     "name":"Axl",
-    "path":"folders/Scripts/Game/Player Specific/Characters/Axl.yy",
+    "path":"folders/Scripts/Game/Player Specific/Axl.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

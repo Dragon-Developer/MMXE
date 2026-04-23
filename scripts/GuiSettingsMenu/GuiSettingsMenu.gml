@@ -41,7 +41,7 @@ function GuiSettingsMenu() : GuiContainer() constructor {
 		parent.KeybindsContainer.setEnabled(true);
 	});
 	
-	buttonOptions = new GuiButton(160, 16, "Options");
+	buttonOptions = new GuiButton(160, 16, "Gameplay");
 	buttonOptions.addEventListener("click", function() { 
 		self.setEnabled(false);
 		parent.OptionsContainer.setEnabled(true);
@@ -53,6 +53,12 @@ function GuiSettingsMenu() : GuiContainer() constructor {
 		parent.VolumeContainer.setEnabled(true);
 	});
 	
-	mainContainer.addChild([buttonBack, DifficultyToggle, buttonKeybinds, buttonVolume, buttonOptions]);
+	buttonVisuals = new GuiButton(160, 16, "Graphics");
+	buttonVisuals.addEventListener("click", function() { 
+		self.setEnabled(false);
+		parent.VisualsContainer.setEnabled(true);
+	});
+	
+	mainContainer.addChild([buttonBack, DifficultyToggle, buttonKeybinds, buttonVolume, buttonOptions, buttonVisuals]);
 	addChild([mainContainer]);
 }

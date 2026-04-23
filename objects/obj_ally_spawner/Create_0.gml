@@ -1,0 +1,78 @@
+event_inherited();
+entity_object = obj_ally;
+current_spawn = 0;
+camera_spawn_offset = new Vec2(-GAME_W / 2,0);
+
+//shouldnt be zero because it tracks checkpoint objects not checkpoint numbers
+if(instance_exists(global.checkpoint_id)){
+	x = global.checkpoint_id.x;
+	y = global.checkpoint_id.y - 32;
+}
+WORLD = ENTITIES.create_instance(obj_world);
+
+global_prepare_application();
+
+y -= GAME_H + 8
+on_spawn = function(_player) {
+	_player.x += current_spawn * 5
+	_player.components.get(ComponentAnimationShadered).set_subdirectories(
+	[ "/normal"]);
+	_player.components.get(ComponentPlayerInput).set_player_index(current_spawn);
+	_player.components.publish("character_set", global.availible_characters[global.character_index].image_folder);
+	//_player.components.publish("armor_set",
+	//[ "x1_helm","x1_body","x1_arms","x1_legs" ]);
+	
+	//create the charge graphics and make it a child
+	
+	//var _charge = ENTITIES.create_instance(obj_charge);
+	//_charge.depth = _player.depth - 1;
+	//_charge.components.publish("character_set", "player");
+	//_player.components.get(ComponentNode).add_child(_charge.components.get(ComponentNode));
+	_player.components.get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
+	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_data.weapon_energy;
+	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.availible_characters[global.character_index].weapons), global.player_data.weapon_energy);
+	//_player.components.get(ComponentWeaponUse).init();
+	//
+	//set health to not 1
+	_player.components.get(ComponentDamageable).set_health(global.player_data.max_health,global.player_data.max_health);
+	_player.components.get(ComponentDamageable).invuln_time = 120;
+	_player.components.get(ComponentDamageable).projectile_tags = ["enemy"];
+	
+	with(_player.components.get(ComponentDamageable)){
+		self.death_function = function(){
+			self.publish("death");
+		}
+	}
+	
+	//log(global.armors[current_spawn])
+	
+	//_player.components.get(ComponentArmorHandler).apply_full_armor_set(global.armors[current_spawn]);
+	
+	if (current_spawn == global.local_player_index) {
+		//log("this is the player!")
+		var _camera = ENTITIES.create_instance(obj_camera, x + camera_spawn_offset.x, y + camera_spawn_offset.y);
+		
+		if(_camera.x < 0) _camera.x = 0
+		
+		_player.components.get(ComponentPlayerMove).camera = _camera;
+		//_camera.components.publish("target_set", _player);	
+		_camera.components.get(ComponentBar).compDamageable = _player.components.get(ComponentDamageable);
+		_camera.components.get(ComponentBar).barCount = 2;
+		_camera.components.get(ComponentBar).barOffsets = [new Vec2(12,78), new Vec2(28,78), new Vec2(44,78)];
+		
+		_camera.components.get(ComponentBar).barValues = [_player.components.get(ComponentWeaponUse).weapon_ammo[_player.components.get(ComponentWeaponUse).current_weapon[0]]]
+		_camera.components.get(ComponentBar).barValueMax = [_player.components.get(ComponentWeaponUse).weapon_max_ammo]
+		
+		_player.components.get(ComponentWeaponUse).bar = _camera.components.get(ComponentBar);
+		_player.components.get(ComponentAnimationShadered).max_queue_size = 0;
+		//_player.components.get(ComponentPlayerInput).__BufferLength = global.settings.Input_Buffer;
+		//_player.components.get(ComponentPlayerInput).buffer_reset();
+	}
+	
+	_player.components.get(ComponentPlayerInput).__BufferLength = 0;
+	_player.components.get(ComponentPlayerInput).buffer_reset();
+	
+	current_spawn++;
+}
+spawn_times = 1;
+//spawn_times = GAME.inputs.getTotalPlayers();

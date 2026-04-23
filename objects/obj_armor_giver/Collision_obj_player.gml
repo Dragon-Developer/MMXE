@@ -1,7 +1,4 @@
-var _armor = new BootPartBase();
-
-_armor.add_slide(other.components.get(ComponentPlayerMove));
-
-array_push(other.components.get(ComponentPlayerMove).armor_parts, _armor)
+array_push(global.settings.shop_items, chip_to_give)
+array_push(global.settings.shop_enabled, {index: chip_to_give, enabled: true})
 
 instance_destroy(self);

@@ -15,6 +15,7 @@ function ProjectileData() constructor{
 	self.init_time = CURRENT_FRAME;
 	self.animation = "xShot1";
 	self.animation_append = "_shoot";
+	self.set_animation_instead = false;
 	self.hitbox_scale = new Vec2(8,8);
 	self.hitbox_offset = new Vec2(0,0);
 	self.tag = []

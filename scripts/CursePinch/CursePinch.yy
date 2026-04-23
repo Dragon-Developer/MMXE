@@ -6,7 +6,7 @@
   "name":"CursePinch",
   "parent":{
     "name":"other",
-    "path":"folders/Scripts/Game/Player Specific/Characters/X/Weapons/other.yy",
+    "path":"folders/Scripts/Game/Player Specific/X/Weapons/other.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

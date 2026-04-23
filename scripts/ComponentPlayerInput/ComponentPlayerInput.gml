@@ -2,8 +2,8 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
     self.__input = GAME.inputs.getEmptyInput();
     self.__inputPressed = GAME.inputs.getEmptyInput();
     self.__inputPressedBuffer = [];
-	self.__BufferLength = 0;
-	self.__useBuffer = false;
+	self.__BufferLength = 4;
+	self.__useBuffer = true;
     self.__inputReleased = GAME.inputs.getEmptyInput();
 	self.__swap_horizontal = false;
 	self.__player_index = 0;

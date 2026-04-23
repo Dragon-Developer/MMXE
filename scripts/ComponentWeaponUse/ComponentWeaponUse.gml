@@ -22,21 +22,27 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.giga_index = -1;
 	
 	self.state_blacklist = [
-	"death",
-	"mach_dash",
-	"mach_hold",
-	"hurt",
-	"intro",
-	"intro_end",
-	"teleport_in",
-	"complete",
-	"outro",
-	"leave",
-	"teleport_in",
-	"intro_end",
-	"slide",
-	"slide_end",
-	"genki_dama"
+		"death",
+		"mach_dash",
+		"mach_hold",
+		"hurt",
+		"intro",
+		"intro_end",
+		"teleport_in",
+		"complete",
+		"outro",
+		"leave",
+		"teleport_in",
+		"intro_end",
+		"slide",
+		"slide_end",
+		"genki_dama",
+		"melee",
+		"melee_end",
+		"variable_dash",
+		"variable_dash_start",
+		"ceil_cling",
+		"ceil_cling_shoot"
 	]
 	
 	self.projectile_count = 0;
@@ -344,13 +350,14 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 	
 	self.general_shooting_check = function(_input, _id, _shot_data, _shot_code){
-		/*apply stock shot
+		//apply stock shot
 		if(self.stock_shot != noone){
 			_shot_data = {};
+			log("stock shot!")
 			with(_shot_data){
 				script_execute(other.stock_shot)
 			}
-		}*/
+		}
 			
 		//decrease weapon energy
 		
@@ -384,6 +391,15 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	}
 		
 	self.create_aimable_projectile = function(_shot_code, _shot_index, _input, _id){
+		//apply stock shot
+		if(self.stock_shot != noone){
+			_shot_data = {};
+			log("stock shot!")
+			with(_shot_data){
+				script_execute(other.stock_shot)
+			}
+		}
+		
 		//playing with fire here
 		
 		//log("REARAINGIUT BGSDBISDGUBSGUIYBYSFDTG USIDTGBISDFBGNTN*&IG")
@@ -459,6 +475,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		//turn the shot data into the actual projectile data
 		var _shot_data = _shot_code.data[clamp(_shot_index, 0, array_length(_shot_code.data) - 1)]
 		
+		//apply stock shot
+		if(self.stock_shot != noone){
+			_shot_data = self.stock_shot;
+			log("stock shot!")
+			self.stock_shot = noone;
+		}
+		
 		var _code = {};
 		
 		with(_code){
@@ -466,12 +489,17 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		}
 		
 		//log(string_copy(_code.animation_append,2,256))
+		if(_code.set_animation_instead){
+			self.publish("animation_play", {name: _code.animation_append})
+			if(get(ComponentPlayerMove))
+				get(ComponentPlayerMove).fsm.change("shoot_anim")
+		} else {
+			if(_code.animation_append != "")
+			self.get_instance().components.get(ComponentAnimationShadered).animation.__type = string_copy(_code.animation_append,2,256);
 		
-		if(_code.animation_append != "")
-		self.get_instance().components.get(ComponentAnimationShadered).animation.__type = string_copy(_code.animation_append,2,256);
-		
-		if(_anim_name == "idle"){
-			self.publish("animation_play", {name: "shoot"})
+			if(_anim_name == "idle"){
+				self.publish("animation_play", {name: "shoot"})
+			}
 		}
 			
 		if(_code.animation_append != "")
@@ -536,6 +564,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		_shot = PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags, self.damage_increase);
 		
 		self.projectile_count++;
+		
+		if variable_struct_exists(_shot.code, "stock_shot"){
+			self.stock_shot = _shot.code.stock_shot
+		}
 		
 		return _shot;
 	}

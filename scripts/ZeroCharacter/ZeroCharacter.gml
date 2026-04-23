@@ -11,6 +11,23 @@ function ZeroCharacter() : BaseCharacter() constructor{
 		[noone, BlackZero, X1Zero]//full set
 	];
 	
+	default_palette = [
+		#6b3110,//Blue Armor Bits
+		#ad3008,
+		#f75108,
+		#185ab5,//Under Armor Teal Bits
+		#6bb5f7,
+		#efffff,
+		#392929,//black
+		#804020,//Face
+		#b86048,
+		#f8b080,
+		#989898,//glove
+		#e0e0e0,
+		#f0f0f0,//eye white
+		#f04010//red
+	];
+	
 	self.states.intro.animation = "intro"
 	self.states.jump.double_jump_animation = "double_jump"
 	self.states.wall_jump.wall_stick = 0;
@@ -21,5 +38,6 @@ function ZeroCharacter() : BaseCharacter() constructor{
 		self.init_default(_player);
 		add_dash(_player);
 		add_wall_jump(_player);
+		add_air_dash(_player)
 	}
 }

@@ -46,6 +46,9 @@ function GuiOptions() : GuiContainer() constructor {
 	if(!variable_struct_exists(global.player_data, "seen_fortress_cutscene")){
 		global.player_data.seen_fortress_cutscene = false;
 	}
+	if(!variable_struct_exists(global.player_data, "quick_up_dash")){
+		global.player_data.quick_up_dash = false;
+	}
 	if(!variable_struct_exists(global.settings, "extra_particles")){
 		global.settings.extra_particles = true;
 	}
@@ -88,68 +91,6 @@ function GuiOptions() : GuiContainer() constructor {
 		PsxDashJumpToggle.children[0].setText("PSX Style Dash Jumping: " + (global.settings.PSX_Style_Dash_Jumping ? "true" : "false"))
 	});
 	
-	ChargeFlashToggle = new GuiButton(190, 12, "Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
-	ChargeFlashToggle
-		.setFlexDirection("column")
-        .setJustifyContent("left")
-        .setAlignItems("center")
-		.children[0].setFontOffset(2)
-	ChargeFlashToggle.addEventListener("click", function(_val){
-		global.settings.charge_flash = !global.settings.charge_flash;
-		ChargeFlashToggle.children[0].setText("Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
-	});
-	
-	var _text = "4:3"
-		
-		if(global.settings.screen_scale_x == 320){
-			_text = "16:9"
-		} else if(global.settings.screen_scale_x == 426){
-			_text = "SNES"
-		} else {
-			_text = "4:3"
-		}
-	
-	ScreenScaleToggle = new GuiButton(190, 12, "Screen Scale: " + _text)
-	ScreenScaleToggle
-		.setFlexDirection("column")
-        .setJustifyContent("left")
-        .setAlignItems("center")
-		.children[0].setFontOffset(2)
-	ScreenScaleToggle.addEventListener("click", function(_val){
-		var _text = "4:3"
-		
-		if(global.settings.screen_scale_x == 320){
-			global.settings.screen_scale_x = 426;
-			global.settings.screen_scale_y = 240;
-			_text = "16:9"
-		} else if(global.settings.screen_scale_x == 426){
-			global.settings.screen_scale_x = 256;
-			global.settings.screen_scale_y = 240;
-			_text = "SNES"
-		} else {
-			global.settings.screen_scale_x = 320;
-			global.settings.screen_scale_y = 240;
-			_text = "4:3"
-		}
-		global.game_w = global.settings.screen_scale_x;
-		global.game_h = global.settings.screen_scale_y;
-		
-		global_prepare_application();
-		
-		ScreenScaleToggle.children[0].setText("Screen Scale: " + _text)
-	});
-	
-	HitNumberToggle = new GuiButton(190, 12, "Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
-	HitNumberToggle
-		.setFlexDirection("column")
-        .setJustifyContent("left")
-        .setAlignItems("center")
-		.children[0].setFontOffset(2)
-	HitNumberToggle.addEventListener("click", function(_val){
-		global.settings.hit_numbers = !global.settings.hit_numbers;
-		HitNumberToggle.children[0].setText("Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
-	});
-	
 	DoubleTapDashToggle = new GuiButton(190, 12, "Double Tap Dash: " + (global.settings.double_tap_dash ? "true" : "false"))
 	DoubleTapDashToggle
 		.setFlexDirection("column")
@@ -161,6 +102,17 @@ function GuiOptions() : GuiContainer() constructor {
 		DoubleTapDashToggle.children[0].setText("Double Tap Dash: " + (global.settings.double_tap_dash ? "true" : "false"))
 	});
 	
+	QuickUpDashToggle = new GuiButton(190, 12, "Quick Up Dash: " + (global.player_data.quick_up_dash ? "true" : "false"))
+	QuickUpDashToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("center")
+		.children[0].setFontOffset(2)
+	QuickUpDashToggle.addEventListener("click", function(_val){
+		global.player_data.quick_up_dash = !global.player_data.quick_up_dash;
+		QuickUpDashToggle.children[0].setText("Quick Up Dash: " + (global.player_data.quick_up_dash ? "true" : "false"))
+	});
+	
 	ScoreShowcaseToggle = new GuiButton(190, 12, "Score Showcase: " + (global.settings.score_showcase ? "true" : "false"))
 	ScoreShowcaseToggle
 		.setFlexDirection("column")
@@ -170,17 +122,6 @@ function GuiOptions() : GuiContainer() constructor {
 	ScoreShowcaseToggle.addEventListener("click", function(_val){
 		global.settings.score_showcase = !global.settings.score_showcase;
 		ScoreShowcaseToggle.children[0].setText("Score Showcase: " + (global.settings.score_showcase ? "true" : "false"))
-	});
-	
-	ExtraParticlesToggle = new GuiButton(190, 12, "Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
-	ExtraParticlesToggle
-		.setFlexDirection("column")
-        .setJustifyContent("left")
-        .setAlignItems("center")
-		.children[0].setFontOffset(2)
-	ExtraParticlesToggle.addEventListener("click", function(_val){
-		global.settings.extra_particles = !global.settings.extra_particles;
-		ExtraParticlesToggle.children[0].setText("Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
 	});
 	
 	DashOnLandingToggle = new GuiButton(190, 12, "Hold Dash While Landing: " + (global.settings.Dash_On_Land ? "true" : "false"))
@@ -208,51 +149,8 @@ function GuiOptions() : GuiContainer() constructor {
 		global.settings.dev_commentary = !global.settings.dev_commentary;
 		DevCommentToggle.children[0].setText("Developer Commentary: " + (global.settings.dev_commentary ? "true" : "false"))
 	});
-
-	GuiScaleContainer = new GuiContainer();
-    GuiScaleContainer
-        .setAutoWidth(true)
-        .setAutoHeight(true)
-		.setFlexDirection("row")
-        .setJustifyContent("center")
-        .setAlignItems("center")
-        .setPadding([4,0,4,0])
-		.setGap(4)
-		.setScrollEnabled(true)
-        .setAutoHeight(false)
-		.height = 16;
-		
-	GuiScaleIncreaseVolume = new GuiButton(12,12, ">")
-	GuiScaleIncreaseVolume.addEventListener("click", function(_val){
-		global.settings.Game_Scale += 1;
-		
-		var _text = "Scale: " + string(global.settings.Game_Scale)
-		
-		if(global.settings.Game_Scale == floor(display_get_height() / GAME_H) + 1)
-			_text = "Fullscreen"
-		
-		GuiScaleVolumeSettings.setText(_text)
-		global_prepare_application();
-	});
 	
-	GuiScaleDecreaseVolume = new GuiButton(12,12, "<")
-	GuiScaleDecreaseVolume.addEventListener("click", function(_val){
-		global.settings.Game_Scale -= 1;
-		
-		var _text = "Scale: " + string(global.settings.Game_Scale)
-		
-		if(global.settings.Game_Scale == floor(display_get_height() / GAME_H) + 1)
-			_text = "Fullscreen"
-		
-		GuiScaleVolumeSettings.setText(_text)
-		global_prepare_application();
-	});
-	
-	GuiScaleVolumeSettings = new GuiText("Scale: " + string(global.settings.Game_Scale))
-	
-	GuiScaleContainer.addChild([GuiScaleDecreaseVolume, GuiScaleVolumeSettings, GuiScaleIncreaseVolume]);
-	
-	mainContainer.addChild([buttonBack, DevCommentToggle, ScreenScaleToggle, ScoreShowcaseToggle, ChargeFlashToggle, ExtraParticlesToggle, HitNumberToggle, PsxDashJumpToggle, DoubleTapDashToggle, DashOnLandingToggle, GuiScaleContainer]);
+	mainContainer.addChild([buttonBack, DevCommentToggle, ScoreShowcaseToggle, PsxDashJumpToggle, QuickUpDashToggle, DoubleTapDashToggle, DashOnLandingToggle]);
 	
 	addChild(mainContainer);
 }

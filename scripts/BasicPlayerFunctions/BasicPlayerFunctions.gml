@@ -14,12 +14,14 @@ function add_dash(_entity){
 				//extra jargon
 				if(variable_struct_exists(self.states, "melee"))
 					self.states.melee.animation = "undefined"
+					
+				//self.get_instance().y = floor(self.get_instance().y)
 			},
 			step: function() {
 				self.set_hor_movement(self.dash_dir);
 				if(CURRENT_FRAME >= self.timer - self.states.dash.interval + 2)
 					self.current_hspd = self.states.dash.speed;	
-				if(CURRENT_FRAME mod 6 == 0){
+				if(CURRENT_FRAME mod 4 == 0){
 					var _inst = self.get_instance();
 					WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
 				}
@@ -158,6 +160,8 @@ function add_melee_state(_entity){
 			enter: function() {
 				self.publish("animation_play", { name: self.states.melee.animation, reset: true});
 				
+				self.get_instance().y = ceil(self.get_instance().y)
+				
 				//create the actual saber
 				
 				var _tags = ["player"];
@@ -181,6 +185,7 @@ function add_melee_state(_entity){
 			leave: function() {	
 				PROJECTILES.destroy_projectile(self.states.melee.proj.code);
 				self.states.melee.proj = undefined;
+				self.states.melee.animation = "undefined"
 			},
 			step: function() {
 				if(!self.physics.is_on_floor()){
@@ -193,7 +198,7 @@ function add_melee_state(_entity){
 			enter: function() {
 				var _frame = self.find("animation").animation.get_props(self.states.melee.animation + "_end").keyframes[0].frame;
 				
-				self.publish("animation_play", { name: self.states.melee.animation + "_end", reset: true, frame: _frame});
+				self.publish("animation_play", { name: "atk_1_end", reset: true, frame: _frame});
 				self.states.melee.animation = "undefined"
 				
 				if(self.physics.is_on_floor()){
@@ -292,6 +297,9 @@ function add_air_dash(_entity, _armor){
 			step: function() {
 				self.set_hor_movement();
 			},
+			leave: function(){
+				self.physics.update_gravity();
+			}
 		})
 		.add("land", {
 			enter: function() {
@@ -304,7 +312,7 @@ function add_air_dash(_entity, _armor){
 				self.dash_jump = false;	
 			}
 		})
-		.add_wildcard_transition("t_dash", "dash_air", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
+		.add_wildcard_transition("t_dash", "dash_air", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes && (!self.fsm.state_exists("variable_dash") || !self.input.get_input("up")); })
 		.add_transition("t_dash_end", "dash_air", "dash_end_air", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_transition", "dash_air", "dash_end_air", function() 
 			{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
@@ -314,13 +322,13 @@ function add_air_dash(_entity, _armor){
 	
 function add_slide(_entity, _armor){
 	with(_entity){
-		struct_set(global.availible_characters[global.character_index].states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
+		struct_set(states, "slide", {speed: self.states.dash.speed, interval: self.states.dash.interval, animation: "slide", old_hitbox: noone})
 		//log("GJNGIHIDUSBGHUBSDGHIBSUIBDSJHGBSHJGBDSGIBI SLIDE")
 		self.fsm.add("slide", {
 			enter: function() {//
 				self.states.slide.old_hitbox = self.get_instance().mask_index;
 				self.get_instance().mask_index = spr_slide_mask;
-				//self.get_instance().y -= 4;
+				self.physics.move_down(16)
 				log("pre")
 				WORLD.play_sound("dash");
 				var _inst = self.get_instance()
@@ -334,12 +342,14 @@ function add_slide(_entity, _armor){
 			},
 			step: function() {
 				self.set_hor_movement(self.dash_dir);
+				self.physics.move_down(16)
 				if(CURRENT_FRAME mod 6 == 0){
 					var _inst = self.get_instance();
 					WORLD.spawn_particle(new DustParticle(_inst.x- 16 * self.dir, _inst.y + 8, self.dir))
 				}
 			},
 			leave: function() {
+				self.physics.move_down(16)
 				if(self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 1, obj_square_16) && 
 					!self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_square_16))
 						self.get_instance().y += 16
@@ -386,12 +396,13 @@ function add_slide(_entity, _armor){
 			); })
 		
 		.add_transition("t_animation_end", "slide_end", "idle")
-		.add_transition("t_jump", "slide", "jump", function() { return self.can_jump_check(); })
+		.add_transition("t_jump", "slide", "jump", function() { return self.can_jump_check() && !self.physics.is_on_ceil(); })
 		.add_transition("t_transition", "slide", "slide_end", function() 
-		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
+		{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && (!self.input.get_input("dash") && !self.input.get_input("down"))) && !self.physics.is_on_ceil(); })
 		.add_transition("t_transition", ["land"], "slide", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
+		.add_transition("t_transition", ["jump", "idle", "walk", "crouch"], "slide", function() { return self.input.get_input("jump") && self.input.get_input("down") })
 		.add_transition("t_dash_end", "slide", "fall", function() { return !self.physics.is_on_floor(self.ground_distance + 1); })
-		.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(self.ground_distance + 1); })
+		.add_transition("t_dash_end", "slide", "slide_end", function() { return self.physics.is_on_floor(self.ground_distance + 1) && !self.physics.is_on_ceil(); })
 		.add_wildcard_transition("t_dash", "slide", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16); })
 	
 	}
@@ -409,7 +420,9 @@ function add_mach_dash(_entity, _falcon_flight){
 			angle: new Vec2(0,1), 
 			only_cardinals: true, 
 			golden: false,
-			change_direction: false
+			change_direction: false,
+			has_time_limit: false,
+			time_limit: 5
 		})
 			
 		if(keyboard_check(ord("P"))){
@@ -424,6 +437,8 @@ function add_mach_dash(_entity, _falcon_flight){
 			self.states.mach_dash.only_cardinals = false;
 			self.states.mach_dash.speed = self.states.walk.speed;
 			self.states.mach_dash.interval *= 12.5;
+			self.states.mach_dash.animation = "fly"
+			self.states.mach_dash.has_time_limit = true
 		}
 			
 		self.get_instance().components.get(ComponentWeaponUse).shoot_inputs = ["shoot", "shoot2", "shoot3"]
@@ -442,15 +457,15 @@ function add_mach_dash(_entity, _falcon_flight){
 				if (_input_dir.x == 0 && _input_dir.y == 0) _input_dir = new Vec2(self.dir, 0);
 					
 				if(_input_dir.x == 0 && _input_dir.y == -1){
-					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_play", { name: self.states.mach_dash.animation + "_up" });
 					WORLD.spawn_particle(new DashUpParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
 				} else if(_input_dir.x == 0 && _input_dir.y == 1){
-					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_play", { name: self.states.mach_dash.animation + "_up" });
 					self.publish("animation_yscale", -1);
 					self.publish("animation_xscale", self.dir * -1);
 					WORLD.spawn_particle(new DashDownParticle(_inst.x- 16 * self.dir, _inst.y + 16, self.dir))
 				} else {
-					self.publish("animation_play", { name: "mach_dash" });
+					self.publish("animation_play", { name: self.states.mach_dash.animation });
 					self.dir = _input_dir.x;
 						
 					if(self.states.mach_dash.only_cardinals)
@@ -481,20 +496,20 @@ function add_mach_dash(_entity, _falcon_flight){
 				_input_dir = _input_dir.normalize();
 					
 				if(_input_dir.x == 0 && _input_dir.y == -1){
-					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_play", { name: self.states.mach_dash.animation + "_up" });
 					self.publish("animation_yscale", 1);
 				} else if(_input_dir.x == 0 && _input_dir.y == 1){
-					self.publish("animation_play", { name: "mach_dash_up" });
+					self.publish("animation_play", { name: self.states.mach_dash.animation + "_up" });
 					self.publish("animation_yscale", -1);
 				} else {
-					self.publish("animation_play", { name: "mach_dash" });
+					self.publish("animation_play", { name: self.states.mach_dash.animation });
 					if(_input_dir.x != 0)
 						self.dir = floor(_input_dir.x + 0.5);
 						
 					if(self.states.mach_dash.only_cardinals)
 						var _input_dir = new Vec2(_input_dir.x, 0);
 						
-					self.publish("animation_xscale", self.dir)
+					self.publish("animation_xscale", self.dir == 0 ? 1 : self.dir)
 					self.publish("animation_angle", 45 * (_input_dir.y * _input_dir.x))
 					self.publish("animation_yscale", 1);
 				}
@@ -527,9 +542,10 @@ function add_mach_dash(_entity, _falcon_flight){
 				self.publish("animation_play", { name: "mach_hold" });
 				self.physics.set_speed(0,0);
 				self.physics.set_grav(new Vec2(0,0));
+				self.timer = CURRENT_FRAME;
 			},
 			step: function() {
-				if(self.input.get_input_released("dash") || self.input.get_input_released("shoot4"))
+				if(self.input.get_input_released("dash") || self.input.get_input_released("shoot4") || (self.states.mach_dash.has_time_limit && CURRENT_FRAME > self.timer + self.states.mach_dash.time_limit))
 					self.fsm.change("mach_dash");
 				if(self.input.get_input_pressed_raw("left")){
 					self.publish("animation_xscale", -1);
@@ -574,7 +590,47 @@ function add_mach_dash(_entity, _falcon_flight){
 }
 	
 function add_falcon_flight(_entity){
-	add_mach_dash(_entity, true)
+	with(_entity){
+		
+		struct_set(states, "fly", {
+			speed: self.states.walk.speed,
+			animation: "fly",
+			anim_timer: 3,
+			fly_timer: 300,
+		})
+		
+		fsm.add("fly", {
+			enter: function(){
+				self.timer = CURRENT_FRAME
+						self.publish("animation_play", { name: self.states.fly.animation + "_start" });
+			},
+			step: function(){
+				var _input_dir = new Vec2(self.hdir, self.vdir);
+				
+				if(CURRENT_FRAME - self.timer > self.states.fly.anim_timer){
+					if(_input_dir.y < 0){
+						self.publish("animation_play", { name: self.states.fly.animation + "_up" });
+					} else if(_input_dir.y > 0){
+						self.publish("animation_play", { name: self.states.fly.animation + "_down" });
+					} else {
+						self.publish("animation_play", { name: self.states.fly.animation });
+					}
+				}
+				
+				if(_input_dir.x != 0){
+					self.dir = sign(_input_dir.x)
+					self.publish("animation_xscale", self.dir);
+				}
+				
+				self.physics.set_speed(_input_dir.x * self.states.walk.speed, _input_dir.y * self.states.walk.speed + sin(CURRENT_FRAME / 4) / 3)
+			}
+			
+		})
+		.add_wildcard_transition("t_dash", "fly", function() { return !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes; })
+		.add_transition("t_transition", "fly", "fall", function() 
+			{ return self.timer <= CURRENT_FRAME - self.states.fly.fly_timer; })
+		.add_wildcard_transition("t_transition", "fly", function() {return self.input.get_input_pressed_raw("jump") && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes;});
+	}
 }
 	
 function remove_dash(_entity){
@@ -582,4 +638,138 @@ function remove_dash(_entity){
 		self.states.dash.interval = 0;
 		self.states.dash.speed = self.states.walk.speed;
 	}
+}
+	
+function add_variable_dash(_entity){
+	with(_entity){
+		
+		struct_set(states, "variable_dash", {
+			speed: 5,
+			animation: "dash_up",
+			interval: self.states.dash_air.interval
+		})
+		
+		fsm.add("variable_dash_start", {
+			enter: function(){
+				if(global.player_data.quick_up_dash) //done until i make the setting for quick up dash
+					self.publish("animation_play", { name: self.states.variable_dash.animation + "_start_quick" });
+				else 
+					self.publish("animation_play", { name: self.states.variable_dash.animation + "_start" });
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,-0.5)
+				self.states.dash_air.curr_dashes++;
+			},
+			step: function(){
+				
+			}
+		})
+		.add("variable_dash", {
+			enter: function(){
+				var _inst = self.get_instance();
+				WORLD.spawn_particle(new DashUpParticle(_inst.x - self.dir * 8, _inst.y + 16, self.dir))
+				WORLD.play_sound("dash");
+				
+				self.timer = CURRENT_FRAME + self.states.variable_dash.interval;
+				self.publish("animation_play", { name: self.states.variable_dash.animation, reset_frame: false });
+				self.physics.set_vspd(self.states.variable_dash.speed * -1)
+			},
+			leave: function(){
+				self.physics.update_gravity();
+			}
+		})
+		.add_transition("t_transition", ["idle", "walk", "dash", "air", "dash_air"],"variable_dash_start", function(){return self.input.get_input("up") && self.input.get_input("dash") && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes})
+		.add_transition("t_animation_end", "variable_dash_start", "variable_dash")
+		.add_transition("t_transition", "variable_dash", "fall", function() 
+			{ return self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
+		.add_transition("t_transition", "variable_dash_start", "dash_end_air", function() 
+			{ return (!self.dash_tapped && !self.input.get_input("dash")); })
+	}
+}
+	
+function add_high_jump(_entity){
+	with(_entity){
+		
+		struct_set(states, "high_jump", {
+			speed: 8,
+			animation: "jump",
+			interval: 30
+		})
+		
+		fsm.add("high_jump", {
+			enter: function(){
+				var _inst = self.get_instance();
+				WORLD.spawn_particle(new DashUpParticle(_inst.x - self.dir * 8, _inst.y + 16, self.dir))
+				WORLD.play_sound("jump");
+				
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,self.states.high_jump.speed * -1)
+				
+				self.timer = CURRENT_FRAME + self.states.high_jump.interval;
+				self.publish("animation_play", { name: "jump" });
+			},
+			leave: function(){
+				self.physics.update_gravity();
+			}
+		})
+		.add_transition("t_transition", "jump", "high_jump", function() 
+			{ return self.physics.is_on_floor(16) && self.input.get_input("jump") && self.input.get_input("up") })
+		.add_transition("t_transition", "high_jump", "fall", function() 
+			{ return self.timer < CURRENT_FRAME })
+	}
+}
+
+function add_ceil_cling(_entity){
+	with(_entity){
+		
+		struct_set(states, "high_jump", {
+			speed: 8,
+			animation: "jump",
+			interval: 30
+		})
+		
+		//PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags, self.damage_increase);
+		
+		fsm.add("ceil_cling", {
+			enter: function(){
+				var _inst = self.get_instance();
+				
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,0)
+				
+				self.timer = CURRENT_FRAME + self.states.high_jump.interval;
+				if fsm.get_previous_state() != "ceil_cling_shoot"
+				self.publish("animation_play", { name: "ceil_cling" });
+			},
+			leave: function(){
+				self.physics.update_gravity();
+			}
+		})
+		.add("ceil_cling_shoot", {
+			enter: function(){
+				var _inst = self.get_instance();
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,0)
+				
+				self.timer = CURRENT_FRAME + 5
+				self.publish("animation_play", { name: "ceil_cling_shoot" });
+				PROJECTILES.create_projectile(_inst.x + dir * 8, _inst.y + 16, 1, xBusterShadowRoofData, self, ["player"], 0);
+			},
+			leave: function(){
+			}
+		})
+		.add_transition("t_transition", "high_jump", "ceil_cling", function() 
+			{ return self.physics.is_on_ceil() })
+		.add_transition("t_transition", "ceil_cling", "ceil_cling_shoot", function() 
+			{ return self.input.get_input("shoot") })
+		.add_transition("t_transition", "ceil_cling_shoot", "ceil_cling", function() 
+			{ return self.timer < CURRENT_FRAME })
+	}
+}
+	
+function add_hover(_entity){
+	
+}
+
+function add_glide(_entity){
+	
 }

@@ -109,7 +109,6 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			move_down(3, self.objects.block, 0)
 		}
 		
-		self.move_step(self.velocity.multiply(self.time_physics_multiplier));
 		self.velocity = self.velocity.add(self.grav.multiply(self.time_physics_multiplier));
 		
 		if (self.get_vspd() > self.terminal_velocity){
@@ -117,6 +116,9 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		}
 		
 		if (self.is_on_floor(2)) self.set_vspd(0);
+		
+		self.move_step(self.velocity.multiply(self.time_physics_multiplier));
+		
     }
 	
 	get_slope_collision = function(_offset = 0, _slope = on_slope){

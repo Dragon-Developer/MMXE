@@ -37,6 +37,8 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 		var _inst = self.get_instance();
 		
+		//_inst.x = _xstart;
+		
 		if(!instance_exists(obj_player)){
 			return;
 		} else {
@@ -129,6 +131,7 @@ function ComponentDoor() : ComponentBase() constructor{
 				break;
 				case(3):
 				if(prev_cam_x == curr_cam.x){
+					_xstart = _inst.x;
 					curr_player.x = floor(curr_player.x) + (flipped * -2 + 1);
 					coll.y = _inst.y;
 					//self.publish("animation_play", { name: "stay_closed" });
@@ -179,6 +182,7 @@ function ComponentDoor() : ComponentBase() constructor{
 		self.publish("animation_play", { name: "close" });
 		
 		var _inst = self.get_instance();
+		_xstart = _inst.x;
 		
 		_inst.mask_index = Sprite47;
 		

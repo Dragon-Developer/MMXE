@@ -26,7 +26,7 @@ function ComponentScoreShowcase() : ComponentBase() constructor{
 			draw_string(_chr, 74 + _ind * 8, 40 + sin(CURRENT_FRAME / 20 + _ind) * 3, "big")
 		})
 		
-		draw_string(room_get_name(global.stage_Data.room), 80, 80, "big")
+		draw_string(room_get_name(global.stage_Data.rm), 80, 80, "big")
 		
 		var _time = global.stage_time;
 		
@@ -79,7 +79,7 @@ function ComponentScoreShowcase() : ComponentBase() constructor{
 		draw_string_condensed("Total Score: ", 200, 120)
 		draw_string_condensed(calculate_score(_time, global.hit_count), 200, 128)
 		
-		var _verification = string(global.character_index) + string(_time) + string(global.stage_Data.room) + "." + string(GM_build_date);
+		var _verification = string(global.character_index) + string(_time) + string(global.stage_Data.rm) + "." + string(GM_build_date);
 		
 		draw_string_condensed(_verification, 1, 234);
 		draw_string_condensed(_verification, 0, 233);

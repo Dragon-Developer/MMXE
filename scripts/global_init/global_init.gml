@@ -69,23 +69,23 @@ function global_init() {
 	//global.stacktracking = true;
 	global.last_run_type_of_component = "none"
 	
-	global.shop_items = [ChipSpeedster, ChipHyperDash, ChipJumper, ChipDasher, ChipAirDasher, ChipClinger, ChipWeighter, ChipDamager, ChipGoldenArmor];
-	global.shop_prices = [250, 450, 300, 200, 800, 575, 425, 700, 1250];
+	global.shop_items = [ChipSpeedster, ChipHyperDash, ChipJumper, ChipDasher, ChipAirDasher, ChipClinger, ChipWeighter, ChipDamager, ChipGoldenArmor, ChipPlatinumArmor];
+	global.shop_prices = [250, 450, 300, 200, 800, 575, 425, 700, 1250, 0];
 	
 	input_source_set(INPUT_KEYBOARD, 0);
-	global_prepare_application();
+	global_prepare_application(GAME_W, GAME_H, true);
 	
 }
 
-function global_prepare_application(_width = GAME_W, _height = GAME_H){		
-
+function global_prepare_application(_width = GAME_W, _height = GAME_H, recenter = false){
+	if recenter window_center()
 	
 	window_set_fullscreen(global.settings.Game_Scale > floor(display_get_height() / GAME_H))
 	
 	window_set_size(global.settings.Game_Scale*GAME_W, global.settings.Game_Scale*GAME_H);
-	window_center();
+	//window_center();
 	view_wport[view_current] = _width * global.settings.Game_Scale
 	view_hport[view_current] = _height * global.settings.Game_Scale
 	camera_set_view_size(view_camera[view_current], _width, _height);
-surface_resize(application_surface, _width, _height);
+	surface_resize(application_surface, _width, _height);
 }

@@ -1397,6 +1397,38 @@
           }
         },
         {
+          "name": "atk_1_end",
+          "properties": {
+            "action" : "atk_1_x",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 6
+              },
+              {
+                "key": 3,
+                "frame": 7
+              },
+              {
+                "key": 6,
+                "frame": 8
+              },
+              {
+                "key": 9,
+                "frame": 9
+              },
+              {
+                "key": 12,
+                "frame": 10
+              },
+              {
+                "key": 15,
+                "frame": 10
+              }
+            ]
+          }
+        },
+        {
           "name": "atk_1_x_end",
           "properties": {
             "action" : "atk_1_x",
@@ -1424,6 +1456,227 @@
               {
                 "key": 15,
                 "frame": 10
+              }
+            ]
+          }
+        },
+        {
+          "name": "fly",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "fly_start",
+          "properties": {
+            "action" : "fly",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "fly_up",
+          "properties": {
+            "action" : "fly",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "fly_down",
+          "properties": {
+            "action" : "fly",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_up_start",
+          "properties": {
+            "action" : "dash_up",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 4
+              },
+              {
+                "key": 15,
+                "frame": 5
+              },
+              {
+                "key": 18,
+                "frame": 6
+              },
+            ]
+          }
+        },
+        {
+          "name": "dash_up_start_quick",
+          "properties": {
+            "action" : "dash_up",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 6
+              }
+            ]
+          }
+        },
+        {
+          "name": "dash_up",
+          "properties": {
+            "keyframes": [
+              {
+                "key": -1,
+                "frame": 6
+              }
+            ]
+          }
+        },
+        {
+          "name": "db_buster_left",
+          "properties": {
+            "action" : "db_buster",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 4
+              },
+              {
+                "key": 3,
+                "frame": 5
+              },
+              {
+                "key": 6,
+                "frame": 6
+              },
+              {
+                "key": 9,
+                "frame": 7
+              },
+              {
+                "key": 12,
+                "frame": 8
+              },
+              {
+                "key": 20,
+                "frame": 8
+              }
+            ]
+          }
+        },
+        {
+          "name": "db_buster_right",
+          "properties": {
+            "action" : "db_buster",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 17,
+                "frame": 3
+              }
+            ]
+          }
+        },
+        {
+          "name": "ceil_cling",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              }
+            ],
+            "loop_begin": 9
+          }
+        },
+        {
+          "name": "ceil_cling_shoot",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 20,
+                "frame": 1
               }
             ]
           }

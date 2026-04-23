@@ -6,7 +6,7 @@
   "name":"ZeroSaberBlack",
   "parent":{
     "name":"Zero",
-    "path":"folders/Scripts/Game/Player Specific/Characters/Zero.yy",
+    "path":"folders/Scripts/Game/Player Specific/Zero.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

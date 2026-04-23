@@ -1776,6 +1776,18 @@
           }
         },
         {
+          "name": "shadow_half_charge",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "shadow_shot",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
           "name": "twin_slasher_down",
           "properties": {
             "speed": 0.5

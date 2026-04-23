@@ -20,10 +20,10 @@ function ComponentInputDisplay() : ComponentBase() constructor{
 		draw_input(self.input.get_input("left"), 6, 3, 9);
 		draw_input(self.input.get_input("right"), 6, 7, 9);
 		
-		draw_input(self.input.get_input("jump"), 6, 28, 8);
-		draw_input(self.input.get_input("dash"), 6, 25, 11);
-		draw_input(self.input.get_input("shoot"), 6, 25, 5);
-		draw_input(self.input.get_input("shoot2"), 6, 22, 8);
+		draw_input(self.input.get_input("jump"), 13, 28, 8);
+		draw_input(self.input.get_input("dash"), 15, 25, 11);
+		draw_input(self.input.get_input("shoot"), 12, 25, 5);
+		draw_input(self.input.get_input("shoot2"), 14, 22, 8);
 		
 		draw_input(true, 5, 12, 10);
 		draw_input(true, 5, 17, 10);

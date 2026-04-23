@@ -196,6 +196,24 @@
           }
         },
         {
+          "name": "drill_shot_green",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "drill_shot_blue",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
+          "name": "drill_shot_orange",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
           "name": "rock_break",
           "properties": {
             "speed":1

@@ -120,6 +120,8 @@ function ComponentBoss() : ComponentBase() constructor{
 					//im going to presume regular boss deaths. 
 				
 					var _time = CURRENT_FRAME - death_time;
+					
+					contact_damage = 0;
 				
 					if(_time == 59){
 						GAME.game_loop.do_action_with_all_components(function(){step_enabled = true;})

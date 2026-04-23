@@ -30,7 +30,7 @@
     2: Crop horizontally
 	3: Crop vertically
 */
-#macro __COLLAGE_DEFAULT_CROP 1
+#macro __COLLAGE_DEFAULT_CROP 0
 
 // Levels of optimization in which Collage will pack texture pages more efficiently (during batch mode)
 /*
@@ -55,7 +55,8 @@
 // The upside to this is that you can use string-based values in certain functions that allow it to fetch from a global database.
 // The downside is that you can't have the same names across multiple Collages.
 // Setting this to false will allow all image names to be used privately, but not accessible via the global image database.
-#macro __COLLAGE_IMAGES_ARE_PUBLIC true
+#macro __COLLAGE_IMAGES_ARE_PUBLIC false
+//forte set this to false. it should help devs
 
 // Whether Collage should respect the origin of the image or not when drawing it stretched.
 // By default this is false to match GameMaker's behaviour.

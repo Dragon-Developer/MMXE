@@ -15,8 +15,10 @@ function ComponentShop() : ComponentInteractibleInteract() constructor{
 	*/
 
 	shop_items = global.shop_items;
+	array_delete(shop_items, -1, 1)
 	shop_structs = [];
 	shop_prices = global.shop_prices;
+	array_delete(shop_prices, -1, 1)
 	
 	item_draw_count = 3; //only counts one direction
 	item_draw_radius = 32; // how far away the last item is from the center

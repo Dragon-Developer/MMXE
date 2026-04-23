@@ -24,6 +24,12 @@
         "y": 64
       }
     },
+    "exe_volley": {
+      "origin": {
+        "x": 64,
+        "y": 64
+      }
+    },
     "exe_grab": {
       "origin": {
         "x": 64,
@@ -618,6 +624,12 @@
         },
         {
           "name": "exe_clamp",
+          "properties": {
+            "speed": 0.3334
+          }
+        },
+        {
+          "name": "exe_volley",
           "properties": {
             "speed": 0.3334
           }

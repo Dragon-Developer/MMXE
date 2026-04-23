@@ -8,6 +8,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.armors = [""];//which format was this?
 	self.animation = new AnimationController();
 	self.position_queue = []; 
+	self.animation_queue = [];
 	self.max_queue_size = 5;
 	self.last_game_frame = 0;
 	self.do_drawing = true;
@@ -28,6 +29,9 @@ function ComponentAnimation() : ComponentBase() constructor {
 		self.subscribe("animation_play", function(_animation) {
 			self.play_animation(_animation);
 		});
+		self.subscribe("animation_add_queue", function(_animation) {
+			self.add_queue(_animation);
+		});
 		self.subscribe("animation_xscale", function(_xscale) {
 			self.animation.set_xscale(_xscale)
 		});
@@ -42,16 +46,22 @@ function ComponentAnimation() : ComponentBase() constructor {
 		});
 	}
 	
+	self.add_queue = function(_queued){
+		array_push(animation_queue, _queued)
+	}
+	
 	self.play_animation = function(_animation){
 		_animation[$ "reset"] ??= false;
 		_animation[$ "keep_index"] ??= false;
 		_animation[$ "frame"] ??= 0;
+		_animation[$ "reset_frame"] ??= true;
 		var _index = self.animation.get_index();
 		self.animation.play(_animation.name, _animation.reset, _animation.frame);
 		if (_animation.keep_index) {
 			self.animation.set_index(_index);	
 		}
-		self.animation.__frame = _animation.frame;
+		if _animation.reset_frame
+			self.animation.__frame = _animation.frame;
 	}
 	
 	self.change_character = function(_character){
@@ -101,7 +111,11 @@ function ComponentAnimation() : ComponentBase() constructor {
 	self.step = function() {
 		self.animation.step();
 		if (self.animation.on_end()) {
-			self.publish("animation_end");	
+			self.publish("animation_end");
+			if(array_length(animation_queue) > 0){
+				self.play_animation(animation_queue[0]);
+				array_delete(animation_queue, 0, 1);
+			}
 		}
 		//rotates thing with scroll wheel
 		//var _mouse = mouse_wheel_down() - mouse_wheel_up();

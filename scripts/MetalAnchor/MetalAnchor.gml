@@ -75,7 +75,7 @@ function MetalAnchorSwarmSpawner() : ProjectileData() constructor{
 	self.step = function(_inst){
 		
 		var	_x = instance_nearest(0,0,obj_camera).x - GAME_W / 2 + irandom_range(0, GAME_W * 1.5);
-		var	_y = instance_nearest(0,0,obj_camera).y - 80;
+		var	_y = instance_nearest(0,0,obj_camera).y;
 		
 		if CURRENT_FRAME mod 6 == 0 {
 			PROJECTILES.create_projectile(_x, _y, dir, MetalAnchorBerd, instance_nearest(0,0, obj_player).components.get(ComponentWeaponUse), tag);

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"BasicPlayerFunctions",
   "parent":{
-    "name":"Characters",
-    "path":"folders/Scripts/Game/Player Specific/Characters.yy",
+    "name":"Parent",
+    "path":"folders/Scripts/Game/Player Specific/Parent.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

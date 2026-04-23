@@ -31,7 +31,7 @@ on_spawn = function(_player) {
 	_player.components.get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
 	_player.components.get(ComponentWeaponUse).weapon_ammo_max = global.player_data.weapon_energy;
 	_player.components.get(ComponentWeaponUse).weapon_ammo = array_create(array_length(global.availible_characters[global.character_index].weapons), global.player_data.weapon_energy);
-	_player.components.get(ComponentWeaponUse).init();
+	//_player.components.get(ComponentWeaponUse).init();
 	//
 	//set health to not 1
 	_player.components.get(ComponentDamageable).set_health(global.player_data.max_health,global.player_data.max_health);

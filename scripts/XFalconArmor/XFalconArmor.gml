@@ -28,6 +28,7 @@ function XFalconArmorBoot() : BootPartBase() constructor{
 	//increased dash speed
 	self.sprite_name = "/falcon/legs"//this is more for filepath.
 	self.armor_name = "Second Armor Boots"
+	self.not_selectable = true;
 	self.step_armor_effects = function(){
 		//even a comment stops the compiler from deleting empty functions
 	};

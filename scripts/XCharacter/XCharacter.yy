@@ -6,7 +6,7 @@
   "name":"XCharacter",
   "parent":{
     "name":"X",
-    "path":"folders/Scripts/Game/Player Specific/Characters/X.yy",
+    "path":"folders/Scripts/Game/Player Specific/X.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
