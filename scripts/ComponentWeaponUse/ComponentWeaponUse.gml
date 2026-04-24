@@ -186,6 +186,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.step = function(){
 		if (self.timescale != 1) self.timescale = 1
 		
+		if(array_length(weapon_list) <= 1) {
+			self.current_weapon = [0,0,0,0]
+		}
+		
 		var _change_direction = self.input.get_input_pressed("switchRight") - self.input.get_input_pressed("switchLeft")
 		
 		if(_change_direction != 0 && array_length(self.weapon_list) > 1){

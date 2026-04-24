@@ -18,6 +18,24 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		log(string(is_in_range(2,1,3)) + " RANGE TEST");
 	}
 	
+	self.locate_enemy = function(_reference){
+		for(var p = 0; p < array_length(enemies); p++){
+			if enemies[p].code == _reference
+				return enemies[p]
+		}
+		
+		return undefined
+	}
+	
+	self.get_animation_frame = function(_reference){
+		for(var p = 0; p < array_length(enemies); p++){
+			if enemies[p].code == _reference
+				return get(ComponentSpriteRenderer).sprites[enemies[p].sprite].animationController.__frame
+		}
+		
+		return undefined
+	}
+	
 	self.create_enemy = function(_x, _y,_dir,  _code){
 		var _enemy = {};
 		
@@ -26,6 +44,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		struct_set(_enemy, "code", {});
 		struct_set(_enemy, "struct", _code);
 		struct_set(_enemy, "hit_by_list", []);
+		struct_set(_enemy.code, "start_time", CURRENT_FRAME);
 		
 		with(_enemy.code){script_execute(_code)}
 		

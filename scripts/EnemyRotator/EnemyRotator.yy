@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"EnemyRotator",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"EnemyRotator",
+  "parent":{
+    "name":"Normal",
+    "path":"folders/Scripts/Game/stages/Enemy/Normal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -648,6 +648,36 @@ function remove_dash(_entity){
 		} 
 	}
 }
+
+function remove_wall_slide(_entity){
+	with(_entity){
+		if(variable_struct_exists(self.fsm, "remove")){
+			if (fsm.get_current_state() == "wall_slide" || fsm.get_current_state() == "wall_jump")
+				self.fsm.change("idle")
+			self.fsm.remove("wall_slide")
+			
+			log("removed?")
+		} else {
+			self.states.dash.interval = 0;
+			self.states.dash.speed = self.states.walk.speed;
+		} 
+	}
+}
+
+function remove_wall_jump(_entity){
+	with(_entity){
+		if(variable_struct_exists(self.fsm, "remove")){
+			if (fsm.get_current_state() == "wall_slide" || fsm.get_current_state() == "wall_jump")
+				self.fsm.change("idle")
+			self.fsm.remove("wall_jump")
+			
+			log("removed?")
+		} else {
+			self.states.dash.interval = 0;
+			self.states.dash.speed = self.states.walk.speed;
+		} 
+	}
+}
 	
 function add_variable_dash(_entity){
 	with(_entity){

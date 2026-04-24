@@ -64,6 +64,7 @@ function global_init() {
 	global.stage_time = -1;
 	global.beat_time = -1;
 	global.hit_count = 0;
+	global.force_idle = false;
 	
 	global.debug = false;
 	//global.stacktracking = true;

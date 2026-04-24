@@ -11,7 +11,7 @@ function xBuster23Data() : ProjectileData() constructor{
 	self.damage = 3;
 	self.shot_limit = 3;
 	
-	self.animation = "xShot3X3";
+	self.animation = "xShot3X2";
 	self.hitbox_scale = new Vec2(24,24);
 	
 	self.create = function(_inst){
@@ -20,7 +20,7 @@ function xBuster23Data() : ProjectileData() constructor{
 	}
 	self.step = function(_inst){
 		var _hspd = 0;
-		if (CURRENT_FRAME == self.init_time + 5) _hspd = 5;
+		if (CURRENT_FRAME <= self.init_time + 5) _hspd = 5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 8)) _hspd = 6;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 8, self.init_time + 10)) _hspd = 6.5;
 		else if (is_in_range(CURRENT_FRAME, self.init_time + 10, self.init_time + 12)) _hspd = 7;

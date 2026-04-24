@@ -70,13 +70,7 @@ function ComponentCutscene() : ComponentBase() constructor{
 	}
 	
 	self.have_player_move = function(_sequence){
-		if(_sequence == undefined)
-			log("there must be an error in transport")
-		
-		var _inst = self.get_instance();
-		var _player = instance_nearest(_inst.x, _inst.y, obj_player);
-		_player.components.get(ComponentPlayerInput).make_scripted_inputs_from_compressed(_sequence);
-		log(_player.components.get(ComponentPlayerInput).scripted_input_index)
+		have_player_move(_sequence)
 	}
 	
 	self.draw_gui = function(){
@@ -86,4 +80,14 @@ function ComponentCutscene() : ComponentBase() constructor{
 		if(self.actions[self.action_number].criteria != camera_create_view)
 		draw_string(self.actions[self.action_number].criteria(), 2, 12, "purple")
 	}
+}
+
+function have_player_move(_sequence){
+	if(_sequence == undefined)
+		log("there must be an error in transport")
+	
+	var _player = instance_nearest(0, 0, obj_player);
+	
+	_player.components.get(ComponentPlayerInput).make_scripted_inputs_from_compressed(_sequence);
+	log(_player.components.get(ComponentPlayerInput).scripted_input_index)
 }
