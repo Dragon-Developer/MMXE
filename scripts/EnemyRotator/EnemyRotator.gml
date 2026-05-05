@@ -1,5 +1,5 @@
 function EnemyRotator() : BaseEnemy() constructor{
-	self.health = 3;
+	self.health = 5;
 	
 	self.sprite = "rotator"
 	

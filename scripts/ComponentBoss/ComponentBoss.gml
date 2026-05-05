@@ -20,12 +20,14 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.intro_animation_name = "blade_fall";
 	self.death_animation_name = "death";
 	
+	self.music_override = "none"
+	
 	self.init = function(){
 		//this has to be here. the game crashes otherwise
 		self.publish("animation_play", { name: self.intro_animation_name });
 		self.publish("animation_xscale", -1);
-					WORLD.stop_sound();
-					WORLD.play_music("new_boss_encounter");
+		WORLD.stop_sound();
+		WORLD.play_music("new_boss_encounter");
 		
 		
 		
@@ -95,7 +97,7 @@ function ComponentBoss() : ComponentBase() constructor{
 						components.get(ComponentPlayerInput).__locked = false;
 					}
 					WORLD.stop_sound();
-					WORLD.play_music("BossBattleL");
+					WORLD.play_boss_music(self.music_override);
 				}
 			})
 			.add("die", {

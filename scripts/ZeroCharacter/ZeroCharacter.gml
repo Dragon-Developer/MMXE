@@ -33,6 +33,7 @@ function ZeroCharacter() : BaseCharacter() constructor{
 	self.states.wall_jump.wall_stick = 0;
 	self.states.wall_jump.launch_lock = 6;
 	self.states.jump.count = 2;
+	self.boss_music = "ZeroCrashL"
 	
 	self.init = function(_player){
 		self.init_default(_player);

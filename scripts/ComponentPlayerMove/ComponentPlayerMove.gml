@@ -134,9 +134,13 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if(self.input.get_input("down") && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_collision_semisolid)){
 					self.fsm.change("fall");
 					_inst.y += 3;
+					self.physics.set_vspd(1);
 					return;
 				}
 				_inst.y -= self.states.jump.strength;
+				with(obj_camera){
+					components.get(ComponentCamera).step();
+				}
 				
 				if(self.physics.is_on_floor()){
 					self.publish("animation_play", { name: self.states.jump.animation });
@@ -154,16 +158,18 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.fsm.inherit();
 				//self.publish("animation_play", { name: "jump" });
 				self.physics.set_vspd(-(self.states.jump.strength - self.physics.get_grav().y));
-				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
+				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")) && self.states.jump.dash_jump_enabled{
 					self.current_hspd = self.states.dash.speed;
 					if(global.settings.extra_particles)
 						WORLD.spawn_particle(new SparkParticle(_inst.x, _inst.y + 16, self.dir))
+				} else if(!self.states.jump.dash_jump_enabled) {
+					self.current_hspd = self.states.walk.speed;
 				}
 				self.timer = CURRENT_FRAME;
 			},
 			step: function() {
 				self.set_hor_movement();
-				if(self.current_hspd != self.states.dash.speed && CURRENT_FRAME - self.timer < 5) && ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
+				if(self.current_hspd != self.states.dash.speed && CURRENT_FRAME - self.timer < 5) && ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")) && self.states.jump.dash_jump_enabled{
 					self.current_hspd = self.states.dash.speed;
 					var _inst = self.get_instance();
 					if(global.settings.extra_particles)

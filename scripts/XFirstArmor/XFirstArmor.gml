@@ -33,8 +33,22 @@ function XFirstArmorBoot() : BootPartBase() constructor{
 	self.armor_name = "First Armor Legs"
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		
-		//self.add_slide(_player);
-		_player.states.dash.speed *= 1.25;
+		if _player.fsm.state_exists("dash")
+			_player.states.dash.speed *= 1.25;
+		else
+			add_dash(_player)
+	}
+	self.description = "Increases dash speed by 25 percent."
+}
+
+function XFirstArmorBootVanilla() : BootPartBase() constructor{
+	//increased dash speed
+	self.sprite_name = "/x1/legs"//this is more for filepath.
+	self.armor_name = "First Armor Legs"
+	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
+		
+		add_dash(_player)
+		_player.states.jump.dash_jump_enabled = true;
 	}
 	self.description = "Increases dash speed by 25 percent."
 }

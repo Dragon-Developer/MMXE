@@ -55,6 +55,10 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 				already_equipped_armor = player.components.get(ComponentArmorHandler).armor_structs;
 				log(already_equipped_armor);
 				already_equipped_armor[armor_slot_to_replace] = armor;
+				for(var k = 0; k < array_length(global.availible_characters[global.character_index].possible_armors[armor_slot_to_replace]);k++){
+					if(global.availible_characters[global.character_index].possible_armors[armor_slot_to_replace][k] == armor)
+						global.armors[global.character_index][armor_slot_to_replace] = k;
+				}
 				
 			}
 		} else {

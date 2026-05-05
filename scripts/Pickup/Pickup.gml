@@ -91,3 +91,27 @@ function HeartTankPickup() : BasePickup() constructor{
 	}
 	self.sprite = "heart"
 }
+
+function HpUpPickup() : BasePickup() constructor{
+	self.count = 1;
+	self.sprite = "heart_yellow"
+	self.sound = "collectible";
+	self.delay = 130;
+	self.skip_cond = "none";
+	self.apply = function(_damageable){
+		_damageable.add_max_health(1, false);
+		_damageable.heal(128)
+	}
+}
+
+
+function WpUpPickup() : BasePickup() constructor{
+	self.sound = "collectible";
+	self.delay = 130;
+	self.skip_cond = "none";
+	self.apply = function(_damageable){
+		_damageable.get(ComponentWeaponUse).weapon_max_ammo++;
+		array_foreach(_damageable.get(ComponentWeaponUse).weapon_ammo, function(_item){_item++})
+	}
+	self.sprite = "wp_up"
+}

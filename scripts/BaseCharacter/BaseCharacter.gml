@@ -2,6 +2,7 @@ function BaseCharacter() constructor{
 	self.default_health = 12;
 	self.player = noone;
 	self.image_folder = "x";
+	self.boss_music = "BossBattleL"
 	self.default_score = 1000;//for the score screen
 	self.states = {	
 		intro: {
@@ -23,7 +24,8 @@ function BaseCharacter() constructor{
 			animation: "jump",
 			double_jump_animation: "jump",
 			count: 1,
-			sound: "jump"
+			sound: "jump",
+			dash_jump_enabled: true
 		},
 		fall:{
 			animation: "fall"

@@ -67,6 +67,14 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 		if(_id == 0) return;//the first sprite can be used for drawing so it needs to exist
 		
 		self.sprites[_id] = undefined;
+		
+		var _clear = true
+		for(var r = 0; r < array_length(self.sprites); r++){
+			if self.sprites[r] != undefined	
+				_clear = false
+		}
+		
+		if _clear self.sprites = [];
 	}
 	
 	self.init = function(){
@@ -77,6 +85,8 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.set_position = function(_id = 0, _x = 0, _y = 0){
+		if self.sprites[_id] == undefined return;
+		
 		self.sprites[_id].x = _x;
 		self.sprites[_id].y = _y;
 	}
@@ -202,6 +212,8 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.swap_sprite = function(_sprite = 0,_color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		if self.sprites[_sprite] == undefined return;
+		
 		self.sprites[_sprite].animationController.__xscale = _xscale;
 		self.sprites[_sprite].dir = _xscale;
 		self.sprites[_sprite].animationController.__yscale = _yscale;

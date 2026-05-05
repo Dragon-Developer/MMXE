@@ -62,6 +62,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		self.charge.input = get(ComponentPlayerInput);
 		self.charge.publish("character_set", "player");
 		self.charge.current_weapon = xBuster;
+		self.reset()
+	}
+	
+	self.reset = function(){
 		self.current_weapon = [0,clamp(1, 0, array_length(global.availible_characters[global.character_index].weapons)),array_length(global.availible_characters[global.character_index].weapons) - 1,array_length(global.availible_characters[global.character_index].weapons) - 2];
 		if(self.current_weapon[1] < 0)self.current_weapon[1] = 0;
 		if(self.current_weapon[2] < 0)self.current_weapon[2] = 0;
@@ -297,7 +301,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			script_execute(_shot_code.data[clamp(_shot_index, 0, array_length(_shot_code.data) - 1)])
 		}
 		
-		if (_shot_data.shot_limit <= self.projectile_count) return;
+		if (_shot_data.shot_limit <= self.projectile_count && !global.debug) return;
 			
 		//get what type of weapon this is [projectile, state based, melee, etc]
 		var _type = _shot_data.term;

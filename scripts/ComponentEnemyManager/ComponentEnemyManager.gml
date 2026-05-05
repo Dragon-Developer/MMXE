@@ -59,6 +59,8 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		
 		array_push(self.enemies, _enemy);
 		
+		_enemy.code.init(_enemy.position);
+		
 		return _enemy;
 	}
 	
@@ -185,7 +187,26 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 				if(!_proj.code.super_piercing)
 					array_push(_enemy.hit_by_list, _proj)
 					
-				_enemy.code.health -= _proj.code.damage;
+				if(array_length(_enemy.code.weaknesses) > 0){
+					var _hits = false;
+					for(var e = 0; e < array_length(_enemy.code.weaknesses); e++){
+						if(_proj.constructor ==_enemy.code.weaknesses[e].projectile){
+							_enemy.code.health -= _proj.code.damage * _enemy.code.weaknesses[e].rate;
+							log("hit by weakness")
+							_hits = true;
+						} else {
+							log("not a weakness!")
+							log(_proj.constructor)
+							log(_enemy.code.weaknesses[e].projectile)
+						}
+					}
+					
+					if !_hits
+						_enemy.code.health -= _proj.code.damage;
+				} else {
+					_enemy.code.health -= _proj.code.damage;
+				}
+				
 				_enemy.flash = 1;
 				WORLD.play_sound("small_damage");
 				
@@ -201,6 +222,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		
 		if(_enemy.code.health <= 0 && !_enemy.code.dead){
 			_enemy.code.dead = true;
+			_enemy.code.destroy();
 			WORLD.play_sound("Explosion");
 			WORLD.spawn_particle(new ExplosionParticle(_enemy.position.x, _enemy.position.y - 16, 1));
 			_enemy.position = new Vec2(-128, -128);

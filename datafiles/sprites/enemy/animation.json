@@ -12,6 +12,12 @@
         "y": 16
       }
     },
+    "brittle_metal": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
+    },
     "skull_bot": {
       "origin": {
         "x": 19,
@@ -161,6 +167,12 @@
                 "frame": 4
               }
             ]
+          }
+        },
+        {
+          "name": "brittle_metal",
+          "properties": {
+            "speed": 0
           }
         },
         {
