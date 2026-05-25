@@ -20,8 +20,7 @@
       "type_combinations": [
         [
           "",
-          "shoot",
-          "throw"
+          "shoot"
         ],
         [
           "",
@@ -35,7 +34,7 @@
           "shadow",
           "hermes",
           "x7",
-          "icarus"
+          "x8"
         ],
         [
           "",
@@ -1397,7 +1396,7 @@
           }
         },
         {
-          "name": "atk_1_end",
+          "name": "atk_1_x_end",
           "properties": {
             "action" : "atk_1_x",
             "keyframes": [
@@ -1679,6 +1678,39 @@
                 "frame": 1
               }
             ]
+          }
+        },
+        {
+          "name": "hover",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 2,
+                "frame": 2
+              },
+              {
+                "key": 3,
+                "frame": 3
+              },
+              {
+                "key": 4,
+                "frame": 4
+              },
+            ]
+          }
+        },
+        {
+          "name": "select",
+          "properties": {
+            "speed": 1
           }
         },
 

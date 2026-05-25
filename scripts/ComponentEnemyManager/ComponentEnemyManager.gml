@@ -27,6 +27,21 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		return undefined
 	}
 	
+	self.find_nearest_enemy = function(_x, _y){
+		var _ret = enemies[0]
+		for(var p = 0; p < array_length(enemies); p++){
+			var _rxoff = abs(_ret.position.x - _x);
+			var _ryoff = abs(_ret.position.y - _y);
+		
+			var _exoff = abs(enemies[p].position.x - _x);
+			var _eyoff = abs(enemies[p].position.y - _y);
+			if ((_rxoff + _ryoff) < (_exoff + _eyoff))
+				_ret = enemies[p]
+		}
+		
+		return _ret
+	}
+	
 	self.get_animation_frame = function(_reference){
 		for(var p = 0; p < array_length(enemies); p++){
 			if enemies[p].code == _reference

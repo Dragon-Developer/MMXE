@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"metroidset",
   "bboxMode":0,
-  "bbox_bottom":175,
+  "bbox_bottom":191,
   "bbox_left":0,
   "bbox_right":143,
   "bbox_top":0,
@@ -16,7 +16,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":176,
+  "height":208,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"61881e86-7761-4170-a380-ed906fd14bc8","blendMode":0,"displayName":"default","isLocked":false,"name":"61881e86-7761-4170-a380-ed906fd14bc8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},

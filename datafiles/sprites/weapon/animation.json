@@ -18,6 +18,18 @@
         "y": 16
       }
     },
+    "icarus_headbutt": {
+      "origin": {
+        "x": 23,
+        "y": 40
+      }
+    },
+    "icarus_beam": {
+      "origin": {
+        "x": 2,
+        "y": 23
+      }
+    },
     "rock_lemon_power_gear": {
       "origin": {
         "x": 42,
@@ -2047,6 +2059,19 @@
                 "frame": 11
               }
             ]
+          }
+        },
+
+        {
+          "name": "icarus_headbutt",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "icarus_beam",
+          "properties": {
+            "speed": 0.5
           }
         },
 

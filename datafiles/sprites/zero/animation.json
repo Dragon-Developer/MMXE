@@ -987,6 +987,12 @@
           }
         },
         {
+          "name": "select",
+          "properties": {
+            "speed":1
+          }
+        },
+        {
           "name": "atk_1",
           "properties": {
             "keyframes": [

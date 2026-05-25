@@ -77,7 +77,6 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentEnemy, _func);
 		ENTITIES.for_each_component(ComponentBoss, _func);
 		ENTITIES.for_each_component(ComponentWeaponUse, _func);
-		ENTITIES.for_each_component(ComponentProjectileManager, _func);
 		ENTITIES.for_each_component(ComponentEnemyManager, _func);
 		ENTITIES.for_each_component(ComponentGravityChanger, _func);
 		ENTITIES.for_each_component(ComponentStageSelector, _func);
@@ -98,12 +97,15 @@ function GameLoop() constructor {
 		ENTITIES.for_each_component(ComponentCamera, _func);
 		ENTITIES.for_each_component(ComponentRide, _func);
 		ENTITIES.for_each_component(ComponentArmorCapsule, _func);
+		ENTITIES.for_each_component(ComponentArmorHandler, _func);
 		ENTITIES.for_each_component(ComponentDoor, _func);
 		ENTITIES.for_each_component(ComponentDoubleGearHandler, _func);
 		ENTITIES.for_each_component(ComponentDamageable, _func);
 		ENTITIES.for_each_component(ComponentDialouge, _func);
+		ENTITIES.for_each_component(ComponentPlayerSelectDisplay, _func);
 		ENTITIES.for_each_component(ComponentBar, _func);
 		ENTITIES.for_each_component(ComponentHealable, _func);
+		ENTITIES.for_each_component(ComponentProjectileManager, _func);
 		ENTITIES.for_each_component(ComponentParticles, _func);
 		ENTITIES.for_each_component(ComponentAnimation, _func);
 		ENTITIES.for_each_component(ComponentAnimationShadered, _func);

@@ -52,6 +52,9 @@ function GuiOptions() : GuiContainer() constructor {
 	if(!variable_struct_exists(global.settings, "extra_particles")){
 		global.settings.extra_particles = true;
 	}
+	if(!variable_struct_exists(global.settings, "x8_armors_show_special_weapons")){
+		global.settings.x8_armors_show_special_weapons = false;
+	}
 	if(!variable_struct_exists(global.settings, "hit_numbers")){
 		global.settings.hit_numbers = true;
 	}

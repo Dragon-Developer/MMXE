@@ -8,7 +8,7 @@ function XGaeaArmorHead() : HeadPartBase() constructor{
 	
 	self.apply_armor_effects = function(_player){// _player is ComponentPlayerMove, not the associated instance
 		
-		_player.get(ComponentWeaponUse).charge.charge_time = [30, 68, 106, 144, 182, 220, 258]
+		_player.get(ComponentWeaponUse).charge.charge_time = [30, 68, 69, 106, 144, 182, 220]
 	}
 	self.set_bonus = XGaeaArmorSetBonus;
 }

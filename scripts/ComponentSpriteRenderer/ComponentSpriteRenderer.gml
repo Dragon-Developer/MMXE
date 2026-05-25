@@ -195,6 +195,7 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	}
 	
 	self.draw_regular = function(_pos, _sprite, _col = c_white, _on_gui = false) {
+		if array_length(self.sprites) <= 0 return;
 		var _animator = _sprite.animationController;
 		if(is_undefined(_pos)) _pos = self.get_interpolated_position(_animator);
 		var _instance_x = floor(_pos[0]);
@@ -207,11 +208,13 @@ function ComponentSpriteRenderer() : ComponentBase() constructor {
 	};
 	
 	self.draw_sprite = function(_action, _frame, _x, _y, _color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		if array_length(self.sprites) <= 0 return;
 		swap_sprite(0, _color, _alpha, _xscale, _yscale, _shader)
 		self.sprites[0].animationController.draw_action(_action, undefined, _frame, floor(_x), floor(_y))
 	}
 	
 	self.swap_sprite = function(_sprite = 0,_color = c_white, _alpha = 1, _xscale = 1, _yscale = 1, _shader = undefined){
+		if array_length(self.sprites) <= 0 return;
 		if self.sprites[_sprite] == undefined return;
 		
 		self.sprites[_sprite].animationController.__xscale = _xscale;

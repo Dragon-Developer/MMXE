@@ -6,22 +6,32 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.combo_count = 0;//the amount of comboiness this entity has been hit with
 	self.combo_offset = 0;//some enemies take more or less comboiness from projectiles
 	self.damage_rate = 1;//the amount that damage gets multiplied by
+	self.damage_offset = 0;//taken damage is subtracted from this number
 	self.dead = false;
 	self.hit_amount = 0;//the amount of times this thing got hit
 	
 	self.invuln_offset = -1;//if its -1 the invuln timer is over
 	self.invuln_time = 150//150;//the time offset in frames that invulnerability lasts for
+	self.red_health_active = false;
+	self.red_health_nuggets = 0;
+	self.red_hp_is_additive = false;
+	self.red_health_percentage = 0.6;
+	self.red_health_timer = -1;
+	self.red_health_interval = 180;
 	
 	self.physics = noone;//physics is used to detect collisions with projectiles.
 	self.plays_sound_on_hit = false;//so players dont activate the on hit 
 	self.bright = false;
 	self.take_boss_damage = false;
 	self.immune_to_damage_zones = false;
+	self.super_armor = false;
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
 	
 	self.hit_by_list = [];
+	
+	self.invincibility_type = "damage"
 	
 	self.serializer = new NET_Serializer();
 	/*self.serializer
@@ -70,18 +80,33 @@ function ComponentDamageable() : ComponentBase() constructor{
 			}
 		}
 		
+		if(red_health_timer > 0 && CURRENT_FRAME > red_health_timer && red_health_nuggets > 0){
+			red_health_nuggets -= 1;
+			self.health += 1;
+			red_health_timer += red_health_interval
+		}
+		
 		if(self.invuln_offset > CURRENT_FRAME) {
-			if(CURRENT_FRAME % 2 == 0 && bright)
-				array_push(find("animation").shaders,new BrightShader())
-			else if(CURRENT_FRAME % 2 == 0)
-				array_push(find("animation").shaders,new GoneShader())
-			else if(array_length(find("animation").shaders) > 1)
-				array_pop(find("animation").shaders)
+			switch(self.invincibility_type){
+				case("sting"):
+				
+				break;
+				
+				default:
+					if(CURRENT_FRAME % 2 == 0 && bright)
+						array_push(find("animation").shaders,new RainbowShader())
+					else if(CURRENT_FRAME % 2 == 0)
+						array_push(find("animation").shaders,new GoneShader())
+					else if(array_length(find("animation").shaders) > 1)
+						array_pop(find("animation").shaders)
+				break;
+			}
 		} else if(self.invuln_offset == CURRENT_FRAME){
 			while(array_length(find("animation").shaders) > 1){
 				array_pop(find("animation").shaders)
 			}
 			self.hit_by_list = [];
+			self.invincibility_type = "damage"
 		}
 		
 		self.check_for_collision();
@@ -99,6 +124,8 @@ function ComponentDamageable() : ComponentBase() constructor{
 		_damage += self.check_for_bosses();
 		_damage += self.check_for_damage_zones();
 		
+		_damage -= damage_offset;
+		
 		if(get(ComponentPlayerMove)){
 			_damage *= (global.settings.difficulty + 1) / 2;
 			
@@ -106,13 +133,22 @@ function ComponentDamageable() : ComponentBase() constructor{
 				_damage = self.health_max - 1;
 		}
 		
-		self.health -= _damage == 0 ? 0 : max(ceil(_damage * damage_rate), 1)
+		self.health -= _damage <= 0 ? 0 : max(ceil(_damage * damage_rate), 1)
 		
-		if(_damage != 0){
+		if(_damage > 0){
 			if(plays_sound_on_hit)
 				WORLD.play_sound("big_damage");
 			hit_amount++;
 			self.publish("took_damage", _damage);//so other components dont need to hook into this to get info
+			
+			if(red_health_active){
+				if red_hp_is_additive{
+					red_health_nuggets = floor(red_health_nuggets / 2)
+					red_health_nuggets += floor(_damage / red_health_percentage * damage_rate);
+				} else
+					red_health_nuggets = floor(_damage / red_health_percentage * damage_rate);
+				red_health_timer = CURRENT_FRAME + red_health_interval
+			}
 				
 			if(global.settings.hit_numbers){//no damage number setting
 				var _inst = self.get_instance()

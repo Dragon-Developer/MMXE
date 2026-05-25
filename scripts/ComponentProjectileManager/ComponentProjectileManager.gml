@@ -109,7 +109,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.step = function(){
 		array_foreach(self.projectiles, function(_shot){
 			_shot.code.step(_shot.position);
-			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir, _shot.vdir)
+			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir, _shot.code.vdir)
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y);
 			
 			if(_shot.animation != _shot.code.animation){

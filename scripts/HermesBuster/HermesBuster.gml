@@ -5,7 +5,14 @@ function HermesBuster() : ProjectileWeapon() constructor{
 	self.title = "X BUSTER";
 	self.description = "Mega Buster Mark 17"
 	
-	self.weapon_palette = global.availible_characters[global.character_index].default_palette;
+	self.weapon_palette = [
+		global.availible_characters[global.character_index].default_palette[0],
+		global.availible_characters[global.character_index].default_palette[1],
+		global.availible_characters[global.character_index].default_palette[2],
+		global.availible_characters[global.character_index].default_palette[3],
+		global.availible_characters[global.character_index].default_palette[4],
+		global.availible_characters[global.character_index].default_palette[5]
+	]
 }
 
 function HermesBuster1Data() : xBuster11Data() constructor{
@@ -42,7 +49,8 @@ function HermesBuster3Data() : xBuster13Data() constructor{
 
 function HermesBuster4Data() : ProjectileData() constructor{
 	self.comboiness = 5;
-	self.damage = 2;
+	self.damage = 4;
+	self.boss_damage = 5;
 	self.vertical_speed = 0;
 	self.piercing = true;
 	
@@ -67,7 +75,7 @@ function HermesBuster4Data() : ProjectileData() constructor{
 
 function HermesBuster5Data() : ProjectileData() constructor{
 	self.comboiness = 15;
-	self.damage = 2;
+	self.damage = 3;
 	self.vertical_speed = 0;
 	self.piercing = true;
 	

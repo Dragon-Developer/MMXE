@@ -369,9 +369,9 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 			_icon_2_color = #a0a0a0;
 			_icon_3_color = c_white;
 		}
-		get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = _icon_1_color;
-		get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = _icon_2_color;
-		get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = _icon_3_color;
+		//get(ComponentSpriteRenderer).sprites[self.settings_icons[0]].animationController.__color = _icon_1_color;
+		//get(ComponentSpriteRenderer).sprites[self.settings_icons[1]].animationController.__color = _icon_2_color;
+		//get(ComponentSpriteRenderer).sprites[self.settings_icons[2]].animationController.__color = _icon_3_color;
 		
 		palette.apply();
 		
@@ -384,7 +384,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		_anim_data[0] = 160 + 35 - 4;
 		_anim_data[1] = 32 + 41 - 7;
 		
-		_player_animator.draw_regular(_anim_data)
+		//_player_animator.draw_regular(_anim_data)
 		
 		
 		palette.reset();

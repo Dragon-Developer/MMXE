@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"ComponentCharacterSelect",
   "parent":{
-    "name":"Stage Select",
-    "path":"folders/Scripts/Game/Entity Components/Stage Select.yy",
+    "name":"Menus",
+    "path":"folders/Scripts/Game/Entity Components/Menus.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

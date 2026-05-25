@@ -79,7 +79,7 @@ function FortState(_initState, _execEnter = true) : SnowState(_initState, _execE
 		return script_execute_ext(_func, _args);
 	};
 	
-	Log("FortState Initalized")
+	log("FortState Initalized")
 }
 
 show_debug_message("FortState exists")

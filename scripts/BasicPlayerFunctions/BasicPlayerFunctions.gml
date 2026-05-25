@@ -183,9 +183,14 @@ function add_melee_state(_entity){
 				}
 			},
 			leave: function() {	
+				if(self.states.melee.proj != undefined)
 				PROJECTILES.destroy_projectile(self.states.melee.proj.code);
 				self.states.melee.proj = undefined;
-				self.states.melee.animation = "undefined"
+				if(self.states.melee.animation != "undefined"){
+					var _frame = self.find("animation").animation.get_props(self.states.melee.animation + "_end").keyframes[0].frame;
+					self.publish("animation_play", { name: self.states.melee.animation + "_end", reset: true, frame: _frame});
+					self.states.melee.animation = "undefined"
+				}
 			},
 			step: function() {
 				if(!self.physics.is_on_floor()){
@@ -196,18 +201,13 @@ function add_melee_state(_entity){
 		
 		self.fsm.add("melee_end", {
 			enter: function() {
-				var _frame = self.find("animation").animation.get_props(self.states.melee.animation + "_end").keyframes[0].frame;
-				
-				self.publish("animation_play", { name: "atk_1_end", reset: true, frame: _frame});
-				self.states.melee.animation = "undefined"
-				
 				if(self.physics.is_on_floor()){
 					self.physics.set_hspd(0);
 				}
 			},
 			leave: function(){
 				
-				log(self.current_hspd);
+				//log(self.current_hspd);
 			}, 
 			step: function() {
 				if(!self.physics.is_on_floor()){
@@ -806,7 +806,48 @@ function add_ceil_cling(_entity){
 }
 	
 function add_hover(_entity){
-	
+	with(_entity){
+		
+		struct_set(states, "hover", {
+			speed: self.states.walk.speed,
+			animation: "hover",
+			interval: 90,
+			lean: 2,
+			leanchange: 0.1
+		})
+		
+		//PROJECTILES.create_projectile(_x, _y, _dir, _shot_data, self, _tags, self.damage_increase);
+		
+		fsm.add("hover", {
+			enter: function(){
+				var _inst = self.get_instance();
+				
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,0)
+				
+				self.timer = CURRENT_FRAME + self.states.hover.interval;
+			},
+			step: function(){
+				
+				//how to animlerp?
+				/*
+				
+					dont?
+					have a variable in the states struct
+					
+				
+				*/
+				
+				self.publish("animation_play", { name: "hover", frame: 2});
+				self.set_hor_movement();
+			},
+			leave: function(){
+				self.physics.update_gravity();
+			}
+		})
+		.add_transition("t_transition", "air", "hover", function() 
+			{ return self.input.get_input_pressed("jump") })
+	}
 }
 
 function add_glide(_entity){
