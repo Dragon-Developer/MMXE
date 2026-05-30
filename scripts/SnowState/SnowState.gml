@@ -328,7 +328,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		
 	/// @param {string} _event
 	/// @param {string} [_state]
-	/// @param {struct|array} [_args]
+	/// @param {Struct|Array} [_args]
 	/// @returns {Struct.SnowState|undefined} self
 	__execute = function(_event, _state = undefined, _args = undefined) {
 		_state ??= __history[0];
