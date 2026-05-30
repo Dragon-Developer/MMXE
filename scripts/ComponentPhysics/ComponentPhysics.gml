@@ -76,7 +76,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 	}
 	/**
 	 * Gets the current gravity vector.
-	 * @returns {struct.Vec2} Gravity vector.
+	 * @returns {Struct.Vec2} Gravity vector.
 	 */
 	get_grav = function() {
 		return self.grav;

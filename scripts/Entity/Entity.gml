@@ -106,7 +106,7 @@ function Entity() constructor {
 			_component.draw_end();
 		});
 	}
-	static publish = function(_event, _args) {
+	static publish = function(_event, _args = undefined) {
 		self.__event_bus.publish(_event, _args);	
 	}
 	static subscribe = function(_event, _callback) {

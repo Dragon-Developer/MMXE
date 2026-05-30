@@ -104,7 +104,7 @@ function NET_Network() constructor {
 	}
 	/// @function						sendData()
 	/// @description					Send data to socket.
-	/// @param {Struct} _data			Data to be sent.
+	/// @param {Struct|any} _data		Data to be sent.
 	/// @param {Id.Socket} [_sockets]	Sockets to send to.
 	static sendData = function(_data, _sockets) {
 		if (is_undefined(_sockets)) {

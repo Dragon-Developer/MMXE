@@ -29,14 +29,14 @@ function NET_GameBase() constructor {
 	}
 	/**
      * Adds local players to the game.
-     * @param {array} _players - The players to add.
+     * @param {Array} _players - The players to add.
      */
 	static add_local_players = function(_players) {
 		self.__local_players = array_union(self.__local_players, _players);	
 	}
 	/**
      * Removes specified local players from the game.
-     * @param {array} _players - The players to remove.
+     * @param {Array} _players - The players to remove.
      */
 	static remove_local_players = function(_players) {
 		self.__local_players = array_filter(self.__local_players, 

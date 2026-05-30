@@ -74,7 +74,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	__on_events[$ "state changed"] = undefined;
 		
 	/// @param {string} _name
-	/// @param {struct} _struct
+	/// @param {Struct} _struct
 	/// @param {bool} _hasParent
 	/// @returns {Struct.SnowState} self
 	__add = function(_name, _struct, _hasParent) {
@@ -254,7 +254,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	/// @param {string} _state
 	/// @param {function} _leave
 	/// @param {function} _enter
-	/// @param {struct} [_data]
+	/// @param {Struct} [_data]
 	/// @returns {Struct.SnowState} self
 	__change = function(_state, _leave, _enter, _data) {
 		var _defLeave, _defEnter;
@@ -292,8 +292,8 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return self;
 	};
 		
-	/// @param {struct} _struct
-	/// @return {struct} Struct filled with all possible events
+	/// @param {Struct} _struct
+	/// @return {Struct} Struct filled with all possible events
 	__create_events_struct = function(_struct) {
 		var _events = {};
 		var _arr, _i, _event, _defEvent;
@@ -487,7 +487,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	};
 	
 	/// @param {string} _transitionName
-	/// @param {struct} [_data]
+	/// @param {Struct} [_data]
 	/// @returns {bool} Whether the transition has been triggered (true), or not (false)
 	__trigger = function(_transitionName, _data) {
 		if (!__assert_transition_name_valid(_transitionName)) return false;
@@ -517,10 +517,10 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return false;
 	};
 	
-	/// @param {array} _transitions
+	/// @param {Array} _transitions
 	/// @param {string} _source
 	/// @param {string} _trigger
-	/// @param {struct} [_data]
+	/// @param {Struct} [_data]
 	/// @returns {bool} Whether the trigger is successful (true), or not (false)
 	__try_triggers = function(_transitions, _source, _trigger, _data) {
 		var _transition, _dest, _i;
@@ -604,7 +604,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	#region Basics
 	
 	/// @param {string} _name
-	/// @param {struct} [_struct]
+	/// @param {Struct} [_struct]
 	/// @returns {Struct.SnowState|undefined} self
 	add = function(_name, _struct = {}) {
 		if (!__assert_state_name_valid(_name)) return undefined;
@@ -626,7 +626,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	/// @param {string} _state
 	/// @param {function} [_leave=undefined]
 	/// @param {function} [_enter=undefined]
-	/// @param {struct} [_data=undefined]
+	/// @param {Struct} [_data=undefined]
 	/// @returns {Struct.SnowState|undefined} self
 	change = function(_state, _leave = undefined, _enter = undefined, _data = undefined) {
 		if ((_leave != undefined) && !__is_really_a_method(_leave)) {
@@ -669,7 +669,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return variable_struct_exists(__states, _state);
 	};
 	
-	/// @returns {array} Array containing the states defined
+	/// @returns {Array} Array containing the states defined
 	get_states = function() {
 		return variable_struct_get_names(__states);	
 	};
@@ -707,7 +707,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	/// @param {string} _event
 	/// @param {string} _callback
-	/// @param {struct} [_context=noone]
+	/// @param {Struct} [_context=noone]
 	/// @returns {Struct.SnowState|undefined} self
 	on = function(_event, _callback, _context = noone) {
 		if (!is_string(_event)) {
@@ -735,7 +735,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	
 	/// @param {string} _parent Parent state name
 	/// @param {string} _name State name
-	/// @param {struct} [_struct] State struct
+	/// @param {Struct} [_struct] State struct
 	/// @return {Struct.SnowState|undefined} self
 	add_child = function(_parent, _name, _struct = {}) {
 		if (!__assert_state_name_valid(_name)) return undefined;
@@ -866,14 +866,14 @@ function SnowState(_initState, _execEnter = true) constructor {
 		return __states[$ _state][$ _event].exists;
 	};
 
-	/// @param {struct} [_data]
+	/// @param {Struct} [_data]
 	/// @returns {Struct.SnowState} self
 	enter = function(_data = undefined) {
 		__execute("enter", undefined, _data);
 		return self;
 	};
 	
-	/// @param {struct} [_data]
+	/// @param {Struct} [_data]
 	/// @returns {Struct.SnowState} self
 	leave = function(_data = undefined) {
 		__execute("leave", undefined, _data);
@@ -970,7 +970,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	};
 	
 	/// @param {string|array} _transition
-	/// @param {struct} [_data=undefined]
+	/// @param {Struct} [_data=undefined]
 	/// @returns {bool} Whether a transition has been triggered (true), or not (false)
 	trigger = function(_transition, _data = undefined) {
 		if (is_array(_transition)) {

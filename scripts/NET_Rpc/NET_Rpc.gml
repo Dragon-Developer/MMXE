@@ -135,7 +135,7 @@ function NET_Rpc() constructor {
 			_handler.runMethod(_data.params, _client);
 		}
 	}
-	static handleResult = function(_data, _client, _socket) {
+	static handleResult = function(_data, _client, _socket = undefined) {
 		var _result = _data.result;
 		var _id = _data.id;
 		if (requests.hasElement(_id)) {
@@ -147,7 +147,7 @@ function NET_Rpc() constructor {
 			show_debug_message("Error -32603: Message received after timeout");	
 		}
 	}
-	static handleError = function(_data, _client, _socket) {
+	static handleError = function(_data, _client, _socket = undefined) {
 		var _error = _data.error;
 		var _code = _error.code;
 		var _message = _error.message;

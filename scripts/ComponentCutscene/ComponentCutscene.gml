@@ -69,7 +69,7 @@ function ComponentCutscene() : ComponentBase() constructor{
 		}
 	}
 	
-	self.have_player_move = function(_sequence){
+	self.have_player_move = function(_sequence, other = undefined){
 		have_player_move(_sequence)
 	}
 	
@@ -82,7 +82,7 @@ function ComponentCutscene() : ComponentBase() constructor{
 	}
 }
 
-function have_player_move(_sequence){
+function have_player_move(_sequence, other = undefined){
 	if(_sequence == undefined)
 		log("there must be an error in transport")
 	

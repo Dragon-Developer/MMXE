@@ -260,6 +260,5 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		return;
 		draw_string_condensed(find("animation").subdirectories, 0, 200)
 		draw_string_condensed(find("animation").armors, 0, 210)
-		
 	}
 }

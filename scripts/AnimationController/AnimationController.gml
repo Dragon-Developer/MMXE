@@ -151,7 +151,7 @@ function AnimationController(_character = "") constructor {
 	static get_animations = function() {
 		return variable_clone(self.__animations);
 	}
-	/// @returns {struct}
+	/// @returns {Struct}
 	static get_props = function(_animation = self.__animation) {
 		return self.__props[$ _animation];
 	}
@@ -194,7 +194,7 @@ function AnimationController(_character = "") constructor {
 		
 	}
 	/// @param {string} _animation
-    /// @param {struct} _props
+    /// @param {Struct} _props
 	/// @returns {Struct.AnimationController} self
 	static add_animation = function(_animation, _props = {}) {
 		_props[$ "action"] ??= _animation;
@@ -561,7 +561,7 @@ function AnimationController(_character = "") constructor {
 		return self.__draw_sprite(_sprite, _index, _x, _y);
     }
 	/// @param {string} _action
-	/// @param {string} _type
+	/// @param {string|undefined} _type
 	/// @param {real} _index
 	/// @param {real} _x
 	/// @param {real} _y
@@ -615,7 +615,7 @@ function AnimationController(_character = "") constructor {
 	static is_playing = function(_animation) {
         return self.__animation == _animation;
     }
-	/// @param {struct} _data
+	/// @param {Struct} _data
 	/// @returns {Struct.AnimationController|any|undefined} self
 	static parse_data = function(_data, _return_self = true) {
         if (!is_struct(_data)) {log("crap");return;}
