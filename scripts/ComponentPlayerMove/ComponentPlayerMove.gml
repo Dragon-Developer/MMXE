@@ -47,10 +47,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	self.add_base_state_machine = function(){
 		
 	self.reset_state_variables();
-	if keyboard_check(ord("O"))
-		self.fsm = new FortState("init", true);
-	else
-		self.fsm = new SnowState("init", true);
+	self.fsm = new FortState("init", true);
 	self.fsm
 		.history_enable()
 		.history_set_max_size(10)
@@ -137,11 +134,15 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				if(self.input.get_input("down") && self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y + 1, obj_collision_semisolid)){
 					self.fsm.change("fall");
 					_inst.y += 3;
+					self.physics.set_vspd(1);
 					return;
 				}
 				_inst.y -= self.states.jump.strength;
+				with(obj_camera){
+					components.get(ComponentCamera).step();
+				}
 				
-				if(self.physics.is_on_floor()){
+				if(self.physics.is_on_floor(self.ground_distance)){
 					self.publish("animation_play", { name: self.states.jump.animation });
 					double_jumps = self.states.jump.count - 1;
 				}else{ 
@@ -157,16 +158,18 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.fsm.inherit();
 				//self.publish("animation_play", { name: "jump" });
 				self.physics.set_vspd(-(self.states.jump.strength - self.physics.get_grav().y));
-				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
+				if ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")) && self.states.jump.dash_jump_enabled{
 					self.current_hspd = self.states.dash.speed;
 					if(global.settings.extra_particles)
 						WORLD.spawn_particle(new SparkParticle(_inst.x, _inst.y + 16, self.dir))
+				} else if(!self.states.jump.dash_jump_enabled) {
+					self.current_hspd = self.states.walk.speed;
 				}
 				self.timer = CURRENT_FRAME;
 			},
 			step: function() {
 				self.set_hor_movement();
-				if(self.current_hspd != self.states.dash.speed && CURRENT_FRAME - self.timer < 5) && ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")){
+				if(self.current_hspd != self.states.dash.speed && CURRENT_FRAME - self.timer < 5) && ((self.fsm.get_previous_state() == "dash" || self.fsm.get_previous_state() == "dash_air" || self.input.get_input("dash") && global.settings.PSX_Style_Dash_Jumping) && self.fsm.state_exists("dash")) && self.states.jump.dash_jump_enabled{
 					self.current_hspd = self.states.dash.speed;
 					var _inst = self.get_instance();
 					if(global.settings.extra_particles)
@@ -396,9 +399,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("hurt", {
 			enter: function(){
 				WORLD.play_sound("hurt");
+				get(ComponentPlayerInput).__locked = false;
+				get(ComponentPlayerMove).locked = false;
+				get(ComponentPhysics).grav = get(ComponentPhysics).grav_default
+				get(ComponentPhysics).velocity = new Vec2(0, 1); 
+				get(ComponentAnimationShadered).animation.__speed = 1;
+				
 				self.publish("animation_play", { name: "hurt" });
 				//self.physics.velocity = new Vec2(self.dir * self.states.hurt.speed,-2);
 				self.physics.set_speed(self.dir * self.states.hurt.speed,-2)
+				
+				
 			}
 		})
 		.add("death", {
@@ -522,7 +533,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 			self.apply_full_armor_set(_armors);
 		});
 		self.subscribe("took_damage", function() {
-			self.fsm.trigger("t_hurt")
+			if !(get(ComponentDamageable).super_armor)
+				self.fsm.trigger("t_hurt")
 		});
 		self.subscribe("complete", function() {
 			self.fsm.trigger("t_complete")
@@ -625,8 +637,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 	}
 		
 	self.draw = function(){
+		
+		
 		if (self.fsm.event_exists("draw"))
 			self.fsm.draw();	
+			
+		/*array_foreach(find("animation").part_shaders, function(_palette, _index){
+			for(var g = 0; g < 31; g++){
+				//find("animation").part_shaders[_index].setPaletteColorByHex(g, _palette[g]);
+				_palette.setPaletteColorByHex(g, self.character.base_palettes[_index][g]);
+			}
+		})*/
 			
 		if !global.debug return;
 		
@@ -638,9 +659,34 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		draw_string(string(self.physics.get_hspd()), self.get_instance().x + 16, self.get_instance().y - 32)
 		draw_string(string(self.get_instance().x), self.get_instance().x - 64, self.get_instance().y - 24)
 		draw_string(string(self.get_instance().y), self.get_instance().x - 64, self.get_instance().y - 32)
-		draw_string("SL:"+string(locked), self.get_instance().x + 64, self.get_instance().y - 48)
+		draw_string("ML:"+string(locked), self.get_instance().x + 64, self.get_instance().y - 48)
 		draw_string("IL:"+string(input.__locked), self.get_instance().x + 64, self.get_instance().y - 56)
 		draw_string(string(fsm.get_current_state()), self.get_instance().x - 32, self.get_instance().y - 64)
+		
+		var _x = floor(self.get_instance().x);
+		var _y = floor(self.get_instance().y);
+		for(var r = 0; r < array_length(global.availible_characters[global.character_index].default_palette); r++){
+			draw_point_color(_x - 1, _y + 32 + r, global.availible_characters[global.character_index].default_palette[r])
+			var _pal = find("animation").get_palette_color(r)
+			var _col = make_color_rgb(_pal.red * 255, _pal.green * 255, _pal.blue * 255)
+			draw_point_color(_x - 3, _y + 32 + r, _col)
+			
+			_pal = find("animation").get_shader_color(find("animation").part_shaders[0], r)
+			_col = make_color_rgb(_pal.red * 255, _pal.green * 255, _pal.blue * 255)
+			draw_point_color(_x + 2, _y + 32 + r, _col)
+			_pal = find("animation").get_shader_color(find("animation").part_shaders[1], r)
+			_col = make_color_rgb(_pal.red * 255, _pal.green * 255, _pal.blue * 255)
+			draw_point_color(_x + 4, _y + 32 + r, _col)
+			_pal = find("animation").get_shader_color(find("animation").part_shaders[2], r)
+			_col = make_color_rgb(_pal.red * 255, _pal.green * 255, _pal.blue * 255)
+			draw_point_color(_x + 6, _y + 32 + r, _col)
+			_pal = find("animation").get_shader_color(find("animation").part_shaders[3], r)
+			_col = make_color_rgb(_pal.red * 255, _pal.green * 255, _pal.blue * 255)
+			draw_point_color(_x + 8, _y + 32 + r, _col)
+			_pal = find("animation").get_shader_color(find("animation").part_shaders[4], r)
+			_col = make_color_rgb(_pal.red * 255, _pal.green * 255, _pal.blue * 255)
+			draw_point_color(_x + 10, _y + 32 + r, _col)
+		}
 	}
 	
 	self.draw_gui = function() {

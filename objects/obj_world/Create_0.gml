@@ -47,6 +47,16 @@ self.play_music = function(_sound){
 	return self.music;
 }
 
+self.play_boss_music = function(_override){
+	
+	switch(_override){
+		default:
+			self.play_music(global.availible_characters[global.character_index].boss_music)
+		break;
+	}
+	
+}
+
 self.stop_sound = function(_sound){
 	self.components.get(ComponentSoundLoader).stop_sound(_sound);
 }

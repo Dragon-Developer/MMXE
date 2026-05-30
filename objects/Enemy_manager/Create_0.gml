@@ -12,3 +12,9 @@ self.create_enemy = function(_x, _y,_dir, _code){
 self.destroy_projectile = function(_proj){
 	components.get(ComponentEnemyManager).destroy_enemy(_proj)
 }
+self.get_animation_frame = function(_reference){
+	return components.get(ComponentEnemyManager).get_animation_frame(_reference)
+}
+self.get_nearest_enemy = function(_x, _y){
+	return components.get(ComponentEnemyManager).find_nearest_enemy(_x, _y)
+}

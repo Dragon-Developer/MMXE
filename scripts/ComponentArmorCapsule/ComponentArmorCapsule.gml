@@ -55,6 +55,10 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 				already_equipped_armor = player.components.get(ComponentArmorHandler).armor_structs;
 				log(already_equipped_armor);
 				already_equipped_armor[armor_slot_to_replace] = armor;
+				for(var k = 0; k < array_length(global.availible_characters[global.character_index].possible_armors[armor_slot_to_replace]);k++){
+					if(global.availible_characters[global.character_index].possible_armors[armor_slot_to_replace][k] == armor)
+						global.armors[global.character_index][armor_slot_to_replace] = k;
+				}
 				
 			}
 		} else {
@@ -63,14 +67,27 @@ function ComponentArmorCapsule() : ComponentBase() constructor{
 				_inst = self.get_instance();
 				player.components.get(ComponentPlayerMove).locked = true;
 				player.components.get(ComponentPlayerMove).fsm.trigger("t_dialouge");
-				var _dialogue = ENTITIES.create_instance(obj_dialouge);
-				_dialogue.x = _inst.x;
-				_dialogue.y = _inst.y;
-				_dialogue.components.get(ComponentPlayerInput).set_player_index(player.components.get(ComponentPlayerInput).get_player_index())
-				_dialogue.components.get(ComponentDialouge).set_dialouge(dialouge, dialouge[0].mugshot_left, dialouge[0].mugshot_right);
-				_dialogue.components.publish("change_dialouge",dialouge);	
+				if(self.dialouge.sentence != ""){
+					var _dialogue = ENTITIES.create_instance(obj_dialouge);
+					_dialogue.x = _inst.x;
+					_dialogue.y = _inst.y;
+					_dialogue.components.get(ComponentPlayerInput).set_player_index(player.components.get(ComponentPlayerInput).get_player_index())
+					_dialogue.components.get(ComponentDialouge).set_dialouge(dialouge, dialouge[0].mugshot_left, dialouge[0].mugshot_right);
+					_dialogue.components.publish("change_dialouge",dialouge);	
+				}
+				
 			}
 		}
+	}
+	
+	self.draw = function(){
+		if !global.debug return;
+		var _arm = {}
+		with(_arm){
+			script_execute(other.armor)
+		}
+		
+		draw_string_condensed(_arm.armor_name, self.get_instance().x, self.get_instance().y - self.get_instance().x / 12)
 	}
 }
 

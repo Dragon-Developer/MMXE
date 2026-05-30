@@ -42,6 +42,29 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 	
 	self.apply_full_armor_set = function(_armors, _state = "init", _reset = true){
 		
+		if(1 == 1){// if you have the autofill neutral armor for x8 armors setting
+			var _set = false
+			for(var t = 0; t < 4; t++){
+				if(_armors[t] != noone){
+					if(Is_X8_armor(_armors[t])){
+						_set = true;
+						log("THERES AN X8 ARMOR")
+					} else {
+						log("nope")
+					}
+				}
+			}
+			
+			if _set {
+				for(var t = 0; t < 4; t++){
+					if(_armors[t] == noone){
+						_armors[t] = array_get([XNeutralArmorHelm, XNeutralArmorArms, XNeutralArmorBody, XNeutralArmorBoot], t)
+					}
+				}
+				log(_armors)
+			}
+		}
+		
 		get(ComponentPlayerMove).reset_state_variables(_state);
 		self.armor_parts = [[],[],["/normal"]];
 		self.reset = _reset;
@@ -70,8 +93,10 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 			if(typeof(_arm) == "struct"){
 				var _can_cont = true;
 				for(var g = 0; g < array_length(self.armor_parts[0]); g++){
-					if(_arm.armor_name == self.armor_parts[0][g].armor_name)
+					if(_arm.armor_name == self.armor_parts[0][g].armor_name){
 						_can_cont = false;
+						log("repeat part!")
+					}
 				}
 				
 				if(_can_cont){
@@ -83,13 +108,6 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 					} else 
 						log(array_length(self.set_bonuses))
 					
-					if(array_length(self.set_bonuses) > 3){
-						if(self.set_bonuses[0] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[3]){
-							if script_exists(self.set_bonuses[0])
-								script_execute(self.set_bonuses[0], get(ComponentPlayerMove))
-						}
-					}
-					
 					if(variable_struct_exists(_arm, "sprite_name")){
 						var _armor_name = string(_arm.sprite_name);
 						_armor_name = string_delete(_armor_name, 0, 1);
@@ -97,6 +115,8 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 						var _directory_name = "/armor" + string(_arm.sprite_name)
 						_directory_name = string_replace(_directory_name, "_", "/")
 						find("animation").add_subdirectories([_directory_name]);
+						
+						log(_armor_name)
 						array_push(self.armor_parts[2], _directory_name);
 						array_push(self.armor_parts[1], _armor_name);
 					} else {
@@ -108,20 +128,27 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 						_arm.apply_armor_effects(get(ComponentPlayerMove));
 					
 					if(variable_struct_exists(_arm, "damage_rate"))
-						get(ComponentDamageable).damage_rate = _arm.damage_rate;
+						get(ComponentDamageable).damage_rate *= _arm.damage_rate;
 					
 					if(variable_struct_exists(_arm, "buster_weapon")){
 						global.availible_characters[global.character_index].weapons[0] = _arm.buster_weapon;
 						get(ComponentWeaponUse).set_weapons(global.availible_characters[global.character_index].weapons);
 					}
-				
 					
+					//fixes some problems
+					if(array_length(self.set_bonuses) > 3){
+						if(self.set_bonuses[0] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[1] && self.set_bonuses[2] == self.set_bonuses[3]){
+							if script_exists(self.set_bonuses[0])
+								script_execute(self.set_bonuses[0], get(ComponentPlayerMove))
+						}
+					}
 					
 				}
 			}
 			
 		});
 		//publish the armor set
+		log(self.armor_parts[1])
 		self.publish("armor_set",self.armor_parts[1]);
 		self.get_instance().components.get(ComponentAnimationShadered).set_subdirectories(self.armor_parts[2]);
 		self.get_instance().components.get(ComponentAnimationShadered).reload_animations();
@@ -131,9 +158,15 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 	
 	self.step = function(){
 		array_foreach(self.armor_parts, function(_part) {
-			if(typeof(_part) == "struct")
-				if(_part.step_armor_effects != undefined)
+			if(typeof(_part) == "struct"){
+				if(_part.step_armor_effects != undefined){
 					_part.step_armor_effects(get(ComponentPlayerMove));
+				} else {
+					//log("undefined step event")
+				}
+			} else {
+				//log("not a struct")
+			}
 					
 		})
 	}

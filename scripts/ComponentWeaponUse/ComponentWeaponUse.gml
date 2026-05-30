@@ -1,5 +1,6 @@
 function ComponentWeaponUse() : ComponentBase() constructor{
 	self.shot_end_time = 0;
+	self.add_tags("weapon");
 	self.current_weapon = [0,0,0,0];//i highly doubt these will change much at all during gameplay
 	self.weapon_list = [
 	xBuster,
@@ -10,6 +11,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.weapon_max_ammo = global.player_data.weapon_energy
 	self.weapon_use_rate = 1;
 	self.weapon_palette = undefined;
+	self.weapon_palette_max_length = 14;
 	self.charge = undefined;
 	self.charge_time = [30, 105, 180, 255];
 	self.shoot_inputs = ["shoot","shoot2","shoot3", "shoot4"]
@@ -62,10 +64,18 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		self.charge.input = get(ComponentPlayerInput);
 		self.charge.publish("character_set", "player");
 		self.charge.current_weapon = xBuster;
+		self.reset()
+	}
+	
+	self.reset = function(){
 		self.current_weapon = [0,clamp(1, 0, array_length(global.availible_characters[global.character_index].weapons)),array_length(global.availible_characters[global.character_index].weapons) - 1,array_length(global.availible_characters[global.character_index].weapons) - 2];
 		if(self.current_weapon[1] < 0)self.current_weapon[1] = 0;
 		if(self.current_weapon[2] < 0)self.current_weapon[2] = 0;
 		if(self.current_weapon[3] < 0)self.current_weapon[3] = 0;
+		
+		if giga_index != -1
+			weapon_selection[3] = giga_index;
+			
  		self.weapon_palette = global.player_character[0].default_palette;
 		
 		if(array_length(global.availible_characters[global.character_index].weapons) <= 0){
@@ -109,8 +119,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 				script_execute(_wep)
 			}
 			
-			if(_code.giga)
+			if(_code.giga){
 				giga_index = _index
+				//log("GIGA'd")
+			}
 			
 			array_foreach(_code.data, function(_proj){
 				
@@ -144,7 +156,11 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			})
 		})
 		
+		if giga_index != -1
+			weapon_selection[3] = giga_index;
+		
 		variable_struct_remove(self, "added_melee_weapons")
+		self.reset()
 	}
 	
 	self.change_weapon = function(_change, _index = 0){
@@ -167,7 +183,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		self.weapon_palette = _wep.weapon_palette;
 		//log(_wep)
 		if(_index == 0)
-			for(var i = 0; i < array_length(_wep.weapon_palette); i++){
+			for(var i = 0; i < min(array_length(_wep.weapon_palette), self.weapon_palette_max_length); i++){
 				find("animation").set_palette_color(i, _wep.weapon_palette[i]);
 			}
 		
@@ -185,6 +201,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	
 	self.step = function(){
 		if (self.timescale != 1) self.timescale = 1
+		
+		if(array_length(weapon_list) <= 1) {
+			self.current_weapon = [0,0,0,0]
+		}
 		
 		var _change_direction = self.input.get_input_pressed("switchRight") - self.input.get_input_pressed("switchLeft")
 		
@@ -251,8 +271,22 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		if(array_contains(state_blacklist, get(ComponentPlayerMove).fsm.get_current_state())) return;
 		
+		check_refills()
+		
 		for(var g = 0; g < array_length(self.shoot_inputs);g++){
 			self.check_shooting(self.shoot_inputs[g], g);
+		}
+	}
+	
+	self.check_refills = function(){
+		for(var g = 0; g < array_length(self.weapon_list); g++){
+			var _wep = {};
+			with(_wep){
+				script_execute(other.weapon_list[g])
+			}
+			
+			if(_wep.refillRate > 0 && self.weapon_ammo[g] < self.weapon_max_ammo)
+				self.weapon_ammo[g] += _wep.refillRate
 		}
 	}
 	
@@ -293,7 +327,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 			script_execute(_shot_code.data[clamp(_shot_index, 0, array_length(_shot_code.data) - 1)])
 		}
 		
-		if (_shot_data.shot_limit <= self.projectile_count) return;
+		if (_shot_data.shot_limit <= self.projectile_count && !global.debug) return;
 			
 		//get what type of weapon this is [projectile, state based, melee, etc]
 		var _type = _shot_data.term;

@@ -106,6 +106,12 @@
           }
         },
         {
+          "name": "heart_yellow",
+          "properties": {
+            "speed": 0.025
+          }
+        },
+        {
           "name": "money_big_red",
           "properties": {
             "speed": 0.2
@@ -131,6 +137,12 @@
         },
         {
           "name": "money_small_yellow",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
+          "name": "wp_up",
           "properties": {
             "speed": 0.2
           }

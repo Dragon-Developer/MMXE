@@ -6,6 +6,18 @@
         "y": 41
       }
     },
+    "rotator": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "brittle_metal": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
+    },
     "skull_bot": {
       "origin": {
         "x": 19,
@@ -158,6 +170,12 @@
           }
         },
         {
+          "name": "brittle_metal",
+          "properties": {
+            "speed": 0
+          }
+        },
+        {
           "name": "little_shit",
           "properties": {
             "keyframes": [
@@ -189,6 +207,80 @@
                 "key": 0,
                 "frame": 0
               }
+            ]
+          }
+        },
+        {
+          "name": "wall_crawler",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "rotator",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 12,
+                "frame": 3
+              },
+              {
+                "key": 16,
+                "frame": 0
+              },
+              {
+                "key": 20,
+                "frame": 1
+              },
+              {
+                "key": 24,
+                "frame": 2
+              },
+              {
+                "key": 224,
+                "frame": 3
+              },
+              {
+                "key": 228,
+                "frame": 0
+              },
+              {
+                "key": 232,
+                "frame": 1
+              },
+              {
+                "key": 236,
+                "frame": 2
+              },
+              {
+                "key": 240,
+                "frame": 3
+              },
+              {
+                "key": 244,
+                "frame": 0
+              },
+              {
+                "key": 444,
+                "frame": 0
+              },
             ]
           }
         }

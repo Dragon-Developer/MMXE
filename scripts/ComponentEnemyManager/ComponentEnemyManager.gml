@@ -18,6 +18,39 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		log(string(is_in_range(2,1,3)) + " RANGE TEST");
 	}
 	
+	self.locate_enemy = function(_reference){
+		for(var p = 0; p < array_length(enemies); p++){
+			if enemies[p].code == _reference
+				return enemies[p]
+		}
+		
+		return undefined
+	}
+	
+	self.find_nearest_enemy = function(_x, _y){
+		var _ret = enemies[0]
+		for(var p = 0; p < array_length(enemies); p++){
+			var _rxoff = abs(_ret.position.x - _x);
+			var _ryoff = abs(_ret.position.y - _y);
+		
+			var _exoff = abs(enemies[p].position.x - _x);
+			var _eyoff = abs(enemies[p].position.y - _y);
+			if ((_rxoff + _ryoff) < (_exoff + _eyoff))
+				_ret = enemies[p]
+		}
+		
+		return _ret
+	}
+	
+	self.get_animation_frame = function(_reference){
+		for(var p = 0; p < array_length(enemies); p++){
+			if enemies[p].code == _reference
+				return get(ComponentSpriteRenderer).sprites[enemies[p].sprite].animationController.__frame
+		}
+		
+		return undefined
+	}
+	
 	self.create_enemy = function(_x, _y,_dir,  _code){
 		var _enemy = {};
 		
@@ -26,6 +59,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		struct_set(_enemy, "code", {});
 		struct_set(_enemy, "struct", _code);
 		struct_set(_enemy, "hit_by_list", []);
+		struct_set(_enemy.code, "start_time", CURRENT_FRAME);
 		
 		with(_enemy.code){script_execute(_code)}
 		
@@ -39,6 +73,8 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		struct_set(_enemy, "hitbox_offset", _enemy.code.hitbox_offset);
 		
 		array_push(self.enemies, _enemy);
+		
+		_enemy.code.init(_enemy.position);
 		
 		return _enemy;
 	}
@@ -166,7 +202,26 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 				if(!_proj.code.super_piercing)
 					array_push(_enemy.hit_by_list, _proj)
 					
-				_enemy.code.health -= _proj.code.damage;
+				if(array_length(_enemy.code.weaknesses) > 0){
+					var _hits = false;
+					for(var e = 0; e < array_length(_enemy.code.weaknesses); e++){
+						if(_proj.constructor ==_enemy.code.weaknesses[e].projectile){
+							_enemy.code.health -= _proj.code.damage * _enemy.code.weaknesses[e].rate;
+							log("hit by weakness")
+							_hits = true;
+						} else {
+							log("not a weakness!")
+							log(_proj.constructor)
+							log(_enemy.code.weaknesses[e].projectile)
+						}
+					}
+					
+					if !_hits
+						_enemy.code.health -= _proj.code.damage;
+				} else {
+					_enemy.code.health -= _proj.code.damage;
+				}
+				
 				_enemy.flash = 1;
 				WORLD.play_sound("small_damage");
 				
@@ -182,6 +237,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		
 		if(_enemy.code.health <= 0 && !_enemy.code.dead){
 			_enemy.code.dead = true;
+			_enemy.code.destroy();
 			WORLD.play_sound("Explosion");
 			WORLD.spawn_particle(new ExplosionParticle(_enemy.position.x, _enemy.position.y - 16, 1));
 			_enemy.position = new Vec2(-128, -128);

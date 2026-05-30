@@ -44,6 +44,9 @@ function Palette() constructor {
 	static getPalette = function(){
 		return self.swapArray;
 	}
+	static getBase = function(){
+		return self.colorsArray;
+	}
 	
 	static apply = function() {
 		shader_set(shdr_palette_swap);
@@ -120,6 +123,24 @@ function BrightShader() constructor {
 	static reset = function() {
 		shader_reset();	
 	}
+}
+
+function DummyShader() constructor {
+	static apply = function() {
+	}
+	static reset = function() {
+	}
+}
+
+function RainbowShader() constructor {
+	static apply = function() {
+		shader_set(shader_palette_rainbow);
+		shader_set_uniform_f(self.Rainbow, CURRENT_FRAME / 100)
+	}
+	static reset = function() {
+		shader_reset();	
+	}
+	self.Rainbow = shader_get_uniform(shdr_palette_swap, "RainbowOffset");
 }
 
 function GoneShader() constructor {

@@ -7,6 +7,9 @@ camera_spawn_offset = new Vec2(-GAME_W / 2,0);
 if(instance_exists(global.checkpoint_id)){
 	x = global.checkpoint_id.x;
 	y = global.checkpoint_id.y - 32;
+	if (global.force_idle){
+		y += GAME_H + 8
+	}
 }
 WORLD = ENTITIES.create_instance(obj_world);
 
@@ -71,6 +74,11 @@ on_spawn = function(_player) {
 	
 	_player.components.get(ComponentPlayerInput).__BufferLength = 0;
 	_player.components.get(ComponentPlayerInput).buffer_reset();
+	
+	if global.force_idle {
+		_player.components.get(ComponentPlayerMove).fsm.change("idle")
+		global.force_idle = false;
+	}
 	
 	current_spawn++;
 }

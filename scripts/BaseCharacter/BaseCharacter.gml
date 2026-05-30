@@ -2,6 +2,7 @@ function BaseCharacter() constructor{
 	self.default_health = 12;
 	self.player = noone;
 	self.image_folder = "x";
+	self.boss_music = "BossBattleL"
 	self.default_score = 1000;//for the score screen
 	self.states = {	
 		intro: {
@@ -23,7 +24,8 @@ function BaseCharacter() constructor{
 			animation: "jump",
 			double_jump_animation: "jump",
 			count: 1,
-			sound: "jump"
+			sound: "jump",
+			dash_jump_enabled: true
 		},
 		fall:{
 			animation: "fall"
@@ -173,8 +175,15 @@ function BaseCharacter() constructor{
 		for(var i = 0; i < array_length(self.default_palette); i++){
 			_animation.set_base_color(i, self.default_palette[i]);
 		}
-		for(var i = 0; i < array_length(self.default_palette); i++){
-			_animation.set_palette_color(i, self.default_palette[i]);
+		for(var j = 0; j < array_length(self.default_palette); j++){
+			_animation.set_palette_color(j, self.default_palette[j]);
+		}
+		
+		for(var l = 0; l < array_length(_animation.part_shaders); l++){
+			for(var k = 0; k < array_length(self.default_palette); k++){
+				_animation.set_shader_color(_animation.part_shaders[l], k, self.default_palette[k]);
+				_animation.set_shader_base_color(_animation.part_shaders[l], k, self.default_palette[k]);
+			}
 		}
 	}
 }

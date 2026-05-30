@@ -13,6 +13,7 @@ function ComponentCharge() : ComponentBase() constructor{
 	
 	self.charge_sound = undefined;
 	self.outline_color = undefined;
+	self.weapon_palette_max_length = 14;
 	
 	self.init = function(){
 		self.publish("animation_play", { 
@@ -75,10 +76,10 @@ function ComponentCharge() : ComponentBase() constructor{
 			charging = false;
 			self.publish("animation_visible", false);
 			var _weap_pal = node_parent.get(ComponentWeaponUse).weapon_palette;
-			for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+			for(var i = 0; i < weapon_palette_max_length; i++){
 				node_parent.find("animation").set_palette_color(i, global.availible_characters[global.character_index].default_palette[i]);
 			}
-			for(var i = 0; i < array_length(_weap_pal); i++){
+			for(var i = 0; i < min(array_length(_weap_pal), weapon_palette_max_length); i++){
 				node_parent.find("animation").set_palette_color(i, _weap_pal[i]);
 			}
 		} else if(_pressed && !charging){//prevent charge shot delay rapidly increasing
@@ -124,13 +125,14 @@ function ComponentCharge() : ComponentBase() constructor{
 				
 				for(var i = 0; i < array_length(self.charge_colors[_charge_amount]); i++){
 					node_parent.find("animation").set_palette_color(i, self.charge_colors[clamp(_charge_amount, 0, _charge_limit - 1)][i]);
+					if i > 13 log("WARNING")
 				}
 			} else {
 				var _weap_pal = node_parent.get(ComponentWeaponUse).weapon_palette;
-				for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
+				for(var i = 0; i < weapon_palette_max_length; i++){
 					node_parent.find("animation").set_palette_color(i, global.availible_characters[global.character_index].default_palette[i]);
 				}
-				for(var i = 0; i < array_length(_weap_pal); i++){
+				for(var i = 0; i < min(array_length(_weap_pal), weapon_palette_max_length); i++){
 					node_parent.find("animation").set_palette_color(i, _weap_pal[i]);
 				}
 			}

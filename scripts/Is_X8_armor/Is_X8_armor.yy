@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"Is_X8_armor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Is_X8_armor",
+  "parent":{
+    "name":"Utils",
+    "path":"folders/Scripts/Utils.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

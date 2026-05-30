@@ -4,7 +4,9 @@ components.add([
 	ComponentArmorSelect,
 	ComponentPlayerInput,
 	ComponentNode,
-	ComponentSpriteRenderer
+	ComponentSpriteRenderer,
+	ComponentAnimationShadered,
+	ComponentPlayerSelectDisplay
 ]);
 
 components.init();

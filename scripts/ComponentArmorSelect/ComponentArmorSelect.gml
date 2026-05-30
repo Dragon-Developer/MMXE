@@ -2,6 +2,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	self.possible_armors = global.availible_characters[global.character_index].possible_armors
 	
 	self.selected_part = 0;
+	self.armors = [];
 	
 	array_copy(
 	possible_armors,0,
@@ -18,7 +19,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		}
 	}
 	
-	log(self.selected_armor)
+	//log(self.selected_armor)
 	
 	self.armor_sprites = [];
 	
@@ -35,7 +36,6 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	
 	self.renderer = noone;
 	
-	self.line_rate = 0;
 	self.points_of_interest = [
 		new Vec2(112,40),
 		new Vec2(64, 64),
@@ -46,8 +46,6 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	
 	self.init = function(){
 		var _inst = self.get_instance();
-		_inst.x = 0;
-		_inst.y = 0;
 		
 		self.renderer = get(ComponentSpriteRenderer);
 		get(ComponentSpriteRenderer).character = "char_select";
@@ -78,6 +76,8 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		self.selected_part++;
 		
 		self.selected_part = 0;
+		
+		self.armors = find("animation").armors;
 	}
 	
 	self.on_register = function() {
@@ -106,10 +106,13 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 		
 		if(_change != 0){
 			//if the selected part is less than 5, then we are selecting one of the armor segments or the 
-			if(self.selected_part <= 5){
-			self.selected_part = clamp(self.selected_part + _change,0, 256);
+			line_rate = 0
+			if selected_part == 0 and _change == -1 
+				selected_part = 3;
+			else if(self.selected_part <= 5){
+				self.selected_part = clamp(self.selected_part + _change,0, 256);
 			
-			self.selected_part = (self.selected_part + array_length(self.selected_armor) + 1) mod (array_length(self.selected_armor) + 1);
+				self.selected_part = (self.selected_part + array_length(self.selected_armor) + 1) mod (array_length(self.selected_armor) + 1);
 			} else if(self.selected_part == 6){
 				self.selected_part = 7;
 			}else if(self.selected_part == 7){
@@ -138,9 +141,13 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	}
 	
 	self.change_armor = function(_change, _force = false){
+		
+		if !variable_struct_exists(find("animation"), "character")
+			self.publish("character_set", global.availible_characters[global.character_index].image_folder)
+		
 		if(_change != 0 || _force){
 			//increment the armor part by 1
-			log(self.selected_armor)
+			//log(self.selected_armor)
 			self.selected_armor[self.selected_part] += _change;
 			
 			
@@ -150,7 +157,7 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 				mod 
 					array_length(self.possible_armors[self.selected_part])
 					
-					log(array_length(self.possible_armors[self.selected_part]))
+					//log(array_length(self.possible_armors[self.selected_part]))
 			
 			//get the sprite name so it can be rendered properly
 			var _armor = {};
@@ -174,30 +181,38 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 					return;
 				}
 				var _sprite_name = _armor.sprite_name;
+				
+				if(self.selected_part < 4)
+				find("animation").subdirectories[selected_part + 1] = "/armor"+_sprite_name;
+				
 				_sprite_name = string_delete(_sprite_name, 0, 1);
 				_sprite_name = string_replace(_sprite_name, "/", "_");
 				
-				_sprite_name = global.availible_characters[global.character_index].image_folder + "_" + _sprite_name;
-				log(_sprite_name)
+				_sprite_name = _sprite_name;
 				
-				
+				if(self.selected_part < 4)
+				find("animation").armors[selected_part] = _sprite_name;
 				get(ComponentSpriteRenderer).clear_sprite(self.armor_sprites[self.selected_part])
 				self.armor_sprites[self.selected_part] = get(ComponentSpriteRenderer).add_sprite( _sprite_name, true)
 			} else {
 				//otherwise just load nothing
+				find("animation").subdirectories[selected_part + 1] = "";
+				find("animation").armors[selected_part] = "";
 				get(ComponentSpriteRenderer).clear_sprite(self.armor_sprites[self.selected_part])
 				self.armor_sprites[self.selected_part] = get(ComponentSpriteRenderer).add_sprite( "nothing")
 			}
+				find("animation").reload_animations();
 		}
+		
 	}
 	
 	self.draw = function(){
 		draw_sprite(spr_reticle_armor_select,0,button_pos[self.selected_part].x - 2,button_pos[self.selected_part].y - 2)
 		
 		draw_set_color(c_white)
-		draw_rectangle(231, 31, 313, 145, false);
+		draw_rectangle(231, 31, 313, 165, false);
 		draw_set_color(c_black)
-		draw_rectangle(232, 32, 312, 144, false);
+		draw_rectangle(232, 32, 312, 164, false);
 		
 		var _armor = {};
 			
@@ -207,8 +222,17 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 			with(_armor){
 				script_execute(_code)
 			}
+		else 
+			return;
+		
+		draw_set_color(c_white)
+		draw_rectangle(198, 18, 315, 31, false);
+		draw_set_color(c_black)
+		draw_rectangle(199, 19, 314, 30, false);
+		draw_string_condensed(_armor.armor_name, 200, 20)
 			
 		var _string = _armor.description;
+		
 		//draw_string_condensed(_string, 240, 33);
 		
 		var _seperated = string_split(_string, " ")
@@ -233,14 +257,9 @@ function ComponentArmorSelect() : ComponentBase() constructor{
 	}
 	
 	self.draw_gui = function(){
-		if(self.selected_part >= 5) return;
-		draw_set_color(c_white)
-		//draw_line_width(0,0,GAME_W,GAME_H,3)
-		draw_line_percentage(
-		button_pos[self.selected_part].x + 20,button_pos[self.selected_part].y + 10,
-		points_of_interest[self.selected_part].x,points_of_interest[self.selected_part].y,
-		3,line_rate/100)
+		return;
+		draw_string_condensed(find("animation").subdirectories, 0, 200)
+		draw_string_condensed(find("animation").armors, 0, 210)
 		
-		line_rate = clamp(line_rate++,0,100)
 	}
 }

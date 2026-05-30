@@ -25,6 +25,13 @@ function ComponentAnimation() : ComponentBase() constructor {
 		});
 		self.subscribe("armor_set", function(_armors){
 			self.armors = _armors;
+			animation.__allowed_suffixes = ["shoot_normal", "normal", "shoot_", ""];
+			array_foreach(_armors, function(_arm){
+				var _str = string_split(_arm, "/")
+				_str = _str[array_length(_str) - 1]
+				array_push(animation.__allowed_suffixes, "shoot_" + _str)
+				array_push(animation.__allowed_suffixes, _str)
+			})
 		});
 		self.subscribe("animation_play", function(_animation) {
 			self.play_animation(_animation);
@@ -74,6 +81,7 @@ function ComponentAnimation() : ComponentBase() constructor {
 	}
 	
 	self.add_subdirectories = function(_subdirs) {
+		if !is_array(_subdirs) _subdirs = [_subdirs]
 		array_foreach(_subdirs, function(_dir){
 			array_push(self.subdirectories, _dir);	
 		})
@@ -234,16 +242,17 @@ function ComponentAnimation() : ComponentBase() constructor {
 		
 		var _previous_xscale = self.animation.get_xscale();
 		
+		self.animation
+			.set_xscale(_xscale)
+			.set_angle(-self.rotation_angle)
+			
 		if(self.draw_base_sprite){
-		    self.animation
-				.set_xscale(_xscale)
-				.set_angle(-self.rotation_angle)
-				.draw_action(_action, _mod, _frame, floor(_x), floor(_y))
+		    self.draw_action(_action, _mod, _frame, floor(_x), floor(_y))
 		}
 		var _modifier = self.animation.__types[$ self.animation.__type][0];
 		if(_modifier != "") _modifier += "_"
 		for (var _q = 0; _q < array_length(self.armors); _q++){
-			self.animation.draw_action(_action,_modifier + self.armors[_q], _frame, floor(_x), floor(_y));
+			self.draw_action(_action,_modifier + self.armors[_q], _frame, floor(_x), floor(_y));
 		}
 		self.animation.set_xscale(_previous_xscale);
 
@@ -255,4 +264,8 @@ function ComponentAnimation() : ComponentBase() constructor {
 		    draw_circle(_instance_x + _ox, _instance_y + _oy, 2, false);
 		}
 	};
+	
+	self.draw_action = function(_action, _modifier, _frame, _x, _y){
+		self.animation.draw_action(_action,_modifier, _frame, floor(_x), floor(_y));
+	}
 }

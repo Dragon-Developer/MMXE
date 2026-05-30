@@ -150,9 +150,20 @@ function GuiVisuals() : GuiContainer() constructor {
 		ExtraParticlesToggle.children[0].setText("Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
 	});
 	
+	X8ColorsToggle = new GuiButton(190, 12, "X8 armors show weapon colors: " + (global.settings.x8_armors_show_special_weapons ? "yes" : "no"))
+	X8ColorsToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("center")
+		.children[0].setFontOffset(2)
+	X8ColorsToggle.addEventListener("click", function(_val){
+		global.settings.x8_armors_show_special_weapons = !global.settings.x8_armors_show_special_weapons;
+		X8ColorsToggle.children[0].setText("X8 armors show weapon colors: " + (global.settings.x8_armors_show_special_weapons ? "yes" : "no"))
+	});
+	
 	//final stuffs
 	
-	mainContainer.addChild([buttonBack, ScreenScaleToggle, ExtraParticlesToggle, HitNumberToggle, ChargeFlashToggle, GuiScaleContainer]);
+	mainContainer.addChild([buttonBack, ScreenScaleToggle, ExtraParticlesToggle, HitNumberToggle, ChargeFlashToggle, X8ColorsToggle, GuiScaleContainer]);
 	
 	addChild(mainContainer);
 }

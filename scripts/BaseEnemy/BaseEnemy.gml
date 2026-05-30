@@ -4,6 +4,8 @@ function BaseEnemy() constructor{
 	self.contact_damage = 2;
 	self.dead = false;
 	
+	self.weaknesses = []
+	
 	self.sprite = "skull_bot"
 	
 	self.hitbox_scale = new Vec2(16,32);
@@ -18,6 +20,11 @@ function BaseEnemy() constructor{
 	self.step = function(_self){
 		
 	}
+	
+	self.destroy = function(_self){
+		
+	}
+	
 	self.setComponent = function(_self)
 	{
 		EnemyComponent = _self;

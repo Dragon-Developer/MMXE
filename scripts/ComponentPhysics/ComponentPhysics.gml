@@ -105,7 +105,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		if(on_slope)
 			if(sign(on_slope.image_xscale) * (on_slope.x - _inst.x) > 0) on_slope = undefined
 		if(prev_slope && !on_slope){
-			log("left")
+			//log("left")
 			move_down(3, self.objects.block, 0)
 		}
 		
@@ -125,7 +125,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _inst = self.get_instance();
 		var _ret = ((_inst.y - _slope.y) + (_inst.x - _slope.x) * (_slope.image_yscale / _slope.image_xscale)) + 16
 		
-		log(_ret)
+		//log(_ret)
 		
 		return (_ret) > _offset;
 	}
@@ -298,7 +298,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			: _target_x;
 			
 		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-8, prev_slope) ){
-			if((_inst.x - prev_slope.x + 16) <= prev_slope.image_xscale * 16 - 9)
+			if((_inst.x - prev_slope.x + 16) <= prev_slope.image_xscale * 16)
 				move_down(_vx * (prev_slope.image_yscale / prev_slope.image_xscale), self.objects.block, 2)
 				
 		}
@@ -312,7 +312,7 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 		var _inst = self.get_instance();
 		var _target_x = _inst.x + _vx;
 		var _origin = self.get_x_origin();
-		if(on_slope) _inst.y -= 5;
+		if(on_slope) _inst.y -= 8;
 
 		var _nearest_block = noone;
 		var _object = _coll;
@@ -327,14 +327,14 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 				}
 			}
 		}
-		if(on_slope) _inst.y += 5;
+		if(on_slope) _inst.y += 8;
 
 		_inst.x = (_nearest_block != noone) 
 			? _nearest_block.bbox_right + _origin + 1
 			: _target_x;
 			
 		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(-8, prev_slope) ){
-			if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16 - 9)
+			if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16)
 			move_down(_vx * (prev_slope.image_yscale / prev_slope.image_xscale), self.objects.block, 2)
 		}
 			
@@ -379,13 +379,21 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			? ceil(_nearest_block.bbox_top - _origin)
 			: _target_y;
 		
-		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && get_slope_collision(0, prev_slope) ){
+		if(prev_slope && (!check_place_meeting(_inst.x, _inst.y + 1, self.objects.block) || sign(prev_slope.image_xscale) * (prev_slope.x - _inst.x) < 0) && 
+			(self.velocity.y < -0.125 ? get_slope_collision(0, prev_slope) : get_slope_collision(-self.velocity.y - 4, prev_slope) )
+		){
 			//_inst.y -= (_inst.x - prev_slope.x) + (_inst.y - prev_slope.y) * (prev_slope.image_xscale / prev_slope.image_yscale) + 15
-			log("e")
+			//log("e")
 			//if((prev_slope.x - _inst.x) <= prev_slope.image_xscale * 16 - 9 * sign(prev_slope.image_xscale))
-			_inst.y = prev_slope.y - clamp(((_inst.x - prev_slope.x) * (prev_slope.image_yscale / prev_slope.image_xscale)), 0, prev_slope.image_yscale * 16 - 2) - 14
+			_inst.y = prev_slope.y - clamp(((_inst.x - prev_slope.x) * (prev_slope.image_yscale / prev_slope.image_xscale)), 0, prev_slope.image_yscale * 16) - 16
 		
 			if(_inst.y + 16 >= prev_slope.y) _inst.y = prev_slope.y - 16
+			
+			if(prev_slope.x > _inst.x && prev_slope.image_xscale > 0){
+				_inst.y = prev_slope.y - 16
+			} else if(prev_slope.x < _inst.x && prev_slope.image_xscale < 0){
+				_inst.y = prev_slope.y - 16
+			}
 		}
 			
 		return _nearest_block;

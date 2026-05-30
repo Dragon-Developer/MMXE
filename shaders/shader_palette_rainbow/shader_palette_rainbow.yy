@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shader_palette_rainbow",
+  "name":"shader_palette_rainbow",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Scripts/Shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

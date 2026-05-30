@@ -2,4 +2,5 @@ event_inherited();
 entity_object = obj_char_select;
 on_spawn = function(_player) {
 	_player.components.get(ComponentPlayerInput).set_player_index(global.local_player_index);
+	_player.components.publish("character_set", "x")
 }

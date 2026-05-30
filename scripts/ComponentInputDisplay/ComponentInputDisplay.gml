@@ -38,7 +38,7 @@ function ComponentInputDisplay() : ComponentBase() constructor{
 	}
 	
 	self.draw_input = function(_input, _frame, _x, _y){
-		draw_sprite_ext(spr_input_controller, _frame, _x, _y,1,1,0,_input ? c_white : c_grey,_input ? 0.75 : 0.5);
+		draw_sprite_ext(spr_input_controller, _frame, _x, _y,1,1,0,_input ? c_white : c_grey,_input ? 1 : 0.8);
 	}
 }
 

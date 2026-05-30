@@ -18,6 +18,18 @@
         "y": 16
       }
     },
+    "icarus_headbutt": {
+      "origin": {
+        "x": 23,
+        "y": 40
+      }
+    },
+    "icarus_beam": {
+      "origin": {
+        "x": 2,
+        "y": 23
+      }
+    },
     "rock_lemon_power_gear": {
       "origin": {
         "x": 42,
@@ -222,6 +234,12 @@
         "y": 50
       }
     },
+    "xShot3X3": {
+      "origin": {
+        "x": 30,
+        "y": 24
+      }
+    },
     "xShot3X1": {
       "origin": {
         "x": 30,
@@ -232,6 +250,12 @@
       "origin": {
         "x": 40,
         "y": 35
+      }
+    },
+    "xShot3X2": {
+      "origin": {
+        "x": 30,
+        "y": 24
       }
     },
     "xShot3X3": {
@@ -634,6 +658,38 @@
 
         {
           "name": "xShot3X3",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 1,
+                "frame": 1
+              },
+              {
+                "key": 5,
+                "frame": 2
+              },
+              {
+                "key": 7,
+                "frame": 3
+              },
+              {
+                "key": 9,
+                "frame": 4
+              },
+              {
+                "key": 10,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 5
+          }
+        },
+        {
+          "name": "xShot3X2",
           "properties": {
             "keyframes": [
               {
@@ -2003,6 +2059,19 @@
                 "frame": 11
               }
             ]
+          }
+        },
+
+        {
+          "name": "icarus_headbutt",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "icarus_beam",
+          "properties": {
+            "speed": 0.5
           }
         },
 

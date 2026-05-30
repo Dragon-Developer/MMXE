@@ -1,1 +1,1 @@
-boss = new BassEXEBoss()
+boss = new TestBoss()

@@ -25,6 +25,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		struct_set(_shot, "shooter", _shooter);
 		struct_set(_shot, "position", new Vec2(_x,_y));
 		struct_set(_shot, "code", {});
+		struct_set(_shot, "constructor", _code);
 		
 		with(_shot.code){script_execute(_code)}
 		
@@ -98,7 +99,8 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.destroy_projectile = function(_proj){
 		for(var p = 0; p < array_length(self.projectiles); p++){
 			if(self.projectiles[p].code == _proj){
-				self.projectiles[p].code.destroy(self.projectiles[p].position);
+				if(self.projectiles[p].code.destroy != camera_create_view)
+					self.projectiles[p].code.destroy(self.projectiles[p].position);
 				array_push(self.to_delete, self.projectiles[p])
 			}
 		}
@@ -107,7 +109,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	self.step = function(){
 		array_foreach(self.projectiles, function(_shot){
 			_shot.code.step(_shot.position);
-			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir, _shot.vdir)
+			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir, _shot.code.vdir)
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y);
 			
 			if(_shot.animation != _shot.code.animation){
@@ -142,7 +144,8 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 					if _shot.shooter != undefined
 						if(variable_struct_exists(_shot.shooter, "projectile_count"))
 							_shot.shooter.projectile_count = clamp(_shot.shooter.projectile_count - 1, 0, 256);
-					self.projectiles[p].code.destroy(self.projectiles[p].position);
+					if(self.projectiles[p].code.destroy != camera_create_view)
+						self.projectiles[p].code.destroy(self.projectiles[p].position);
 					get(ComponentSpriteRenderer).clear_sprite(_shot.sprite);
 					array_delete(self.projectiles, p,1);
 				}

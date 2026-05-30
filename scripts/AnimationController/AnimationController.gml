@@ -26,6 +26,7 @@ function AnimationController(_character = "") constructor {
     };
     self.__actions = [];
 	self.__animations = [];
+	self.__allowed_suffixes = [];
     self.__animation = "";
     self.__type = "normal";
     self.__props = {};
@@ -63,6 +64,7 @@ function AnimationController(_character = "") constructor {
 		.addVariable("__last_keyframe")
 		.addVariable("__last_index")
 		.addVariable("__wait_frames")
+		.addVariable("__allowed_suffixes")
 	
 	static use_collage = function(_collage) {
 		self.__collage = _collage;
@@ -240,6 +242,8 @@ function AnimationController(_character = "") constructor {
 	}
 	/// @returns {Struct.AnimationController} self
     static init = function() {
+		
+		
         self.__collection = {};
         struct_foreach(self.__types, function(_type, _suffixes) {
 	        var _current_animation = {
@@ -247,9 +251,19 @@ function AnimationController(_character = "") constructor {
 	        };
 			self.__collection[$ _type] = _current_animation;
 			var _self = self;
-	        array_foreach(self.__actions, method({ this: _self, currentAnimation: _current_animation, suffixes: _suffixes }, function(_action) {
+			
+			var _file = file_text_open_write(game_save_id + "suffixes" + self.get_character() + " " + _type + ".txt")
+			file_text_write_string(_file, _suffixes)
+			file_text_close(_file)
+	        array_foreach(self.__actions, method({ this: _self, currentAnimation: _current_animation, suffixes: _suffixes }, function(_action, _index) {
 				var _len = array_length(suffixes);
 				for (var _i = 0; _i < _len; _i++) {
+					
+					//if the current suffix is allowed, or the allowed suffixes array is empty, continue
+					if !(array_length(this.__allowed_suffixes) <= 0 || array_contains(this.__allowed_suffixes, suffixes[_i]) || _i < 2){
+						continue;
+					}
+					
 					var _suffix = suffixes[_i];
 					if (!is_undefined(currentAnimation[$ "sprites"][$ _action])) {
 						return;
@@ -264,9 +278,6 @@ function AnimationController(_character = "") constructor {
 					}
 					// [character, action, suffix]
 					var _sprite_name = string_join_ext(ANIMATION_SPRITE_SEPARATOR, _array);
-					// if dark asks, i made this function something generic so other systems could use it
-					// it does what it used to do, but i moved it to spriteloader so spriteloader 
-					// could also load sprite assets
 					var _sprite = SpriteLoader.load_sprite(this.__collage, _sprite_name);
 					
 					if (!is_undefined(_sprite)) {

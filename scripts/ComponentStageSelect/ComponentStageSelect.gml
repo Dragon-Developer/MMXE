@@ -12,12 +12,12 @@ function ComponentStageSelector() : ComponentBase() constructor{
 		new Stage_Select_icon_generate(rm_gate_2, 67, 18, "gate", "intro_stage", "gate", "Peak", 6, 6, 0, 2),
 		new Stage_Select_icon_generate(rm_char_select, 140, 11, "x", undefined, "x", "Swap out your%character", 7, 7, 1, 3),
 		new Stage_Select_icon_generate(rm_intro, 213, 18, "undefined", "tutorial", "x", "Go learn the%basics!", 8, 8, 2, 4),
-		new Stage_Select_icon_generate(rm_oldschool, 261, 18, "undefined", "x2-intro-stage", "x", "A straight line%with obstacles", 9, 9, 3, 0),
+		new Stage_Select_icon_generate(rm_forte_example_stage, 261, 18, "undefined", "x2-intro-stage", "x", "A straight line%with obstacles", 9, 9, 3, 0),
 		
 		new Stage_Select_icon_generate(rm_training_stage, 19, 182, "undefined", "blast_hole", "x", "Rougher than%the rest of%'em!", 0, 0, 9, 6),
 		new Stage_Select_icon_generate(rm_flame_stag, 67, 182, "undefined", "flame_stag", "flame_stag", "Less scary%without the%lava", 1, 1, 5, 7),
 		new Stage_Select_icon_generate(rm_headquarters, 140, 189, "undefined", "HQ", "x", "Go home and be%a family man!", 2, 2, 6, 8),
-		new Stage_Select_icon_generate(rm_simple, 213, 182, "undefined", "tutorial", "x", "Super simple%stage", 3, 3, 7, 9),
+		new Stage_Select_icon_generate(rm_boss_test, 213, 182, "undefined", "tutorial", "x", "Super simple%stage", 3, 3, 7, 9),
 		new Stage_Select_icon_generate(rm_dynamos_hellhole, 261, 182, "undefined", "WeaponGet", "x", "Dynamo set up%an amusement%park?!?!% %Go investigate%the park!", 4, 4, 8, 0)
 	];//not much for the moment
 	
