@@ -619,71 +619,68 @@ function AnimationController(_character = "") constructor {
 	/// @returns {Struct.AnimationController|any|undefined} self
 	static parse_data = function(_data, _return_self = true) {
         if (!is_struct(_data)) {log("crap");return;}
-    
+		// Type combinations.
+		// Normaly is a 3 size array of arrays.
         if (struct_exists(_data, "type_combinations")) {
             self.add_type_combinations(_data.type_combinations);
-        }
-        
+        } else {
+			self.add_type_combinations(["", "", ""]);
+		}
+		// Parse speed.
         if (struct_exists(_data, "speed")) {
-            self.set_speed(_data.speed);    
-        }
-		
-		var _anim_data;
-    
+            self.set_speed(_data.speed);
+        } else {
+			self.set_speed(1);
+		}
+		// List of anims.
         if (struct_exists(_data, "list")) {
             var _animations = _data.list;
             for (var _i = 0, _len = array_length(_animations); _i < _len; _i++) {
-                var _animation = _animations[_i];
+                // Get values.
+				var _animation = _animations[_i];
                 var _name = _animation.name;
-                _anim_data = _animation.properties;
-            
-                if (!is_struct(_anim_data)) continue;
-            
-                var _keyframes = [];
-                if (struct_exists(_anim_data, "keyframes")) {
+                var _anim_data = _animation.properties;
+				// Skip if there are no propieties.
+                if (!is_struct(_anim_data)) {
+					continue;
+				}
+				// TODO: Check if not having keyframes crashes.
+				var _keyframes = [];
+				if (struct_exists(_anim_data, "keyframes")) {
                     _keyframes = _anim_data.keyframes;
                 }
-            
+				// Defaults to the animation name.
                 var _action = _name;
                 if (struct_exists(_anim_data, "action")) {
                     _action = _anim_data.action;
                 }
-            
                 var _loop_begin = 0;
                 if (struct_exists(_anim_data, "loop_begin")) {
                     _loop_begin = _anim_data.loop_begin;
                 }
-                
                 var _speed = 1;
                 if (struct_exists(_anim_data, "speed")) {
                     _speed = _anim_data.speed;
                 }
-            
 				var _index_events = [];
-				
 				if (struct_exists(_anim_data, "index_events")) {
                     _index_events = _anim_data.index_events;
                 }
-				
+				// Seems deprecated.
 				var _key_events = [];
-				
 				if (struct_exists(_anim_data, "key_events")) {
                     _key_events = _anim_data.key_events;
                 }
-				
 				var _shot_offset_x = 0;
-				
 				if (struct_exists(_anim_data, "shot_offset_x")) {
                     _shot_offset_x = _anim_data.shot_offset_x;
                 }
-				
 				var _shot_offset_y = 0;
-				
 				if (struct_exists(_anim_data, "shot_offset_y")) {
                     _shot_offset_y = _anim_data.shot_offset_y;
                 }
-				
-				//shot offsets. i know i can get the active animation here. 
+				// Shot offsets.
+				// I know I can get the active animation here. 
 				_anim_data = {
                     action: _action,
                     keyframes: _keyframes,
@@ -696,10 +693,11 @@ function AnimationController(_character = "") constructor {
                 self.add_animation(_name, _anim_data);
             }
         }
-		if(_return_self)
+		if(_return_self) {
 			return self;
-		else
+		} else {
 			return _anim_data;
+		}
     }
 	static clear = function() {
 	    self.__collection = {};
