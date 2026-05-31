@@ -77,7 +77,7 @@ function GuiVisuals() : GuiContainer() constructor {
 	
 	
 	
-	ChargeFlashToggle = new GuiButton(190, 12, "Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
+	ChargeFlashToggle = new GuiButton(190, 12, "Charge Flash: " + (global.settings.charge_flash ? "yes" : "no"))
 	ChargeFlashToggle
 		.setFlexDirection("column")
         .setJustifyContent("left")
@@ -85,7 +85,7 @@ function GuiVisuals() : GuiContainer() constructor {
 		.children[0].setFontOffset(2)
 	ChargeFlashToggle.addEventListener("click", function(_val){
 		global.settings.charge_flash = !global.settings.charge_flash;
-		ChargeFlashToggle.children[0].setText("Charge Flash: " + (global.settings.charge_flash ? "true" : "false"))
+		ChargeFlashToggle.children[0].setText("Charge Flash: " + (global.settings.charge_flash ? "yes" : "no"))
 	});
 	
 	var _text = "4:3"
@@ -128,7 +128,7 @@ function GuiVisuals() : GuiContainer() constructor {
 		ScreenScaleToggle.children[0].setText("Screen Scale: " + _text)
 	});
 	
-	HitNumberToggle = new GuiButton(190, 12, "Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
+	HitNumberToggle = new GuiButton(190, 12, "Hit Numbers: " + (global.settings.hit_numbers ? "yes" : "no"))
 	HitNumberToggle
 		.setFlexDirection("column")
         .setJustifyContent("left")
@@ -136,10 +136,10 @@ function GuiVisuals() : GuiContainer() constructor {
 		.children[0].setFontOffset(2)
 	HitNumberToggle.addEventListener("click", function(_val){
 		global.settings.hit_numbers = !global.settings.hit_numbers;
-		HitNumberToggle.children[0].setText("Hit Numbers: " + (global.settings.hit_numbers ? "true" : "false"))
+		HitNumberToggle.children[0].setText("Hit Numbers: " + (global.settings.hit_numbers ? "yes" : "no"))
 	});
 	
-	ExtraParticlesToggle = new GuiButton(190, 12, "Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
+	ExtraParticlesToggle = new GuiButton(190, 12, "Extra Particle Effects: " + (global.settings.extra_particles ? "yes" : "no"))
 	ExtraParticlesToggle
 		.setFlexDirection("column")
         .setJustifyContent("left")
@@ -147,10 +147,10 @@ function GuiVisuals() : GuiContainer() constructor {
 		.children[0].setFontOffset(2)
 	ExtraParticlesToggle.addEventListener("click", function(_val){
 		global.settings.extra_particles = !global.settings.extra_particles;
-		ExtraParticlesToggle.children[0].setText("Extra Particle Effects: " + (global.settings.extra_particles ? "true" : "false"))
+		ExtraParticlesToggle.children[0].setText("Extra Particle Effects: " + (global.settings.extra_particles ? "yes" : "no"))
 	});
 	
-	X8ColorsToggle = new GuiButton(190, 12, "X8 armors show weapon colors: " + (global.settings.x8_armors_show_special_weapons ? "yes" : "no"))
+	X8ColorsToggle = new GuiButton(220, 12, "X8 armors show weapon colors: " + (global.settings.x8_armors_show_special_weapons ? "yes" : "no"))
 	X8ColorsToggle
 		.setFlexDirection("column")
         .setJustifyContent("left")
@@ -161,9 +161,20 @@ function GuiVisuals() : GuiContainer() constructor {
 		X8ColorsToggle.children[0].setText("X8 armors show weapon colors: " + (global.settings.x8_armors_show_special_weapons ? "yes" : "no"))
 	});
 	
+	CrtShaderToggle = new GuiButton(220, 12, "CRT Shader: " + (global.settings.crt_shader ? "on" : "off"))
+	CrtShaderToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("center")
+		.children[0].setFontOffset(2)
+	CrtShaderToggle.addEventListener("click", function(_val){
+		global.settings.crt_shader = !global.settings.crt_shader;
+		CrtShaderToggle.children[0].setText("CRT Shader: " + (global.settings.crt_shader ? "on" : "off"))
+	});
+	
 	//final stuffs
 	
-	mainContainer.addChild([buttonBack, ScreenScaleToggle, ExtraParticlesToggle, HitNumberToggle, ChargeFlashToggle, X8ColorsToggle, GuiScaleContainer]);
+	mainContainer.addChild([buttonBack, CrtShaderToggle, ScreenScaleToggle, ExtraParticlesToggle, HitNumberToggle, ChargeFlashToggle, X8ColorsToggle, GuiScaleContainer]);
 	
 	addChild(mainContainer);
 }

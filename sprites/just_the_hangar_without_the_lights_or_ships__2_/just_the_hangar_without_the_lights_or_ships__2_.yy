@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"just_the_hangar_without_the_lights_or_ships__2_",
   "bboxMode":0,
-  "bbox_bottom":430,
+  "bbox_bottom":479,
   "bbox_left":0,
   "bbox_right":639,
   "bbox_top":256,

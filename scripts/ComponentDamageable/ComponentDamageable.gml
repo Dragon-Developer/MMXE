@@ -28,6 +28,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
+	self.weaknesses = []
 	
 	self.hit_by_list = [];
 	
@@ -94,9 +95,9 @@ function ComponentDamageable() : ComponentBase() constructor{
 				
 				default:
 					if(CURRENT_FRAME % 2 == 0 && bright)
-						array_push(find("animation").shaders,new RainbowShader())
+						array_push(find("animation").shaders,"flash")
 					else if(CURRENT_FRAME % 2 == 0)
-						array_push(find("animation").shaders,new GoneShader())
+						array_push(find("animation").shaders,"gone")
 					else if(array_length(find("animation").shaders) > 1)
 						array_pop(find("animation").shaders)
 				break;
@@ -144,9 +145,9 @@ function ComponentDamageable() : ComponentBase() constructor{
 			if(red_health_active){
 				if red_hp_is_additive{
 					red_health_nuggets = floor(red_health_nuggets / 2)
-					red_health_nuggets += floor(_damage / red_health_percentage * damage_rate);
+					red_health_nuggets += floor(_damage * red_health_percentage * damage_rate);
 				} else
-					red_health_nuggets = floor(_damage / red_health_percentage * damage_rate);
+					red_health_nuggets = floor(_damage * red_health_percentage * damage_rate);
 				red_health_timer = CURRENT_FRAME + red_health_interval
 			}
 				
@@ -238,6 +239,17 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 		
 		if(_proj.code.damage > 0){
+			if(array_length(weaknesses) > 0 && variable_struct_exists(_proj, "constructor")){
+				var _hits = false;
+				for(var e = 0; e < array_length(weaknesses); e++){
+					if(_proj.constructor == weaknesses[e].projectile){
+						_proj.code.damage *= weaknesses[e].rate
+						self.publish("hit_by_weakness",)
+					} else {
+					}
+				}
+			}
+			
 			if(variable_struct_exists(_proj.code, "invuln_rate"))
 				self.invuln_offset = CURRENT_FRAME + (self.invuln_time * _proj.code.invuln_rate);
 			else
@@ -247,6 +259,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 				array_push(self.hit_by_list, _proj)
 			if((!_proj.code.piercing || self.health > 0) && !_proj.code.super_piercing)
 				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
+				
 			if(take_boss_damage)
 				return _proj.code.boss_damage;
 			else 

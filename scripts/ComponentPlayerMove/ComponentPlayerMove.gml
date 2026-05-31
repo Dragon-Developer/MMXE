@@ -54,7 +54,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add("init", {
 			enter: function() {
 				self.publish("animation_play", { name: "idle" });
-				global.return_stage = rm_stage_select;
+					global.return_stage = rm_stage_select;
 			}
 		})
 		.add("teleport_in", {
@@ -312,6 +312,8 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					
 					if(global.settings.score_showcase && !left_manually) || (global.dynamo_race)
 						room_transition_to(rm_score_showcase, 0, 24);
+					else if(global.stage_Data.reward != undefined)
+						room_transition_to(rm_weapon_get, 0, 24);
 					else
 						room_transition_to(global.return_stage, 0, 24);
 					
@@ -398,16 +400,17 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		})
 		.add("hurt", {
 			enter: function(){
+				self.get_instance().y -= 1;
 				WORLD.play_sound("hurt");
 				get(ComponentPlayerInput).__locked = false;
 				get(ComponentPlayerMove).locked = false;
 				get(ComponentPhysics).grav = get(ComponentPhysics).grav_default
 				get(ComponentPhysics).velocity = new Vec2(0, 1); 
-				get(ComponentAnimationShadered).animation.__speed = 1;
+				get(ComponentAnimationShadered).animation.__speed = self.states.hurt.rate;
 				
 				self.publish("animation_play", { name: "hurt" });
 				//self.physics.velocity = new Vec2(self.dir * self.states.hurt.speed,-2);
-				self.physics.set_speed(self.dir * self.states.hurt.speed,-2)
+				self.physics.set_speed(self.dir * self.states.hurt.speed,self.states.hurt.strength)
 				
 				
 			}

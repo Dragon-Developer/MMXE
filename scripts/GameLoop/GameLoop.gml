@@ -4,7 +4,7 @@ function GameLoop() constructor {
 	self.debug = global.debug;// i aint gonna replace every instance when i can just do this
 	self.frame_advancing = false;
 	
-	self.blur = false;
+	self.blur = global.settings.crt_shader;
 	
 	//thanks gacel ur the best
 	// Always 255 on modern PCs;

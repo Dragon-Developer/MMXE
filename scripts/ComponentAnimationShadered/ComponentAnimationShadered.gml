@@ -9,53 +9,38 @@ function ComponentAnimationShadered() : ComponentAnimation() constructor {
 	}
 	
 	self.draw_action = function(_action, _modifier, _frame, _x, _y){
+		if (array_contains(shaders,"flash")) {
+			var _shad = new BrightShader()
+			_shad.apply()
+		}else
 		part_shaders[draw_cycle].apply();
 				
-		self.animation.draw_action(_action,_modifier, _frame, surface_size / 2, surface_size / 2);
+		self.animation.draw_action(_action,_modifier, _frame, _x, _y);
 		
+		if (array_contains(shaders,"flash")) 
+			_shad.reset()
+		else
 		part_shaders[draw_cycle].reset();
 		
 		draw_cycle++;
 	}
 	
 	self.draw_apply_palette = function(){
-		//surface_reset_target();
 		
-		//for the autistic guy that's helping test stuff
-		//he gets errors with surfaces. this is the only new surface added
-		//return;
+		if (array_contains(shaders,"gone")) 
+			return;
 		
 		self.draw_cycle = 0;
 		
-		var _surf = surface_create(surface_size, surface_size)
-		surface_set_target(_surf);
 		self.draw_regular();
-		surface_reset_target();
-		
-		array_foreach(self.shaders, function(_shdr){
-			_shdr.apply();
-		})
-		
-		draw_surface(_surf, floor(self.get_instance().x - surface_size / 2), floor(self.get_instance().y - surface_size / 2))
-		surface_free(_surf)
-		
-		array_foreach(self.shaders, function(_shdr){
-			_shdr.reset();
-		})
-		//surface_reset_target();
-		
-		if surface_get_target() != application_surface{
-			//var _success = file_text_open_read(game_save_id + "IT WORKED TELL FORTE IT WORKED.txt")
-			//file_text_close(_success)
-			surface_reset_target()
-		} else {
-			//var _success = file_text_open_read(game_save_id + "DAMMIT TELL FORTE IT DONT WORK.txt")
-			//file_text_close(_success)
-		}
 	}
 	
 	self.set_palette_color = function(_index, _hex){
-		self.shaders[0].setPaletteColorByHex(_index, _hex);
+		self.part_shaders[0].setPaletteColorByHex(_index, _hex);
+		self.part_shaders[1].setPaletteColorByHex(_index, _hex);
+		self.part_shaders[2].setPaletteColorByHex(_index, _hex);
+		self.part_shaders[3].setPaletteColorByHex(_index, _hex);
+		self.part_shaders[4].setPaletteColorByHex(_index, _hex);
 	}
 	
 	self.set_shader_color = function(_shader, _index, _hex){
@@ -63,11 +48,15 @@ function ComponentAnimationShadered() : ComponentAnimation() constructor {
 	}
 	
 	self.set_palette_color_manual = function(_index, _red, _blue, _green){
-		self.shaders[0].setPaletteColorManually(_index, _red, _blue, _green);
+		self.part_shaders[0].setPaletteColorManually(_index, _red, _blue, _green);
+	}
+	
+	self.set_surface_size = function(_scale){
+		self.surface_size = _scale;
 	}
 	
 	self.get_palette_color = function(_index){
-		var _shdr = self.shaders[0];
+		var _shdr = self.part_shaders[0];
 		var _ret = {
 					red: _shdr.getPalette()[0][_index], 
 					green: _shdr.getPalette()[1][_index], 
@@ -77,7 +66,7 @@ function ComponentAnimationShadered() : ComponentAnimation() constructor {
 	}
 	
 	self.get_base_color = function(_index){
-		var _shdr = self.shaders[0];
+		var _shdr = self.part_shaders[0];
 		var _ret = {
 					red: _shdr.getBase()[0][_index], 
 					green: _shdr.getBase()[1][_index], 
@@ -107,7 +96,7 @@ function ComponentAnimationShadered() : ComponentAnimation() constructor {
 	}
 	
 	self.set_base_color = function(_index, _hex){
-		self.shaders[0].setBaseColorByHex(_index, _hex);
+		self.part_shaders[0].setBaseColorByHex(_index, _hex);
 	}
 	
 	self.set_shader_base_color = function(_shader, _index, _hex){

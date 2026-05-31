@@ -130,6 +130,7 @@ function XIcarusArmorBoot() : X8BootBase() constructor{
 	self.apply_armor_effects = function(_player){
 		_player.states.jump.strength *= 1.5;
 		_player.states.wall_jump.strength *= 1.5;
+		add_air_dash(_player)
 		
 		set_default_palette(_player,[ #f04010, #903010, #502008, #f04010, #903010, #502008, #f0f0f0, #989898, #707070, #f8b878, #f04010]);
 	}
@@ -195,7 +196,5 @@ function IcarusArmorSetBonus( _player, _palette = [ #f8b878, #f04010, #903010, #
 	for(var r = 0; r < array_length(_player.get(ComponentArmorHandler).armor_parts[0]); r++){
 		var _armor = _player.get(ComponentArmorHandler).armor_parts[0][r]
 		_armor.palette = _palette
-		log(_armor.part_palette)
-		
 	}
 }

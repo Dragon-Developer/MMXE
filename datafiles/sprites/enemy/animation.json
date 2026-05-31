@@ -12,6 +12,12 @@
         "y": 16
       }
     },
+    "chill_statue": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
     "brittle_metal": {
       "origin": {
         "x": 16,
@@ -283,7 +289,35 @@
               },
             ]
           }
-        }
+        },
+        {
+          "name": "chill_statue",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 3,
+                "frame": 1
+              },
+              {
+                "key": 6,
+                "frame": 2
+              },
+              {
+                "key": 9,
+                "frame": 3
+              },
+              {
+                "key": 12,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 12
+          }
+        },
 
         //eof
       ]

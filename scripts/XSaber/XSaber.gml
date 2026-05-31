@@ -19,9 +19,10 @@ function XSaberData() : MeleeData() constructor{
 		if(_current_swing == "atk_1_x" || _current_swing == "atk_jump_x"){
 			return;//bail!
 		} else if(!_plr.physics.is_on_floor()){
+			return;//bail!
 			set_player_melee_info(_plr, "atk_jump_x", 0, new Vec2(24,-8), new Vec2(64,56), 4)
 		} else {
-			set_player_melee_info(_plr, "atk_1_x", 1, new Vec2(32,-8), new Vec2(40,48), 5)
+			set_player_melee_info(_plr, "atk_1_x", 32, new Vec2(32,-8), new Vec2(40,48), 4)
 		}
 		
 		_plr.fsm.change("melee");

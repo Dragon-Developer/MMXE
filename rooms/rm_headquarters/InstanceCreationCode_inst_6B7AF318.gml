@@ -1,0 +1,1 @@
+end_point = new Vec2(1000, 0)

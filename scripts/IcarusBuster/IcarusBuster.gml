@@ -42,6 +42,9 @@ function IcarusBigFuckoffLaserData() : ProjectileData() constructor{
 		if(self.start_time + self.life <= CURRENT_FRAME)
 			PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(self)
 			
+			
+		_inst.x = floor(_inst.x)
+		_inst.y = floor(_inst.y);
 	}
 	
 	self.draw = function(_inst){
@@ -53,9 +56,9 @@ function IcarusBigFuckoffLaserData() : ProjectileData() constructor{
 		draw_set_color(#20d8ff)
 		draw_rectangle(_inst.x+ self.dir * 13, _inst.y - 10 + sin(CURRENT_FRAME) * scale, _inst.x + dir * GAME_W, _inst.y + 11 - sin(CURRENT_FRAME) * scale, false);
 		draw_set_color(#70ffff)
-		draw_rectangle(_inst.x+ self.dir * 13, _inst.y - 9 + sin(CURRENT_FRAME) * scale, _inst.x + dir * GAME_W, _inst.y + 10 - sin(CURRENT_FRAME) * scale, false);
+		draw_rectangle(_inst.x+ self.dir * 13, _inst.y - 8, _inst.x + dir * GAME_W, _inst.y + 8, false);
 		draw_set_color(#f0ffff)
-		draw_rectangle(_inst.x+ self.dir * 13, _inst.y - 8 + sin(CURRENT_FRAME) * scale, _inst.x + dir * GAME_W, _inst.y + 9 - sin(CURRENT_FRAME) * scale, false);
+		draw_rectangle(_inst.x+ self.dir * 13, _inst.y - 7, _inst.x + dir * GAME_W, _inst.y + 7, false);
 		draw_set_color(c_black)
 	}
 	

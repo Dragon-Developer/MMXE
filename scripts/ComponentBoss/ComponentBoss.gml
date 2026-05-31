@@ -17,6 +17,7 @@ function ComponentBoss() : ComponentBase() constructor{
 	self.max_health = 32;
 	
 	self.pose_animation_name = "walk";
+	self.dialouge_animation_name = "idle";
 	self.intro_animation_name = "blade_fall";
 	self.death_animation_name = "death";
 	
@@ -50,8 +51,9 @@ function ComponentBoss() : ComponentBase() constructor{
 			})
 			.add("enter_grounded", {
 				enter: function() {
-					if has_dialouge {
-						log("DIALOUGE")
+					if has_dialouge && !global.debug{
+						//log("DIALOUGE")
+						self.publish("animation_play", { name: self.dialouge_animation_name });
 						var _plr = instance_nearest(0,0,obj_player)
 						
 						var _dialogue = ENTITIES.create_instance(obj_dialouge);
@@ -240,6 +242,22 @@ function ComponentBoss() : ComponentBase() constructor{
 			log("CHAT GET")
 			has_dialouge = true;
 		});
+		
+		self.subscribe("took_damage", function() {
+			self.on_damage();
+		});
+		
+		self.subscribe("hit_by_weakness", function() {
+			self.on_weakness();
+		});
+	}
+	
+	self.on_damage = function(){
+		
+	}
+	
+	self.on_weakness = function(){
+		
 	}
 	
 	self.draw_gui = function(){

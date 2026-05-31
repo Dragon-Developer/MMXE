@@ -32,6 +32,12 @@
           }
         },
         {
+          "name": "chill",
+          "properties": {
+            "speed":  1
+          }
+        },
+        {
           "name": "menu",
           "properties": {
             "speed":  1

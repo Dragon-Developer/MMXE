@@ -50,7 +50,7 @@ function add_dash(_entity = undefined){
 		.add_transition("t_transition", ["land"], "dash", function() { return self.input.get_input("dash") && global.settings.Dash_On_Land })
 		.add_transition("t_dash_end", "dash", "fall", function() { return !self.physics.is_on_floor(self.ground_distance + 1); })
 		.add_transition("t_dash_end", "dash", "dash_end", function() { return self.physics.is_on_floor(self.ground_distance + 1); })
-		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16); })
+		.add_wildcard_transition("t_dash", "dash", function() { return !self.physics.check_wall(self.dash_dir) && self.physics.is_on_floor(self.ground_distance + 1) && !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y, obj_square_16) && fsm.get_current_state() != "frozen"; })
 	}
 }
 	
@@ -312,7 +312,7 @@ function add_air_dash(_entity, _armor = undefined){
 				self.dash_jump = false;	
 			}
 		})
-		.add_wildcard_transition("t_dash", "dash_air", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes && (!self.fsm.state_exists("variable_dash") || !self.input.get_input("up")); })
+		.add_wildcard_transition("t_dash", "dash_air", function() { return !self.physics.check_wall(self.dash_dir) && !self.physics.is_on_floor() && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes && (!self.fsm.state_exists("variable_dash") || !self.input.get_input("up")) && self.fsm.get_current_state() != "zipline"; })
 		.add_transition("t_dash_end", "dash_air", "dash_end_air", function() { return self.physics.is_on_floor(); })
 		.add_transition("t_transition", "dash_air", "dash_end_air", function() 
 			{ return (self.hdir != self.dash_dir && (self.hdir != 0 || self.dash_tapped)) || self.timer <= CURRENT_FRAME || (!self.dash_tapped && !self.input.get_input("dash")); })
@@ -852,4 +852,145 @@ function add_hover(_entity){
 
 function add_glide(_entity){
 	
+}
+
+function add_zipline(_entity){
+	with(_entity){
+		fsm.add("zipline", {
+			enter: function(){
+				var _inst = self.get_instance();
+				self.dir *= -1;
+				self.publish("animation_xscale", dir * -1)
+				var _line = zipline
+				var _offset = (_line.end_point.y / _line.end_point.x)
+				if _line.end_point.x != 0 
+					_inst.y = _line.y + 16 + (_inst.x - _line.x) * _offset
+				else
+					_inst.x = _line.x
+				
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,0)
+				self.publish("animation_play", { name: "wall_slide"});
+				
+				self.current_hspd = self.states.walk.speed;
+				
+				self.states.dash_air.curr_dashes = 0;
+			},
+			step: function(){
+				var _inst = self.get_instance();
+				var _line = zipline
+				
+				if _line.end_point.x = 0 {
+					var _dir = self.current_hspd * self.vdir;
+					
+					if vdir != 0 dir = vdir;
+					
+					if(_inst.y > _line.y + _line.end_point.y - self.current_hspd && self.vdir == 1){
+						_dir = 0;
+					}
+				
+					if(_inst.y < _line.y + self.current_hspd && self.vdir == -1){
+						_dir = 0;
+					}
+				
+					self.physics.set_speed(0, _dir)
+				} else {
+				
+					var _dir = _line.end_point.normalize();
+					_dir = _dir.multiply(self.current_hspd * self.hdir)
+				
+					if hdir != 0 dir = hdir;
+				
+					self.publish("animation_xscale", dir * -1)
+				
+					if(_inst.x < _line.x + self.current_hspd && self.hdir = -1){
+						_dir.x = 0;
+						_dir.y = 0;
+					}
+				
+					if(_inst.x > _line.x + _line.end_point.x - self.current_hspd && self.hdir = 1){
+						_dir.x = 0;
+						_dir.y = 0;
+					}
+				
+					self.physics.set_speed(_dir.x, _dir.y)
+				}
+			},
+			leave: function(){
+				self.physics.update_gravity();
+				self.dir *= -1;
+				self.publish("animation_xscale", dir * -1)
+			}
+		}).add("zipline_dash", {
+			enter: function(){
+				var _inst = self.get_instance();
+				self.dir *= -1;
+				self.publish("animation_xscale", dir * -1)
+				
+				self.physics.set_grav(new Vec2(0,0))
+				self.physics.set_speed(0,0)
+				self.publish("animation_play", { name: "wall_jump"});
+				WORLD.play_sound(self.states.dash.sound);
+				
+				self.current_hspd = self.states.dash.speed;
+				self.timer = CURRENT_FRAME + self.states.dash.interval;
+			},
+			step: function(){
+				var _inst = self.get_instance();
+				var _line = zipline
+				if _line.end_point.x = 0 {
+					var _dir = self.current_hspd * self.dir;
+					if(_inst.y > _line.y + _line.end_point.y - self.current_hspd && self.dir == 1){
+						_dir = 0;
+					}
+				
+					if(_inst.y < _line.y + self.current_hspd && self.dir == -1){
+						_dir = 0;
+					}
+				
+					self.physics.set_speed(0, _dir)
+				} else {
+				
+					var _dir = _line.end_point.normalize();
+					_dir = _dir.multiply(self.current_hspd * self.dir)
+				
+					if(_inst.x < _line.x + self.current_hspd && self.dir = -1){
+						_dir.x = 0;
+						_dir.y = 0;
+					}
+				
+					if(_inst.x > _line.x + _line.end_point.x - self.current_hspd && self.dir = 1){
+						_dir.x = 0;
+						_dir.y = 0;
+					}
+				
+					self.physics.set_speed(_dir.x, _dir.y)
+				}
+			},
+			leave: function(){
+				self.physics.update_gravity();
+				self.dir *= -1;
+				self.publish("animation_xscale", dir * -1)
+			}
+		})
+		.add_transition("t_transition", "air", "zipline", function() 
+			{ 
+				var _comp = false;
+				with(obj_zipline_start){
+					if close_enough {
+						_comp = true;
+						other.zipline = self
+					}
+				}
+				return self.input.get_input("up") && _comp;
+			})
+		.add_transition("t_transition", "zipline", "zipline_dash", function() 
+			{ return self.input.get_input("dash")})
+		.add_transition("t_transition", "zipline_dash", "zipline", function() 
+			{ return self.timer < CURRENT_FRAME})
+		.add_transition("t_transition", ["zipline", "zipline_dash"], "jump", function() 
+			{ return self.input.get_input_pressed("jump") && !self.input.get_input("down")})
+		.add_transition("t_transition", ["zipline", "zipline_dash"], "fall", function() 
+			{ return self.input.get_input_pressed("jump") && self.input.get_input("down")})
+	}
 }

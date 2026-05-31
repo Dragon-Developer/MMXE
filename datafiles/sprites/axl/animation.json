@@ -1668,7 +1668,13 @@
               }
             ]
           }
-        }
+        },
+        {
+          "name": "select",
+          "properties": {
+            "speed": 1
+          }
+        },
 
 
 

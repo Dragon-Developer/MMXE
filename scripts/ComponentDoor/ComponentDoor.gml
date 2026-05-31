@@ -56,6 +56,8 @@ function ComponentDoor() : ComponentBase() constructor{
 					coll.x += (sign(_inst.image_xscale) / 2) + 0.5;
 					coll.image_xscale = (_inst.sprite_width - 2) / 16;
 				}
+				
+				coll.image_xscale = floor(coll.image_xscale)
 			}
 			
 			//var _player = instance_nearest(_inst.x,_inst.y, obj_player);
@@ -109,7 +111,7 @@ function ComponentDoor() : ComponentBase() constructor{
 					if(physics.check_place_meeting(_inst.x + 12,_inst.y, obj_player) || physics.check_place_meeting(_inst.x - 12,_inst.y, obj_player)){
 						curr_player.x += (74/256) * (flipped * -2 + 1);
 						// the camera movement value is larger than snes, but its also 
-						curr_cam.x += (flipped * -2 + 1) * (383/256);
+						curr_cam.x += (flipped * -2 + 1) * (400/256);
 					} else {
 						state_segment++;
 						with(obj_camera){
@@ -124,6 +126,12 @@ function ComponentDoor() : ComponentBase() constructor{
 						}
 						curr_player.components.get(ComponentAnimationShadered).animation.__speed = 1;
 						curr_player.components.get(ComponentPhysics).grav = new Vec2(0, 0.25); 
+						curr_player.components.get(ComponentPlayerInput).__input[$ "left"] = false; 
+						curr_player.components.get(ComponentPlayerInput).__input[$ "right"] = false; 
+						curr_player.components.get(ComponentPlayerInput).__input[$ "jump"] = false; 
+						curr_player.components.get(ComponentPlayerInput).__input[$ "dash"] = false; 
+						curr_player.components.get(ComponentPlayerInput).__input[$ "down"] = false; 
+						curr_player.components.get(ComponentPlayerInput).__input[$ "up"] = false; 
 					}
 				//}
 		
@@ -187,6 +195,7 @@ function ComponentDoor() : ComponentBase() constructor{
 		
 		_inst.components.get(ComponentPhysics).grav = new Vec2(0, 0); 
 		_inst.components.get(ComponentPhysics).velocity = new Vec2(0, 0); 
+		_inst.components.get(ComponentPhysics).step = function(){}
 		
 		_inst.visible = true;
 		

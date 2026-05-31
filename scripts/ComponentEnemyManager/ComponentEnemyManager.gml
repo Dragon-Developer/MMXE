@@ -67,6 +67,9 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		_enemy.dir = _dir;
 		_enemy.flash = false;
 		
+		if(variable_struct_exists(_enemy.code, "create"))
+			_enemy.code.create(_enemy.position);
+		
 		struct_set(_enemy, "sprite", get(ComponentSpriteRenderer).add_sprite(_enemy.code.sprite,false,  _x, _y, _dir));
 		//log(_enemy.sprite)
 		struct_set(_enemy, "hitbox", _enemy.code.hitbox_scale);
@@ -89,12 +92,12 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	self.step = function(){
 		array_foreach(self.enemies, function(_enemy, _index){
 			if(_enemy.flash == 1) {
-				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, 1, 1, shader_palette_light);
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir, 1, shader_palette_light);
 				_enemy.flash = 2;
 			} else if(_enemy.flash == 2) {
 				_enemy.flash = 3;
 			} else if(_enemy.flash == 3) {
-				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, 1, 1, undefined);
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir, 1, undefined);
 				_enemy.flash = 0;
 			} 
 			
@@ -139,12 +142,8 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	
 	self.draw = function(){
 		array_foreach(self.enemies, function(_enemy){
-			if(!_enemy.code.dead){
-				get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
-				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir)
-			}
-			
-			//draw_string(_enemy.code.health, _enemy.position.x, _enemy.position.y - 32)
+			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
+			get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir)
 			
 			if (draw_enabled){
 				draw_rectangle( (_enemy.hitbox.x / 2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
@@ -184,7 +183,7 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 			//detect projectiles within the enemy
 			if(is_in_range(floor(_enemy_left_point), _projectile_left_point, _projectile_right_point) || is_in_range(floor(_enemy_right_point), _projectile_left_point, _projectile_right_point)){
 				if(is_in_range(floor(_enemy_top_point), _projectile_top_point, _projectile_bottom_point) || is_in_range(floor(_enemy_bottom_point), _projectile_top_point, _projectile_bottom_point)){
-					_proj = _projectiles[u];
+					cause_projectile_collision(_enemy, _projectiles[u])
 				}
 			}
 			
@@ -192,13 +191,27 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 			if(is_in_range(floor(_projectile_left_point), _enemy_left_point, _enemy_right_point) || is_in_range(floor(_projectile_right_point), _enemy_left_point, _enemy_right_point)){
 
 				if(is_in_range(floor(_projectile_top_point), _enemy_bottom_point, _enemy_top_point) || is_in_range(floor(_projectile_bottom_point), _enemy_bottom_point, _enemy_top_point)){
-					_proj = _projectiles[u];
+					cause_projectile_collision(_enemy, _projectiles[u])
 				}
 			}
 		}
 		
 		if(_proj != noone){
-			if(!array_contains(_enemy.hit_by_list, _proj) && !array_contains(_proj.code.tag, "enemy")){
+			
+		}
+		
+		if(_enemy.code.health <= 0 && !_enemy.code.dead){
+			_enemy.code.dead = true;
+			_enemy.code.destroy();
+			WORLD.play_sound("Explosion");
+			WORLD.spawn_particle(new ExplosionParticle(_enemy.position.x, _enemy.position.y - 16, 1));
+			_enemy.position = new Vec2(-128, -128);
+			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
+		}
+	}
+	
+	self.cause_projectile_collision = function(_enemy, _proj){
+		if(!array_contains(_enemy.hit_by_list, _proj) && !array_contains(_proj.code.tag, "enemy")){
 				if(!_proj.code.super_piercing)
 					array_push(_enemy.hit_by_list, _proj)
 					
@@ -233,15 +246,5 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 				if((!_proj.code.piercing || _enemy.code.health > 0) && !_proj.code.super_piercing)
 					PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
 			}
-		}
-		
-		if(_enemy.code.health <= 0 && !_enemy.code.dead){
-			_enemy.code.dead = true;
-			_enemy.code.destroy();
-			WORLD.play_sound("Explosion");
-			WORLD.spawn_particle(new ExplosionParticle(_enemy.position.x, _enemy.position.y - 16, 1));
-			_enemy.position = new Vec2(-128, -128);
-			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
-		}
 	}
 }

@@ -12,6 +12,12 @@
         "y": 16
       }
     },
+    "chill_nuke": {
+      "origin": {
+        "x": 24,
+        "y": 16
+      }
+    },
     "fuckass_pickaxe": {
       "origin": {
         "x": 16,
@@ -1874,10 +1880,47 @@
           }
         },
         {
+          "name": "chill_breath_1",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "chill_breath_2",
+          "properties": {
+            "speed": 0.3334
+          }
+        },
+        {
+          "name": "chill_puke_90",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "chill_puke_30",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "chill_nuke",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
           "name": "fire_wave_temp_full_charge",
           "properties": {
             "speed": 0.3334,
             "loop_begin": 1
+          }
+        },
+        {
+          "name": "chill_statue",
+          "properties": {
+            "speed": 0.1,
+            "loop_begin": 4
           }
         },
         {

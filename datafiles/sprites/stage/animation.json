@@ -6,6 +6,18 @@
         "y": 8
       }
     },
+    "hunter_1": {
+      "origin": {
+        "x": 32,
+        "y": 32
+      }
+    },
+    "hunter_1_tired": {
+      "origin": {
+        "x": 32,
+        "y": 32
+      }
+    },
     "dr_cain_ghost": {
       "origin": {
         "x": 12,
@@ -87,6 +99,18 @@
         },
         {
           "name": "welder",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "hunter_1",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "hunter_1_tired",
           "properties": {
             "speed": 1
           }

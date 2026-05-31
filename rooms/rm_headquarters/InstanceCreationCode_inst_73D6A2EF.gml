@@ -1,56 +1,21 @@
 on_spawn = function(_npc){
-	if(global.character_ref[global.character_index] == RockCharacter){
-		_npc.components.get(ComponentNPC).dialouge = [
-			{   sentence : "What's up, little bro?",
-				mugshot_left : "x",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "right"
-			},
-			{   sentence : "...",
-				mugshot_left : "x",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "left"
-			},
-			{   sentence : "...",
-				mugshot_left : "x",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "right"
-			},
-			{   sentence : "Never call me 'little bro' again.",
-				mugshot_left : "x_angry",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "left"
-			}
-		]
-	} else {
-		_npc.components.get(ComponentNPC).dialouge = [
-			{   sentence : "Damn! The ladder's broken!",
-				mugshot_left : "x_angry",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "left"
-			},
-			{   sentence : "...",
-				mugshot_left : "x",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "right"
-			},
-			{   sentence : "Just jump up and grab a higher part of the ladder, dude.",
-				mugshot_left : "x",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "right"
-			},
-			{   sentence : "Are you crazy? You'll hurt yourself!",
-				mugshot_left : "x_angry",
-				mugshot_right : PLAYER_SPRITE,
-				focus : "left"
-			},
-			{   sentence : "DO. NOT. CLIMB. THIS. LADDER.",
-				mugshot_left : "x_angry",
-				mugshot_right : PLAYER_SPRITE + "_suprise",
-				focus : "left"
-			}
-		]
-	}
+	_npc.components.get(ComponentNPC).dialouge = [
+		{   sentence : "Welcome to the maverick hunter's headquarters!",
+			mugshot_left : "x",
+			mugshot_right : PLAYER_SPRITE,
+			focus : "left"
+		},
+		{   sentence : "Keep going straight to find the briefing room, and go downstairs for the hangar bay.",
+			mugshot_left : "x",
+			mugshot_right : PLAYER_SPRITE,
+			focus : "left"
+		},
+		{   sentence : "Going up leads to the sky deck, and leaving the building shows you our under-construction training facility!",
+			mugshot_left : "x",
+			mugshot_right : PLAYER_SPRITE,
+			focus : "left"
+		}
+	]
 	_npc.components.get(ComponentAnimation).set_subdirectories(
 	["/normal"]);
 	_npc.components.publish("character_set", "x");

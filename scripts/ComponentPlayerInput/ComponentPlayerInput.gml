@@ -93,7 +93,7 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 	}
 	
 	self.input_check_regular = function(_verb){
-		if (self.__locked) return false;
+		if (self.__locked) return __input[$ _verb];
 		if (self.__swap_horizontal) {
 			if (_verb == "right") {
 				_verb = "left";

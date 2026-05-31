@@ -13,5 +13,6 @@ function XCharacter() : BaseCharacter() constructor{
 		self.init_default(_player);
 		add_dash(_player);
 		add_wall_jump(_player);
+		add_zipline(_player)
 	}
 }

@@ -205,19 +205,7 @@ function ComponentWeaponGet() : ComponentBase() constructor{
 		renderer.set_position(board,_board_pos.x,_board_pos.y + board_move_speed);
 		renderer.draw_sprite("weapon_get_board", 0,_board_pos.x,_board_pos.y);
 		
-		if(_board_pos.y >= board_height){
-			//renderer.sprites = [];
-			//renderer.init();
-			self.state = "player_test";
-			//the following is bad practice in this engine, but i would
-			//like to get all of the updates the player spawn gets so ill
-			//just make the player spawn lol
-		
-			plr = ENTITIES.create_instance(obj_player,48,192)
-			self.spawn_player(plr);
-			plr.components.get(ComponentWeaponUse).set_weapons([new_weapon]);
-			plr.components.get(ComponentWeaponUse).change_weapon(0);
-		}
+		room_transition_to(rm_stage_select, 0, 24)
 	}
 	
 	self.player_test = function(){
