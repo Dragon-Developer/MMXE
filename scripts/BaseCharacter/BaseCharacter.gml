@@ -48,6 +48,8 @@ function BaseCharacter() constructor{
 		},
 		hurt: {
 			speed: -138 / 256,
+			strength: -2,
+			rate: 1,
 			sound: "hurt"
 		},
 		dash_air: {
@@ -66,6 +68,12 @@ function BaseCharacter() constructor{
 		[noone]//full set
 	];
 	self.armor_use_requirements = [];
+	
+	self.zipline_palette = [
+		#203080,//Blue Armor Bits
+		#0040f0,
+		#0080f8,
+	]
 	
 	self.default_palette = [
 		#203080,//Blue Armor Bits

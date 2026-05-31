@@ -32,7 +32,6 @@
           "gaea",
           "blade",
           "shadow",
-          "hermes",
           "x7",
           "x8"
         ],
@@ -1709,6 +1708,12 @@
         },
         {
           "name": "select",
+          "properties": {
+            "speed": 1
+          }
+        },
+        {
+          "name": "frozen",
           "properties": {
             "speed": 1
           }

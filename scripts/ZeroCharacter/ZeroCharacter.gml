@@ -11,6 +11,12 @@ function ZeroCharacter() : BaseCharacter() constructor{
 		[noone, BlackZero, X1Zero]//full set
 	];
 	
+	self.zipline_palette = [
+		#6b3110,//Blue Armor Bits
+		#ad3008,
+		#f75108,
+	]
+	
 	default_palette = [
 		#6b3110,//Blue Armor Bits
 		#ad3008,
@@ -40,5 +46,6 @@ function ZeroCharacter() : BaseCharacter() constructor{
 		add_dash(_player);
 		add_wall_jump(_player);
 		add_air_dash(_player)
+		add_zipline(_player)
 	}
 }

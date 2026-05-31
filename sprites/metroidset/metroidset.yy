@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"metroidset",
   "bboxMode":0,
-  "bbox_bottom":191,
+  "bbox_bottom":207,
   "bbox_left":0,
   "bbox_right":143,
   "bbox_top":0,

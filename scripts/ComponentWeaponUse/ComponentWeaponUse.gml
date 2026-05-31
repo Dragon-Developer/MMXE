@@ -15,6 +15,7 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 	self.charge = undefined;
 	self.charge_time = [30, 105, 180, 255];
 	self.shoot_inputs = ["shoot","shoot2","shoot3", "shoot4"]
+	self.shooting = false;
 	self.bar = noone;
 	
 	self.supercharged = false;
@@ -39,12 +40,13 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		"slide",
 		"slide_end",
 		"genki_dama",
-		"melee",
-		"melee_end",
+		//"melee",
+		//"melee_end",
 		"variable_dash",
 		"variable_dash_start",
 		"ceil_cling",
-		"ceil_cling_shoot"
+		"ceil_cling_shoot",
+		"frozen"
 	]
 	
 	self.projectile_count = 0;
@@ -204,6 +206,10 @@ function ComponentWeaponUse() : ComponentBase() constructor{
 		
 		if(array_length(weapon_list) <= 1) {
 			self.current_weapon = [0,0,0,0]
+		}
+		
+		if(get(ComponentPlayerInput).__locked && self.charge.start_time != -1){
+			self.charge.start_time++;
 		}
 		
 		var _change_direction = self.input.get_input_pressed("switchRight") - self.input.get_input_pressed("switchLeft")

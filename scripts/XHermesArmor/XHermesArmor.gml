@@ -30,10 +30,10 @@ function XHermesArmorBoot() : X8BootBase() constructor{
 		
 		_player.states.dash.speed *= 1.5;
 		_player.states.walk.speed *= 1.5;
+		add_air_dash(_player)
 		
 		with(obj_camera){
-			components.get(ComponentCamera).movement_limit_x *= 5;
-			components.get(ComponentCamera).movement_limit_y *=2 ;
+			components.get(ComponentCamera).use_movement_limits = false;
 		}
 		
 		with(_player){

@@ -42,7 +42,7 @@ function ComponentArmorHandler() : ComponentBase() constructor{
 	
 	self.apply_full_armor_set = function(_armors, _state = "init", _reset = true){
 		
-		if(1 == 1){// if you have the autofill neutral armor for x8 armors setting
+		if(global.settings.x8_armor_auto_equip){// if you have the autofill neutral armor for x8 armors setting
 			var _set = false
 			for(var t = 0; t < 4; t++){
 				if(_armors[t] != noone){

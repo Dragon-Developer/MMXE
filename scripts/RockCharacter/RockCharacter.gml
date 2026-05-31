@@ -8,6 +8,7 @@ function RockCharacter() : BaseCharacter() constructor{
 		self.init_default(_player);
 		add_slide(_player, self);
 		add_wall_jump(_player);
+		add_zipline(_player)
 	}
 	self.states.dash.animation = "slide"
 	

@@ -1,5 +1,5 @@
 function ShotgunIce() : ProjectileWeapon() constructor{
-	self.data = [ShotgunIceData,ShotgunIceData,ShotgunIceData,ShotgunIceSled,ShotgunIceSled];
+	self.data = [ShotgunIceData,ShotgunIceData,EvilShotgunIce,ShotgunIceSled,ShotgunIceSled];
 	self.charge_limit = 4;
 	self.weapon_palette = [
 		#3973f7,//Blue Armor Bits
@@ -20,6 +20,7 @@ function ShotgunIceData() : ProjectileData() constructor{
 	self.shot_limit = 2;
 	self.damage = 2;
 	self.animation = "shotgun_ice";
+	self.strength = 1
 	
 	self.create = function(_inst){
 		//log(init_time)
@@ -29,10 +30,10 @@ function ShotgunIceData() : ProjectileData() constructor{
 	self.step = function(_inst){
 		
 		var _hspd = 0;
-		if (is_in_range(CURRENT_FRAME, self.init_time, self.init_time + 2)) _hspd = 4;
-		else if (is_in_range(CURRENT_FRAME, self.init_time + 2, self.init_time + 5)) _hspd = 5;
-		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6;
-		else if (CURRENT_FRAME - self.init_time > 24)_hspd = 6.25;
+		if (is_in_range(CURRENT_FRAME, self.init_time, self.init_time + 2)) _hspd = 4 * strength;
+		else if (is_in_range(CURRENT_FRAME, self.init_time + 2, self.init_time + 5)) _hspd = 5 * strength;
+		else if (is_in_range(CURRENT_FRAME, self.init_time + 5, self.init_time + 24)) _hspd = 6 * strength;
+		else if (CURRENT_FRAME - self.init_time > 24)_hspd = 6.25 * strength;
 		if(!is_undefined(_inst))
 			_inst.x += _hspd * self.dir;
 			
@@ -62,10 +63,12 @@ function ShotgunIceFragmentData() : ProjectileData() constructor{
 	self.vspd = 0;
 	self.hspd = 8;
 	
+	self.strength = new Vec2(8, 0)
+	
 	self.create = function(_inst){}
 	self.step = function(_inst){
-		_inst.x += hspd * self.dir;
-		_inst.y += vspd;
+		_inst.x += strength.x * self.dir;
+		_inst.y += strength.y;
 	}
 	self.destroy = function(_inst){
 		WORLD.spawn_particle(new LemonDieParticle(_inst.x + 16, _inst.y, 1))
@@ -74,26 +77,22 @@ function ShotgunIceFragmentData() : ProjectileData() constructor{
 
 function ShotgunIceFragment2Data() : ShotgunIceFragmentData() constructor{
 	self.comboiness = 2;
-	self.vspd = 5;
-	self.hspd = 7;
+	self.strength = strength.rotate(-60)
 }
 
 function ShotgunIceFragment3Data() : ShotgunIceFragmentData() constructor{
 	self.comboiness = 3;
-	self.vspd = -5;
-	self.hspd = 7;
+	self.strength = strength.rotate(60)
 }
 
 function ShotgunIceFragment4Data() : ShotgunIceFragmentData() constructor{
 	self.comboiness = 4;
-	self.vspd = 7;
-	self.hspd = 5;
+	self.strength = strength.rotate(-30)
 }
 
 function ShotgunIceFragment5Data() : ShotgunIceFragmentData() constructor{
 	self.comboiness = 5;
-	self.vspd = -7;
-	self.hspd = 5;
+	self.strength = strength.rotate(30)
 }
 
 function ShotgunIceSled() : ProjectileData() constructor{

@@ -222,6 +222,10 @@ function BassEXEBoss() : BaseBoss() constructor{
 					} else {
 						_inst.y -= 35
 					}
+					
+					var _point = instance_nearest(x, y, Boss_ref_node)
+					_inst.x += sign(_point.x - _inst.x) * 1.5
+					
 					with(obj_player){
 						x = other.get_instance().x + other.dir * 20;
 						y = other.get_instance().y;
@@ -295,6 +299,9 @@ function BassEXEBoss() : BaseBoss() constructor{
 				},
 				
 				step: function(){
+					if(!variable_struct_exists(self, "ball_speed"))
+						self.ball_speed = desperate ? 10 : 1
+						
 					ball_speed += (CURRENT_FRAME - self.timer) / (desperate ? 70 : 75)
 					if CURRENT_FRAME mod 2 == 0 return;
 					var _inst = self.get_instance();

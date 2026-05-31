@@ -10,15 +10,22 @@ function BassCharacter() : BaseCharacter() constructor{
 		_player.get(ComponentWeaponUse).weapon_use_rate = 0.75;
 		add_dash(_player);
 		add_wall_jump(_player);
+		add_zipline(_player)
 	}
 	
-		self.possible_armors = [
+	self.possible_armors = [
 		[noone],//heads
 		[noone],//arms
 		[noone],//bodies
 		[noone],//boots
 		[noone, ArmorDoubleGear]//full set
 	];
+	
+	self.zipline_palette = [
+		#600060,//Blue Armor Bits
+		#bd00a4,
+		#ff6cd7,
+	]
 	
 	self.default_palette = [
 		#b10000,//eye
@@ -32,7 +39,14 @@ function BassCharacter() : BaseCharacter() constructor{
 		#383038,
 		#505058,
 		#788199,
-		#b1b9c1
+		#b1b9c1,
+		#000000,
+		#000000,
+		#000000,
+		#000000,
+		#000000,
+		#000000,
+		#000000
 	];
 	
 	self.charge_colors = [
@@ -65,18 +79,18 @@ function BassCharacter() : BaseCharacter() constructor{
 			#d3eec2
 		],
 		[
-		#b10000,//eye
-		#0f4eaa,//gems
-		#52a0ef,
-		#682c1d,//oranges
-		#c93800,
-		#f9a928,
-		#202020,//black
-		#2b1e24,//greys
-		#383038,
-		#505058,
-		#788199,
-		#b1b9c1
+			#b10000,//eye
+			#0f4eaa,//gems
+			#52a0ef,
+			#682c1d,//oranges
+			#c93800,
+			#f9a928,
+			#202020,//black
+			#2b1e24,//greys
+			#383038,
+			#505058,
+			#788199,
+			#b1b9c1
 		]
 	]
 }

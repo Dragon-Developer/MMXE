@@ -1,1 +1,1 @@
-boss = new TestBoss()
+boss = new ChillPenguinBoss()

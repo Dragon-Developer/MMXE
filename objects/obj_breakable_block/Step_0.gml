@@ -3,7 +3,8 @@ visible = true;
 
 var _nearest = instance_nearest(x,y,obj_player)
 if(_nearest)
-	if(_nearest.components.get(ComponentPlayerMove).fsm.get_current_state() == "wall_jump" && 
+	if(_nearest.components.get(ComponentPlayerMove).fsm.get_current_state() == "wall_jump" &&
+	_nearest.components.get(ComponentPhysics).get_vspd() < 0 &&
 		abs(_nearest.x - x) < 32 && abs(_nearest.y - y + 8) < 16)
 		_plr = _nearest;
 

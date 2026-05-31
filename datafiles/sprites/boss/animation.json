@@ -12,6 +12,30 @@
         "y": 32
       }
     },
+    "chill_idle": {
+      "origin": {
+        "x": 34,
+        "y": 34
+      }
+    },
+    "chill_pose": {
+      "origin": {
+        "x": 34,
+        "y": 34
+      }
+    },
+    "chill_puke": {
+      "origin": {
+        "x": 34,
+        "y": 34
+      }
+    },
+    "chill_slide": {
+      "origin": {
+        "x": 34,
+        "y": 34
+      }
+    },
     "blade_fall": {
       "origin": {
         "x": 128,
@@ -200,74 +224,50 @@
               {
                 "key": 0,
                 "frame": 0,
-                "shot_offset_x": 12,
-                "shot_offset_y":  -3
               },
               {
                 "key": 80,
-                "frame": 1,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 1
               },
               {
                 "key": 84,
                 "frame": 2,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
               },
               {
                 "key": 92,
-                "frame": 1,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 1
               },
               {
                 "key": 96,
-                "frame": 0,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 0
               },
               {
                 "key": 144,
-                "frame": 1,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 1
               },
               {
                 "key": 148,
-                "frame": 2,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 2
               },
               {
                 "key": 152,
-                "frame": 1,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 1
               },
               {
                 "key": 156,
-                "frame": 0,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 0
               },
               {
                 "key": 160,
-                "frame": 1,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 1
               },
               {
                 "key": 164,
-                "frame": 2,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 2
               },
               {
                 "key": 168,
-                "frame": 1,
-                "shot_offset_x": 12,
-                "shot_offset_y": -3
+                "frame": 1
               }
             ]
           }
@@ -278,75 +278,51 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 19,
-                "shot_offset_y": -5
+                "frame": 0
               },
               {
                 "key": 5,
-                "frame": 1,
-                "shot_offset_x": 22,
-                "shot_offset_y": -5
+                "frame": 1
               },
               {
                 "key": 6,
-                "frame": 2,
-                "shot_offset_x": 22,
-                "shot_offset_y": -6
+                "frame": 2
               },
               {
                 "key": 8,
-                "frame": 3,
-                "shot_offset_x": 22,
-                "shot_offset_y": -5
+                "frame": 3
               },
               {
                 "key": 11,
-                "frame": 4,
-                "shot_offset_x": 22,
-                "shot_offset_y": -4
+                "frame": 4
               },
               {
                 "key": 14,
-                "frame": 5,
-                "shot_offset_x": 22,
-                "shot_offset_y": -4
+                "frame": 5
               },
               {
                 "key": 17,
-                "frame": 6,
-                "shot_offset_x": 22,
-                "shot_offset_y": -5
+                "frame": 6
               },
               {
                 "key": 19,
-                "frame": 7,
-                "shot_offset_x": 22,
-                "shot_offset_y": -6
+                "frame": 7
               },
               {
                 "key": 21,
-                "frame": 8,
-                "shot_offset_x": 22,
-                "shot_offset_y": -5
+                "frame": 8
               },
               {
                 "key": 24,
-                "frame": 9,
-                "shot_offset_x": 22,
-                "shot_offset_y": -4
+                "frame": 9
               },
               {
                 "key": 27,
-                "frame": 10,
-                "shot_offset_x": 22,
-                "shot_offset_y": -4
+                "frame": 10
               },
               {
                 "key": 30,
-                "frame": 1,
-                "shot_offset_x": 22,
-                "shot_offset_y": -5
+                "frame": 1
               }
             ],
             "loop_begin": 5
@@ -358,21 +334,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 20,
-                "shot_offset_y": -3
+                "frame": 0
               },
               {
                 "key": 3,
-                "frame": 1,
-                "shot_offset_x": 21,
-                "shot_offset_y": -4
+                "frame": 1
               },
               {
                 "key": 7,
-                "frame": 2,
-                "shot_offset_x": 20,
-                "shot_offset_y": -5
+                "frame": 2
               }
             ],
             "loop_begin": 7
@@ -385,21 +355,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 2,
-                "shot_offset_x": 20,
-                "shot_offset_y": -5
+                "frame": 2
               },
               {
                 "key": 3,
-                "frame": 3,
-                "shot_offset_x": 21,
-                "shot_offset_y": -4
+                "frame": 3
               },
               {
                 "key": 7,
-                "frame": 4,
-                "shot_offset_x": 21,
-                "shot_offset_y": -4
+                "frame": 4
               }
             ],
             "loop_begin": 7
@@ -411,15 +375,11 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               },
               {
                 "key": 3,
-                "frame": 1,
-                "shot_offset_x": 32,
-                "shot_offset_y": 4
+                "frame": 1
               }
             ],
             "loop_begin": 3
@@ -432,15 +392,11 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               },
               {
                 "key": 8,
-                "frame": 0,
-                "shot_offset_x": 26,
-                "shot_offset_y": -1
+                "frame": 0
               }
             ]
           }
@@ -452,21 +408,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 0,
-                "shot_offset_x": 21,
-                "shot_offset_y": -5
+                "frame": 0
               },
               {
                 "key": 3,
-                "frame": 1,
-                "shot_offset_x": 16,
-                "shot_offset_y": -3
+                "frame": 1
               },
               {
                 "key": 6,
-                "frame": 2,
-                "shot_offset_x": 15,
-                "shot_offset_y": -2
+                "frame": 2
               }
             ],
             "loop_begin": 6
@@ -479,15 +429,11 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 3,
-                "shot_offset_x": 18,
-                "shot_offset_y": -8
+                "frame": 3
               },
               {
                 "key": 3,
-                "frame": 4,
-                "shot_offset_x": 21,
-                "shot_offset_y": -9
+                "frame": 4
               }
             ],
             "loop_begin": 3
@@ -582,6 +528,217 @@
                 "frame": 5
               }
             ]
+          }
+        },
+        {
+          "name": "chill_puke",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 6,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 14,
+                "frame": 4
+              },
+              {
+                "key": 50,
+                "frame": 5
+              },
+              {
+                "key": 52,
+                "frame": 6
+              },
+              {
+                "key": 56,
+                "frame": 5
+              },
+              {
+                "key": 60,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "chill_pose",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 6,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 14,
+                "frame": 4
+              },
+              {
+                "key": 37,
+                "frame": 3
+              },
+              {
+                "key": 40,
+                "frame": 5
+              },
+              {
+                "key": 42,
+                "frame": 6
+              }
+            ],
+            "loop_begin": 42
+          }
+        },
+        {
+          "name": "chill_statue_startup",
+          "properties": {
+            "action": "chill_puke",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 6,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 14,
+                "frame": 4
+              }
+            ],
+            "loop_begin": 14
+          }
+        },
+        {
+          "name": "chill_statue_hold",
+          "properties": {
+            "action": "chill_puke",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 5
+              },
+              {
+                "key": 4,
+                "frame": 6
+              },
+              {
+                "key": 6,
+                "frame": 5
+              }
+            ]
+          }
+        },
+        {
+          "name": "chill_slide",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 6,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 10,
+                "frame": 3
+              },
+              {
+                "key": 14,
+                "frame": 4
+              },
+              {
+                "key": 36,
+                "frame": 5
+              },
+              {
+                "key": 30,
+                "frame": 6
+              }
+            ],
+            "loop_begin": 60
+          }
+        },
+        {
+          "name": "chill_idle",
+          "properties": {
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "chill_oh_fuck",
+          "properties": {
+            "speed": 0.5
+          }
+        },
+        {
+          "name": "chill_damage",
+          "properties": {
+            "action": "chill_oh_fuck",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "chill_grab",
+          "properties": {
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "chill_fall",
+          "properties": {
+            "speed": 0.25
+          }
+        },
+        {
+          "name": "chill_jump",
+          "properties": {
+            "speed": 0.25,
+            "loop_begin": 3
           }
         },
         {

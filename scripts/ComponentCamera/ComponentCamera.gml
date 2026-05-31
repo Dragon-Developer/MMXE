@@ -12,6 +12,7 @@ function ComponentCamera() : ComponentBase() constructor {
 	self.target = noone;
 	self.bounds = noone;//if bounds are noone, just lock onto player pos. otherwise, abide by bounds
 	self.physics = noone;
+	self.use_movement_limits = true;
 	
 	self.reset_movement_limits = function(){
 		self.movement_limit_x = 4.05 * self.timescale;//the camera cant move faster than this
@@ -151,6 +152,8 @@ function ComponentCamera() : ComponentBase() constructor {
 		//catch up to the target if possible
 		//if the target is more than a third of a screen's worth of space away, 
 		//go to exactly a third of a screens worth away
+		var _correction_strength = 6
+		
 		if(abs(x - _cam_x) > GAME_W / 3 && _target_always_in_view){
 			if(x > _cam_x){
 				_cam_x = x - (abs(x - _cam_x) - GAME_W / 3 + 1);
@@ -158,11 +161,11 @@ function ComponentCamera() : ComponentBase() constructor {
 				_cam_x = x + (abs(x - _cam_x) - GAME_W / 3 + 1);
 			}
 			log("Too far!")
-		} else if(abs(x - _cam_x) > self.movement_limit_x){
+		} else if(abs(x - _cam_x) > self.movement_limit_x && use_movement_limits){
 			if(x > _cam_x){
-				_cam_x = x - self.movement_limit_x;
+				_cam_x = x - self.movement_limit_x - log10(abs(x - _cam_x) / _correction_strength);
 			} else {
-				_cam_x = x + self.movement_limit_x;
+				_cam_x = x + self.movement_limit_x + log10(abs(x - _cam_x) / _correction_strength);
 			}
 		}
 		
@@ -172,11 +175,11 @@ function ComponentCamera() : ComponentBase() constructor {
 			} else {
 				_cam_y = y + (abs(y - _cam_y) - GAME_H / 3);
 			}
-		} else if(abs(y - _cam_y) > self.movement_limit_y){
+		} else if(abs(y - _cam_y) > self.movement_limit_y && use_movement_limits){
 			if(y > _cam_y){
-				_cam_y = y - self.movement_limit_y;
+				_cam_y = y - self.movement_limit_y - log10(abs(y - _cam_y) / _correction_strength);
 			} else {
-				_cam_y = y + self.movement_limit_y;
+				_cam_y = y + self.movement_limit_y + log10(abs(y - _cam_y) / _correction_strength);
 			}
 		}
 		

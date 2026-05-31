@@ -2,7 +2,9 @@ event_inherited();
 
 components.add([
 	ComponentWeaponGet,
-	ComponentSpriteRenderer
+	ComponentSpriteRenderer,
+	ComponentAnimationShadered,
+	ComponentPlayerSelectDisplay
 ]);
 
 components.init();

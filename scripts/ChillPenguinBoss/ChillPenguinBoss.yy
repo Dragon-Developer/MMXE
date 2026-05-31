@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ChillPenguinBoss",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ChillPenguinBoss",
+  "parent":{
+    "name":"Boss",
+    "path":"folders/Scripts/Game/stages/Boss.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

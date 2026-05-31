@@ -1,0 +1,2 @@
+draw_sprite_tiled_ext(sprite_index, 0, (CURRENT_FRAME mod 16) * 4.1 * dir, (CURRENT_FRAME mod 16) * 4.1, dir, 1, c_white, 0.9)
+draw_sprite_tiled_ext(spr_bright, 0, (CURRENT_FRAME mod 16) * 4.1 * dir, (CURRENT_FRAME mod 16) * 4.1, dir, 1, c_black, clamp((CURRENT_FRAME - self.start_time) / 50, 0, 0.2))

@@ -1,1 +1,0 @@
-pickup_data = new BlueMoney();

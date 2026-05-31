@@ -55,15 +55,18 @@ function ComponentDialouge() : ComponentBase() constructor{
 	
 	self.set_dialouge_with_enum = function(_dialouge){
 		//log(_dialouge)
-		self.set_dialouge(_dialouge.sentence, _dialouge.mugshot_left, _dialouge.mugshot_right, _dialouge.focus);
+		_dialouge[$ "additive"] ??= false;
+		var _additive = _dialouge.additive
+		self.set_dialouge(_dialouge.sentence, _dialouge.mugshot_left, _dialouge.mugshot_right, _dialouge.focus, _additive);
 	}
 	
-	self.set_dialouge = function(_text, _mugshot_left = "x", _mugshot_right = "x", _focus = "right"){
+	self.set_dialouge = function(_text, _mugshot_left = "x", _mugshot_right = "x", _focus = "right", _additive = false){
 		
-		
-		self.text_chunks = [];
-		self.tc_length = [];
-		self.text_length = [];
+		if!(_additive){
+			self.text_chunks = [];
+			self.tc_length = [];
+			self.text_length = [];
+		}
 		
 		if(is_array(_text)){
 			self.chat = _text;
