@@ -1,0 +1,100 @@
+{
+	"sprites": {
+		"default": { "origin": { "x": 32, "y": 48 } },
+		"shoot": { "origin": { "x": 32, "y": 48 } },
+		"dash_start": { "origin": { "x": 32, "y": 48 } },
+		"dash": { "origin": { "x": 32, "y": 48 } },
+		"dash_end": { "origin": { "x": 32, "y": 48 } },
+		"jump_start": { "origin": { "x": 32, "y": 48 } },
+		"jump": { "origin": { "x": 32, "y": 48 } },
+		"fall": { "origin": { "x": 32, "y": 48 } },
+		"land": { "origin": { "x": 32, "y": 48 } },
+		"hurt": { "origin": { "x": 32, "y": 48 } }
+	},
+	"data": {
+		"animations": {
+			"list": [{
+				"name": "idle",
+				"properties": {
+					"keyframes": [
+						{ "key": 0, "frame": 0 }
+					]
+				}
+			},{
+				"name": "shoot",
+				"properties": {
+					"loop_begin": 2,
+					"keyframes": [
+						{ "key": 0, "frame": 0 },
+						{ "key": 1, "frame": 4 },
+						{ "key": 2, "frame": 14 }
+					]
+				}
+			},{
+				"name": "dash_start",
+				"properties": {
+					"keyframes": [
+						{ "key": 0, "frame": 0 }
+					]
+				}
+			},{
+				"name": "dash",
+				"properties": {
+					"keyframes": [
+						{ "key": 0, "frame": 0 }
+					]
+				}
+			},{
+				"name": "dash_end",
+				"properties": {
+					"keyframes": [
+						{ "key": 0, "frame": 0 }
+					]
+				}
+			},{
+				"name": "jump_start",
+				"properties": {
+					"keyframes": [
+						{ "key": 0, "frame": 0 }
+					]
+				}
+			},{
+				"name": "jump",
+				"properties": {
+					"loop_begin": 1,
+					"keyframes": [
+						{ "key": 0, "frame": 0 },
+						{ "key": 1, "frame": 5 }
+					]
+				}
+			},{
+				"name": "fall",
+				"properties": {
+					"loop_begin": 2,
+					"keyframes": [
+						{ "key": 0, "frame": 0 },
+						{ "key": 1, "frame": 5 },
+						{ "key": 2, "frame": 10 }
+					]
+				}
+			},{
+				"name": "land",
+				"properties": {
+					"keyframes": [
+						{ "key": 0, "frame": 0 }
+					]
+				}
+			},{
+				"name": "hurt",
+				"properties": {
+					"loop_begin": 1,
+					"keyframes": [
+						{ "key": 0, "frame": 0 },
+						{ "key": 1, "frame": 5 },
+						{ "key": 2, "frame": 10 }
+					]
+				}
+			}]
+		}
+	}
+}
