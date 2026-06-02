@@ -1,3 +1,3 @@
-parallax_layer = "mountains"
-parallax_offset.y = 102;
-parallax_speed = new Vec2(1/3,0)
+parallax_layer = "mountains";
+parallax_offset.y = -16;
+parallax_speed = new Vec2(0.5, 1);

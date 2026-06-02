@@ -706,7 +706,7 @@ function SnowState(_initState, _execEnter = true) constructor {
 	};
 	
 	/// @param {string} _event
-	/// @param {string} _callback
+	/// @param {string|Function} _callback
 	/// @param {Struct} [_context=noone]
 	/// @returns {Struct.SnowState|undefined} self
 	on = function(_event, _callback, _context = noone) {

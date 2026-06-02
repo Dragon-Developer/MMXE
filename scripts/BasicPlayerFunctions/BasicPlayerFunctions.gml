@@ -489,6 +489,15 @@ function add_mach_dash(_entity, _falcon_flight = undefined){
 				self.states.mach_dash.angle = _input_dir;
 						
 				self.physics.set_speed(self.states.mach_dash.angle.x * self.states.mach_dash.speed, self.states.mach_dash.angle.y * self.states.mach_dash.speed);
+
+				// Set iframes.
+				get(ComponentDamageable).dmg_invincible = true;
+				// Create projectile.
+				PROJECTILES.create_projectile(
+					self.get_instance().x, self.get_instance().y,
+					self.dir, XBladeDashHitbox,
+					get(ComponentWeaponUse), ["player"], 0
+				);
 			},
 			step: function() {
 				if(!self.states.mach_dash.change_direction) return;
@@ -513,13 +522,11 @@ function add_mach_dash(_entity, _falcon_flight = undefined){
 					self.publish("animation_angle", 45 * (_input_dir.y * _input_dir.x))
 					self.publish("animation_yscale", 1);
 				}
-					
 				self.states.mach_dash.angle = _input_dir;
-					
 				self.physics.set_speed(self.states.mach_dash.angle.x * self.states.mach_dash.speed, self.states.mach_dash.angle.y * self.states.mach_dash.speed);
-					
 			},
 			leave: function() {
+				get(ComponentDamageable).dmg_invincible = false;
 				self.physics.update_gravity();
 				self.physics.set_speed(0,0);
 				self.physics.terminal_velocity = self.physics.terminal_velocity_default;
@@ -529,12 +536,15 @@ function add_mach_dash(_entity, _falcon_flight = undefined){
 			},
 			draw: function(){
 				var _anim = self.get_instance().components.find("animation");
-				var _pos = _anim.get_interpolated_position();
-				_pos[0] += self.physics.get_hspd() * (CURRENT_FRAME - self.timer) / 6;
-				_pos[1] += self.physics.get_vspd() * (CURRENT_FRAME - self.timer) / 6;
-				_anim.animation.set_color(c_blue);
+                var _pos = _anim.get_interpolated_position();
+                var _speed = 0.3;
+				_pos[0] += self.physics.get_hspd() * (CURRENT_FRAME - self.timer) * _speed;
+				_pos[1] += self.physics.get_vspd() * (CURRENT_FRAME - self.timer) * _speed;
+				draw_set_color(c_blue);
+				draw_set_alpha(0.5)
 				_anim.draw_regular(_pos);
-				_anim.animation.set_color(c_white);
+				draw_set_alpha(1)
+				draw_set_color(c_white);
 			}
 		})
 		.add("dash_hold", {
@@ -545,8 +555,6 @@ function add_mach_dash(_entity, _falcon_flight = undefined){
 				self.timer = CURRENT_FRAME;
 			},
 			step: function() {
-				if(self.input.get_input_released("dash") || self.input.get_input_released("shoot4") || (self.states.mach_dash.has_time_limit && CURRENT_FRAME > self.timer + self.states.mach_dash.time_limit))
-					self.fsm.change("mach_dash");
 				if(self.input.get_input_pressed_raw("left")){
 					self.publish("animation_xscale", -1);
 					self.dir = -1;
@@ -554,6 +562,17 @@ function add_mach_dash(_entity, _falcon_flight = undefined){
 				if(self.input.get_input_pressed_raw("right")){
 					self.publish("animation_xscale", 1);
 					self.dir = 1;
+				}
+				var _inst = self.get_instance();
+				var _dir = new Vec2(self.hdir, self.vdir);
+
+				if(self.input.get_input_released("dash") || 
+					self.input.get_input_released("shoot4") ||
+					(_dir.x != 0 || _dir.y != 0) && CURRENT_FRAME > self.timer + 4 ||
+					(self.states.mach_dash.has_time_limit &&
+					CURRENT_FRAME > self.timer + self.states.mach_dash.time_limit)
+				) {
+					self.fsm.change("mach_dash");
 				}
 			},
 			leave: function() {
@@ -587,6 +606,31 @@ function add_mach_dash(_entity, _falcon_flight = undefined){
 			{ return self.timer <= CURRENT_FRAME; })
 		.add_wildcard_transition("t_transition", "dash_hold", function() {return self.input.get_input_pressed_raw("shoot4") && self.states.dash_air.curr_dashes < self.states.dash_air.max_dashes;});
 	}
+}
+
+function XBladeDashHitbox() : ProjectileData() constructor{
+	self.comboiness = -1;
+	self.damage = 3;
+	self.shot_limit = 999;
+	self.hitbox_scale = new Vec2(32, 24);
+	self.hitbox_offset = new Vec2(0,0);
+	self.animation = ""
+
+	self.create = function(inst) {}
+	self.step = function(inst){
+		var player = instance_nearest(inst.x, inst.y, obj_player)
+		inst.x = player.x;
+		inst.y = player.y;
+		// Get player OBJ.
+		var player = instance_nearest(0, 0, obj_player);
+		// Get string of state name.
+		var state = player.components.get(ComponentPlayerMove).fsm.get_current_state();
+		// Destroy if we did exit the match dash state.
+		if (state != "mach_dash") {
+			PROJECTILES.destroy_projectile(self);
+		}
+	}
+	self.destroy = function(inst) {}
 }
 	
 function add_falcon_flight(_entity){

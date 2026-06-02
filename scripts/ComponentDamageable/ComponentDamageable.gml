@@ -25,6 +25,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.take_boss_damage = false;
 	self.immune_to_damage_zones = false;
 	self.super_armor = false;
+	self.dmg_invincible = false;
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
@@ -168,7 +169,14 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.take_damage = function(_damage){
 		if(self.damage_rate == undefined || !variable_struct_exists(self, "damage_rate")) self.damage_rate = 1;
 		
-		if(damage_rate <= 0 || dead) return;//cant take damage if your damage rate is below or at zero.
+		//cant take damage if your damage rate is below or at zero.
+		if(damage_rate <= 0 || dead) {
+			return 0;
+		}
+		
+		if (self.dmg_invincible) {
+			return 0;
+		}
 		
 		if(self.invuln_offset > CURRENT_FRAME){
 			return 0;
@@ -232,6 +240,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 		
 		if !_hits return 0;
+
+		if (self.dmg_invincible) {
+			return 0;
+		}
 		
 		if(self.invuln_offset > CURRENT_FRAME && _proj.code.comboiness >= 0 && _proj.code.comboiness <= self.combo_count) || array_contains(self.hit_by_list, _proj){
 			//if the comboiness is too high and the projectile is not comboy enough
@@ -282,6 +294,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		}
 		
 		if(_enemy == false) return 0;
+
+		if (self.dmg_invincible) {
+			return 0;
+		}
 		
 		if(self.invuln_offset > CURRENT_FRAME) || array_contains(self.hit_by_list, _enemy){
 			//if the comboiness is too high and the projectile is not comboy enough 
@@ -305,6 +321,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 			return 0;
 		}
 		
+		if (self.dmg_invincible) {
+			return 0;
+		}
+		
 		if(self.invuln_offset > CURRENT_FRAME){
 			return 0;
 		}
@@ -320,6 +340,10 @@ function ComponentDamageable() : ComponentBase() constructor{
 		var _zone = self.physics.get_place_meeting(self.get_instance().x,self.get_instance().y,obj_hurt_zone);
 		
 		if(!variable_instance_exists(_zone, "contact_damage")){ 
+			return 0;
+		}
+		
+		if (self.dmg_invincible) {
 			return 0;
 		}
 		
