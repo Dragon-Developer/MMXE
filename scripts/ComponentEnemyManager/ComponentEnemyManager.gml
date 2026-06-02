@@ -51,6 +51,17 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		return undefined
 	}
 	
+	self.change_enemy_animation = function(_enemy, _animation){
+		for(var p = 0; p < array_length(enemies); p++){
+			if enemies[p].code == _enemy{
+				get(ComponentSpriteRenderer).change_sprite(enemies[p].sprite, _animation)
+				return true
+			}
+		}
+		
+		return false
+	}
+	
 	self.create_enemy = function(_x, _y,_dir,  _code){
 		var _enemy = {};
 		

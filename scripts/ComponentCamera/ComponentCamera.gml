@@ -208,6 +208,18 @@ function ComponentCamera() : ComponentBase() constructor {
 		camera_set_view_pos(self.camera, self.get_instance().x, self.get_instance().y);
 	}
 	
+	self.draw = function(){
+		if !global.settings.speedrun_mode return;
+		
+		var _time = CURRENT_FRAME
+		
+		var _minutes = floor(_time / 3600);
+		var _seconds = floor(_time / 60) % 60;
+		var _frames = (_time % 60) * 10 / 6;
+		
+		draw_string(_minutes + ":" + _seconds + "." + _frames, self.get_instance().x, self.get_instance().y + GAME_H - 16)
+	}
+	
 	self.rotation_controller.on_end = function() {
 		ENTITIES.pause(["actor"], false);
 			//log(WORLD)

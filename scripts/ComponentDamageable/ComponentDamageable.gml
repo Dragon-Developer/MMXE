@@ -25,6 +25,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 	self.take_boss_damage = false;
 	self.immune_to_damage_zones = false;
 	self.super_armor = false;
+	self.invulnerable = false;
 	
 	self.projectile_tags = ["player"];// projectiles will have an associated tag to check
 	// if they actually hurt the hurtable
@@ -109,7 +110,7 @@ function ComponentDamageable() : ComponentBase() constructor{
 			self.hit_by_list = [];
 			self.invincibility_type = "damage"
 		}
-		
+		if !invulnerable
 		self.check_for_collision();
 	}
 	

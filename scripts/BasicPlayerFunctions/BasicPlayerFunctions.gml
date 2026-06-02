@@ -530,8 +530,9 @@ function add_mach_dash(_entity, _falcon_flight){
 			draw: function(){
 				var _anim = self.get_instance().components.find("animation");
 				var _pos = _anim.get_interpolated_position();
-				_pos[0] += self.physics.get_hspd() * (CURRENT_FRAME - self.timer) / 6;
-				_pos[1] += self.physics.get_vspd() * (CURRENT_FRAME - self.timer) / 6;
+				var _speed = 1
+				_pos[0] += self.physics.get_hspd() * (CURRENT_FRAME - self.timer) * _speed;
+				_pos[1] += self.physics.get_vspd() * (CURRENT_FRAME - self.timer) * _speed;
 				_anim.animation.set_color(c_blue);
 				_anim.draw_regular(_pos);
 				_anim.animation.set_color(c_white);
@@ -867,6 +868,8 @@ function add_zipline(_entity){
 					_inst.y = _line.y + 16 + (_inst.x - _line.x) * _offset
 				else
 					_inst.x = _line.x
+				
+				double_jumps = self.states.jump.count;
 				
 				self.physics.set_grav(new Vec2(0,0))
 				self.physics.set_speed(0,0)

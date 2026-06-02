@@ -64,6 +64,9 @@ function GuiOptions() : GuiContainer() constructor {
 	if(!variable_struct_exists(global.settings, "hit_numbers")){
 		global.settings.hit_numbers = true;
 	}
+	if(!variable_struct_exists(global.settings, "speedrun_mode")){
+		global.settings.speedrun_mode = true;
+	}
 	if(!variable_struct_exists(global.settings, "double_tap_dash")){
 		global.settings.double_tap_dash = false;
 	}
@@ -109,6 +112,17 @@ function GuiOptions() : GuiContainer() constructor {
 	DoubleTapDashToggle.addEventListener("click", function(_val){
 		global.settings.double_tap_dash = !global.settings.double_tap_dash;
 		DoubleTapDashToggle.children[0].setText("Double Tap Dash: " + (global.settings.double_tap_dash ? "yes" : "no"))
+	});
+	
+	SpeedrunModeToggle = new GuiButton(190, 12, "Speedrunning Tricks: " + (global.settings.speedrun_mode ? "yes" : "no"))
+	SpeedrunModeToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("center")
+		.children[0].setFontOffset(2)
+	SpeedrunModeToggle.addEventListener("click", function(_val){
+		global.settings.speedrun_mode = !global.settings.speedrun_mode;
+		SpeedrunModeToggle.children[0].setText("Speedrunning Tricks: " + (global.settings.speedrun_mode ? "yes" : "no"))
 	});
 	
 	QuickUpDashToggle = new GuiButton(190, 12, "Quick Up Dash: " + (global.player_data.quick_up_dash ? "on" : "off"))
@@ -170,7 +184,7 @@ function GuiOptions() : GuiContainer() constructor {
 		DevCommentToggle.children[0].setText("Developer Commentary: " + (global.settings.dev_commentary ? "yes" : "no"))
 	});
 	
-	mainContainer.addChild([buttonBack, DevCommentToggle, X8ArmorAutoEquipToggle, ScoreShowcaseToggle, PsxDashJumpToggle, QuickUpDashToggle, DoubleTapDashToggle, DashOnLandingToggle]);
+	mainContainer.addChild([buttonBack, DevCommentToggle, X8ArmorAutoEquipToggle, ScoreShowcaseToggle, SpeedrunModeToggle, PsxDashJumpToggle, QuickUpDashToggle, DoubleTapDashToggle, DashOnLandingToggle]);
 	
 	addChild(mainContainer);
 }

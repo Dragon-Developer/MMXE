@@ -155,7 +155,7 @@ function ComponentPauseMenu() : ComponentBase() constructor{
 		//set up palette to match player palette
 		for(var i = 0; i < array_length(global.availible_characters[global.character_index].default_palette); i++){
 			palette.setBaseColorByHex(i, global.availible_characters[global.character_index].default_palette[i]);
-			palette.setPaletteColorByHex(i, global.player_character[player.components.get(ComponentPlayerInput).get_player_index()].default_palette[i]);
+			palette.setPaletteColorByHex(i, global.availible_characters[global.character_index].default_palette[i]);
 		}
 		
 		//set current weapon to player's current weapon

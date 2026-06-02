@@ -921,7 +921,23 @@
                 "frame": 0
               },
               {
-                "key": 30,
+                "key": 8,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "ladder_shoot",
+          "properties": {
+            "action": "ladder",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 8,
                 "frame": 0
               }
             ]
@@ -937,28 +953,28 @@
                 "frame": 1
               },
               {
-                "key": 8,
+                "key": 6,
                 "frame": 2
               },
               {
-                "key": 11,
+                "key": 12,
                 "frame": 3
               },
               {
-                "key": 14,
+                "key": 18,
                 "frame": 4
               },
               {
-                "key": 22,
-                "frame": 3
+                "key": 24,
+                "frame": 12
               },
               {
-                "key": 25,
-                "frame": 2
+                "key": 30,
+                "frame": 11
               },
               {
-                "key": 28,
-                "frame": 1
+                "key": 36,
+                "frame": 10
               }
             ]
           }
@@ -970,11 +986,15 @@
             "keyframes": [
               {
                 "key": 0,
-                "frame": 1
+                "frame": 5
               },
               {
-                "key": 10,
-                "frame": 2
+                "key": 4,
+                "frame": 6
+              },
+              {
+                "key": 8,
+                "frame": 6
               }
             ]
           }

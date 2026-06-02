@@ -103,14 +103,14 @@ function ChillPenguinBoss() : BaseBoss() constructor{
 			})
 			.add("belly_slide", {
 				enter: function(){
-					self.timer = 9 * DIFF
+					self.timer = 8 + DIFF + random_value * 0.01
 				},
 				step: function(){
 					
 					var _inst = self.get_instance();
 					
 					_inst.x += self.timer * self.dir
-					self.timer -= 0.2 * DIFF / 2;
+					self.timer -= 0.1;
 					self.publish("animation_xscale", self.dir);
 					
 					self.get(ComponentDamageable).invuln_offset = CURRENT_FRAME + 2;
@@ -126,14 +126,14 @@ function ChillPenguinBoss() : BaseBoss() constructor{
 					self.publish("animation_play", { name: "chill_jump" });
 					self.timer = CURRENT_FRAME
 					if fsm.get_previous_state() == "wind" return;
-					self.get(ComponentPhysics).set_speed(6 * dir * (DIFF / 2), -9);
+					self.get(ComponentPhysics).set_speed(6 * dir, -9);
 					var _inst = self.get_instance();
 					_inst.y -= 6
 				},
 				step: function(){
 					var _inst = self.get_instance();
 					if(instance_position(_inst.x + 16 * self.dir, _inst.y, obj_square_16)){
-						self.get(ComponentPhysics).set_hspd(0);
+						self.get(ComponentPhysics).set_hspd(-0.1 * dir);
 					}
 					
 					if self.get(ComponentPhysics).get_vspd() == 0{
@@ -258,7 +258,7 @@ function ChillPenguinBoss() : BaseBoss() constructor{
 			.add("damaged", {
 				enter: function(){
 					self.publish("animation_play", { name: "chill_oh_fuck" });
-					self.timer = CURRENT_FRAME + 50 / ((DIFF + 1) / 2);
+					self.timer = CURRENT_FRAME + 50;
 				},
 				step: function(){
 				},
