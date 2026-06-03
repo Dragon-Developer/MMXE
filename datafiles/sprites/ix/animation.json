@@ -1,23 +1,31 @@
 {
 	"sprites": {
-		"default": { "origin": { "x": 32, "y": 48 } },
-		"shoot": { "origin": { "x": 32, "y": 48 } },
-		"dash_start": { "origin": { "x": 32, "y": 48 } },
-		"dash": { "origin": { "x": 32, "y": 48 } },
-		"dash_end": { "origin": { "x": 32, "y": 48 } },
-		"jump_start": { "origin": { "x": 32, "y": 48 } },
-		"jump": { "origin": { "x": 32, "y": 48 } },
-		"fall": { "origin": { "x": 32, "y": 48 } },
-		"land": { "origin": { "x": 32, "y": 48 } },
-		"hurt": { "origin": { "x": 32, "y": 48 } }
+		"default": { "origin": { "x": 32, "y": 32 } },
+		"idle": { "origin": { "x": 32, "y": 32 } },
+		"shoot": { "origin": { "x": 32, "y": 32 } },
+		"dash_start": { "origin": { "x": 32, "y": 32 } },
+		"dash": { "origin": { "x": 32, "y": 32 } },
+		"dash_end": { "origin": { "x": 32, "y": 32 } },
+		"jump_start": { "origin": { "x": 32, "y": 32 } },
+		"jump": { "origin": { "x": 32, "y": 32 } },
+		"fall": { "origin": { "x": 32, "y": 32 } },
+		"land": { "origin": { "x": 32, "y": 32 } },
+		"hurt": { "origin": { "x": 32, "y": 32 } }
 	},
 	"data": {
 		"animations": {
 			"list": [{
+				"name": "default",
+				"properties": {
+					"keyframes": [
+						{ "frame": 0, "key": 0 }
+					]
+				}
+			},{
 				"name": "idle",
 				"properties": {
 					"keyframes": [
-						{ "key": 0, "frame": 0 }
+						{ "frame": 0, "key": 0 }
 					]
 				}
 			},{
@@ -25,37 +33,37 @@
 				"properties": {
 					"loop_begin": 2,
 					"keyframes": [
-						{ "key": 0, "frame": 0 },
-						{ "key": 1, "frame": 4 },
-						{ "key": 2, "frame": 14 }
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 4 },
+						{ "frame": 2, "key": 14 }
 					]
 				}
 			},{
 				"name": "dash_start",
 				"properties": {
 					"keyframes": [
-						{ "key": 0, "frame": 0 }
+						{ "frame": 0, "key": 0 }
 					]
 				}
 			},{
 				"name": "dash",
 				"properties": {
 					"keyframes": [
-						{ "key": 0, "frame": 0 }
+						{ "frame": 0, "key": 0 }
 					]
 				}
 			},{
 				"name": "dash_end",
 				"properties": {
 					"keyframes": [
-						{ "key": 0, "frame": 0 }
+						{ "frame": 0, "key": 0 }
 					]
 				}
 			},{
 				"name": "jump_start",
 				"properties": {
 					"keyframes": [
-						{ "key": 0, "frame": 0 }
+						{ "frame": 0, "key": 0 }
 					]
 				}
 			},{
@@ -63,8 +71,8 @@
 				"properties": {
 					"loop_begin": 1,
 					"keyframes": [
-						{ "key": 0, "frame": 0 },
-						{ "key": 1, "frame": 5 }
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 5 }
 					]
 				}
 			},{
@@ -72,16 +80,16 @@
 				"properties": {
 					"loop_begin": 2,
 					"keyframes": [
-						{ "key": 0, "frame": 0 },
-						{ "key": 1, "frame": 5 },
-						{ "key": 2, "frame": 10 }
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 5 },
+						{ "frame": 2, "key": 10 }
 					]
 				}
 			},{
 				"name": "land",
 				"properties": {
 					"keyframes": [
-						{ "key": 0, "frame": 0 }
+						{ "frame": 0, "key": 0 }
 					]
 				}
 			},{
@@ -89,9 +97,9 @@
 				"properties": {
 					"loop_begin": 1,
 					"keyframes": [
-						{ "key": 0, "frame": 0 },
-						{ "key": 1, "frame": 5 },
-						{ "key": 2, "frame": 10 }
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 5 },
+						{ "frame": 2, "key": 10 }
 					]
 				}
 			}]
