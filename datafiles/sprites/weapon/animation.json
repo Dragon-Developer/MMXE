@@ -1738,6 +1738,12 @@
           }
         },
         {
+          "name": "rotator_shot",
+          "properties": {
+            "speed": 0.2
+          }
+        },
+        {
           "name": "genki_dama",
           "properties": {
             "speed": 0.5,

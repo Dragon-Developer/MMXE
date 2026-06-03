@@ -51,6 +51,15 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		return undefined
 	}
 	
+	self.get_animation_index = function(_reference){
+		for(var p = 0; p < array_length(enemies); p++){
+			if enemies[p].code == _reference
+				return get(ComponentSpriteRenderer).sprites[enemies[p].sprite].animationController.__index
+		}
+		
+		return undefined
+	}
+	
 	self.change_enemy_animation = function(_enemy, _animation){
 		for(var p = 0; p < array_length(enemies); p++){
 			if enemies[p].code == _enemy{
@@ -75,7 +84,9 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 		with(_enemy.code){script_execute(_code)}
 		
 		_enemy.code.dir = _dir;
+		_enemy.code.vdir = 1;
 		_enemy.dir = _dir;
+		_enemy.vdir = 1;
 		_enemy.flash = false;
 		
 		if(variable_struct_exists(_enemy.code, "create"))
@@ -102,15 +113,19 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	
 	self.step = function(){
 		array_foreach(self.enemies, function(_enemy, _index){
+			get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.code.dir, _enemy.code.vdir)
+			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
 			if(_enemy.flash == 1) {
-				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir, 1, shader_palette_light);
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.code.dir, _enemy.code.vdir, shader_palette_light);
 				_enemy.flash = 2;
 			} else if(_enemy.flash == 2) {
 				_enemy.flash = 3;
 			} else if(_enemy.flash == 3) {
-				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir, 1, undefined);
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.code.dir, _enemy.code.vdir, undefined);
 				_enemy.flash = 0;
-			} 
+			} else {
+				get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.code.dir, _enemy.code.vdir, undefined);
+			}
 			
 			_enemy.code.step(_enemy.position);
 			self.get_collision(_enemy);
@@ -152,18 +167,14 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 	}
 	
 	self.draw = function(){
-		array_foreach(self.enemies, function(_enemy){
-			get(ComponentSpriteRenderer).set_position(_enemy.sprite, _enemy.position.x, _enemy.position.y)
-			get(ComponentSpriteRenderer).swap_sprite(_enemy.sprite, c_white, 1, _enemy.dir)
-			
-			if (draw_enabled){
+		if (draw_enabled){
+			array_foreach(self.enemies, function(_enemy){
 				draw_rectangle( (_enemy.hitbox.x / 2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
 					(_enemy.hitbox.y / 2) + _enemy.position.y + _enemy.hitbox_offset.y,
 					(_enemy.hitbox.x / -2) + _enemy.position.x + _enemy.hitbox_offset.x * _enemy.dir,  
 					(_enemy.hitbox.y / -2) + _enemy.position.y + _enemy.hitbox_offset.y, false)
-			}
-			
-		})
+			})
+		}
 	}
 	
 	self.draw_gui = function(){

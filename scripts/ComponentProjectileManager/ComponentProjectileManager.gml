@@ -32,6 +32,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		_shot.code.dir = _dir;
 		_shot.code.shooter = _shooter;
 		_shot.dir = _dir;
+		_shot.deflected = false;
 		
 		if(variable_struct_exists(_shot.code, "vdir")){
 			_shot.vdir = _shot.code.vdir;
@@ -72,6 +73,7 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 		
 		_shot.code.dir = _dir;
 		_shot.dir = _dir;
+		_shot.deflected = false;
 		
 		if(variable_struct_exists(_shot.code, "vdir")){
 			_shot.vdir = _shot.code.vdir;
@@ -108,7 +110,8 @@ function ComponentProjectileManager() : ComponentBase() constructor{
 	
 	self.step = function(){
 		array_foreach(self.projectiles, function(_shot){
-			_shot.code.step(_shot.position);
+			if !_shot.deflected
+				_shot.code.step(_shot.position);
 			get(ComponentSpriteRenderer).swap_sprite(_shot.sprite, c_white, 1, _shot.code.dir, _shot.code.vdir)
 			get(ComponentSpriteRenderer).set_position(_shot.sprite, _shot.position.x, _shot.position.y);
 			

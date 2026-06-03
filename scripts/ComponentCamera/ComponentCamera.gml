@@ -217,7 +217,7 @@ function ComponentCamera() : ComponentBase() constructor {
 		var _seconds = floor(_time / 60) % 60;
 		var _frames = (_time % 60) * 10 / 6;
 		
-		draw_string(_minutes + ":" + _seconds + "." + _frames, self.get_instance().x, self.get_instance().y + GAME_H - 16)
+		draw_string(_minutes + ":" + _seconds + "." + _frames, self.get_instance().x + 32, self.get_instance().y + GAME_H - 32)
 	}
 	
 	self.rotation_controller.on_end = function() {

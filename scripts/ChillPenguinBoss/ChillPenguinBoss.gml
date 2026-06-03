@@ -276,7 +276,7 @@ function ChillPenguinBoss() : BaseBoss() constructor{
 			.add_transition("t_transition", "wind", "wind_end", function(){return CURRENT_FRAME > self.timer})
 			.add_transition("t_transition", "spawn_statues_startup", "spawn_statues", function(){return CURRENT_FRAME > self.timer})
 			.add_transition("t_transition", "puke", "idle", function(){return CURRENT_FRAME > self.timer})
-			.add_transition("t_transition", "damaged", "idle", function(){return CURRENT_FRAME > self.timer})
+			.add_transition("t_transition", "damaged", "jump", function(){return CURRENT_FRAME > self.timer})
 			.add_transition("t_transition", "belly_slide", "idle", function(){return self.timer < 0})
 			.add_transition("t_transition", ["jump", "wind_end"], "idle", function()
 				{return instance_position(self.get_instance().x, self.get_instance().y + 24, obj_square_16)})

@@ -33,6 +33,104 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 		
 	self.init = function(){
 		self.buffer_reset();
+		
+		if(keyboard_check(ord("6")) || global.settings.auto_record_inputs){
+			
+			if(keyboard_check(vk_shift)){
+				if(using_scripted_inputs){
+					using_scripted_inputs = false;
+					scripted_input_index = 0;
+				} else {
+					input_file = file_text_open_read(game_save_id + "recorded inputs.json");
+					scripted_inputs = [];
+				
+					var _finished = false
+				
+					while(!_finished){
+						var _input_struct = {left: false, right: false,up: false, down: false, dash: false, shoot: false, shoot2: false, shoot3: false, shoot4: false, jump: false, switchLeft: false, switchRight: false, pause: false}
+						var _inputs = file_text_read_string(input_file);
+					
+						//bail if the input file is done
+						if(_inputs == "Maverick dead"){
+							_finished = true;
+							continue;
+						}
+					    file_text_readln(input_file);
+					
+						//convert inputs to struct
+						if(__input_string_contains(_inputs, "L"))//left
+							_input_struct.left = true;
+						if(__input_string_contains(_inputs, "R"))//right
+							_input_struct.right = true;
+						if(__input_string_contains(_inputs, "U"))//up
+							_input_struct.up = true;
+						if(__input_string_contains(_inputs, "D"))//down
+							_input_struct.down = true;
+						if(__input_string_contains(_inputs, "F"))//dash
+							_input_struct.dash = true;
+						if(__input_string_contains(_inputs, "P"))//shoot 1
+							_input_struct.shoot = true;
+						if(__input_string_contains(_inputs, "A"))//shoot 2
+							_input_struct.shoot2 = true;
+						if(__input_string_contains(_inputs, "G"))//shoot 3
+							_input_struct.shoot3 = true;
+						if(__input_string_contains(_inputs, "O"))//shoot 4
+							_input_struct.shoot4 = true;
+						if(__input_string_contains(_inputs, "J"))//jump
+							_input_struct.jump = true;
+						if(__input_string_contains(_inputs, "Z"))//pause
+							_input_struct.pause = true;
+						if(__input_string_contains(_inputs, "Y"))//switch left
+							_input_struct.switchLeft = true;
+						if(__input_string_contains(_inputs, "T"))//switch right
+							_input_struct.switchRight = true;
+					
+					    var _repeats = file_text_read_real(input_file);
+						_repeats++;
+					    file_text_readln(input_file);
+					
+						for(var w = 0; w < _repeats; w++){
+							array_push(scripted_inputs, _input_struct)
+						}
+					}
+				
+					file_text_close(input_file);
+				
+					using_scripted_inputs = true;
+					var _x = 8
+					var _y = 8
+	
+					if(instance_exists(obj_camera)){
+					_x = instance_nearest(0,0,obj_camera).x + 8
+					_y = instance_nearest(0,0,obj_camera).y + 8
+					}
+	
+					if !keyboard_check(vk_shift) {
+						var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+						_response.number = "PLAYING BACK INPUT"
+					}
+				}
+			} else {
+				write_inputs = !write_inputs
+				var _x = 8
+				var _y = 8
+	
+				if(instance_exists(obj_camera)){
+				_x = instance_nearest(0,0,obj_camera).x + 8
+				_y = instance_nearest(0,0,obj_camera).y + 8
+				}
+	
+				var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+				_response.number = write_inputs ? "RECORDING" : "STOPPED RECORDING"
+			
+				if(write_inputs){
+					input_file = file_text_open_write(game_save_id + "recorded inputs.json");
+				} else {
+				    file_text_write_string(input_file, "Maverick dead");
+					file_text_close(input_file);
+				}
+			}
+		}
 	}
 	self.buffer_reset = function(){
 		self.__inputPressedBuffer = [];
@@ -188,22 +286,6 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 			}
 		}
 		
-		if(keyboard_check_pressed(ord("6"))){
-			//
-			write_inputs = false;
-			
-			var _x = 8
-			var _y = 8
-	
-			if(instance_exists(obj_camera)){
-				_x = instance_nearest(0,0,obj_camera).x + 8
-				_y = instance_nearest(0,0,obj_camera).y + 8
-			}
-	
-			var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
-			_response.number = "RECORDED INPUTS SAVED"
-		}		
-		
 		if(keyboard_check_pressed(ord("7"))){
 			if(using_scripted_inputs){
 				using_scripted_inputs = false;
@@ -273,8 +355,10 @@ function ComponentPlayerInput() : ComponentInputBase() constructor {
 				_y = instance_nearest(0,0,obj_camera).y + 8
 				}
 	
-				var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
-				_response.number = "PLAYING BACK INPUT"
+				if !keyboard_check(vk_shift) {
+					var _response = instance_create_depth(_x, _y, -15000, obj_damage_number);
+					_response.number = "PLAYING BACK INPUT"
+				}
 			}
 		}
 		

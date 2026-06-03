@@ -12,7 +12,7 @@ _right_point = (end_point.x <= 0 ? x : x + end_point.x) + grip_range
 
 
 close_enough = (is_in_range(player.x, self.x - grip_range, self.x + end_point.x + grip_range) && 
-	is_in_range(player.y - 16, self.y - grip_range, self.y + end_point.y + _vertical_offset + grip_range))
+	is_in_range(player.y - 16, self.y - grip_range, self.y + end_point.y + _vertical_offset + grip_range) || is_in_range(player.y - 16, self.y + end_point.y + _vertical_offset + grip_range, self.y - grip_range))
 
 if end_point.x == 0 {
 	_top_point = (end_point.y > 0 ? y : y + end_point.y) - grip_range

@@ -61,6 +61,9 @@ function GuiOptions() : GuiContainer() constructor {
 	if(!variable_struct_exists(global.settings, "crt_shader")){
 		global.settings.crt_shader = false;
 	}
+	if(!variable_struct_exists(global.settings, "auto_record_inputs")){
+		global.settings.auto_record_inputs = false;
+	}
 	if(!variable_struct_exists(global.settings, "hit_numbers")){
 		global.settings.hit_numbers = true;
 	}
@@ -125,6 +128,17 @@ function GuiOptions() : GuiContainer() constructor {
 		SpeedrunModeToggle.children[0].setText("Speedrunning Tricks: " + (global.settings.speedrun_mode ? "yes" : "no"))
 	});
 	
+	AutoRecordToggle = new GuiButton(200, 12, "Automatically record inputs: " + (global.settings.auto_record_inputs ? "yes" : "no"))
+	AutoRecordToggle
+		.setFlexDirection("column")
+        .setJustifyContent("left")
+        .setAlignItems("center")
+		.children[0].setFontOffset(2)
+	AutoRecordToggle.addEventListener("click", function(_val){
+		global.settings.auto_record_inputs = !global.settings.auto_record_inputs;
+		AutoRecordToggle.children[0].setText("Automatically record inputs: " + (global.settings.auto_record_inputs ? "yes" : "no"))
+	});
+	
 	QuickUpDashToggle = new GuiButton(190, 12, "Quick Up Dash: " + (global.player_data.quick_up_dash ? "on" : "off"))
 	QuickUpDashToggle
 		.setFlexDirection("column")
@@ -184,7 +198,7 @@ function GuiOptions() : GuiContainer() constructor {
 		DevCommentToggle.children[0].setText("Developer Commentary: " + (global.settings.dev_commentary ? "yes" : "no"))
 	});
 	
-	mainContainer.addChild([buttonBack, DevCommentToggle, X8ArmorAutoEquipToggle, ScoreShowcaseToggle, SpeedrunModeToggle, PsxDashJumpToggle, QuickUpDashToggle, DoubleTapDashToggle, DashOnLandingToggle]);
+	mainContainer.addChild([buttonBack, DevCommentToggle, X8ArmorAutoEquipToggle, ScoreShowcaseToggle, AutoRecordToggle, SpeedrunModeToggle, PsxDashJumpToggle, QuickUpDashToggle, DoubleTapDashToggle, DashOnLandingToggle]);
 	
 	addChild(mainContainer);
 }
