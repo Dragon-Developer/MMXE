@@ -62,14 +62,15 @@ function TestBoss() : BaseBoss() constructor {
 			self.check_player_wallclimb = other.check_player_wallclimb;
 			// Set up gravity, animations and other stuff.
 			self.get(ComponentPhysics).set_grav(new Vec2(0, 0.25));
-			self.attack_states = ["giga_charge"];
-			self.lowhp_states = ["dash_start", "jump_start", "shoot", "shoot2", "giga_charge"];			
-			self.cheese_states = ["dash_start", "jump_start"]
+			self.attack_states = ["dash_start", "jump_start", "shoot", "shoot2"];
+			self.lowhp_states = ["dash_start", "jump_start", "shoot", "shoot2", "giga_charge"];	
+			self.wall_states = ["dash_start", "jump_start"]
+			self.lowhp_wall_states = ["giga_charge", "jump_start"]
 			self.timer = -1;
 			self.startTime = CURRENT_FRAME;
-			self.desperate_rate = 1/4
-			self.contact_damage = 2
-			self.health = 28;
+			self.desperate_rate = 1/4;
+			self.contact_damage = 2;
+			self.max_health = 28;
 
 			// Idle state, our main state.
 			// We go to others from here.
@@ -105,8 +106,12 @@ function TestBoss() : BaseBoss() constructor {
 					var nearPlayer = instance_nearest(actor.x, actor.y, obj_player);
 					var localPhysics = actor.components.get(ComponentPhysics);
 					// If the enemy is cheesing on a wall.
-					if (nearPlayer.y - actor.y <= -80 && self.check_player_wallclimb(self)) {
-						targetStates = self.cheese_states;
+					if (false && nearPlayer.y - actor.y <= -80 && self.check_player_wallclimb(self)) {
+						if (desperate) {
+							targetStates = self.lowhp_wall_states;
+						} else {
+							targetStates = self.wall_states;
+						}
 					}
 					// Select a random state from the attack_states array.
 					self.fsm.change(targetStates[random_value mod array_length(targetStates)]);
@@ -399,27 +404,61 @@ function TestBoss() : BaseBoss() constructor {
 					// Animation.
 					self.face_player();
 					self.publish("animation_xscale", self.dir);
-					self.publish("animation_play", { name: "dash" });
+					self.publish("animation_play", { name: "giga_dash" });
 					// Get player and self.
 					var actor = self.get_instance();
 					var nearPlayer = instance_nearest(actor.x, actor.y, obj_player);
 					// Get distance between the 2.
-					var posDiff = nearPlayer.y - actor.y;
-					// Use that distance to aim for the player positon.
-					self.get(ComponentPhysics).set_vspd(posDiff / 60.0);
-					self.get(ComponentPhysics).set_hspd(9 * self.dir);
+					// We use the formula of uniform rectilar motion here.
+					// Hope you paid attention in high school.
+					// First we got the X and Y distance.
+					var distX = abs(nearPlayer.x - actor.x);
+					var distY = nearPlayer.y - actor.y;
+					// The we use the formula v = d/t to calculate v that would be out y speed.
+					var speedX = 9;
+					var speedY = 9;
+					if (distX != 0) {
+						speedY = speedX * (distY / distX);
+					}
+					// And limit the Y speed if is too high.
+					if (abs(speedY) > 32) {
+						speedY = 32 * sign(speedY);
+					}
+					// Apply the final speed.
+					self.get(ComponentPhysics).set_vspd(speedY);
+					self.get(ComponentPhysics).set_hspd(speedX * self.dir);
 					// Disable gravity and add iframes.
 					self.get(ComponentPhysics).set_grav(new Vec2(0, 0));
-					get(ComponentDamageable).dmg_invincible = true;
+					self.get(ComponentDamageable).dmg_invincible = true;
 					// Play sound.
 					WORLD.play_sound("nova_stike_x6");
+					WORLD.play_sound("shoot_3");
+					// Increase melee damage.			
+					self.contact_damage = 4;
 				},
-				leave: function(){
-					self.get(ComponentPhysics).set_vspd(0)
-					self.get(ComponentPhysics).set_hspd(0)
+				step: function() {
+					// Giga end near a wall.
+					var localPhysics = self.get_instance().components.get(ComponentPhysics);
+					if (localPhysics.check_place_meeting(
+						self.get_instance().x + self.dir * 8,
+						self.get_instance().y - 2,
+						obj_square_16
+					)) {
+						// Add camera shake.
+						var cam = instance_nearest(0, 0, obj_camera);
+						cam.components.get(ComponentCamera).shake_intensity = 4;
+						// Set gravity to normal and bounce of the wall.
+						self.get(ComponentPhysics).set_grav(new Vec2(0, 0.25));
+						self.get(ComponentPhysics).set_vspd(-2 * self.dir)
+						self.get(ComponentPhysics).set_hspd(-4)					
+						WORLD.play_sound("explosion");
+						self.fsm.change("jump");
+					}
+				},
+				leave: function() {
+					self.contact_damage = 2;
 					self.get(ComponentPhysics).set_grav(new Vec2(0, 0.25));
-					get(ComponentDamageable).dmg_invincible = false;
-					WORLD.play_sound("explosion");
+					self.get(ComponentDamageable).dmg_invincible = false;
 				}
 			})
 			// ------------------------------
@@ -427,20 +466,13 @@ function TestBoss() : BaseBoss() constructor {
 			// These allow to share code between multiple states.
 			// ------------------------------
 			// Dash end when near a wall.
-			.add_transition("t_transition", ["dash", "giga_dash"], "dash_end", function() {
+			.add_transition("t_transition", "dash", "dash_end", function() {
 				var localPhysics = self.get_instance().components.get(ComponentPhysics);
-				return (
-					localPhysics.check_place_meeting(
-						self.get_instance().x + self.dir * 32,
-						self.get_instance().y - 2,
-						obj_square_16
-					) ||
-					localPhysics.check_place_meeting(
-						self.get_instance().x + self.dir * 32,
-						self.get_instance().y - 2,
-						obj_door_spawner
-					)
-				)
+				return (localPhysics.check_place_meeting(
+					self.get_instance().x + self.dir * 32,
+					self.get_instance().y - 2,
+					obj_square_16
+				))
 			})
 			// Go from air to land.
 			.add_transition("t_transition", ["jump", "fall"], "land", function() {
@@ -450,10 +482,7 @@ function TestBoss() : BaseBoss() constructor {
 				);
 			})
 			// To from land to air.
-			.add_transition(
-				"t_transition",
-				["jump", "dash_stop", "dash", "dash_end"], "fall",
-			function() {
+			.add_transition("t_transition", ["jump", "dash_end", "dash"], "fall", function() {
 				return (
 					self.get(ComponentPhysics).get_vspd() >= 0 &&
 					!self.get_instance().components.get(ComponentPhysics).is_on_floor(2)

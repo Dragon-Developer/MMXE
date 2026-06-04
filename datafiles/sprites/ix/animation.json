@@ -2,6 +2,7 @@
 	"sprites": {
 		"idle": { "origin": { "x": 32, "y": 32 } },
 		"shoot": { "origin": { "x": 32, "y": 32 } },
+		"shoot_charge": { "origin": { "x": 32, "y": 32 } },
 		"dash_start": { "origin": { "x": 32, "y": 32 } },
 		"dash": { "origin": { "x": 32, "y": 32 } },
 		"dash_end": { "origin": { "x": 32, "y": 32 } },
@@ -11,7 +12,7 @@
 		"land": { "origin": { "x": 32, "y": 32 } },
 		"hurt": { "origin": { "x": 32, "y": 32 } },
 		"giga_charge": { "origin": { "x": 32, "y": 32 } },
-		"shoot_charge": { "origin": { "x": 32, "y": 32 } }
+		"giga_dash": { "origin": { "x": 80, "y": 48 } }
 	},
 	"data": {
 		"animations": {
@@ -131,6 +132,19 @@
 						{ "frame": 0, "key": 0 },
 						{ "frame": 1, "key": 3 },
 						{ "frame": 0, "key": 6 }
+					]
+				}
+			}, {
+				"name": "giga_dash",
+				"properties": {
+					"loop_begin": 4,
+					"keyframes": [
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 4 },
+						{ "frame": 2, "key": 6 },
+						{ "frame": 4, "key": 8 },
+						{ "frame": 5, "key": 10 },
+						{ "frame": 0, "key": 12 }
 					]
 				}
 			}]
