@@ -6,6 +6,18 @@
         "y": 41
       }
     },
+    "spin": {
+      "origin": {
+        "x": 16,
+        "y": 16
+      }
+    },
+    "rider": {
+      "origin": {
+        "x": 16,
+        "y": 32
+      }
+    },
     "rotator": {
       "origin": {
         "x": 16,
@@ -114,6 +126,33 @@
           }
         },
         {
+          "name": "rider",
+          "properties": {
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 2
+              }
+            ]
+          }
+        },
+        {
+          "name": "rider_shoot",
+          "properties": {
+            "action": "rider", 
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 4
+              },
+              {
+                "key": 100,
+                "frame": 4
+              }
+            ]
+          }
+        },
+        {
           "name": "skull_bot_shield",
           "properties": {
             "action": "skull_bot",
@@ -134,6 +173,24 @@
                 "frame": 0
               }
             ]
+          }
+        },
+        {
+          "name": "spin_idle",
+          "properties": {
+            "action": "spin",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "spin",
+          "properties": {
+            "speed": 0.1
           }
         },
         {
@@ -286,6 +343,42 @@
               {
                 "key": 444,
                 "frame": 0
+              },
+            ]
+          }
+        },
+        {
+          "name": "rotator_2",
+          "properties": {
+            "action": "rotator",
+            "keyframes": [
+              {
+                "key": 0,
+                "frame": 0
+              },
+              {
+                "key": 4,
+                "frame": 1
+              },
+              {
+                "key": 8,
+                "frame": 2
+              },
+              {
+                "key": 12,
+                "frame": 3
+              },
+              {
+                "key": 16,
+                "frame": 0
+              },
+              {
+                "key": 20,
+                "frame": 1
+              },
+              {
+                "key": 24,
+                "frame": 2
               },
             ]
           }

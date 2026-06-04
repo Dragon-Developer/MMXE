@@ -137,12 +137,16 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 					self.physics.set_vspd(1);
 					return;
 				}
-				_inst.y -= self.states.jump.strength;
+				
+				if (global.settings.speedrun_mode || !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - self.states.jump.strength, obj_collision_semisolid)){
+					_inst.y -= self.states.jump.strength;
+				}
+				
 				with(obj_camera){
 					components.get(ComponentCamera).step();
 				}
 				
-				if(self.physics.is_on_floor(self.ground_distance)){
+				if(self.physics.is_on_floor(16)){
 					self.publish("animation_play", { name: self.states.jump.animation });
 					double_jumps = self.states.jump.count - 1;
 				}else{ 
@@ -356,6 +360,9 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				self.fsm.inherit();
 				with(self.get_instance()){
 					x = instance_nearest(x,y,obj_ladder).x + 16;
+					
+					if(instance_nearest(x,y,obj_ladder).y > y)
+						y = instance_nearest(x,y,obj_ladder).y + 16
 				}
 				self.publish("animation_play", { name: "ladder_enter" });
 				self.find("animation").animation.__speed = 1;
@@ -493,7 +500,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 		.add_transition("t_transition", "ladder_idle", "ladder_move", function() { return self.vdir != 0})
 		.add_transition("t_transition", "ladder_move", "ladder_idle", function() { return self.vdir == 0})
 		.add_transition("t_transition", ["ladder_idle", "ladder_move"], "ladder_exit", function() { 
-			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 8, obj_ladder) || self.physics.is_on_floor(4)
+			return !self.physics.check_place_meeting(self.get_instance().x, self.get_instance().y - 16, obj_ladder) || self.physics.is_on_floor(4)
 		})
 		.add_transition("t_transition", ["fall", "wall_slide", "wall_jump"], "land", function() { return self.physics.is_on_floor(self.ground_distance); })
 		.add_transition("t_transition", ["idle", "walk", "crouch", "land"], "fall", function() { return !self.physics.is_on_floor(self.ground_distance); })
@@ -650,7 +657,7 @@ function ComponentPlayerMove() : ComponentBase() constructor {
 				//find("animation").part_shaders[_index].setPaletteColorByHex(g, _palette[g]);
 				_palette.setPaletteColorByHex(g, self.character.base_palettes[_index][g]);
 			}
-		})*/
+		})*/	
 			
 		if !global.debug return;
 		

@@ -57,7 +57,7 @@ function ComponentDoor() : ComponentBase() constructor{
 					coll.image_xscale = (_inst.sprite_width - 2) / 16;
 				}
 				
-				coll.image_xscale = floor(coll.image_xscale)
+				coll.image_xscale = ceil(coll.image_xscale)
 			}
 			
 			//var _player = instance_nearest(_inst.x,_inst.y, obj_player);

@@ -15,6 +15,15 @@ self.destroy_projectile = function(_proj){
 self.get_animation_frame = function(_reference){
 	return components.get(ComponentEnemyManager).get_animation_frame(_reference)
 }
+self.get_animation_index = function(_reference){
+	return components.get(ComponentEnemyManager).get_animation_index(_reference)
+}
 self.get_nearest_enemy = function(_x, _y){
 	return components.get(ComponentEnemyManager).find_nearest_enemy(_x, _y)
+}
+self.get_ref = function(_ref){
+	return components.get(ComponentEnemyManager).locate_enemy(_ref)
+}
+self.change_enemy_animation = function(_enemy, _animation){
+	return components.get(ComponentEnemyManager).change_enemy_animation(_enemy, _animation)
 }

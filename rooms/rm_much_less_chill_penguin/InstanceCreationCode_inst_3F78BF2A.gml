@@ -1,1 +1,1 @@
-enemyData = EnemyRotator
+enemyData = SpinGuyEnemy
