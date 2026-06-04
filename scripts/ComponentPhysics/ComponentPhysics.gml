@@ -115,8 +115,9 @@ function ComponentPhysics() : ComponentPhysicsBase() constructor {
 			self.set_vspd(self.terminal_velocity * (self.time_physics_multiplier));
 		}
 		
-		if (self.is_on_floor(2)) self.set_vspd(0);
-		
+		if (self.get_vspd() > 0 && self.is_on_floor(2)) {
+			self.set_vspd(0);
+		}
 		self.move_step(self.velocity.multiply(self.time_physics_multiplier));
 		
     }

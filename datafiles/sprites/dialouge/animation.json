@@ -1088,8 +1088,27 @@
               }
             ]
           }
+        }, {
+          "name": "ix",
+          "properties": {
+            "action":"ix_regular",
+            "keyframes": [
+              { "frame": 0, "key": 0 },
+			  { "frame": 2, "key": 60 },
+			  { "frame": 0, "key": 65 }
+            ]
+          }
+        }, {
+          "name": "ix_talking",
+          "properties": {
+            "action":"ix_regular",
+            "keyframes": [
+              { "frame": 0, "key": 0 },
+			  { "frame": 1, "key": 10 },
+			  { "frame": 0, "key": 18 }
+            ]
+          }
         }
-        //eof
       ]
     }
   }

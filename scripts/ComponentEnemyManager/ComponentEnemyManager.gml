@@ -243,8 +243,12 @@ function ComponentEnemyManager() : ComponentBase() constructor{
 					_num.number = _proj.code.damage
 				}
 				
-				if((!_proj.code.piercing || _enemy.code.health > 0) && !_proj.code.super_piercing)
+				if((!_proj.code.piercing || _enemy.code.health > 0) &&
+					!_proj.code.true_piercing &&
+					!_proj.code.super_piercing
+				) {
 					PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
+				}
 			}
 	}
 }

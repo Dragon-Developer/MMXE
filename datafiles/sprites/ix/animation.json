@@ -1,6 +1,5 @@
 {
 	"sprites": {
-		"default": { "origin": { "x": 32, "y": 32 } },
 		"idle": { "origin": { "x": 32, "y": 32 } },
 		"shoot": { "origin": { "x": 32, "y": 32 } },
 		"dash_start": { "origin": { "x": 32, "y": 32 } },
@@ -10,96 +9,128 @@
 		"jump": { "origin": { "x": 32, "y": 32 } },
 		"fall": { "origin": { "x": 32, "y": 32 } },
 		"land": { "origin": { "x": 32, "y": 32 } },
-		"hurt": { "origin": { "x": 32, "y": 32 } }
+		"hurt": { "origin": { "x": 32, "y": 32 } },
+		"giga_charge": { "origin": { "x": 32, "y": 32 } },
+		"shoot_charge": { "origin": { "x": 32, "y": 32 } }
 	},
 	"data": {
 		"animations": {
 			"list": [{
 				"name": "default",
+				"action":"idle",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "idle",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "shoot",
 				"properties": {
-					"loop_begin": 2,
+					"loop_begin": 14,
 					"keyframes": [
 						{ "frame": 0, "key": 0 },
 						{ "frame": 1, "key": 4 },
 						{ "frame": 2, "key": 14 }
 					]
 				}
-			},{
+			}, {
+				"name": "shoot2",
+				"properties": {
+					"action":"shoot",
+					"loop_begin": 10,
+					"keyframes": [
+						{ "frame": 1, "key": 0 },
+						{ "frame": 0, "key": 10 }
+					]
+				}
+			}, {
+				"name": "shoot_charge",
+				"properties": {
+					"keyframes": [
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 3 },
+						{ "frame": 0, "key": 6 }
+					]
+				}
+			}, {
 				"name": "dash_start",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "dash",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "dash_end",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "jump_start",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "jump",
 				"properties": {
-					"loop_begin": 1,
+					"loop_begin": 5,
 					"keyframes": [
 						{ "frame": 0, "key": 0 },
 						{ "frame": 1, "key": 5 }
 					]
 				}
-			},{
+			}, {
 				"name": "fall",
 				"properties": {
-					"loop_begin": 2,
+					"loop_begin": 10,
 					"keyframes": [
 						{ "frame": 0, "key": 0 },
 						{ "frame": 1, "key": 5 },
 						{ "frame": 2, "key": 10 }
 					]
 				}
-			},{
+			}, {
 				"name": "land",
 				"properties": {
 					"keyframes": [
 						{ "frame": 0, "key": 0 }
 					]
 				}
-			},{
+			}, {
 				"name": "hurt",
 				"properties": {
-					"loop_begin": 1,
+					"loop_begin": 5,
 					"keyframes": [
 						{ "frame": 0, "key": 0 },
 						{ "frame": 1, "key": 5 },
-						{ "frame": 2, "key": 10 }
+						{ "frame": 2, "key": 10 },
+						{ "frame": 1, "key": 15 }
+					]
+				}
+			}, {
+				"name": "giga_charge",
+				"properties": {
+					"keyframes": [
+						{ "frame": 0, "key": 0 },
+						{ "frame": 1, "key": 3 },
+						{ "frame": 0, "key": 6 }
 					]
 				}
 			}]

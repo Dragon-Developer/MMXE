@@ -1,1 +1,1 @@
-boss = new ChillPenguinBoss()
+self.boss = new TestBoss();

@@ -166,7 +166,11 @@ function add_melee_state(_entity){
 				
 				var _tags = ["player"];
 				
-				var _melee_hitbox = PROJECTILES.create_melee_hitbox(self.get_instance().x, self.get_instance().y, self.dir, MeleeProjectile, get(ComponentWeaponUse), _tags, self.states.melee.animation, 12);
+				var _melee_hitbox = PROJECTILES.create_melee_hitbox(
+					self.get_instance().x, self.get_instance().y,
+					self.dir, MeleeProjectile, get(ComponentWeaponUse),
+					_tags, self.states.melee.animation, 12
+				);
 			
 				_melee_hitbox.code.comboiness = self.states.melee.priority;
 				_melee_hitbox.hitbox = self.states.melee.hitbox_scale;

@@ -49,6 +49,11 @@
           "properties": {
             "speed": 1
           }
+        },{
+          "name": "charge_hyper",
+          "properties": {
+            "speed": 1
+          }
         }
       ]
     }

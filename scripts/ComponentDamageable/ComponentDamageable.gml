@@ -267,11 +267,15 @@ function ComponentDamageable() : ComponentBase() constructor{
 			else
 				self.invuln_offset = CURRENT_FRAME + self.invuln_time;
 			self.combo_count = _proj.code.comboiness;
-			if(!_proj.code.super_piercing)
+			if(!_proj.code.super_piercing) {
 				array_push(self.hit_by_list, _proj)
-			if((!_proj.code.piercing || self.health > 0) && !_proj.code.super_piercing)
+			}
+			if ((!_proj.code.piercing || self.health > 0) &&
+				!_proj.code.true_piercing &&
+				!_proj.code.super_piercing
+			) {
 				PROJECTILES.components.get(ComponentProjectileManager).destroy_projectile(_proj.code)
-				
+			}
 			if(take_boss_damage)
 				return _proj.code.boss_damage;
 			else 
