@@ -106,7 +106,7 @@ function TestBoss() : BaseBoss() constructor {
 					var nearPlayer = instance_nearest(actor.x, actor.y, obj_player);
 					var localPhysics = actor.components.get(ComponentPhysics);
 					// If the enemy is cheesing on a wall.
-					if (false && nearPlayer.y - actor.y <= -80 && self.check_player_wallclimb(self)) {
+					if (nearPlayer.y - actor.y <= -80 && self.check_player_wallclimb(self)) {
 						if (desperate) {
 							targetStates = self.lowhp_wall_states;
 						} else {
