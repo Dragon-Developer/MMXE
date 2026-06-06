@@ -11,7 +11,7 @@ function ComponentStageSelector() : ComponentBase() constructor{
 		new Stage_Select_icon_generate(rm_explose_horneck, 19, 18, "undefined", "blast_hole_2.0", "x", "Explose Horneck%Stage", 5, 5, 4, 1),
 		new Stage_Select_icon_generate(rm_gate_2, 67, 18, "gate", "intro_stage", "gate", "Peak", 6, 6, 0, 2),
 		new Stage_Select_icon_generate(rm_char_select, 140, 11, "x", undefined, "x", "Swap out your%character", 7, 7, 1, 3),
-		new Stage_Select_icon_generate(rm_boss_test, 213, 18, "undefined", "tutorial", "x", "Go learn the%basics!", 8, 8, 2, 4),
+		new Stage_Select_icon_generate(rm_intro, 213, 18, "undefined", "tutorial", "x", "Go learn the%basics!", 8, 8, 2, 4),
 		new Stage_Select_icon_generate(rm_much_less_chill_penguin, 261, 18, "chill", "volcano_rage", "chill", "An old maverick%returns, destroying%old hunter bases!", 9, 9, 3, 0),
 		
 		new Stage_Select_icon_generate(rm_training_stage, 19, 182, "undefined", "blast_hole", "x", "Rougher than%the rest of%'em!", 0, 0, 9, 6),
