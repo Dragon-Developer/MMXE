@@ -81,7 +81,6 @@ Feel free to suggest new features in the discord. If your suggestion is for cont
 ### Programming:
 - Dark Shadow (Dragon-Developer): main programmer. (Animation system, Component system, Base player)
 - ApselTheBlue: creates test stages and helps with programming in v1 of the engine.
-- AxlForte: tried his best (Special weapon code, enemy and boss handler code, player armor system, projectile handler, character handler)
 - Gacel: general programming, X game data, SNES palette shader
 
 ### Music:
